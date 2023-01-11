@@ -30,7 +30,7 @@ jobs:
             else 
              ENV=${{inputs.envFile}}
             fi
-            npm install && \
+            npm install --legacy-peer-deps && \
             npm i -g env-cmd && \
             CI=false env-cmd -f ${ENV} npm run build
     - uses: jakejarvis/s3-sync-action@master

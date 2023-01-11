@@ -17,6 +17,6 @@ jobs:
   DeployToAWS: 
      uses: meowmeoworg/workflow-support/.github/workflows/DeployReactStaticWebToS3.yml@develop
      with:
-      envFile: ${inputs.envFile}
+      envFile: ${{inputs.envFile}}
      secrets: inherit
     

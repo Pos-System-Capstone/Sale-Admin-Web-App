@@ -1,0 +1,21 @@
+{
+  "list": "Danh sách Bộ sưu tập",
+  "table": {
+    "collectionName": "Tên",
+    "collectionNameEn": "Tên tiếng Anh",
+    "position": "Thứ tự",
+    "banner_url": "Ảnh đại diện",
+    "store": "Cửa hàng",
+    "description": "Mô tả",
+    "type": "Loại"
+  },
+  "createInfo": "Tạo bộ sưu tập",
+  "productInCollection": "Sản phẩm",
+  "addBtn": "Thêm bộ sưu tập",
+  "groupCollection": "Thêm nhóm sản phẩm",
+  "addTitle": "Thêm bộ sưu tập",
+  "editTitle": "Cập nhật bộ sưu tập",
+  "collectionInfoTab": "Thông tin chung",
+  "productTab": "Sản phẩm",
+  "updateTitle": "Cập nhật bộ sưu tập"
+}

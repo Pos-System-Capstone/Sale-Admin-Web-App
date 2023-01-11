@@ -1,0 +1,14 @@
+{
+  "list": "Danh sách các Danh mục",
+  "table": {
+    "cateName": "Tên",
+    "cateNameEn": "Tên tiếng Anh",
+    "position": "Thứ tự",
+    "thumbnail": "Ảnh đại diện",
+    "subCategory": "Danh mục con",
+    "visible": "Hiển thị trên web"
+  },
+  "addBtn": "Thêm Danh mục",
+  "addTitle": "Thêm Danh mục",
+  "editTitle": "Cập nhật Danh mục"
+}

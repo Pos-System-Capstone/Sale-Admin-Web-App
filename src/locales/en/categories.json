@@ -1,0 +1,11 @@
+{
+  "list": "List category",
+  "table": {
+    "cateName": "Name",
+    "cateNameEn": "English name",
+    "position": "Position"
+  },
+  "addBtn": "Add category",
+  "addTitle": "Add category",
+  "editTitle": "Edit category"
+}

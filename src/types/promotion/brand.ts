@@ -1,0 +1,26 @@
+export type TBrandBase = {
+  brandId?: any;
+  brandCode?: any;
+  phoneNumber?: any;
+  imgUrl?: any;
+  brandName?: any;
+  companyName?: any;
+  description?: any;
+  address?: any;
+  delFlg?: any;
+  insDate?: any;
+  updDate?: any;
+  brandEmail?: any;
+  account?: any;
+  action?: any;
+  channel?: any;
+  conditionRule?: any;
+  gameCampaign?: any;
+  gift?: any;
+  memberLevel?: any;
+  productCategory?: any;
+  promotion?: any;
+  store?: any;
+  transaction?: any;
+  voucherGroup?: any;
+};

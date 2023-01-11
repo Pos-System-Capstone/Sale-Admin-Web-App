@@ -1,0 +1,177 @@
+{
+  "menu": {
+    "product": {
+      "root": "Sản phẩm"
+    },
+    "group": {
+      "root": "Danh mục"
+    },
+    "master": "Danh sách Sản phẩm",
+    "extra": "Danh mục Extra",
+    "combo-list": "Sản phẩm Combo",
+    "category": "Danh mục sản phẩm",
+    "extra-category": "Danh mục extra",
+    "collection": "Bộ sưu tập",
+    "menu": { "root": "Bảng giá" },
+    "store": "Cửa hàng",
+    "log": "Log",
+    "menu-list": "Bảng giá",
+    "store-menu-apply": "Cửa hàng áp dụng",
+    "general": "Tổng quan",
+    "customer": {
+      "root": "Khách hàng",
+      "customerList": "Danh sách khách hàng",
+      "addNewCustomer": "Thêm mới khách hàng"
+    },
+    "combo": {
+      "root": "Combo",
+      "customerList": "Danh sách khách hàng",
+      "addNewCustomer": "Thêm mới khách hàng"
+    },
+    "order": "Đơn hàng",
+    "store-menu": "Bảng giá",
+    "product-subheader": "Sản phẩm",
+    "menu-subheader": "Bảng giá",
+    "store-subheader": "Cửa hàng",
+    "customer-subheader": "Khách hàng",
+    "group-subheader": "Danh mục",
+    "log-subheader": "Log",
+    "report": {
+      "report": "Báo cáo",
+      "dashboard": "Bảng điều khiển",
+      "home": "Home",
+      "insights": "insights",
+      "management": "Quản lý",
+      "trading": "Báo cáo kinh doanh",
+      "promotion": "Báo cáo khuyến mãi",
+      "overviewDate": "Tổng quan theo ngày",
+      "overviewMonth": "Tổng quan theo tháng",
+      "payment": "Báo cáo thanh toán",
+      "productSale": "Báo cáo doanh thu sản phẩm",
+      "productProgress": "Báo cáo diễn tiến sản phẩm",
+      "stores": "Báo cáo cửa hàng"
+    },
+    "promotion": {
+      "general": "Tổng quan",
+      "dashboard": "Bảng điều khiển",
+      "campaign": "Chiến dịch",
+      "promotion": "Khuyến mãi",
+      "voucher": "Phiếu giảm giá",
+      "condition": "Điều kiện",
+      "action": "Hành động",
+      "gift": "Quà tặng",
+      "configuration": "Cấu hình",
+      "setting": "Cài đặt",
+      "profile": "Hồ sơ của tôi",
+      "actionBtn": "New Action",
+      "giftBtn": "New Gift"
+    }
+  },
+  "pages": {
+    "stores": {
+      "listTitle": "Danh sách cửa hàng",
+      "updateTitle": "Cập nhật cửa hàng",
+      "addBtn": "Thêm cửa hàng",
+      "table": {
+        "name": "Tên cửa hàng",
+        "shortName": "Tên rút gọn",
+        "isAvailable": "Trạng thái",
+        "storeCode": "Mã cửa hàng",
+        "openTime": "Mở cửa",
+        "closeTime": "Đóng cửa",
+        "type": "Loại cửa hàng",
+        "address": "Địa chỉ"
+      },
+      "storeInfoTitle": "Thông tin cửa hàng",
+      "storeMenu": "Bảng giá",
+      "applyMenuStore": "Thêm bảng giá",
+      "editMenuStore": "Điều chỉnh bảng giá"
+    },
+    "menus": {
+      "table": {
+        "menuName": "Tên bảng giá",
+        "storeName": "Cửa hàng",
+        "timeRange": "Khung giờ",
+        "dayFilter": "Ngày áp dụng",
+        "fromTime": "Từ",
+        "toTime": "Đến"
+      },
+      "storeApplyTab": {
+        "title": "Danh sách các cửa hàng được áp dụng bảng giá",
+        "addStoreInMenu": "Thêm cửa hàng áp dụng",
+        "editStoreInMenu": "Cập nhật bảng giá"
+      }
+    },
+    "customers": {
+      "listTitle": "Danh sách khách hàng",
+      "updateTitle": "Cập nhật khách hàng",
+      "addBtn": "Thêm khách hàng",
+      "table": {
+        "no": "STT",
+        "name": "Tên khách hàng",
+        "homePhone": "Số điện thoại cá nhân",
+        "companyName": "Tên công ty",
+        "homeAddress": "Địa chỉ nhà riêng",
+        "companyAddress": "Địa chỉ công ty",
+        "homeEmail": "Email cá nhân",
+        "companyEmail": "Email công ty",
+        "companyPhone": "Số điện thoại công ty",
+        "city": "Tỉnh/Thành phố",
+        "province": "Quận/Huyện",
+        "tags": "Thẻ"
+      }
+    },
+    "orders": {
+      "table": {
+        "invoice": "Mã đơn",
+        "quantity": "Số lượng",
+        "totalAmount": "Tổng cộng",
+        "finalAmount": "Thanh toán",
+        "paymentType": "Hình thức thanh toán",
+        "orderTime": "Thời gian",
+        "orderType": "Hình thức đặt hàng",
+        "status": "Trạng thái",
+        "cashier": "Thu ngân",
+        "detail": "Chi tiết",
+        "address": "Địa chỉ giao",
+        "custPhone": "Số điện thoại",
+        "discount": "Giảm giá",
+        "store": "Cửa hàng",
+        "note": "Ghi chú",
+        "customerName": "Tên khách hàng",
+        "customerPhone": "SDT khách hàng"
+      }
+    }
+  },
+  "resoTable": {
+    "settingColumn": "Hiển thị cột",
+    "clearFilters": "Xóa bộ lọc"
+  },
+  "common": {
+    "required": "Vui lòng nhập {{name}}",
+    "navigation": "Điều hướng",
+    "addMore": "Thêm",
+    "create": "Tạo",
+    "update": "Cập nhật",
+    "delete": "Xóa",
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "all": "Tất cả",
+    "available": "Hoạt động",
+    "notAvailable": "Không Hoạt động",
+    "choosedItem": "Đã chọn",
+    "confirm": "Xác nhận",
+    "confirmDeleteTitle": "Xác nhận xóa",
+    "deleteSuccess": "Xóa thành công",
+    "atLeast": "Ít nhất {{number}} giá trị",
+    "status": "Trạng thái",
+    "filter": "Bộ lọc",
+    "clearFilter": "Xóa bộ lọc",
+    "fromTime": "Từ",
+    "toTime": "Đến",
+    "201": "Tạo thành công",
+    "200": "Thành công",
+    "400": "Lỗi",
+    "error": "Có lỗi xảy ra. Vui lòng thử lại"
+  }
+}

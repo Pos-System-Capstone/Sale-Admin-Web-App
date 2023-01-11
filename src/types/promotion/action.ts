@@ -1,0 +1,24 @@
+export type TActionBase = {
+  actionId?: any;
+  actionType?: any;
+  discountQuantity?: any;
+  discountAmount?: any;
+  discountPercentage?: any;
+  fixedPrice?: any;
+  maxAmount?: any;
+  minPriceAfter?: any;
+  orderLadderProduct?: any;
+  ladderPrice?: any;
+  bundlePrice?: any;
+  bundleQuantity?: any;
+  bundleStrategy?: any;
+  delFlg?: any;
+  insDate?: any;
+  updDate?: any;
+  name?: any;
+  brandId?: any;
+  brand?: any;
+  actionProductMapping?: [];
+  promotionTier?: [];
+  voucherGroup?: [];
+};

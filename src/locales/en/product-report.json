@@ -1,0 +1,16 @@
+{
+  "title": "Sales by product sold",
+  "table": {
+    "productName": "Product",
+    "quantity": "Quantity",
+    "finalAmount": "Final amount",
+    "orderTime": "Order time",
+    "discount": "Discount",
+    "totalAmount": "Total amount"
+  },
+  "groupBy": {
+    "category": "Category",
+    "master": "Product master",
+    "none": "None"
+  }
+}

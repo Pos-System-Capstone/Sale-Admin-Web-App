@@ -1,0 +1,16 @@
+{
+  "title": "Doanh thu theo sản phẩm",
+  "table": {
+    "productName": "Sản phẩm",
+    "quantity": "Số lượng",
+    "totalAmount": "Tổng cộng",
+    "finalAmount": "Thanh toán",
+    "orderTime": "Thời gian",
+    "discount": "Giảm giá"
+  },
+  "groupBy": {
+    "category": "Doanh mục",
+    "master": "Dòng sản phẩm",
+    "none": "Không"
+  }
+}

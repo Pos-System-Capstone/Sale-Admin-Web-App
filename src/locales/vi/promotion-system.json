@@ -1,0 +1,193 @@
+{
+  "common": {
+    "unknown": "Unknown",
+    "start": "Bắt đầu",
+    "end": "Kết thúc"
+  },
+  "dashboard": {
+    "title": "Bảng điều khiển",
+    "totalPromotion": "TỔNG SỐ KHUYẾN MÃI",
+    "runningPromotion": "KHUYẾN MÃI ĐANG CHẠY",
+    "expiredPromotion": "KHUYẾN MÃI ĐÃ HẾT HẠN",
+    "draftPromotion": "KHUYẾN MÃI ĐANG NHÁP"
+  },
+  "promotion": {
+    "title": "Quản lý khuyến mãi",
+    "selectPromotionType": "Chọn loại khuyến mãi",
+    "description": "Mô tả",
+    "setting": "Cài đặt",
+    "saveAndFinish": "Lưu và kết thúc",
+    "select": "Chọn",
+    "save": "Lưu",
+    "back": "Trở lại",
+    "next": "Tiếp theo",
+    "table": {
+      "no": "STT",
+      "name": "Tên",
+      "type": "Loại",
+      "action": "Hành động",
+      "startDate": "Ngày bắt đầu",
+      "status": "Trạng thái",
+      "statusType": {
+        "all": "Tất cả",
+        "draft": "Nháp",
+        "published": "Đã xuất bản",
+        "unPublished": "Chưa xuất bản",
+        "expired": "Đã hết hạn"
+      }
+    },
+    "createPromotion": {
+      "createPromotion": "Thêm khuyến mãi",
+      "promotionType": "Loại khuyến mãi",
+      "questionPromotionType": "Loại khuyến mãi",
+      "usingVoucher": "Sử dụng Voucher",
+      "usingCode": "Sử dụng mã khuyến mãi",
+      "automatic": "Tự động",
+      "promotionName": "Tên khuyến mãi",
+      "promotionCode": "Mã khuyến mãi",
+      "actionType": "Hình thức khuyến mãi",
+      "questionActionType": "Hình thức khuyến mãi",
+      "discount": "Giảm giá",
+      "discountActionType": {
+        "discountAmountOfOrder": "Giảm giá số tiền đơn hàng",
+        "discountPercentageOfOrder": "Giảm giá phần trăm đơn hàng",
+        "discountShippingFeeOfOrder": "Giảm giá phí vận chuyển đơn hàng",
+        "discountAmountOfItem": "Giảm giá số tiền sản phẩm",
+        "discountPercentOfItem": "Giảm giá phần trăm sản phẩm",
+        "discountUnitOfItem": "Giảm giá số lượng sản phẩm",
+        "fixedPriceOfItem": "Giá sản phẩm cố định",
+        "ladderPriceOfItem": "Giá sản phẩm bậc thang",
+        "bundlePriceOfItem": "Giá sản phẩm gói"
+      },
+      "gift": "Quà Tặng",
+      "giftActionType": {
+        "giftVoucher": "Quà Tặng Voucher",
+        "giftProduct": "Quà Tặng Sản Phẩm",
+        "giftPoint": "Quà Tặng Điểm Thưởng",
+        "giftGameCode": "Quà Tặng Mã Game"
+      },
+      "timeFrame": "Khung thời gian",
+      "from": "Từ",
+      "to": "Đến",
+      "unlimited": "Không thời hạn",
+      "validInThisTimeFrameOnly": "Chỉ áp dụng trong khung thời gian này",
+      "validOnParticularDayOnly": "Chỉ áp dụng trong ngày này"
+    },
+    "settings": {
+      "constraint": "Giới hạn",
+      "paymentMethod": "Phương thức thanh toán",
+      "helperPaymentMethod": "Phương thức thanh toán có thể sử dụng khuyến mãi này",
+      "targetCustomer": "Khách hàng mục tiêu",
+      "helperTargetCustomer": "Loại khách hàng có thể sử dụng khuyến mãi này",
+      "memberShipLevel": "Cấp độ thành viên",
+      "helperMemberShipLevel": "Cấp độ thành viên                  ",
+      "customerGender": "Giới tính",
+      "helperCustomerGender": "Giới tính khách hàng có thể sử dụng khuyến mãi này",
+      "saleMode": "Chế độ",
+      "helperSaleMode": "Chế độ bán hàng của bạn",
+      "applyBy": "Áp dụng theo",
+      "helperApplyBy": "Khách hàng của bạn có thể sử dụng khuyến mãi này",
+      "exclusive": "Khuyến mãi đặc biệt",
+      "helperExclusive": "Khuyến mãi có bao gồm các khuyến mãi khác không",
+      "storeConfig": "Cấu hình cửa hàng",
+      "helperStoreConfig": "Cửa hàng khách hàng có thể sử dụng khuyến mãi này",
+      "paymentMethodType": {
+        "cash": "Tiền mặt",
+        "creditCard": "Thẻ tín dụng",
+        "bankTransfer": "Chuyển khoản",
+        "eWallet": "Ví điện tử",
+        "mobileBanking": "Ngân hàng di động",
+        "cod": "Thanh toán khi nhận hàng"
+      },
+      "targetCustomerType": {
+        "guest": "Khách",
+        "membership": "Thành viên"
+      },
+      "genderType": {
+        "male": "Nam",
+        "female": "Nữ"
+      },
+      "saleModeType": {
+        "eatIn": "Dùng tại chỗ",
+        "takeAway": "Mang đi",
+        "delivery": "Giao hàng"
+      },
+      "applyByType": {
+        "store": "Cửa hàng",
+        "online": "Trực tuyến"
+      },
+      "exclusiveType": {
+        "none": "Không",
+        "level": "Cấp độ",
+        "global": "Toàn cục"
+      },
+      "memberLevelType": {
+        "level1": "Cấp 1",
+        "level2": "Cấp 2"
+      }
+    },
+    "preview": {
+      "title": "Xem trước",
+      "name": "Tên khuyến mãi",
+      "startDate": "Ngày bắt đầu",
+      "endDate": "Ngày kết thúc",
+      "exclusive": "Khuyến mãi đặc biệt",
+      "status": "Trạng thái",
+      "paymentMethod": "Phương thức thanh toán",
+      "uploadFile": "Tải lên tệp",
+      "saleMode": "Chế độ bán hàng",
+      "applyBy": "Áp dụng theo",
+      "availableOnHoliday": "Có hiệu lực trên ngày lễ",
+      "customerType": "Loại khách hàng",
+      "customerGender": "Giới tính khách hàng"
+    }
+  },
+  "voucher": {
+    "title": "Quản lý phiếu giảm giá",
+    "table": {
+      "no": "STT",
+      "name": "Tên",
+      "actionName": "Tên hình thức",
+      "total": "Tổng số",
+      "redeemed": "Đã đổi",
+      "used": "Đã sử dụng"
+    },
+    "addVoucher": {
+      "newVoucher": "Thêm phiếu giảm giá",
+      "voucherGroupBuilder": "NHÓM PHIẾU GIẢM GIÁ",
+      "warning": "Cảnh báo",
+      "helperWarning": "Một phiếu giảm giá là một chuỗi các giao dịch đổi đồng có giá trị tiền tệ và chỉ có thể được tiêu để một các lý do nào đó hoặc đồng thời chỉ được sử dụng cho các sản phẩm nào đó.",
+      "groupName": "Tên Nhóm",
+      "quantity": "Số Lượng",
+      "length": "Độ Dài",
+      "helperLength": "Số lượng phiếu giảm giá trong nhóm",
+      "discountAction": "Hình thức giảm giá",
+      "giftAction": "Hình thức quà tặng",
+      "advancedSettings": "Cài đặt nâng cao",
+      "charset": {
+        "label": "Bảng chữ cái",
+        "alphanumeric": "Chữ số",
+        "alphabetic": "Bảng chữ cái",
+        "alphabeticlowercase": "Bảng chữ cái thường",
+        "alphabeticuppercase": "Bảng chữ cái hoa",
+        "numbers": "Chữ số",
+        "custom": "Tuỳ chọn"
+      },
+      "sample": "Mẫu",
+      "prefix": "Tiền tố",
+      "postfix": "Hậu tố"
+    }
+  },
+  "profile": {
+    "title": "Hồ sơ"
+  },
+  "dayInWeek": {
+    "monday": "Thứ hai",
+    "tuesday": "Thứ ba",
+    "wednesday": "Thứ tư",
+    "thursday": "Thứ năm",
+    "friday": "Thứ sáu",
+    "saturday": "Thứ bảy",
+    "sunday": "Chủ nhật"
+  }
+}

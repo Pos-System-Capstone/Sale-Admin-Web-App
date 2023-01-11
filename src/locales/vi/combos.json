@@ -1,0 +1,20 @@
+{
+  "list": "Danh sách Nhóm",
+  "table": {
+    "comboName": "Tên nhóm",
+    "collectionNameEn": "Tên tiếng Anh",
+    "position": "Thứ tự",
+    "banner_url": "Ảnh đại diện",
+    "store": "Cửa hàng",
+    "description": "Mô tả"
+  },
+  "createInfo": "Thông tin",
+  "productInCollection": "Sản phẩm",
+  "addBtn": "Thêm bộ sưu tập",
+  "groupCollection": "Thêm nhóm sản phẩm",
+  "addTitle": "Thêm bộ sưu tập",
+  "editTitle": "Cập nhật bộ sưu tập",
+  "collectionInfoTab": "Thông tin chung",
+  "productTab": "Sản phẩm",
+  "updateTitle": "Cập nhật bộ sưu tập"
+}

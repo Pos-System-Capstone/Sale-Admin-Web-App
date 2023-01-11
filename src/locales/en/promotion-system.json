@@ -1,0 +1,193 @@
+{
+  "common": {
+    "unknown": "Unknown",
+    "start": "Start",
+    "end": "End"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "totalPromotion": "TOTAL PROMOTION",
+    "runningPromotion": "RUNNING PROMOTION",
+    "expiredPromotion": "EXPIRED PROMOTION",
+    "draftPromotion": "DRAFT PROMOTION"
+  },
+  "promotion": {
+    "title": "Manage Promotion",
+    "selectPromotionType": "Select promotion type",
+    "description": "Description",
+    "setting": "Setting",
+    "saveAndFinish": "Save and Finish",
+    "select": "Select",
+    "save": "Save",
+    "back": "Back",
+    "next": "Next",
+    "table": {
+      "no": "No",
+      "name": "Name",
+      "type": "Type",
+      "action": "Action",
+      "startDate": "Start",
+      "status": "Status",
+      "statusType": {
+        "all": "All",
+        "draft": "Draft",
+        "published": "Published",
+        "unPublished": "Unpublished",
+        "expired": "Expired"
+      }
+    },
+    "createPromotion": {
+      "createPromotion": "Create promotion",
+      "promotionType": "Promotion type",
+      "questionPromotionType": "What type of promotion ?",
+      "usingVoucher": "Using voucher",
+      "usingCode": "Using code",
+      "automatic": "Automatic",
+      "promotionName": "Promotion name",
+      "promotionCode": "Promotion code",
+      "actionType": "Action type",
+      "questionActionType": "What kind of action ?",
+      "discount": "Discount",
+      "discountActionType": {
+        "discountAmountOfOrder": "Discount amount of order",
+        "discountPercentageOfOrder": "Discount percentage of order",
+        "discountShippingFeeOfOrder": "Discount shipping fee of order",
+        "discountAmountOfItem": "Discount amount of item",
+        "discountPercentOfItem": "Discount percentage of item",
+        "discountUnitOfItem": "Discount unit of item",
+        "fixedPriceOfItem": "Fixed price of item",
+        "ladderPriceOfItem": "Ladder price of item",
+        "bundlePriceOfItem": "Bundle price of item"
+      },
+      "gift": "Gift",
+      "giftActionType": {
+        "giftVoucher": "Gift voucher",
+        "giftProduct": "Gift product",
+        "giftPoint": "Gift point",
+        "giftGameCode": "Gift game code"
+      },
+      "timeFrame": "Time frame",
+      "from": "From",
+      "to": "To",
+      "unlimited": "Unlimited",
+      "validInThisTimeFrameOnly": "Valid in this time frame only",
+      "validOnParticularDayOnly": "Valid on particular day only"
+    },
+    "settings": {
+      "constraint": "Constraint",
+      "paymentMethod": "Payment method",
+      "helperPaymentMethod": "Payment method can use this promotion",
+      "targetCustomer": "Target customer",
+      "helperTargetCustomer": "Kind of customer can use your promotion",
+      "memberShipLevel": "Membership level",
+      "helperMemberShipLevel": "Level of customer                  ",
+      "customerGender": "Customer Gender",
+      "helperCustomerGender": "Gender of customer can use your promotion.",
+      "saleMode": "Sale mode",
+      "helperSaleMode": "The mode in which you sell your products.",
+      "applyBy": "Apply by",
+      "helperApplyBy": "Where yours customers can use promotion.",
+      "exclusive": "Exclusive",
+      "helperExclusive": "Whether promotion excludes others or not.",
+      "storeConfig": "Store configuration",
+      "helperStoreConfig": "Stores that customer can use promotion",
+      "paymentMethodType": {
+        "cash": "Cash",
+        "creditCard": "Credit card",
+        "bankTransfer": "Bank transfer",
+        "eWallet": "EWallet",
+        "mobileBanking": "Mobile banking",
+        "cod": "COD"
+      },
+      "targetCustomerType": {
+        "guest": "Guest",
+        "membership": "Membership"
+      },
+      "genderType": {
+        "male": "Male",
+        "female": "Female"
+      },
+      "saleModeType": {
+        "eatIn": "Eat-in",
+        "takeAway": "Take away",
+        "delivery": "Delivery"
+      },
+      "applyByType": {
+        "store": "Store",
+        "online": "Online"
+      },
+      "exclusiveType": {
+        "none": "None",
+        "level": "Level",
+        "global": "Global"
+      },
+      "memberLevelType": {
+        "level1": "Level 1",
+        "level2": "Level 2"
+      }
+    },
+    "preview": {
+      "title": "Preview",
+      "name": "Promotion name",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "exclusive": "Exclusive",
+      "status": "Status",
+      "paymentMethod": "Payment method",
+      "uploadFile": "Upload file",
+      "saleMode": "Sale mode",
+      "applyBy": "Apply by",
+      "availableOnHoliday": "Available on holiday",
+      "customerType": "Customer type",
+      "customerGender": "Customer gender"
+    }
+  },
+  "voucher": {
+    "title": "Manage Voucher",
+    "table": {
+      "no": "NO",
+      "name": "NAME",
+      "actionName": "ACTION NAME",
+      "total": "TOTAL",
+      "redeemed": "REDEEMED",
+      "used": "USED"
+    },
+    "addVoucher": {
+      "newVoucher": "New Voucher",
+      "voucherGroupBuilder": "VOUCHER GROUP BUILDER",
+      "warning": "Warning",
+      "helperWarning": "A voucher is a bond of the redeemable transaction type which is worth a certain monetary value and which may be spent only for specific reasons or on specific goods.",
+      "groupName": "Group Name",
+      "quantity": "Quantity",
+      "length": "Length",
+      "helperLength": "Maximum quantity of voucher",
+      "discountAction": "Discount Action",
+      "giftAction": "Gift Action",
+      "advancedSettings": "Advanced settings",
+      "charset": {
+        "label": "Charset",
+        "alphanumeric": "Alphanumeric",
+        "alphabetic": "Alphabetic",
+        "alphabeticlowercase": "Alphabetic Lowercase",
+        "alphabeticuppercase": "Alphabetic Uppercase",
+        "numbers": "Numbers",
+        "custom": "Custom"
+      },
+      "sample": "Sample",
+      "prefix": "Prefix",
+      "postfix": "Postfix"
+    }
+  },
+  "profile": {
+    "title": "Hồ sơ"
+  },
+  "dayInWeek": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
+  }
+}

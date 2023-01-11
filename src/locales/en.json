@@ -1,0 +1,138 @@
+{
+  "menu": {
+    "product": {
+      "root": "Products",
+      "master": "Product Master",
+      "collection": "Collections",
+      "categories": "Categories"
+    },
+    "menu": { "root": "Menus", "list": "Menu List", "store-menu": "Menu in Store" },
+    "store": "Stores",
+    "customer": {
+      "root": "Customer",
+      "customerList": "Customer list",
+      "addNewCustomer": "Add customer"
+    },
+    "promotion": {
+      "general": "General",
+      "dashboard": "Dashboard",
+      "campaign": "Campaign",
+      "promotion": "Promotion",
+      "voucher": "Voucher",
+      "condition": "Condition",
+      "action": "Action",
+      "gift": "Gift",
+      "configuration": "Configuration",
+      "setting": "Settings",
+      "profile": "My Profile",
+      "actionBtn": "New Action",
+      "giftBtn": "New Gift"
+    },
+    "order": "Orders",
+    "store-menu": "Menu",
+    "product-subheader": "Product",
+    "menu-subheader": "Menu",
+    "store-subheader": "Store"
+  },
+  "demo": {
+    "title": "English",
+    "introduction": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+  },
+  "pages": {
+    "stores": {
+      "listTitle": "Store List",
+      "addBtn": "Add new store",
+      "updateTitle": "Update store",
+      "table": {
+        "name": "Store name",
+        "shortName": "Short name",
+        "isAvailable": "Available",
+        "storeCode": "Store code",
+        "openTime": "Open time",
+        "closeTime": "Close time",
+        "type": "Store type"
+      },
+      "storeInfoTitle": "Store Information",
+      "storeMenu": "Menus",
+      "applyMenuStore": "Add more menu",
+      "editMenuStore": "Edit menu"
+    },
+    "menus": {
+      "table": {
+        "storeName": "Store",
+        "timeRange": "Time",
+        "dayFilter": "Day apply",
+        "fromTime": "From",
+        "toTime": "To"
+      },
+      "storeApplyTab": {
+        "title": "List store applied this menu",
+        "addStoreInMenu": "Add store for this menu",
+        "editStoreInMenu": "Update store for this menu"
+      }
+    },
+    "customers": {
+      "listTitle": "Danh sách khách hàng",
+      "updateTitle": "Cập nhật khách hàng",
+      "addBtn": "Thêm khách hàng",
+      "table": {
+        "no": "STT",
+        "name": "Tên khách hàng",
+        "homePhone": "Số điện thoại cá nhân",
+        "companyName": "Tên công ty",
+        "homeAddress": "Địa chỉ nhà riêng",
+        "companyAddress": "Địa chỉ công ty",
+        "homeEmail": "Email cá nhân",
+        "companyEmail": "Email công ty",
+        "companyPhone": "Số điện thoại công ty",
+        "city": "Tỉnh/Thành phố",
+        "province": "Quận/Huyện",
+        "tags": "Thẻ"
+      }
+    },
+    "orders": {
+      "table": {
+        "invoice": "Invoice",
+        "quantity": "Quantity",
+        "finalAmount": "Final amount",
+        "paymentType": "Payment type",
+        "orderTime": "Order time",
+        "orderType": "Order Type",
+        "status": "Status",
+        "cashier": "Cashier",
+        "detail": "Detail"
+      }
+    }
+  },
+  "common": {
+    "required": "Please enter {{name}}",
+    "navigation": "Navigation",
+    "create": "Create",
+    "addMore": "Add",
+    "delete": "Delete",
+    "update": "Update",
+    "save": "Save",
+    "cancel": "Cancel",
+    "all": "All",
+    "available": "Available",
+    "notAvailable": "Not available",
+    "choosedItem": "Choosed",
+    "confirm": "Confirm",
+    "confirmDeleteTitle": "Confirm delete",
+    "deleteSuccess": "Deleted successfully",
+    "atLeast": "At least {{number}} value(s)",
+    "status": "Status",
+    "filter": "Filters",
+    "clearFilter": "CLear filters",
+    "fromTime": "From",
+    "toTime": "To",
+    "201": "Perform successfully",
+    "200": "Success",
+    "400": "Error",
+    "error": "There has an error. Please try again!"
+  },
+  "resoTable": {
+    "settingColumn": "Show/Hide column",
+    "clearFilters": "Clear filters"
+  }
+}

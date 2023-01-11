@@ -100,13 +100,8 @@ export default function Router() {
           children: [
             { path: '', element: <BrandListPage /> },
             {
-              path: ':id',
-              children: [
-                {
-                  path: 'stores',
-                  element: <OrderListPage />
-                }
-              ]
+              path: ':brandId',
+              children: [{ path: '', element: <BrandDetail /> }]
             }
           ]
         },
@@ -288,6 +283,8 @@ const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 const Products = Loadable(lazy(() => import('../pages/Products/Products')));
 const UpdateProduct = Loadable(lazy(() => import('../pages/Products/UpdateProduct')));
 const CreateProduct = Loadable(lazy(() => import('../pages/Products/create')));
+
+const BrandDetail = Loadable(lazy(() => import('../pages/Brands/components/BrandDetail')));
 
 // Menu
 const MenusPage = Loadable(lazy(() => import('../pages/Menus')));

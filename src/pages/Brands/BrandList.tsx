@@ -49,7 +49,8 @@ const BrandListPage = () => {
       hideInSearch: true,
       render: (_: any, brand: TBrand) => (
         <Tooltip title="Chi tiết">
-          <IconButton onClick={() => setDetailBrand(brand.id)} size="large">
+          {/* <IconButton onClick={() => setDetailBrand(brand.id)} size="large"> */}
+          <IconButton onClick={() => navigate(`${brand.id}`)} size="large">
             <Visibility />
           </IconButton>
         </Tooltip>

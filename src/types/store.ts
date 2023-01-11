@@ -1,15 +1,18 @@
 import { Menu } from './menu';
 
+export enum StoreStatus {
+  ACTIVE= 'Active',
+  DEACTIVE= 'Deactive'
+}
+
 export type TStore = {
   id: number;
+  brandId: string;
   name: string;
-  short_name: string;
-  is_available: boolean;
-  create_date: Date;
-  type: number;
-  open_time: Date;
-  close_time: Date;
-  store_code?: string;
+  shortName: string;
+  email: string;
+  address: string;
+  status: StoreStatus;
 };
 
 export type StoreInMenu = {

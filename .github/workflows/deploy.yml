@@ -9,7 +9,7 @@ on:
     inputs: 
      envFile:
       description: Env file to deploy
-      type: text
+      type: string
       required: false
       default: '.env.production'
 

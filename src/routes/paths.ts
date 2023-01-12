@@ -39,10 +39,6 @@ export const PATH_DASHBOARD = {
     ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
     analytics: path(ROOTS_DASHBOARD, '/analytics')
   },
-  accounts: {
-    root: path(ROOTS_DASHBOARD, '/accounts'),
-    new: path(ROOTS_DASHBOARD, '/accounts/new')
-  },
   brand: {
     root: path(ROOTS_DASHBOARD, '/brands'),
     list: path(ROOTS_DASHBOARD, '/brands/'),

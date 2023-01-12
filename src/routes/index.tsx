@@ -106,6 +106,16 @@ export default function Router() {
           ]
         },
         {
+          path: 'accounts',
+          children: [
+            {
+              path: 'new',
+              element: <CreateAccount />
+            },
+            { path: '', element: <AccountListPage /> }
+          ]
+        },
+        {
           path: 'orders',
           children: [
             { path: '', element: <OrderListPage /> },
@@ -316,6 +326,10 @@ const CustomerListPage = Loadable(lazy(() => import('../pages/Customer/CustomerL
 const ComboListPage = Loadable(lazy(() => import('../pages/Products/Combos/ComboList')));
 const CreateComboPage = Loadable(lazy(() => import('../pages/Products/Combos/CreateCombo')));
 const UpdateComboPage = Loadable(lazy(() => import('../pages/Products/Combos/UpdateCombo')));
+
+// accounts
+const AccountListPage = Loadable(lazy(() => import('../pages/accounts/AccountList')));
+const CreateAccount = Loadable(lazy(() => import('../pages/accounts/CreateAccount')));
 
 //log
 const LogPage = Loadable(lazy(() => import('../pages/Log')));

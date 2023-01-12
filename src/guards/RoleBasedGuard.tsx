@@ -12,9 +12,12 @@ type RoleBasedGuardProp = {
 
 const useCurrentRole = (): String[] => {
   const { user } = useAuth();
+  console.log('user', user);
   // Logic here to get current user role
-  const role = user?.roles ?? [];
-  return role;
+  const roles: String[] = [];
+  roles.push(user?.role);
+  // const role = user?.role ?? [];
+  return roles;
 };
 
 export default function RoleBasedGuard({ accessibleRoles, children }: RoleBasedGuardProp) {

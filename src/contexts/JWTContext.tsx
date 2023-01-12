@@ -152,14 +152,23 @@ function AuthProvider({ children }: { children: ReactNode }) {
       username,
       password
     });
-    const { accessToken: accessToken, apps } = response.data;
+    const { accessToken, id, name, role, status } = response.data;
+    console.log('response', response.data);
+    console.log('id', id);
+    console.log('role', role);
+    console.log('accessToken', accessToken);
+    console.log('name', name);
+    console.log('status', status);
     const user = {
-      name: 'Admin',
-      displayName: 'Admin',
-      roles: apps?.find(
-        ({ name }: { name: string }) => name === process.env.REACT_APP_IDENTITY_API_NAME
-      ).role
+      id: id,
+      name: name,
+      displayName: name,
+      role: role
+      // roles: apps?.find(
+      //   ({ name }: { name: string }) => name === process.env.REACT_APP_IDENTITY_API_NAME
+      // ).role
     };
+    console.log('user', user);
     setSession(accessToken);
     setUserInfo(user);
     dispatch({

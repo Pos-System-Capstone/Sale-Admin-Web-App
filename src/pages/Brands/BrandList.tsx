@@ -21,8 +21,8 @@ const BrandListPage = () => {
   const brandColumns: TTableColumn<TBrand>[] = [
     {
       title: 'STT',
-      dataIndex: 'index'
-      // hideInSearch: true
+      dataIndex: 'index',
+      hideInSearch: true
     },
     {
       title: 'Tên nhãn hiệu',

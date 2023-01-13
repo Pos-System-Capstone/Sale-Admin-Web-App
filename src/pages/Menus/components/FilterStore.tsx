@@ -60,7 +60,7 @@ const FilterStore: React.FC<Props> = ({ filteredStores, stores, onChangeFilter }
                 >
                   {option.name}
                   <br />
-                  <span>{option.store_code}</span>
+                  {/* <span>{option.store_code}</span> */}
                 </Box>
               </li>
             )}

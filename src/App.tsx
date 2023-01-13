@@ -17,6 +17,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { ProgressBarStyle } from './components/LoadingScreen';
 import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
 import { useState } from 'react';
+import Settings from 'components/settings';
 
 // ----------------------------------------------------------------------
 
@@ -47,7 +48,7 @@ export default function App() {
                 <GlobalStyles />
                 <ProgressBarStyle />
                 <BaseOptionChartStyle />
-                {/* <Settings /> */}
+                <Settings />
                 <ScrollToTop />
                 <GoogleAnalytics />
                 <Router />

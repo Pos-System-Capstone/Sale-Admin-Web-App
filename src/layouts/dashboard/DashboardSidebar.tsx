@@ -21,7 +21,8 @@ import { PATH_DASHBOARD, ROOTS_DASHBOARD as ROOTS_DASHBOARD_SALE } from '../../r
 import adminSidebarConfig, {
   promotionAppSidebarConfig,
   reportAppSidebarConfig,
-  storeAppSidebarConfig
+  storeAppSidebarConfig,
+  systemAdminSidebarConfig
 } from './SidebarConfig';
 
 const DRAWER_WIDTH = 280;
@@ -107,10 +108,15 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
   const { pathname } = useLocation();
   const { user } = useAuth();
   const { storeId } = useParams();
+  console.log('Check Role user', user?.role);
   // const system = useSelector((state: RootState) => state.system);
   // const systems = localStorage.getItem('system');
   const sidebarConfig = useMemo(() => {
     const firstElementOfPath = pathname.split('/')[1];
+    if (user?.role.includes('SysAdmin')) {
+      console.log('Sysadmin');
+      return systemAdminSidebarConfig;
+    }
     if (firstElementOfPath === ROOTS_DASHBOARD_SALE.split('/')[1]) return adminSidebarConfig;
     if (firstElementOfPath === ROOTS_DASHBOARD_REPORT.split('/')[1]) {
       const reportSideBarConfig = reportAppSidebarConfig();
@@ -132,21 +138,21 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
     //   if (system === 'promotion-system') return promotionAppSidebarConfig;
     // }
 
-    if (user?.roles?.includes('admin')) {
+    if (user?.role?.includes('admin')) {
       return adminSidebarConfig;
     }
-    if (user?.roles?.includes('store-admin')) {
+    if (user?.role?.includes('store-admin')) {
       return storeAppSidebarConfig;
     }
-    if (user?.roles?.includes('report-admin')) {
+    if (user?.role?.includes('report-admin')) {
       const reportSideBarConfig = reportAppSidebarConfig();
       return reportSideBarConfig;
     }
-    if (user?.roles?.includes('promotion-admin')) {
+    if (user?.role?.includes('promotion-admin')) {
       return promotionAppSidebarConfig;
     }
-    return adminSidebarConfig;
-  }, [user?.roles, pathname]);
+    return systemAdminSidebarConfig;
+  }, [pathname, user?.role]);
 
   const { isCollapse, collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =
     useCollapseDrawer();

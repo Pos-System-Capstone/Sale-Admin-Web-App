@@ -3,7 +3,6 @@ import { Visibility } from '@mui/icons-material';
 // material
 import { Card, IconButton, Stack, Tooltip } from '@mui/material';
 import brandApi from 'api/brand';
-import AutoCompleteStoreSelect from 'components/form/common/AutocompleteStoreSelect/AutocompleteStoreSelect';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { useState } from 'react';
@@ -21,8 +20,8 @@ const BrandListPage = () => {
   const brandColumns: TTableColumn<TBrand>[] = [
     {
       title: 'STT',
-      dataIndex: 'index'
-      // hideInSearch: true
+      dataIndex: 'index',
+      hideInSearch: true
     },
     {
       title: 'Tên nhãn hiệu',
@@ -31,17 +30,18 @@ const BrandListPage = () => {
     {
       title: 'Email',
       dataIndex: 'email',
-      renderFormItem: () => <AutoCompleteStoreSelect name="brand_id" label="Nhãn Hiệu" />
+      hideInSearch: true
+      // renderFormItem: () => <AutoCompleteStoreSelect name="brand_id" label="Nhãn Hiệu" />
     },
     {
       title: 'Điện thoại',
       dataIndex: 'phone',
       hideInSearch: true
-      // hideInTable: true
     },
     {
       title: 'Trạng thái',
-      dataIndex: 'status'
+      dataIndex: 'status',
+      hideInSearch: true
     },
     {
       title: 'Chi tiết',
@@ -49,7 +49,8 @@ const BrandListPage = () => {
       hideInSearch: true,
       render: (_: any, brand: TBrand) => (
         <Tooltip title="Chi tiết">
-          <IconButton onClick={() => setDetailBrand(brand.id)} size="large">
+          {/* <IconButton onClick={() => setDetailBrand(brand.id)} size="large"> */}
+          <IconButton onClick={() => navigate(`${brand.id}`)} size="large">
             <Visibility />
           </IconButton>
         </Tooltip>

@@ -100,14 +100,19 @@ export default function Router() {
           children: [
             { path: '', element: <BrandListPage /> },
             {
-              path: ':id',
-              children: [
-                {
-                  path: 'stores',
-                  element: <OrderListPage />
-                }
-              ]
+              path: ':brandId',
+              children: [{ path: '', element: <BrandDetail /> }]
             }
+          ]
+        },
+        {
+          path: 'accounts',
+          children: [
+            {
+              path: 'new',
+              element: <CreateAccount />
+            },
+            { path: '', element: <AccountListPage /> }
           ]
         },
         {
@@ -289,6 +294,8 @@ const Products = Loadable(lazy(() => import('../pages/Products/Products')));
 const UpdateProduct = Loadable(lazy(() => import('../pages/Products/UpdateProduct')));
 const CreateProduct = Loadable(lazy(() => import('../pages/Products/create')));
 
+const BrandDetail = Loadable(lazy(() => import('../pages/Brands/components/BrandDetail')));
+
 // Menu
 const MenusPage = Loadable(lazy(() => import('../pages/Menus')));
 const UpdateMenuPage = Loadable(lazy(() => import('../pages/Menus/update')));
@@ -319,6 +326,10 @@ const CustomerListPage = Loadable(lazy(() => import('../pages/Customer/CustomerL
 const ComboListPage = Loadable(lazy(() => import('../pages/Products/Combos/ComboList')));
 const CreateComboPage = Loadable(lazy(() => import('../pages/Products/Combos/CreateCombo')));
 const UpdateComboPage = Loadable(lazy(() => import('../pages/Products/Combos/UpdateCombo')));
+
+// accounts
+const AccountListPage = Loadable(lazy(() => import('../pages/accounts/AccountList')));
+const CreateAccount = Loadable(lazy(() => import('../pages/accounts/CreateAccount')));
 
 //log
 const LogPage = Loadable(lazy(() => import('../pages/Log')));

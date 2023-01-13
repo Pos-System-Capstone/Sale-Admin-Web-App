@@ -5,10 +5,9 @@ import editIcon from '@iconify/icons-eva/edit-outline';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import trashIcon from '@iconify/icons-eva/trash-outline';
 import { Icon } from '@iconify/react';
-import { ClearAllOutlined, Replay, SettingsOutlined } from '@mui/icons-material';
+import { Replay, SettingsOutlined } from '@mui/icons-material';
 import {
   Box,
-  Button,
   Checkbox,
   CircularProgress,
   Container,
@@ -169,7 +168,7 @@ const ResoTable = (
     },
     {
       defaultPageSize: 10,
-      defaultParams: [{ current: 1, pageSize: 50 }],
+      defaultParams: [{ current: 1, pageSize: 10 }],
       formatResult: (res) => ({
         total: dataSource ? dataSource.length : res.data.total,
         list: dataSource ?? res.data?.items ?? [],
@@ -662,7 +661,7 @@ const ResoTable = (
               <Box ml="auto">
                 <Stack spacing={1} direction="row">
                   {toolBarRender()}
-                  {form.formState.isDirty && (
+                  {/* {form.formState.isDirty && (
                     <Button
                       startIcon={<ClearAllOutlined />}
                       onClick={() => form.reset({})}
@@ -670,7 +669,7 @@ const ResoTable = (
                     >
                       {t('resoTable.clearFilters')}
                     </Button>
-                  )}
+                  )} */}
                   <IconButton size="small" onClick={search?.submit}>
                     {loading ? <CircularProgress style={{ width: 24, height: 24 }} /> : <Replay />}
                   </IconButton>
@@ -721,7 +720,7 @@ const ResoTable = (
         )}
         {pagination && (
           <TablePagination
-            rowsPerPageOptions={[25, 50, 100]}
+            rowsPerPageOptions={[10, 50, 100]}
             component="div"
             {...{ rowsPerPage: pageSize, count: total, page: current - 1 }}
             onPageChange={(_, page) => changeCurrent(page + 1)}

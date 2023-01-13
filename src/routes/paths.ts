@@ -153,6 +153,11 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/stores'),
     new: path(ROOTS_DASHBOARD, '/stores/new')
   },
+  accounts: {
+    root: path(ROOTS_DASHBOARD, '/accounts'),
+    new: path(ROOTS_DASHBOARD, '/accounts/new'),
+    editById: (id: any) => path(ROOTS_DASHBOARD, `/accounts/${id}`)
+  },
   log: {
     root: path(ROOTS_DASHBOARD, '/log')
   }

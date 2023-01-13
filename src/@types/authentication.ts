@@ -2,34 +2,34 @@ import firebase from 'firebase/app';
 
 export type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
-    ? {
-        type: Key;
-      }
-    : {
-        type: Key;
-        payload: M[Key];
-      };
+  ? {
+    type: Key;
+  }
+  : {
+    type: Key;
+    payload: M[Key];
+  };
 };
 
-export type UserRole = 'admin' | 'store-admin' | any;
+export type UserRole = 'SysAdmin' | 'store-admin' | any;
 
 export type AuthUser =
   | {
-      name: string;
-      roles?: UserRole[];
-      displayName: string;
-      email?: string;
-      photoURL?: string;
-      phoneNumber?: string;
-      country?: string;
-      address?: string;
-      state?: string;
-      city?: string;
-      zipCode?: number;
-      about?: string;
-      isPublic?: boolean;
-      [key: string]: any;
-    }
+    name: string;
+    role?: UserRole[];
+    displayName: string;
+    email?: string;
+    photoURL?: string;
+    phoneNumber?: string;
+    country?: string;
+    address?: string;
+    state?: string;
+    city?: string;
+    zipCode?: number;
+    about?: string;
+    isPublic?: boolean;
+    [key: string]: any;
+  }
   | null
   | Record<string, any>;
 

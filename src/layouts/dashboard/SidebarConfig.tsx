@@ -35,26 +35,69 @@ const ICONS = {
   collection: getIcon('ic_collection')
 };
 
-const sidebarConfig = [
+// SYSTEM ADMIN SIDEBAR CONFIG
+export const systemAdminSidebarConfig = [
   {
-    subheader: 'general',
+    subheader: 'Tổng quan',
     items: [
       {
-        title: 'brands',
+        title: 'Tổng quan',
+        path: PATH_DASHBOARD.general.app,
+        icon: ICONS.dashboard
+      }
+    ]
+  },
+  {
+    subheader: 'Quản lý hệ thống',
+    items: [
+      {
+        title: 'Danh sách thương hiệu',
         path: PATH_DASHBOARD.brand.root,
         icon: ICONS.store
+      },
+      {
+        title: 'Danh sách tài khoản',
+        path: PATH_DASHBOARD.accounts.root,
+        icon: ICONS.user
       }
-      // ,
-      // {
-      //   title: 'report.dashboard',
-      //   path: PATH_DASHBOARD.general.app,
-      //   icon: ICONS.dashboard
-      // },
-      // {
-      //   title: 'order',
-      //   path: PATH_DASHBOARD.orders.list,
-      //   icon: ICONS.order
-      // }
+    ]
+  }
+];
+
+const sidebarConfig = [
+  {
+    subheader: 'Dashboard',
+    items: [
+      {
+        title: 'Tổng quan',
+        path: PATH_STORE_APP.general.app,
+        icon: ICONS.dashboard
+      }
+    ]
+  },
+  {
+    subheader: 'Quản lý hệ thống',
+    items: [
+      {
+        title: 'Danh sách thương hiệu',
+        path: PATH_DASHBOARD.brand.root,
+        icon: ICONS.store
+      },
+      {
+        title: 'Danh sách tài khoản',
+        path: PATH_DASHBOARD.accounts.root,
+        icon: ICONS.user
+      },
+      {
+        title: 'report.dashboard',
+        path: PATH_DASHBOARD.general.app,
+        icon: ICONS.dashboard
+      },
+      {
+        title: 'order',
+        path: PATH_DASHBOARD.orders.list,
+        icon: ICONS.order
+      }
     ]
   },
   {
@@ -130,16 +173,16 @@ const sidebarConfig = [
 export const storeAppSidebarConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
-  {
-    subheader: 'general',
-    items: [
-      {
-        title: 'reportDashboard',
-        path: PATH_STORE_APP.general.app,
-        icon: ICONS.dashboard
-      }
-    ]
-  },
+  // {
+  //   subheader: 'general',
+  //   items: [
+  //     {
+  //       title: 'reportDashboard',
+  //       path: PATH_DASHBOARD.app,
+  //       icon: ICONS.dashboard
+  //     }
+  //   ]
+  // },
 
   // MANAGEMENT
   // ----------------------------------------------------------------------

@@ -56,11 +56,13 @@ const BrandDetailPage = () => {
   const storeDetailColumns: ResoDescriptionColumnType<TStore>[] = [
     {
       title: 'STT',
-      dataIndex: 'index'
+      dataIndex: 'index',
+      hideInSearch: true
     },
     {
       title: 'Tên đầy đủ',
-      dataIndex: 'name'
+      dataIndex: 'name',
+      hideInSearch: true
     },
     {
       title: 'Tên rút gọn',
@@ -78,7 +80,8 @@ const BrandDetailPage = () => {
     },
     {
       title: 'Trạng thái',
-      dataIndex: 'status'
+      dataIndex: 'status',
+      hideInSearch: true
     }
   ];
 

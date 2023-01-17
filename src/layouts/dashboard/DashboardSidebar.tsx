@@ -15,15 +15,18 @@ import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 // routes
 import { ROOTS_DASHBOARD as ROOTS_DASHBOARD_PROMOTION } from '../../routes/promotionAppPaths';
 import { ROOTS_DASHBOARD as ROOTS_DASHBOARD_REPORT } from '../../routes/reportAppPaths';
-import { PATH_DASHBOARD, ROOTS_DASHBOARD as ROOTS_DASHBOARD_SALE } from '../../routes/paths';
+import { PATH_DASHBOARD } from '../../routes/paths';
 
 //
-import adminSidebarConfig, {
+import {
   promotionAppSidebarConfig,
   reportAppSidebarConfig,
   storeAppSidebarConfig,
-  systemAdminSidebarConfig
+  brandManagerSidebarConfig,
+  systemAdminSidebarConfig,
+  brandAdminSidebarConfig
 } from './SidebarConfig';
+import { Role } from 'utils/role';
 
 const DRAWER_WIDTH = 280;
 const COLLAPSE_WIDTH = 102;
@@ -113,11 +116,22 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
   // const systems = localStorage.getItem('system');
   const sidebarConfig = useMemo(() => {
     const firstElementOfPath = pathname.split('/')[1];
-    if (user?.role.includes('SysAdmin')) {
+    if (user?.role.includes(Role.SystemAdmin)) {
       console.log('Sysadmin');
       return systemAdminSidebarConfig;
     }
-    if (firstElementOfPath === ROOTS_DASHBOARD_SALE.split('/')[1]) return adminSidebarConfig;
+    if (user?.role.includes(Role.BrandManager)) {
+      console.log('BrandManager');
+      return brandManagerSidebarConfig;
+    }
+    if (user?.role.includes(Role.BrandAdmin)) {
+      console.log('BrandAdmin');
+      return brandAdminSidebarConfig;
+    }
+    if (user?.role.includes(Role.StoreManager)) {
+      return storeAppSidebarConfig;
+    }
+    // if (firstElementOfPath === ROOTS_DASHBOARD_SALE.split('/')[1]) return adminSidebarConfig;
     if (firstElementOfPath === ROOTS_DASHBOARD_REPORT.split('/')[1]) {
       const reportSideBarConfig = reportAppSidebarConfig();
       return reportSideBarConfig;
@@ -138,9 +152,9 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
     //   if (system === 'promotion-system') return promotionAppSidebarConfig;
     // }
 
-    if (user?.role?.includes('admin')) {
-      return adminSidebarConfig;
-    }
+    // if (user?.role?.includes('admin')) {
+    //   return adminSidebarConfig;
+    // }
     if (user?.role?.includes('store-admin')) {
       return storeAppSidebarConfig;
     }

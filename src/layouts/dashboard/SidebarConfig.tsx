@@ -64,22 +64,22 @@ export const systemAdminSidebarConfig = [
   }
 ];
 
-const sidebarConfig = [
+export const brandManagerSidebarConfig = [
   {
     subheader: 'Dashboard',
     items: [
       {
         title: 'Tổng quan',
-        path: PATH_STORE_APP.general.app,
+        path: PATH_DASHBOARD.general.app,
         icon: ICONS.dashboard
       }
     ]
   },
   {
-    subheader: 'Quản lý hệ thống',
+    subheader: 'Quản lý thương hiệu',
     items: [
       {
-        title: 'Danh sách thương hiệu',
+        title: 'Chi tiết thương hiệu',
         path: PATH_DASHBOARD.brand.root,
         icon: ICONS.store
       },
@@ -89,72 +89,66 @@ const sidebarConfig = [
         icon: ICONS.user
       },
       {
-        title: 'report.dashboard',
-        path: PATH_DASHBOARD.general.app,
-        icon: ICONS.dashboard
-      },
-      {
-        title: 'order',
+        title: 'Đơn hàng',
         path: PATH_DASHBOARD.orders.list,
         icon: ICONS.order
       }
     ]
   },
+  // {
+  //   subheader: 'menu-subheader',
+  //   items: [
+  //     {
+  //       title: 'menu-list',
+  //       path: PATH_DASHBOARD.menus.root,
+  //       icon: ICONS.menu
+  //     },
+  //     {
+  //       title: 'store-menu-apply',
+  //       path: PATH_DASHBOARD.menus.storeMenu,
+  //       icon: ICONS.storeApply
+  //     }
+  //   ]
+  // },
+  // {
+  //   subheader: 'product-subheader',
+  //   items: [
+  //     // MANAGEMENT : PRODUCT
+  //     {
+  //       title: 'master',
+  //       path: PATH_DASHBOARD.products.list,
+  //       icon: ICONS.product
+  //     },
+  //     {
+  //       title: 'combo-list',
+  //       path: PATH_DASHBOARD.combos.list,
+  //       icon: ICONS.combo
+  //     }
+  //   ]
+  // },
+  // {
+  //   subheader: 'group-subheader',
+  //   path: PATH_DASHBOARD.group.root,
+  //   items: [
+  //     {
+  //       title: 'category',
+  //       path: PATH_DASHBOARD.categories.list,
+  //       icon: ICONS.category
+  //     },
+  //     {
+  //       title: 'extra-category',
+  //       path: PATH_DASHBOARD.categories.extra,
+  //       icon: ICONS.extraCategory
+  //     },
+  //     {
+  //       title: 'collection',
+  //       path: PATH_DASHBOARD.collections.list,
+  //       icon: ICONS.collection
+  //     }
+  //   ]
+  // },
   {
-    subheader: 'menu-subheader',
-    items: [
-      {
-        title: 'menu-list',
-        path: PATH_DASHBOARD.menus.root,
-        icon: ICONS.menu
-      },
-      {
-        title: 'store-menu-apply',
-        path: PATH_DASHBOARD.menus.storeMenu,
-        icon: ICONS.storeApply
-      }
-    ]
-  },
-  {
-    subheader: 'product-subheader',
-    items: [
-      // MANAGEMENT : PRODUCT
-      {
-        title: 'master',
-        path: PATH_DASHBOARD.products.list,
-        icon: ICONS.product
-      },
-      {
-        title: 'combo-list',
-        path: PATH_DASHBOARD.combos.list,
-        icon: ICONS.combo
-      }
-    ]
-  },
-  {
-    subheader: 'group-subheader',
-    path: PATH_DASHBOARD.group.root,
-    items: [
-      {
-        title: 'category',
-        path: PATH_DASHBOARD.categories.list,
-        icon: ICONS.category
-      },
-      {
-        title: 'extra-category',
-        path: PATH_DASHBOARD.categories.extra,
-        icon: ICONS.extraCategory
-      },
-      {
-        title: 'collection',
-        path: PATH_DASHBOARD.collections.list,
-        icon: ICONS.collection
-      }
-    ]
-  },
-
-  {
-    subheader: 'store-subheader',
+    subheader: 'Quản lý cửa hàng',
     items: [
       {
         title: 'store',
@@ -165,6 +159,81 @@ const sidebarConfig = [
         title: 'log',
         path: PATH_DASHBOARD.log.root,
         icon: ICONS.tag
+      }
+    ]
+  }
+];
+export const brandAdminSidebarConfig = [
+  // {
+  //   subheader: 'Dashboard',
+  //   items: [
+  //     {
+  //       title: 'Tổng quan',
+  //       path: PATH_DASHBOARD.general.app,
+  //       icon: ICONS.dashboard
+  //     }
+  //   ]
+  // },
+  {
+    subheader: 'Quản lý đơn hàng',
+    items: [
+      {
+        title: 'Đơn hàng',
+        path: PATH_DASHBOARD.orders.list,
+        icon: ICONS.order
+      }
+    ]
+  },
+
+  {
+    subheader: 'Quản lý thực đơn',
+    items: [
+      {
+        title: 'Danh sách thực đơn',
+        path: PATH_DASHBOARD.menus.root,
+        icon: ICONS.menu
+      },
+      {
+        title: 'Danh sách cửa hàng áp dụng thực đơn',
+        path: PATH_DASHBOARD.menus.storeMenu,
+        icon: ICONS.storeApply
+      }
+    ]
+  },
+  {
+    subheader: 'Quản lý sản phẩm',
+    items: [
+      // MANAGEMENT : PRODUCT
+      {
+        title: 'Danh sách sản phẩm',
+        path: PATH_DASHBOARD.products.list,
+        icon: ICONS.product
+      },
+      {
+        title: 'Danh sách combo',
+        path: PATH_DASHBOARD.combos.list,
+        icon: ICONS.combo
+      }
+    ]
+  },
+  {
+    subheader: 'Nhóm sản phẩm',
+    path: PATH_DASHBOARD.group.root,
+    items: [
+      {
+        title: 'Danh mục sản phẩm',
+        path: PATH_DASHBOARD.categories.list,
+        icon: ICONS.category
+      },
+      {
+        title: 'Danh mục sản phẩm extra',
+        path: PATH_DASHBOARD.categories.extra,
+        icon: ICONS.extraCategory
+      },
+      {
+        title: 'Bộ sưu tập',
+        path: PATH_DASHBOARD.collections.list,
+        icon: ICONS.collection
       }
     ]
   }
@@ -334,4 +403,3 @@ export const reportAppSidebarConfig = () => {
     }
   ];
 };
-export default sidebarConfig;

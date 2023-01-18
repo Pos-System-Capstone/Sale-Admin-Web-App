@@ -1,16 +1,28 @@
-import { Avatar, Card, DialogContent, DialogTitle, Stack, Typography } from '@mui/material';
+import { Visibility } from '@mui/icons-material';
+import {
+  Avatar,
+  Card,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Stack,
+  Tooltip,
+  Typography
+} from '@mui/material';
 import brandApi from 'api/brand';
 import Page from 'components/Page';
 import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 import ResoTable from 'components/ResoTable/ResoTable';
 
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
+import { PATH_DASHBOARD } from 'routes/paths';
 import { TBrandDetail } from 'types/brand';
 import { TStore } from 'types/store';
 
 const BrandDetailPage = () => {
   const { brandId } = useParams();
+  const navigate = useNavigate();
 
   const { data: brand, isLoading } = useQuery(
     ['brands', brandId],
@@ -82,6 +94,22 @@ const BrandDetailPage = () => {
       title: 'Trạng thái',
       dataIndex: 'status',
       hideInSearch: true
+    },
+    {
+      title: 'Chi tiết',
+      fixed: 'right',
+      hideInSearch: true,
+      render: (_: any, store: TStore) => (
+        <Tooltip title="Chi tiết">
+          {/* <IconButton onClick={() => setDetailBrand(brand.id)} size="large"> */}
+          <IconButton
+            onClick={() => navigate(PATH_DASHBOARD.stores.storeById(store.id))}
+            size="large"
+          >
+            <Visibility />
+          </IconButton>
+        </Tooltip>
+      )
     }
   ];
 
@@ -117,6 +145,7 @@ const BrandDetailPage = () => {
         </DialogContent>
 
         <Stack spacing={2}>
+          {/* <Typography variant="h5">Danh sách cửa hàng</Typography> */}
           <ResoTable
             showAction={false}
             rowKey="store_id"

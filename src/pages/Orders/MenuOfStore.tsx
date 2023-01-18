@@ -182,7 +182,7 @@ export default function MenuOfStorePage() {
 
   const filteredEvents = useMemo(() => {
     const viewMenuOfStores = appliedStores.filter(({ store }) =>
-      filteredStores.some(({ id }) => id === store?.id)
+      filteredStores.some(({ id }) => id === store?.id.toString())
     );
     return transformSIMtoEvent(viewMenuOfStores);
   }, [appliedStores, filteredStores]);

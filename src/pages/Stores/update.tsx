@@ -64,7 +64,7 @@ const UpdateStorePage = () => {
         });
       });
 
-  const onDeleteStore = async (storeId: number) => {
+  const onDeleteStore = async (storeId: string) => {
     try {
       await storeApi.delete(storeId);
       enqueueSnackbar('Xoá thành công', {

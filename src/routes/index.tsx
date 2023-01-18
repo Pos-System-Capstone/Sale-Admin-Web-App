@@ -106,6 +106,15 @@ export default function Router() {
           ]
         },
         {
+          path: 'stores',
+          children: [
+            {
+              path: ':storeId',
+              children: [{ path: '', element: <StoreDetail /> }]
+            }
+          ]
+        },
+        {
           path: 'accounts',
           children: [
             {
@@ -295,6 +304,7 @@ const UpdateProduct = Loadable(lazy(() => import('../pages/Products/UpdateProduc
 const CreateProduct = Loadable(lazy(() => import('../pages/Products/create')));
 
 const BrandDetail = Loadable(lazy(() => import('../pages/Brands/components/BrandDetail')));
+const StoreDetail = Loadable(lazy(() => import('../pages/Stores/components/StoreDetail')));
 
 // Menu
 const MenusPage = Loadable(lazy(() => import('../pages/Menus')));

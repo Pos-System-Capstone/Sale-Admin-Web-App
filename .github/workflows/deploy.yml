@@ -12,29 +12,7 @@ on:
         type: string
         required: false
         default: '.env.production'
-
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-
-    # env:
-    #   SOURCE_DIR: "dist/"
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Install dependencies
-        run: yarn
-
-      - name: Build
-        run: yarn build
-
-      - name: Share artifact inside workflow
-        uses: actions/upload-artifact@v3
-        with:
-          name: react-github-actions-build
-          path: build
   DeployToAWS:
     uses: meowmeoworg/workflow-support/.github/workflows/DeployReactStaticWebToS3.yml@develop
     with:

@@ -14,4 +14,12 @@ export type TBrand = {
   numberOfStores: number;
 };
 
+export type TNewBrandCreate = {
+  name: string;
+  email: string;
+  address: string;
+  phone: string;
+  picUrl: string;
+};
+
 export type TBrandDetail = TBrand;

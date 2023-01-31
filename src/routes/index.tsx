@@ -102,6 +102,10 @@ export default function Router() {
             {
               path: ':brandId',
               children: [{ path: '', element: <BrandDetail /> }]
+            },
+            {
+              path: 'new',
+              element: <CreateNewBrand />
             }
           ]
         },
@@ -305,6 +309,9 @@ const CreateProduct = Loadable(lazy(() => import('../pages/Products/create')));
 
 const BrandDetail = Loadable(lazy(() => import('../pages/Brands/components/BrandDetail')));
 const StoreDetail = Loadable(lazy(() => import('../pages/Stores/components/StoreDetail')));
+const CreateNewBrand = Loadable(
+  lazy(() => import('../pages/Brands/components/CreateNewBrand/CreateNewBrand'))
+);
 
 // Menu
 const MenusPage = Loadable(lazy(() => import('../pages/Menus')));

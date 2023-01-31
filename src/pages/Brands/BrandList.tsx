@@ -1,21 +1,20 @@
 /* eslint-disable camelcase */
 import { Visibility } from '@mui/icons-material';
+import Label from 'components/Label';
+
 // material
-import { Card, IconButton, Stack, Tooltip } from '@mui/material';
+import { Box, Card, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import brandApi from 'api/brand';
-import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
-import { useState } from 'react';
 // components
+import { Button } from '@mui/material';
+import Page from 'components/Page';
 import { useNavigate } from 'react-router-dom';
-import { TBrand } from 'types/brand';
+import { BrandStatus, TBrand } from 'types/brand';
 import { TTableColumn } from 'types/table';
-import CreateNewBrandDialog from './components/CreateNewBrandDialog';
 
 const BrandListPage = () => {
   const navigate = useNavigate();
-
-  const [isCreateNewBrandDialogShow, setIsCreateNewBrandDialogShow] = useState(true);
 
   const brandColumns: TTableColumn<TBrand>[] = [
     {
@@ -41,6 +40,11 @@ const BrandListPage = () => {
     {
       title: 'Trạng thái',
       dataIndex: 'status',
+      render: (_: any, brand: TBrand) => (
+        <Label color={brand.status == BrandStatus.ACTIVE ? 'primary' : 'default'}>
+          {brand.status == BrandStatus.ACTIVE ? 'Hoạt động' : 'Ngừng hoạt động'}
+        </Label>
+      ),
       hideInSearch: true
     },
     {
@@ -59,12 +63,21 @@ const BrandListPage = () => {
   ];
 
   return (
-    <Page title="Danh sách thương hiệu">
-      {/* <OrderDetailDialog orderId={12} open={true} onClose={() => setDetailBrand(null)} /> */}
-      <CreateNewBrandDialog
-        open={isCreateNewBrandDialogShow}
-        onClose={() => setIsCreateNewBrandDialogShow(false)}
-      />
+    <Page>
+      <Box>
+        <Stack
+          my={2}
+          spacing={2}
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography variant="h3">Danh sách thương hiệu</Typography>
+          <Button onClick={() => navigate('new')} variant="contained">
+            Tạo nhãn hiệu mới
+          </Button>
+        </Stack>
+      </Box>
       <Card>
         <Stack spacing={2}>
           <ResoTable

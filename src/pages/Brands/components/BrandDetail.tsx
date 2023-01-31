@@ -60,7 +60,7 @@ const BrandDetailPage = () => {
       dataIndex: 'status'
     },
     {
-      title: 'Số lượng cửa hàng: ',
+      title: 'Số lượng cửa hàng ',
       dataIndex: 'numberOfStores'
     }
   ];
@@ -101,7 +101,6 @@ const BrandDetailPage = () => {
       hideInSearch: true,
       render: (_: any, store: TStore) => (
         <Tooltip title="Chi tiết">
-          {/* <IconButton onClick={() => setDetailBrand(brand.id)} size="large"> */}
           <IconButton
             onClick={() => navigate(PATH_DASHBOARD.stores.storeById(store.id))}
             size="large"
@@ -145,7 +144,6 @@ const BrandDetailPage = () => {
         </DialogContent>
 
         <Stack spacing={2}>
-          {/* <Typography variant="h5">Danh sách cửa hàng</Typography> */}
           <ResoTable
             showAction={false}
             rowKey="store_id"

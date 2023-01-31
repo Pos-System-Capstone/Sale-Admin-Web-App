@@ -10,12 +10,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TBrand } from 'types/brand';
 import { TTableColumn } from 'types/table';
-import BrandDetailDialog from './components/BrandDetailDialog';
+import CreateNewBrandDialog from './components/CreateNewBrandDialog';
 
 const BrandListPage = () => {
   const navigate = useNavigate();
 
-  const [detailBrand, setDetailBrand] = useState<string | null>(null);
+  const [isCreateNewBrandDialogShow, setIsCreateNewBrandDialogShow] = useState(true);
 
   const brandColumns: TTableColumn<TBrand>[] = [
     {
@@ -61,10 +61,9 @@ const BrandListPage = () => {
   return (
     <Page title="Danh sách thương hiệu">
       {/* <OrderDetailDialog orderId={12} open={true} onClose={() => setDetailBrand(null)} /> */}
-      <BrandDetailDialog
-        brandId={detailBrand}
-        open={Boolean(detailBrand)}
-        onClose={() => setDetailBrand(null)}
+      <CreateNewBrandDialog
+        open={isCreateNewBrandDialogShow}
+        onClose={() => setIsCreateNewBrandDialogShow(false)}
       />
       <Card>
         <Stack spacing={2}>

@@ -3,8 +3,10 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
 import { Avatar, Button, Card, Stack } from '@mui/material';
+import categoryApi from 'api/category';
 import CategoryModal from 'components/CategoryModal';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
+import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
@@ -13,9 +15,9 @@ import { useSnackbar } from 'notistack';
 import { useEffect, useRef, useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
-import { addCategoy, deleteCategoyById, editCategory, getCategories } from 'redux/category/api';
+import { addCategoy, deleteCategoyById, editCategory } from 'redux/category/api';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { TCategory } from 'types/category';
+import { CategoryStatus, TCategory } from 'types/category';
 import { TTableColumn } from 'types/table';
 
 const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
@@ -31,8 +33,13 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
 
   const columns: TTableColumn<TCategory>[] = [
     {
+      title: 'STT',
+      dataIndex: 'index',
+      hideInSearch: true
+    },
+    {
       title: 'Hình ảnh',
-      dataIndex: 'pic_url',
+      dataIndex: 'picUrl',
       hideInSearch: true,
       render: (src, { product_name }: any) => (
         <Avatar
@@ -44,13 +51,25 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
       )
     },
     {
-      title: translate('categories.table.cateName'),
-      dataIndex: 'cate_name'
+      title: 'Tên danh mục',
+      dataIndex: 'name'
     },
     {
-      title: translate('categories.table.position'),
-      dataIndex: 'position',
+      title: 'Mã danh mục',
+      dataIndex: 'code',
       hideInSearch: true
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'status',
+      hideInSearch: true,
+      render: (status) => {
+        return status === CategoryStatus.ACTIVE ? (
+          <Label color="primary">Hoạt động </Label>
+        ) : (
+          <Label color="warning"> Không hoạt động </Label>
+        );
+      }
     }
   ];
 
@@ -93,7 +112,7 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
       });
 
   const deleteCategoryHander = () =>
-    deleteCategoyById(currentDeleteItem?.cate_id!)
+    deleteCategoyById(currentDeleteItem!.id)
       .then(() => setCurrentDeleteItem(null))
       .then(tableRef.current?.reload)
       .then(() =>
@@ -111,12 +130,12 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
 
   return (
     <Page
-      title={isExtra ? 'Danh mục extra' : 'Danh mục'}
+      title={isExtra ? 'Danh mục extra' : 'Danh mục sản phẩm'}
       actions={() => [
         <Button
           key="add-category"
           onClick={() => {
-            navigate(`${PATH_DASHBOARD.categories.new}?isExtra=${isExtra}`);
+            navigate(PATH_DASHBOARD.categories.new);
           }}
           variant="contained"
           startIcon={<Icon icon={plusFill} />}
@@ -138,7 +157,7 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
         onDelete={deleteCategoryHander}
         title={
           <>
-            {translate('common.confirmDeleteTitle')} <strong>{currentDeleteItem?.cate_name}</strong>
+            {translate('common.confirmDeleteTitle')} <strong>{currentDeleteItem?.name}</strong>
           </>
         }
       />
@@ -150,11 +169,11 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
             }}
             ref={tableRef}
             onEdit={(cate: TCategory) => {
-              navigate(`${PATH_DASHBOARD.categories.editById(cate.cate_id)}`);
+              navigate(`${PATH_DASHBOARD.categories.editById(cate.id)}`);
             }}
             onDelete={(cate: TCategory) => setCurrentDeleteItem(cate)}
-            rowKey="cate_id"
-            getData={getCategories}
+            rowKey="id"
+            getData={categoryApi.get}
             columns={columns}
           />
         </Stack>

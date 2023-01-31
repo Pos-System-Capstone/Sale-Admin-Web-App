@@ -11,7 +11,6 @@ import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 import { CardTitle } from 'pages/Products/components/Card';
 import { transformDraftToStr } from 'pages/Products/utils';
-import React, { useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
 import { TCategory } from 'types/category';
@@ -36,15 +35,14 @@ const CategoryInfoTab = ({ updateMode }: Props) => {
   const updateCategoryForm = useForm<TCategory & { is_root: boolean }>({
     resolver: yupResolver(schema),
     defaultValues: {
-      description: EditorState.createEmpty(),
-      parent_cate_id: null
+      description: EditorState.createEmpty().toString()
     }
   });
 
-  useEffect(() => {
-    if (!category) return;
-    updateCategoryForm.reset({ ...category, is_root: !Boolean(category.parent_cate_id) });
-  }, [category, updateCategoryForm]);
+  // useEffect(() => {
+  //   if (!category) return;
+  //   updateCategoryForm.reset({ ...category, is_root: !Boolean(category.parent_cate_id) });
+  // }, [category, updateCategoryForm]);
 
   const onSubmit = (values: TCategory) => {
     console.log(`data`, values);

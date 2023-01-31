@@ -1,36 +1,36 @@
-import { Avatar } from '@mui/material';
+import { Chip } from '@mui/material';
 // import AutocompleteCategory from 'components/form/common/Category/AutocompleteCategory';
 import Label from 'components/Label';
-import { PRODUCT_TYPE_DATA } from 'constraints';
-import { TProductBase } from 'types/product';
-import { TTableColumn } from 'types/table';
 
-export const accountColumns: TTableColumn<TProductBase>[] = [
+import { TTableColumn } from 'types/table';
+import { TUser, UserStatus } from 'types/user';
+
+export const accountColumns: TTableColumn<TUser>[] = [
   {
     title: 'STT',
     dataIndex: 'index',
     hideInSearch: true
   },
-  {
-    title: 'Hình ảnh',
-    dataIndex: 'pic_url',
-    hideInSearch: true,
-    render: (src, { product_name }: any) => (
-      <Avatar
-        alt={product_name}
-        src={src}
-        variant="square"
-        style={{ width: '54px', height: '54px' }}
-      />
-    )
-  },
+  // {
+  //   title: 'Hình ảnh',
+  //   dataIndex: 'pic_url',
+  //   hideInSearch: true,
+  //   render: (src, { product_name }: any) => (
+  //     <Avatar
+  //       alt={product_name}
+  //       src={src}
+  //       variant="square"
+  //       style={{ width: '54px', height: '54px' }}
+  //     />
+  //   )
+  // },
   {
     title: 'Tên tài khoản',
-    dataIndex: 'product_name'
+    dataIndex: 'username'
   },
   {
     title: 'Họ và tên',
-    dataIndex: 'product_name'
+    dataIndex: 'name'
   },
   // {
   //   title: 'Giá mặc định',
@@ -44,31 +44,29 @@ export const accountColumns: TTableColumn<TProductBase>[] = [
   // },
   {
     title: 'Loại Sản Phẩm',
-    dataIndex: 'product_type',
-    valueType: 'select',
-    valueEnum: PRODUCT_TYPE_DATA
+    dataIndex: 'role',
     // hideInSearch: true
-    // render: (type) => <Chip label={PRODUCT_TYPE_DATA.find(({ value }) => value == type)?.label} />
+    render: (type) => <Chip label={type} />
   },
   {
     title: 'Trạng thái',
-    dataIndex: 'is_available',
+    dataIndex: 'status',
     width: 150,
-    render: (available) => (
-      <Label color={available ? 'primary' : 'default'}>
-        {available ? 'Đang bán' : 'Ngừng bán'}
+    render: (status) => (
+      <Label color={status == UserStatus.ACTIVE ? 'primary' : 'default'}>
+        {status == UserStatus.ACTIVE ? 'Hoạt động' : 'Ngừng hoạt động'}
       </Label>
     ),
-    valueEnum: [
-      {
-        label: 'Đang bán',
-        value: 'true'
-      },
-      {
-        label: 'Ngừng bán',
-        value: 'false'
-      }
-    ],
+    // valueEnum: [
+    //   {
+    //     label: 'Đang bán',
+    //     value: 'true'
+    //   },
+    //   {
+    //     label: 'Ngừng bán',
+    //     value: 'false'
+    //   }
+    // ],
     valueType: 'select',
     formProps: {
       fullWidth: true

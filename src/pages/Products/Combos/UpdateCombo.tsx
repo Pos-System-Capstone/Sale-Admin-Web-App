@@ -39,7 +39,7 @@ import { PATH_DASHBOARD } from 'routes/paths';
 import { CombinationModeEnum, CreateComboForm } from 'types/product';
 import { CardTitle } from '../components/Card';
 import BasicProductInfoForm from '../components/form/BasicProductInfoForm';
-import CategoryTreeForm from '../components/form/CategoryTreeForm';
+// import CategoryTreeForm from '../components/form/CategoryTreeForm';
 import ProductImagesForm from '../components/form/ProductImagesForm';
 import { validationSchema } from '../type';
 import { normalizeProductCombo, transformComboForm, transformDraftToStr } from '../utils';
@@ -283,7 +283,7 @@ const UpdateCombo = (props: Props) => {
                         </Typography>
                       </Stack>
                     </Box>
-                    <CategoryTreeForm />
+                    {/* <CategoryTreeForm /> */}
                   </Stack>
                 </Card>
 

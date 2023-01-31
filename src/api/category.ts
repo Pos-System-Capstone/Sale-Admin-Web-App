@@ -5,31 +5,31 @@ import { BaseReponse } from 'types/response';
 import request from 'utils/axios';
 import { generateAPIWithPaging } from './utils';
 
-const getExtraCategoriesFromCateId = (catId: number, params?: any) => {
+const getExtraCategoriesFromCateId = (catId: string, params?: any) => {
   return request.get<BaseReponse<TCategoryExtra>>(`/categories/${catId}/extras`, { params });
 };
 
-const getProductsInCategory = (catId: number, params?: any) => {
+const getProductsInCategory = (catId: string, params?: any) => {
   return request.get<BaseReponse<TProductBase>>(`/categories/${catId}/products`, { params });
 };
 
-const getChildByCategoryId = (catId: number) => {
+const getChildByCategoryId = (catId: string) => {
   return request.get<TCategory[]>(`/categories/${catId}/childs`);
 };
 
-const getModifiersOfCategory = (catId: number) =>
+const getModifiersOfCategory = (catId: string) =>
   request.get<TModifier[]>(`/categories/${catId}/modifiers`);
 
-const addModifiersOfCategory = (catId: number, values: Omit<TModifier, 'id'>) =>
+const addModifiersOfCategory = (catId: string, values: Omit<TModifier, 'id'>) =>
   request.post<number>(`/categories/${catId}/modifiers`, values);
 
 const updateModifiersOfCategory = (
-  catId: number,
+  catId: string,
   modifierId: number,
   values: Omit<TModifier, 'id'>
 ) => request.put<number>(`/categories/${catId}/modifiers/${modifierId}`, values);
 
-const deleteModifiersOfCategory = (catId: number, modifierId: number) =>
+const deleteModifiersOfCategory = (catId: string, modifierId: number) =>
   request.delete<number>(`/categories/${catId}/modifiers/${modifierId}`);
 
 const categoryApi = {

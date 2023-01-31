@@ -75,7 +75,15 @@ export default function Login() {
           </Stack>
 
           <Alert severity="info" sx={{ mb: 3 }}>
-            Testaccount : <strong>saleadmin</strong> / password :<strong>&nbsp;zaQ@1234</strong>
+            Test System Admin : <strong>admin</strong> / password :<strong>&nbsp;123456</strong>
+          </Alert>
+          <Alert severity="info" sx={{ mb: 3 }}>
+            Test Brand Manager : <strong>katinatmanager</strong> / password :
+            <strong>&nbsp;1234567</strong>
+          </Alert>
+          <Alert severity="info" sx={{ mb: 3 }}>
+            Test Brand Admin : <strong>KatinatAdmin</strong> / password :
+            <strong>&nbsp;1234567</strong>
           </Alert>
 
           <LoginForm />

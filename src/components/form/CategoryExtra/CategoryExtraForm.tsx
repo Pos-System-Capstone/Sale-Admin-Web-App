@@ -10,7 +10,7 @@ interface Props {
 const CategoryExtraForm = ({ updateMode }: Props) => {
   const { data: extras = [] } = useExtras();
 
-  const extraOptions = extras.map((c) => ({ label: c.cate_name, value: c.cate_id }));
+  const extraOptions = extras.map((c) => ({ label: c.name, value: c.id }));
 
   const getOpObj = (option: any) => {
     if (!option) return option;

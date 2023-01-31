@@ -6,13 +6,25 @@ export enum StoreStatus {
 }
 
 export type TStore = {
-  id: number;
+  id: string;
   brandId: string;
   name: string;
   shortName: string;
   email: string;
   address: string;
   status: StoreStatus;
+};
+
+export type TStoreDetail = {
+  id: string;
+  brandId: string;
+  name: string;
+  shortName: string;
+  email: string;
+  address: string;
+  status: StoreStatus;
+  phone: string;
+  code: string;
 };
 
 export type StoreInMenu = {

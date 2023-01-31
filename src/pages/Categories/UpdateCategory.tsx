@@ -8,6 +8,7 @@ import { useParams } from 'react-router';
 import CategoryExtraTab from './components/CategoryExtraTab';
 import CategoryInfoTab from './components/CategoryInfoTab';
 import CategoryModifierTab from './components/CategoryModifierTab';
+import { CategoryType } from 'types/category';
 
 interface Props {}
 
@@ -21,8 +22,8 @@ const UpdateCategory = (props: Props) => {
   const { id } = useParams();
 
   const { data: category, error } = useCategory(Number(id));
-  const isExtra = category?.is_extra;
-  const isContainer = category?.is_container;
+  const isExtra = category?.categoryType === CategoryType.EXTRA;
+  // const isContainer = category?.is_container;
 
   if (error) {
     return <EmptyContent title="Không tìm thấy danh mục này" />;
@@ -35,8 +36,8 @@ const UpdateCategory = (props: Props) => {
           <Box>
             <TabList onChange={handleChangeTab}>
               <Tab label="Thông tin chung" value="1" />
-              {!(isExtra || isContainer) && <Tab label="Sản phẩm đi kèm" value="2" />}
-              {!(isExtra || isContainer) && <Tab label="Tuỳ chỉnh" value="3" />}
+              {!isExtra && <Tab label="Sản phẩm đi kèm" value="2" />}
+              {!isExtra && <Tab label="Tuỳ chỉnh" value="3" />}
             </TabList>
           </Box>
 

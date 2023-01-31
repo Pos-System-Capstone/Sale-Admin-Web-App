@@ -7,8 +7,6 @@ import Label from 'components/Label';
 import useLocales from 'hooks/useLocales';
 import { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { TStore } from 'types/store';
-import { getAppToken } from 'utils/utils';
 import { MHidden } from '../../components/@material-extend';
 // hooks
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
@@ -89,14 +87,6 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
 
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const handleSelectStore = (store: TStore) => {
-    const token = getAppToken();
-    window.open(
-      `${process.env.REACT_APP_STORE_MANAGEMENT_APP_URL}/auth/login?accessToken=${token}`,
-      '_blank'
-    );
   };
 
   const envLabelColor = (env: any) => {

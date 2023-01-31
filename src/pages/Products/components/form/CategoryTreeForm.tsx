@@ -1,10 +1,7 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { Typography } from '@mui/material';
-import TreeViewField, { RenderTree } from 'components/form/TreeViewField/TreeViewField';
 import useCategories from 'hooks/categories/useCategories';
-import React, { useMemo } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
-import { TCategory } from 'types/category';
+import { useFormContext } from 'react-hook-form';
 
 interface Props {
   isExtraCate?: boolean;
@@ -16,45 +13,45 @@ const CategoryTreeForm = ({ isExtraCate = false }: Props) => {
   } = useFormContext();
   const { data: categories } = useCategories({ 'is-extra': isExtraCate, 'only-root': true });
 
-  const categoryTreeData = useMemo<RenderTree[]>(() => {
-    const generateTree: any = (category: TCategory) => {
-      if (!category.childs || category.childs.length === 0) {
-        return {
-          id: category.cate_id,
-          name: category.cate_name,
-          children: [],
-          isContainer: category.is_container
-        };
-      }
-      return {
-        id: category.cate_id,
-        name: category.cate_name,
-        children: category.childs.map(generateTree),
-        isContainer: category.is_container
-      };
-    };
+  // const categoryTreeData = useMemo<RenderTree[]>(() => {
+  //   const generateTree: any = (category: TCategory) => {
+  //     if (!category.childs || category.childs.length === 0) {
+  //       return {
+  //         id: category.cate_id,
+  //         name: category.cate_name,
+  //         children: [],
+  //         isContainer: category.is_container
+  //       };
+  //     }
+  //     return {
+  //       id: category.cate_id,
+  //       name: category.cate_name,
+  //       children: category.childs.map(generateTree),
+  //       isContainer: category.is_container
+  //     };
+  //   };
 
-    return (
-      categories?.map((c) => ({
-        id: `${c.cate_id}`,
-        name: c.cate_name,
-        isContainer: c.is_container,
-        children: c?.childs.map(generateTree)
-      })) ?? []
-    );
-  }, [categories]);
+  //   return (
+  //     categories?.map((c) => ({
+  //       id: `${c.cate_id}`,
+  //       name: c.cate_name,
+  //       isContainer: c.is_container,
+  //       children: c?.childs.map(generateTree)
+  //     })) ?? []
+  //   );
+  // }, [categories]);
 
-  const checkIsRootCategory = (id: string, cates: TCategory[]): boolean => {
-    return cates?.some((c) => {
-      if (c.cate_id === Number(id)) {
-        return c.is_container;
-      }
-      if (c.childs) {
-        return checkIsRootCategory(id, c.childs);
-      }
-      return false;
-    });
-  };
+  // const checkIsRootCategory = (id: string, cates: TCategory[]): boolean => {
+  //   return cates?.some((c) => {
+  //     if (c.cate_id === Number(id)) {
+  //       return c.is_container;
+  //     }
+  //     if (c.childs) {
+  //       return checkIsRootCategory(id, c.childs);
+  //     }
+  //     return false;
+  //   });
+  // };
 
   return (
     <>
@@ -67,7 +64,7 @@ const CategoryTreeForm = ({ isExtraCate = false }: Props) => {
           </Typography>
         )}
       />
-      <Controller
+      {/* <Controller
         name="cat_id"
         render={({ field }) => (
           <TreeViewField
@@ -76,7 +73,7 @@ const CategoryTreeForm = ({ isExtraCate = false }: Props) => {
             {...field}
           />
         )}
-      />
+      /> */}
     </>
   );
 };

@@ -110,9 +110,9 @@ const FilterStore: React.FC<Props> = ({ filteredStores, stores, onChangeFilter }
                       mr: 1,
                       mt: '2px'
                     }}
-                    style={{
-                      backgroundColor: COLOR_OPTIONS[store.id % COLOR_OPTIONS.length]
-                    }}
+                    // style={{
+                    //   backgroundColor: COLOR_OPTIONS[store.id % COLOR_OPTIONS.length]
+                    // }}
                   />
                   <Typography>{store.name}</Typography>
                   <Box flex={1} />

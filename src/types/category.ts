@@ -1,31 +1,32 @@
 import { ModifierSelectType } from './Modifier';
 
 export type TCategory = {
-  cate_id: number;
-  cate_name: string;
-  cate_name_eng: string;
-  is_extra: boolean;
-  store_id: number;
-  seo_name: string;
-  seo_keyword?: any;
-  seo_description?: any;
-  parent_cate_id?: any;
-  position: number;
-  active: boolean;
-  is_available: boolean;
-  brand_id: number;
-  pic_url?: any;
-  banner_url?: any;
-  description?: any;
-  description_eng?: any;
-  banner_description?: any;
-  banner_description_eng?: any;
-  parent_cate?: any;
-  category_extra_cate: CategoryExtraCate[];
-  category_modifier: any[];
-  childs: TCategory[];
-  is_container: boolean;
+  id: string;
+  code: string;
+  name: string;
+  categoryType: CategoryType;
+  displayOrder: number;
+  description: string;
+  picUrl: string;
+  status: CategoryStatus;
+  brandId: string;
 };
+export interface TCategoryCreate {
+  code: string;
+  name: string;
+  categoryType: CategoryType;
+  displayOrder: number;
+  description: string;
+  picUrl: string;
+}
+export enum CategoryType {
+  NORMAL = 'NORMAL',
+  EXTRA = 'EXTRA'
+}
+export enum CategoryStatus {
+  ACTIVE = 'Active',
+  DEACTIVE = 'Deactive'
+}
 
 export type TCategoryExtra = {
   /** Min max co dang 1-2 */
@@ -46,3 +47,13 @@ export interface CategoryExtraCate {
   cate?: any;
   extra_cate?: any;
 }
+export const CREATE_CATEGORY_TYPE_OPTIONS = [
+  {
+    value: CategoryType.NORMAL,
+    label: 'NORMAL'
+  },
+  {
+    value: CategoryType.EXTRA,
+    label: 'EXTRA'
+  }
+];

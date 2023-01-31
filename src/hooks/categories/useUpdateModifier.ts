@@ -11,7 +11,7 @@ const useUpdateModifier = () => {
       modifierId
     }: {
       data: Omit<TModifier, 'id'>;
-      cateId: number;
+      cateId: string;
       modifierId: number;
     }) => categoryApi.updateModifiersOfCategory(cateId!, modifierId, data),
     {

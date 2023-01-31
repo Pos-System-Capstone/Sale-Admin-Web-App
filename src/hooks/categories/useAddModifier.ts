@@ -5,7 +5,7 @@ import { TModifier } from 'types/Modifier';
 const useAddModifier = () => {
   const queryClient = useQueryClient();
   return useMutation(
-    ({ data, cateId }: { data: Omit<TModifier, 'id'>; cateId: number }) =>
+    ({ data, cateId }: { data: Omit<TModifier, 'id'>; cateId: string }) =>
       categoryApi.addModifiersOfCategory(cateId!, data),
     {
       onSuccess: (_, { cateId }) => {

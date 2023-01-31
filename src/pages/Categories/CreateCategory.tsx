@@ -1,21 +1,18 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+// import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Card, Stack } from '@mui/material';
 import categoryApi from 'api/category';
 import CategoryForm from 'components/form/common/Category/CategoryForm';
-import SeoForm from 'components/form/Seo/SeoForm';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import useDashboard from 'hooks/useDashboard';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
-import { CardTitle } from 'pages/Products/components/Card';
-import { transformDraftToStr, transformProductForm } from 'pages/Products/utils';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import { useSearchParams } from 'react-router-dom';
-import { TCategory } from 'types/category';
+import { TCategoryCreate } from 'types/category';
 import * as yup from 'yup';
 import { PATH_DASHBOARD } from 'routes/paths';
+import { transformDraftToStr } from 'pages/Products/utils';
 
 interface Props {}
 
@@ -27,27 +24,27 @@ const CreateCategory = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const isExtra: boolean = searchParams.get('isExtra') === 'true';
-  const createCategoryForm = useForm<TCategory>({
-    resolver: yupResolver(schema),
+  // const [searchParams] = useSearchParams();
+  // const isExtra: boolean = searchParams.get('isExtra') === 'true';
+  const createCategoryForm = useForm<TCategoryCreate>({
+    // resolver: yupResolver(schema),
     defaultValues: {
-      // is_container: !isExtra,
-      is_extra: isExtra
-    },
-    shouldUnregister: false
+      // categoryType: isExtra ? CategoryType.EXTRA : CategoryType.NORMAL
+    }
+    // shouldUnregister: false
   });
 
-  const onSubmit = (values: TCategory) => {
-    console.log(`data`, values);
-    const data = transformProductForm(transformDraftToStr(values));
+  const onSubmit = (values: TCategoryCreate) => {
+    const data = transformDraftToStr(values);
+    console.log(`data`, data);
     return categoryApi
       .create(data)
       .then((res) => {
         enqueueSnackbar(`Tạo thành công`, {
           variant: 'success'
         });
-        navigate(`${PATH_DASHBOARD.categories.root}/${res.data}`);
+        // navigate(`${PATH_DASHBOARD.categories.root}/${res.data}`);
+        navigate(PATH_DASHBOARD.categories.root);
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
@@ -68,7 +65,7 @@ const CreateCategory = (props: Props) => {
             type="submit"
             variant="contained"
           >
-            Lưu
+            Tạo
           </LoadingAsyncButton>
         </Stack>
       </DashboardNavLayout>
@@ -79,14 +76,14 @@ const CreateCategory = (props: Props) => {
               <CategoryForm />
             </Box>
           </Card>
-          <Card>
+          {/* <Card>
             <Box>
               <CardTitle mb={2} variant="subtitle1">
                 SEO
               </CardTitle>
               <SeoForm />
             </Box>
-          </Card>
+          </Card> */}
         </Stack>
       </Page>
     </FormProvider>

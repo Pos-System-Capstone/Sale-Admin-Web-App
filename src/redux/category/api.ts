@@ -5,7 +5,7 @@ export const getCategories = (params: any) => request.get<TCategory>('/categorie
 
 export const getCategoyById = (cateId: number) => request.get<TCategory>(`/categories/${cateId}`);
 
-export const deleteCategoyById = (cateId: number) => request.delete<any>(`/categories/${cateId}`);
+export const deleteCategoyById = (cateId: string) => request.delete<any>(`/categories/${cateId}`);
 
 export const addCategoy = (values: Omit<TCategory, 'cate_id'>) =>
   request.post<number>(`/categories`, values);

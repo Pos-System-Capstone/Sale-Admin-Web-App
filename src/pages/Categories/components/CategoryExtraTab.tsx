@@ -88,7 +88,7 @@ const CategoryExtraTab = (props: Props) => {
     confirm({
       title: (
         <>
-          Xác nhận xóa <strong>{extra.extra_cate.cate_name}</strong>
+          Xác nhận xóa <strong>{extra.extra_cate.name}</strong>
         </>
       ),
       content: 'Xoá nhóm extra này?',
@@ -127,7 +127,7 @@ const CategoryExtraTab = (props: Props) => {
     {
       title: 'Tên',
       dataIndex: 'extra_cate',
-      render: (data: TCategory) => <Typography>{data.cate_name}</Typography>
+      render: (data: TCategory) => <Typography>{data.name}</Typography>
     },
     {
       title: 'Số lượng tối thiểu',
@@ -251,7 +251,7 @@ const CategoryExtraTab = (props: Props) => {
             showAction={false}
             columns={categoryExtraColumns}
             rowKey="cate_id"
-            getData={(params: any) => categoryApi.getExtraCategoriesFromCateId(Number(id), params)}
+            getData={(params: any) => categoryApi.getExtraCategoriesFromCateId(id!, params)}
           />
         </FormProvider>
       </Box>

@@ -3,9 +3,9 @@ import FormHelperText from '@mui/material/FormHelperText';
 import { InputField } from 'components/form';
 // import TreeViewField, { RenderTree } from 'components/form/TreeViewField/TreeViewField';
 import useCategories from 'hooks/categories/useCategories';
-import getCategoryChilds from 'hooks/categories/useCategoryChild';
+
 import useLocales from 'hooks/useLocales';
-import { cloneDeep } from 'lodash';
+
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -31,43 +31,43 @@ const ConditionForm = ({ updateMode }: Props) => {
     setCategories(data ?? []);
   }, [data]);
 
-  const getChilds = async (cateId?: number) => {
-    let results = await getCategoryChilds(Number(cateId));
-    const updateCategories = cloneDeep([...categories]);
-    let foundedParent = null;
-    for (const childCate of updateCategories) {
-      foundedParent = findParentCateFromCate(childCate, cateId!);
-      if (foundedParent) break;
-    }
-    if (foundedParent) {
-      foundedParent.childs = results;
-    }
-    setCategories(updateCategories);
-  };
+  // const getChilds = async (cateId?: number) => {
+  //   let results = await getCategoryChilds(Number(cateId));
+  //   const updateCategories = cloneDeep([...categories]);
+  //   let foundedParent = null;
+  //   for (const childCate of updateCategories) {
+  //     foundedParent = findParentCateFromCate(childCate, cateId!);
+  //     if (foundedParent) break;
+  //   }
+  //   if (foundedParent) {
+  //     foundedParent.childs = results;
+  //   }
+  //   setCategories(updateCategories);
+  // };
 
-  const findParentCateFromCate = (cate: TCategory, parentCateId: number): TCategory | null => {
-    if (cate.cate_id === parentCateId) {
-      return cate;
-    }
-    if (!cate.childs) return null;
-    for (const childCate of cate.childs) {
-      const foundedParent = findParentCateFromCate(childCate, parentCateId!);
-      if (foundedParent) return foundedParent;
-    }
-    return null;
-  };
+  // const findParentCateFromCate = (cate: TCategory, parentCateId: number): TCategory | null => {
+  //   if (cate.cate_id === parentCateId) {
+  //     return cate;
+  //   }
+  //   if (!cate.childs) return null;
+  //   for (const childCate of cate.childs) {
+  //     const foundedParent = findParentCateFromCate(childCate, parentCateId!);
+  //     if (foundedParent) return foundedParent;
+  //   }
+  //   return null;
+  // };
 
-  const checkIsRootCategory = (id: string, cates: TCategory[]): boolean => {
-    return cates?.some((c) => {
-      if (c.cate_id === Number(id)) {
-        return c.is_container;
-      }
-      if (c.childs) {
-        return checkIsRootCategory(id, c.childs);
-      }
-      return false;
-    });
-  };
+  // const checkIsRootCategory = (id: string, cates: TCategory[]): boolean => {
+  //   return cates?.some((c) => {
+  //     if (c.cate_id === Number(id)) {
+  //       return c.is_container;
+  //     }
+  //     if (c.childs) {
+  //       return checkIsRootCategory(id, c.childs);
+  //     }
+  //     return false;
+  //   });
+  // };
 
   // const [isExtra, isRoot, is_container] = watch(['is_extra', 'is_root', 'is_container']);
 

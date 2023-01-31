@@ -1,13 +1,12 @@
 import { Info } from '@mui/icons-material';
 import { Box, Button, Grid, Stack, Tooltip, Typography } from '@mui/material';
-import categoryApi from 'api/category';
-import EmptyContent from 'components/EmptyContent';
+
 import { CheckBoxField, DraftEditorField } from 'components/form';
 import SeoForm from 'components/form/Seo/SeoForm';
-import Label from 'components/Label';
+
 import ModalForm from 'components/ModalForm/ModalForm';
-import ResoTable from 'components/ResoTable/ResoTable';
-import useExtraCategory from 'hooks/extra-categories/useExtraCategoy';
+
+// import useExtraCategory from 'hooks/extra-categories/useExtraCategoy';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { CreateProductForm, ProductTypeEnum, TProductBase } from 'types/product';
@@ -27,11 +26,11 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
   const { watch } = useFormContext<CreateProductForm>();
 
   const [hasExtra, hasVariant] = watch(['has_extra', 'hasVariant']);
-  const cateId = watch('cat_id');
+  // const cateId = watch('id');
   const productType = watch('product_type');
   const isExtraProduct = productType === ProductTypeEnum.Extra;
 
-  const { data: extras } = useExtraCategory(Number(cateId));
+  // const { data: extras } = useExtraCategory(cateId.toString ?? '');
 
   const productExtraColumns: TTableColumn<TProductBase>[] = [
     {
@@ -90,18 +89,18 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
                           onOk={async () => true}
                           trigger={<Button variant="text">Xem các sản phẩm extra</Button>}
                         >
-                          {extras?.map((categoryExtra, idx) => (
+                          {/* {extras?.map((categoryExtra, idx) => (
                             <Box key={`extra-product-group-${categoryExtra.cate_id}`}>
                               <Stack direction="row" spacing={1} alignItems="center" mb={1}>
                                 <Label color="default">{idx + 1}</Label>
                                 <Typography variant="h6">
-                                  {categoryExtra.extra_cate.cate_name}
+                                  {categoryExtra.extra_cate.name}
                                 </Typography>
                               </Stack>
                               <ResoTable
                                 getData={(params: any) =>
                                   categoryApi.getProductsInCategory(
-                                    categoryExtra.extra_cate.cate_id,
+                                    categoryExtra.extra_cate.id,
                                     params
                                   )
                                 }
@@ -116,7 +115,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
                             </Box>
                           )) ?? (
                             <EmptyContent title="Hiện tại chưa có nhóm extra nào được cấu hình để đi kèm với danh mục đã chọn" />
-                          )}
+                          )} */}
                         </ModalForm>
                       )}
                     </Stack>

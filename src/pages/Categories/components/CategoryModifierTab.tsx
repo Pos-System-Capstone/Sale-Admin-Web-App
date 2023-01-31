@@ -50,7 +50,7 @@ const CategoryModifierTab = (props: Props) => {
   });
   const { enqueueSnackbar } = useSnackbar();
 
-  const { data: modifiers } = useCategoryModifiers(Number(id));
+  const { data: modifiers } = useCategoryModifiers(id!);
   const { mutateAsync: addModifierAsync } = useAddModifier();
   const { mutateAsync: deleteModifierAsync } = useDeleteModifier();
   const { mutateAsync: updateModifierAsync } = useUpdateModifier();
@@ -98,7 +98,7 @@ const CategoryModifierTab = (props: Props) => {
   const onAddModifier = async (values: ModifierForm) => {
     try {
       const data = transformModifier({ ...values, cate_id: Number(id) });
-      await addModifierAsync({ data, cateId: Number(id) });
+      await addModifierAsync({ data, cateId: id! });
       return true;
     } catch (error) {
       enqueueSnackbar((error as any).message, {
@@ -114,7 +114,7 @@ const CategoryModifierTab = (props: Props) => {
       content: 'Xoá tuỳ chỉnh này sẽ tác động tới các sản phẩm đang được áp dụng',
       onOk: async () => {
         try {
-          await deleteModifierAsync({ cateId: Number(id), modifierId: values.id });
+          await deleteModifierAsync({ cateId: id!, modifierId: values.id });
         } catch (error) {
           console.log(`error`, error);
           enqueueSnackbar(error as any, {
@@ -164,7 +164,7 @@ const CategoryModifierTab = (props: Props) => {
                   await updateForm.handleSubmit(
                     (data) => {
                       return updateModifierAsync({
-                        cateId: Number(id),
+                        cateId: id!,
                         data: transformModifier(data),
                         modifierId: modifier.id
                       });

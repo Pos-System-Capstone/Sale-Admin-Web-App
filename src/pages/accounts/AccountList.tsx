@@ -14,9 +14,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { TProductBase } from 'types/product';
-import { deleteProdById, getAllProduct } from '../../redux/product/api';
+import { deleteProdById } from '../../redux/product/api';
 //
 import { accountColumns } from './config';
+import brandApi from 'api/brand';
 
 // ----------------------------------------------------------------------
 
@@ -101,14 +102,14 @@ export default function AccountListPage() {
           <Box sx={{ mb: 2 }}>
             <TabList onChange={handleChangeTab}>
               <Tab label="Tài khoản Brand Admin" value="1" />
-              <Tab label="ài khoản Store Manager" value="2" />
-              <Tab label="ài khoản Store Staff" value="3" />
+              <Tab label="Tài khoản Store Manager" value="2" />
+              <Tab label="Tài khoản Store Staff" value="3" />
             </TabList>
           </Box>
           <ResoTable
             ref={ref}
             pagination
-            getData={getAllProduct}
+            getData={(params: any) => brandApi.getListUserOfBrand(params)}
             onEdit={editProuct}
             onDelete={onDelete}
             columns={accountColumns}

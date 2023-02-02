@@ -18,8 +18,11 @@ import { MIconButton } from '../../components/@material-extend';
 import MyAvatar from '../../components/MyAvatar';
 import MenuPopover from '../../components/MenuPopover';
 import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
+import { getUserInfo } from 'utils/utils';
 
 // ----------------------------------------------------------------------
+
+const userInfoFromLocalStorage = JSON.parse(getUserInfo() ?? '');
 
 const MENU_OPTIONS = [
   {
@@ -30,7 +33,7 @@ const MENU_OPTIONS = [
   {
     label: 'Profile',
     icon: personFill,
-    linkTo: PATH_DASHBOARD.user.profile
+    linkTo: PATH_DASHBOARD.user.profileById(userInfoFromLocalStorage.id.toString())
   },
   {
     label: 'Settings',
@@ -50,6 +53,7 @@ export default function AccountPopover() {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
+    console.log('user ne: ', userInfoFromLocalStorage);
     setOpen(true);
   };
   const handleClose = () => {

@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react';
 // material
 import { Button, Card, Stack } from '@mui/material';
 import storeApi from 'api/store';
-import DeleteConfirmDialog from 'components/DelectConfirmDialog';
+import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 import { SelectField } from 'components/form';
 import Label from 'components/Label';
 import Page from 'components/Page';

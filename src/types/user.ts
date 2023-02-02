@@ -1,43 +1,49 @@
+import { TBrandDetail } from './brand';
+import { TStoreDetail } from './store';
+
 /* eslint-disable prettier/prettier */
 export type TUser = {
-    id: string;
-    username: string;
-    name: string;
-    role: Role;
-    status: UserStatus;
-}
-export enum Role {
-    SystemAdmin = 'SysAdmin',
-    BrandManager = 'BrandManager',
-    BrandAdmin = 'BrandAdmin',
-    StoreManager = 'StoreManager'
+  id: string;
+  username: string;
+  name: string;
+  role: UserRole;
+  status: UserStatus;
+};
+export enum UserRole {
+  SystemAdmin = 'SysAdmin',
+  BrandManager = 'BrandManager',
+  BrandAdmin = 'BrandAdmin',
+  StoreManager = 'StoreManager'
 }
 
 export enum UserStatus {
-    ACTIVE = 'Active',
-    DEACTIVE = 'Deactive'
+  ACTIVE = 'Active',
+  DEACTIVE = 'Deactive'
 }
 export type TUserCreate = {
-    brandId: string;
-    username: string;
-    name: string;
-    password: string;
-    status: string;
-    role: string;
-}
+  brandId: string;
+  username: string;
+  name: string;
+  password: string;
+  status: string;
+  role: string;
+};
+
+export type TUserInfo = TUser & {
+  moreDetail: TStoreDetail | TBrandDetail;
+};
+
 export const CREATE_USER_ROLE_OPTIONS = [
-
-
-    {
-        value: Role.BrandAdmin,
-        label: "BrandAdmin"
-    },
-    {
-        value: Role.BrandManager,
-        label: "BrandManager"
-    },
-    {
-        value: Role.StoreManager,
-        label: "StoreManager"
-    },
+  {
+    value: UserRole.BrandAdmin,
+    label: 'BrandAdmin'
+  },
+  {
+    value: UserRole.BrandManager,
+    label: 'BrandManager'
+  },
+  {
+    value: UserRole.StoreManager,
+    label: 'StoreManager'
+  }
 ];

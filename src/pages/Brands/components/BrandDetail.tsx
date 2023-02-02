@@ -129,37 +129,25 @@ const BrandDetailPage = () => {
       dataIndex: 'index',
       hideInSearch: true
     },
-    // {
-    //   title: 'Hình ảnh',
-    //   dataIndex: 'pic_url',
-    //   hideInSearch: true,
-    //   render: (src, { product_name }: any) => (
-    //     <Avatar
-    //       alt={product_name}
-    //       src={src}
-    //       variant="square"
-    //       style={{ width: '54px', height: '54px' }}
-    //     />
-    //   )
-    // },
     {
       title: 'Tên tài khoản',
       dataIndex: 'username'
     },
     {
       title: 'Họ và tên',
-      dataIndex: 'name'
+      dataIndex: 'name',
+      hideInSearch: true
     },
     {
       title: 'Vị trí',
       dataIndex: 'role',
-      // hideInSearch: true
       render: (type) => <Chip label={type} />
     },
     {
       title: 'Trạng thái',
       dataIndex: 'status',
       width: 150,
+      hideInSearch: true,
       render: (status) => (
         <Label color={status == UserStatus.ACTIVE ? 'primary' : 'default'}>
           {status == UserStatus.ACTIVE ? 'Hoạt động' : 'Ngừng hoạt động'}
@@ -177,7 +165,7 @@ const BrandDetailPage = () => {
       // ],
     }
   ];
-  const [activeTab, setActiveTab] = useState('2');
+  const [activeTab, setActiveTab] = useState('1');
   const [loading, setLoading] = useState(false);
   const handleChangeTab = (_event: React.SyntheticEvent, newValue: string) => {
     setLoading(true);

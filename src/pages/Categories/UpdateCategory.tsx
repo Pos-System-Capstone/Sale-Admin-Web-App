@@ -8,8 +8,6 @@ import { useParams } from 'react-router';
 import CategoryExtraTab from './components/CategoryExtraTab';
 import CategoryInfoTab from './components/CategoryInfoTab';
 import CategoryModifierTab from './components/CategoryModifierTab';
-import { CategoryType } from 'types/category';
-
 interface Props {}
 
 const UpdateCategory = (props: Props) => {
@@ -21,8 +19,7 @@ const UpdateCategory = (props: Props) => {
 
   const { id } = useParams();
 
-  const { data: category, error } = useCategory(Number(id));
-  const isExtra = category?.categoryType === CategoryType.EXTRA;
+  const { data: category, error, isLoading } = useCategory(id!);
   // const isContainer = category?.is_container;
 
   if (error) {
@@ -36,20 +33,26 @@ const UpdateCategory = (props: Props) => {
           <Box>
             <TabList onChange={handleChangeTab}>
               <Tab label="Thông tin chung" value="1" />
-              {!isExtra && <Tab label="Sản phẩm đi kèm" value="2" />}
-              {!isExtra && <Tab label="Tuỳ chỉnh" value="3" />}
+              <Tab label="Sản phẩm trong danh mục" value="2" />
+              <Tab label="Tuỳ chỉnh" value="3" />
             </TabList>
           </Box>
 
           <Stack spacing={2}>
             <TabPanel value="1">
-              <CategoryInfoTab updateMode />
+              <Stack spacing={2}>
+                <CategoryInfoTab category={category} isLoading={isLoading} updateMode />
+              </Stack>
             </TabPanel>
             <TabPanel value="2">
-              <CategoryExtraTab />
+              <Stack spacing={2}>
+                <CategoryExtraTab />
+              </Stack>
             </TabPanel>
             <TabPanel value="3">
-              <CategoryModifierTab />
+              <Stack spacing={2}>
+                <CategoryModifierTab />
+              </Stack>
             </TabPanel>
           </Stack>
         </TabContext>

@@ -1,15 +1,18 @@
 /* eslint-disable camelcase */
 // material
-import { Card, DialogContent, Stack } from '@mui/material';
+import { Card, DialogContent, Stack, Typography } from '@mui/material';
 import storeApi from 'api/store';
 import Page from 'components/Page';
-import ResoDescriptions from 'components/ResoDescriptions';
+import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 import ResoTable from 'components/ResoTable/ResoTable';
+import { useRef } from 'react';
 import { useQuery } from 'react-query';
 // components
-import { useParams } from 'react-router-dom';
-import { TEmployee } from 'types/employee';
-import { TStoreDetail } from 'types/store';
+import Label from 'components/Label';
+import { useNavigate, useParams } from 'react-router-dom';
+import { PATH_DASHBOARD } from 'routes/paths';
+import { EmployeeStatus, TEmployee } from 'types/employee';
+import { StoreStatus, TStoreDetail } from 'types/store';
 import { TTableColumn } from 'types/table';
 
 const StoreDetailPage = () => {
@@ -21,8 +24,10 @@ const StoreDetailPage = () => {
       enabled: Boolean(storeId)
     }
   );
+  const navigate = useNavigate();
+  const tableRef = useRef<any>();
 
-  const storeDetailColumns: TTableColumn<TStoreDetail>[] = [
+  const storeDetailColumns: ResoDescriptionColumnType<TStoreDetail>[] = [
     {
       title: 'STT',
       dataIndex: 'index',
@@ -56,7 +61,14 @@ const StoreDetailPage = () => {
     {
       title: 'Trạng thái',
       dataIndex: 'status',
-      hideInSearch: true
+      hideInSearch: true,
+      render: (status) => {
+        return status === StoreStatus.ACTIVE ? (
+          <Label color="primary">Hoạt động </Label>
+        ) : (
+          <Label color="warning">Không hoạt động</Label>
+        );
+      }
     }
     // {
     //   title: 'Chi tiết',
@@ -95,14 +107,16 @@ const StoreDetailPage = () => {
       hideInSearch: true
     },
     {
-      title: 'Mã code',
-      dataIndex: 'code',
-      hideInSearch: true
-    },
-    {
       title: 'Trạng thái',
       dataIndex: 'status',
-      hideInSearch: true
+      hideInSearch: true,
+      render: (status) => {
+        return status === EmployeeStatus.ACTIVE ? (
+          <Label color="primary">Hoạt động </Label>
+        ) : (
+          <Label color="warning"> Không hoạt động </Label>
+        );
+      }
     }
   ];
 
@@ -120,14 +134,20 @@ const StoreDetailPage = () => {
             />
           </Stack>
         </DialogContent>
+      </Card>
 
+      <Card sx={{ my: 2 }}>
         <Stack spacing={2}>
-          {/* <Typography variant="h5">Danh sách nhân viên</Typography> */}
+          <Typography variant="h5">Danh sách nhân viên</Typography>
           <ResoTable
-            showAction={false}
+            ref={tableRef}
             rowKey="store_id"
             getData={(params: any) => storeApi.getStoreEmployees(storeId ?? '', params)}
             columns={employeeDetailColumns}
+            onDelete={() => {}}
+            onEdit={(employee: TEmployee) => {
+              navigate(`${PATH_DASHBOARD.user.profileById(employee.id)}`);
+            }}
           />
         </Stack>
       </Card>

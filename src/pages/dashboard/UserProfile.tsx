@@ -1,38 +1,29 @@
+import roundAccountBox from '@iconify/icons-ic/round-account-box';
 import { Icon } from '@iconify/react';
 import { capitalCase } from 'change-case';
 import { useEffect, useState } from 'react';
-import heartFill from '@iconify/icons-eva/heart-fill';
-import peopleFill from '@iconify/icons-eva/people-fill';
-import roundPermMedia from '@iconify/icons-ic/round-perm-media';
-import roundAccountBox from '@iconify/icons-ic/round-account-box';
 // material
+import { Box, Card, Container, Tab, Tabs } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Tab, Box, Card, Tabs, Container } from '@mui/material';
 // redux
-import { RootState, useDispatch, useSelector } from '../../redux/store';
 import {
-  getPosts,
-  getGallery,
-  getFriends,
-  getProfile,
   getFollowers,
+  getFriends,
+  getGallery,
+  getPosts,
+  getProfile,
   onToggleFollow
 } from '../../redux/slices/user';
+import { RootState, useDispatch, useSelector } from '../../redux/store';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
 import useAuth from '../../hooks/useAuth';
 import useSettings from '../../hooks/useSettings';
 // components
-import Page from '../../components/Page';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-import {
-  Profile,
-  ProfileCover,
-  ProfileFriends,
-  ProfileGallery,
-  ProfileFollowers
-} from '../../components/_dashboard/user/profile';
+import Page from '../../components/Page';
+import { Profile } from '../../components/_dashboard/user/profile';
 
 // ----------------------------------------------------------------------
 
@@ -58,7 +49,7 @@ export default function UserProfile() {
   const { themeStretch } = useSettings();
   const { user } = useAuth();
   const dispatch = useDispatch();
-  const { myProfile, posts, followers, friends, gallery } = useSelector(
+  const { myProfile, posts } = useSelector(
     (state: RootState) => state.user
   );
 
@@ -77,14 +68,6 @@ export default function UserProfile() {
     setCurrentTab(newValue);
   };
 
-  const handleToggleFollow = (followerId: string) => {
-    dispatch(onToggleFollow(followerId));
-  };
-
-  const handleFindFriends = (value: string) => {
-    setFindFriends(value);
-  };
-
   if (!myProfile) {
     return null;
   }
@@ -93,28 +76,7 @@ export default function UserProfile() {
     {
       value: 'profile',
       icon: <Icon icon={roundAccountBox} width={20} height={20} />,
-      component: <Profile myProfile={myProfile} posts={posts} />
-    },
-    {
-      value: 'followers',
-      icon: <Icon icon={heartFill} width={20} height={20} />,
-      component: <ProfileFollowers followers={followers} onToggleFollow={handleToggleFollow} />
-    },
-    {
-      value: 'friends',
-      icon: <Icon icon={peopleFill} width={20} height={20} />,
-      component: (
-        <ProfileFriends
-          friends={friends}
-          findFriends={findFriends}
-          onFindFriends={handleFindFriends}
-        />
-      )
-    },
-    {
-      value: 'gallery',
-      icon: <Icon icon={roundPermMedia} width={20} height={20} />,
-      component: <ProfileGallery gallery={gallery} />
+      // component: <Profile myProfile={myProfile} posts={} />
     }
   ];
 
@@ -136,8 +98,6 @@ export default function UserProfile() {
             position: 'relative'
           }}
         >
-          <ProfileCover myProfile={myProfile} />
-
           <TabsWrapperStyle>
             <Tabs
               value={currentTab}
@@ -161,7 +121,7 @@ export default function UserProfile() {
 
         {PROFILE_TABS.map((tab) => {
           const isMatched = tab.value === currentTab;
-          return isMatched && <Box key={tab.value}>{tab.component}</Box>;
+          // return isMatched && <Box key={tab.value}>{tab.component}</Box>;
         })}
       </Container>
     </Page>

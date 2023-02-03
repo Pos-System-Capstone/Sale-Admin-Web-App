@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 import { Avatar, Button, Card, Stack } from '@mui/material';
 import categoryApi from 'api/category';
 import CategoryModal from 'components/CategoryModal';
-import DeleteConfirmDialog from 'components/DelectConfirmDialog';
+import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';

@@ -1,70 +1,55 @@
-import { Icon } from '@iconify/react';
-import pinFill from '@iconify/icons-eva/pin-fill';
-import emailFill from '@iconify/icons-eva/email-fill';
-import roundBusinessCenter from '@iconify/icons-ic/round-business-center';
-// material
-import { styled } from '@mui/material/styles';
-import { Link, Card, Typography, CardHeader, Stack } from '@mui/material';
-// @types
-import { Profile } from '../../../../@types/user';
+import { Grid } from '@mui/material';
+import { InputField } from 'components/form';
+import useAuth from 'hooks/useAuth';
+import { TUser } from 'types/user';
 
-// ----------------------------------------------------------------------
+interface Props {
+  updateMode?: boolean;
+  userInfo: TUser | undefined;
+}
 
-const IconStyle = styled(Icon)(({ theme }) => ({
-  width: 20,
-  height: 20,
-  marginTop: 1,
-  flexShrink: 0,
-  marginRight: theme.spacing(2)
-}));
-
-// ----------------------------------------------------------------------
-
-export default function ProfileAbout({ profile }: { profile: Profile }) {
-  const { quote, country, email, role, company, school } = profile;
-
+export default function ProfileAbout({ updateMode, userInfo }: Props) {
+  const { user } = useAuth();
+  // console.log('user ne: ', user);
   return (
-    <Card>
-      <CardHeader title="About" />
-
-      <Stack spacing={2} sx={{ p: 3 }}>
-        <Typography variant="body2">{quote}</Typography>
-
-        <Stack direction="row">
-          <IconStyle icon={pinFill} />
-          <Typography variant="body2">
-            Live at &nbsp;
-            <Link component="span" variant="subtitle2" color="text.primary">
-              {country}
-            </Link>
-          </Typography>
-        </Stack>
-
-        <Stack direction="row">
-          <IconStyle icon={emailFill} />
-          <Typography variant="body2">{email}</Typography>
-        </Stack>
-
-        <Stack direction="row">
-          <IconStyle icon={roundBusinessCenter} />
-          <Typography variant="body2">
-            {role} at &nbsp;
-            <Link component="span" variant="subtitle2" color="text.primary">
-              {company}
-            </Link>
-          </Typography>
-        </Stack>
-
-        <Stack direction="row">
-          <IconStyle icon={roundBusinessCenter} />
-          <Typography variant="body2">
-            Studied at &nbsp;
-            <Link component="span" variant="subtitle2" color="text.primary">
-              {school}
-            </Link>
-          </Typography>
-        </Stack>
-      </Stack>
-    </Card>
+    <Grid container spacing={2}>
+      {/* <Grid item xs={12} sm={12} sx={{ textAlign: 'center' }}>
+        <Box>
+          <UploadImageField.Avatar name="pic_url" label={'Avatar'} />
+        </Box>
+      </Grid> */}
+      <Grid item xs={12} sm={6}>
+        <InputField fullWidth name="name" label="Tên nhân viên" defaultValue={userInfo?.name} />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <InputField fullWidth name="username" label="Tên " defaultValue={userInfo?.username} />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <InputField fullWidth name="role" label="Vị trí" defaultValue={userInfo?.role} />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <InputField fullWidth name="status" label="Trạng thái" defaultValue={userInfo?.status} />
+      </Grid>
+      {/* <Grid item xs={12}>
+        <Controller
+          name="description"
+          render={({ field }) => {
+            return (
+              <DraftEditorField
+                ariaLabel="Mô tả chi tiếtÏ"
+                value={field.value}
+                onChange={field.onChange}
+              />
+            );
+          }}
+        />
+      </Grid> */}
+      {/* {!isExtra && (
+        <Grid item xs={12}>
+          <CheckBoxField name="is_root" label="Đây là Danh mục gốc" />
+        </Grid>
+      )}
+      */}
+    </Grid>
   );
 }

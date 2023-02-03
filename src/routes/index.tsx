@@ -129,6 +129,15 @@ export default function Router() {
           ]
         },
         {
+          path: 'user',
+          children: [
+            {
+              path: ':accountId',
+              children: [{ path: '', element: <UserProfile /> }]
+            }
+          ]
+        },
+        {
           path: 'orders',
           children: [
             { path: '', element: <OrderListPage /> },
@@ -356,3 +365,6 @@ const OverviewDate = Loadable(lazy(() => import('../pages/report/Overview/Overvi
 const OverviewMonth = Loadable(lazy(() => import('../pages/report/Overview/OverviewMonth')));
 const StoreReport = Loadable(lazy(() => import('../pages/report/StoreReport')));
 const HomePage = Loadable(lazy(() => import('../pages/report/Home')));
+
+// user
+const UserProfile = Loadable(lazy(() => import('../components/_dashboard/user/profile/Profile')));

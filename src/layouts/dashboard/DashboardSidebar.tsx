@@ -111,7 +111,6 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
   const { pathname } = useLocation();
   const { user } = useAuth();
   const { storeId } = useParams();
-  console.log('Check Role user', user?.role);
   // const system = useSelector((state: RootState) => state.system);
   // const systems = localStorage.getItem('system');
   const sidebarConfig = useMemo(() => {
@@ -138,18 +137,11 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
     }
     if (firstElementOfPath === ROOTS_DASHBOARD_PROMOTION.split('/')[1])
       return promotionAppSidebarConfig;
-    // if (systems === 'sale') return adminSidebarConfig;
-    // if (systems === 'report') return reportAppSidebarConfig;
-    // if (systems === 'promotion') return promotionAppSidebarConfig;
 
     // if (system === '') {
     //   if (firstElementOfPath === 'dashboard') return adminSidebarConfig;
-    //   if (firstElementOfPath === 'report') return reportAppSidebarConfig;
-    //   if (firstElementOfPath === 'promotion-system') return promotionAppSidebarConfig;
     // } else {
     //   if (system === 'reso-sale') return adminSidebarConfig;
-    //   if (system === 'report-system') return reportAppSidebarConfig;
-    //   if (system === 'promotion-system') return promotionAppSidebarConfig;
     // }
 
     // if (user?.role?.includes('admin')) {

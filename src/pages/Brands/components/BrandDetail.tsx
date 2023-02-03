@@ -24,8 +24,8 @@ import { useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { TBrandDetail } from 'types/brand';
-import { TStore } from 'types/store';
+import { TBrandDetail, BrandStatus } from 'types/brand';
+import { StoreStatus, TStore } from 'types/store';
 import { TTableColumn } from 'types/table';
 import { TUser, TUserCreate, UserStatus } from 'types/user';
 import AddAccountModal from './AddAccountModel';
@@ -69,7 +69,14 @@ const BrandDetailPage = () => {
     },
     {
       title: 'Trạng thái',
-      dataIndex: 'status'
+      dataIndex: 'status',
+      render: (status) => {
+        return status === BrandStatus.ACTIVE ? (
+          <Label color="primary">Hoạt động </Label>
+        ) : (
+          <Label color="warning"> Không hoạt động </Label>
+        );
+      }
     },
     {
       title: 'Số lượng cửa hàng ',
@@ -105,7 +112,14 @@ const BrandDetailPage = () => {
     {
       title: 'Trạng thái',
       dataIndex: 'status',
-      hideInSearch: true
+      hideInSearch: true,
+      render: (status) => {
+        return status === StoreStatus.ACTIVE ? (
+          <Label color="primary">Hoạt động </Label>
+        ) : (
+          <Label color="warning"> Không hoạt động </Label>
+        );
+      }
     },
     {
       title: 'Chi tiết',
@@ -129,37 +143,25 @@ const BrandDetailPage = () => {
       dataIndex: 'index',
       hideInSearch: true
     },
-    // {
-    //   title: 'Hình ảnh',
-    //   dataIndex: 'pic_url',
-    //   hideInSearch: true,
-    //   render: (src, { product_name }: any) => (
-    //     <Avatar
-    //       alt={product_name}
-    //       src={src}
-    //       variant="square"
-    //       style={{ width: '54px', height: '54px' }}
-    //     />
-    //   )
-    // },
     {
       title: 'Tên tài khoản',
       dataIndex: 'username'
     },
     {
       title: 'Họ và tên',
-      dataIndex: 'name'
+      dataIndex: 'name',
+      hideInSearch: true
     },
     {
       title: 'Vị trí',
       dataIndex: 'role',
-      // hideInSearch: true
       render: (type) => <Chip label={type} />
     },
     {
       title: 'Trạng thái',
       dataIndex: 'status',
       width: 150,
+      hideInSearch: true,
       render: (status) => (
         <Label color={status == UserStatus.ACTIVE ? 'primary' : 'default'}>
           {status == UserStatus.ACTIVE ? 'Hoạt động' : 'Ngừng hoạt động'}
@@ -177,7 +179,7 @@ const BrandDetailPage = () => {
       // ],
     }
   ];
-  const [activeTab, setActiveTab] = useState('2');
+  const [activeTab, setActiveTab] = useState('1');
   const [loading, setLoading] = useState(false);
   const handleChangeTab = (_event: React.SyntheticEvent, newValue: string) => {
     setLoading(true);

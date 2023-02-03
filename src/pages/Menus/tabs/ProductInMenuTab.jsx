@@ -3,7 +3,7 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 import { Avatar, Box, Button, Card, Typography } from '@mui/material';
 import { useDebounceFn } from 'ahooks';
-import DeleteConfirmDialog from 'components/DelectConfirmDialog';
+import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
 import Label from 'components/Label';
 import ResoTable from 'components/ResoTable/ResoTable';

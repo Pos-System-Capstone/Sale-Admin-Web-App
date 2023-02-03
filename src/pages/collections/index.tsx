@@ -2,7 +2,7 @@
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 import { Button, Card, Stack } from '@mui/material';
-import DeleteConfirmDialog from 'components/DelectConfirmDialog';
+import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 // components
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';

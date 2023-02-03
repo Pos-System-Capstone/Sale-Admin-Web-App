@@ -1,5 +1,6 @@
 import { Grid } from '@mui/material';
 import { InputField } from 'components/form';
+import useAuth from 'hooks/useAuth';
 import { TUser } from 'types/user';
 
 interface Props {
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export default function ProfileAbout({ updateMode, userInfo }: Props) {
+  const { user } = useAuth();
+  // console.log('user ne: ', user);
   return (
     <Grid container spacing={2}>
       {/* <Grid item xs={12} sm={12} sx={{ textAlign: 'center' }}>

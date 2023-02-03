@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { PATH_STORE_APP } from 'routes/storeAppPaths';
+import { getUserInfo } from 'utils/utils';
 import SvgIconStyle from '../../components/SvgIconStyle';
 import { PATH_DASHBOARD } from '../../routes/paths';
 
@@ -34,6 +35,8 @@ const ICONS = {
   product: getIcon('ic_product'),
   collection: getIcon('ic_collection')
 };
+
+const userInfoFromLocalStorage = JSON.parse(getUserInfo() ?? '');
 
 // SYSTEM ADMIN SIDEBAR CONFIG
 export const systemAdminSidebarConfig = [
@@ -80,7 +83,7 @@ export const brandManagerSidebarConfig = [
     items: [
       {
         title: 'Chi tiết thương hiệu',
-        path: PATH_DASHBOARD.brand.root,
+        path: PATH_DASHBOARD.brand.brandById(userInfoFromLocalStorage?.brandId),
         icon: ICONS.store
       },
       {

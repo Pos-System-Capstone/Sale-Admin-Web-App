@@ -25,7 +25,6 @@ export default function Profile({ updateMode }: Props) {
   };
 
   const { data: userInfo, isLoading, error } = useQuery('user', getUserInfo);
-  console.log('user info ne: ', userInfo);
 
   const handleSubmitUpdateUserInfoForm = () => {};
 

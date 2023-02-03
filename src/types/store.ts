@@ -1,8 +1,8 @@
 import { Menu } from './menu';
 
 export enum StoreStatus {
-  ACTIVE= 'Active',
-  DEACTIVE= 'Deactive'
+  ACTIVE = 'Active',
+  DEACTIVE = 'Deactive'
 }
 
 export type TStore = {

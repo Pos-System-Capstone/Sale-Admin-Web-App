@@ -24,8 +24,8 @@ import { useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { TBrandDetail } from 'types/brand';
-import { TStore } from 'types/store';
+import { TBrandDetail, BrandStatus } from 'types/brand';
+import { StoreStatus, TStore } from 'types/store';
 import { TTableColumn } from 'types/table';
 import { TUser, TUserCreate, UserStatus } from 'types/user';
 import AddAccountModal from './AddAccountModel';
@@ -69,7 +69,14 @@ const BrandDetailPage = () => {
     },
     {
       title: 'Trạng thái',
-      dataIndex: 'status'
+      dataIndex: 'status',
+      render: (status) => {
+        return status === BrandStatus.ACTIVE ? (
+          <Label color="primary">Hoạt động </Label>
+        ) : (
+          <Label color="warning"> Không hoạt động </Label>
+        );
+      }
     },
     {
       title: 'Số lượng cửa hàng ',
@@ -105,7 +112,14 @@ const BrandDetailPage = () => {
     {
       title: 'Trạng thái',
       dataIndex: 'status',
-      hideInSearch: true
+      hideInSearch: true,
+      render: (status) => {
+        return status === StoreStatus.ACTIVE ? (
+          <Label color="primary">Hoạt động </Label>
+        ) : (
+          <Label color="warning"> Không hoạt động </Label>
+        );
+      }
     },
     {
       title: 'Chi tiết',

@@ -152,7 +152,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
       username,
       password
     });
-    const { accessToken, id, name, role, status } = response.data;
+    const { accessToken, id, name, role, status, brandId, storeId } = response.data;
     console.log('response', response.data);
     console.log('id', id);
     console.log('role', role);
@@ -163,7 +163,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
       id: id,
       name: name,
       displayName: name,
-      role: role
+      role: role,
+      brandId: brandId,
+      storeId: storeId
       // roles: apps?.find(
       //   ({ name }: { name: string }) => name === process.env.REACT_APP_IDENTITY_API_NAME
       // ).role

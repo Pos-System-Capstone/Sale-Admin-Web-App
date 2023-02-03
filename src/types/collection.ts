@@ -1,18 +1,31 @@
+// export type TCollection = {
+//   id: number;
+//   name: string;
+//   name_eng: string;
+//   description: string;
+//   description_eng: string;
+//   seo: string;
+//   seodescription: string;
+//   seokeyword: string;
+//   link: string;
+//   banner_url: string;
+//   brand_id: number;
+//   type: CollectionTypeEnum;
+//   position: number;
+// };
+
 export type TCollection = {
-  id: number;
+  id: string;
   name: string;
-  name_eng: string;
+  code: string;
+  status: CollectionStatus;
+  picUrl: string;
   description: string;
-  description_eng: string;
-  seo: string;
-  seodescription: string;
-  seokeyword: string;
-  link: string;
-  banner_url: string;
-  brand_id: number;
-  type: CollectionTypeEnum;
-  position: number;
 };
+export enum CollectionStatus {
+  ACTIVE = 'Active',
+  DEACTIVE = 'Deactive'
+}
 
 export enum CollectionTypeEnum {
   MenuCollection = 0,

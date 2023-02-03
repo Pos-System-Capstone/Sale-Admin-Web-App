@@ -1,12 +1,15 @@
+import { TCollection } from 'types/collection';
 import { TProductCollection } from 'types/product-collection';
 import { BaseReponse } from 'types/response';
 import request from 'utils/axios';
+import { generateAPIWithPaging } from './utils';
 
-const getProductsInCollection = (collectionId: number, params?: any) =>
-  request.get<BaseReponse<TProductCollection>>(`/admin/collections/${collectionId}/products`);
+const getProductsInCollection = (collectionId: string, params?: any) =>
+  request.get<BaseReponse<TProductCollection>>(`/collections/${collectionId}/products`);
 
-const productInCollectionApi = {
+const collectionApi = {
+  ...generateAPIWithPaging<TCollection>('categories'),
   getProductsInCollection
 };
 
-export default productInCollectionApi;
+export default collectionApi;

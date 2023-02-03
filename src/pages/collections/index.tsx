@@ -14,7 +14,7 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { deleteCollection, getCollections } from 'redux/collections/api';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { CollectionTypeEnum, TCollection } from 'types/collection';
+import { CollectionStatus, CollectionTypeEnum, TCollection } from 'types/collection';
 import { TTableColumn } from 'types/table';
 
 const CollectionListPage = () => {
@@ -27,28 +27,28 @@ const CollectionListPage = () => {
 
   const columns: TTableColumn<TCollection>[] = [
     {
-      title: translate('collections.table.collectionName'),
+      title: 'Tên',
       dataIndex: 'name',
       fixed: 'left'
     },
     {
-      title: translate('collections.table.type'),
-      dataIndex: 'type',
+      title: 'Trạng thái',
+      dataIndex: 'status',
       valueType: 'select',
       valueEnum: [
         {
-          label: 'Nhóm combo',
-          value: CollectionTypeEnum.GroupCollection
+          label: 'Hoạt đọng',
+          value: CollectionStatus.ACTIVE
         },
         {
-          label: 'Bộ sưu tập',
-          value: CollectionTypeEnum.MenuCollection
+          label: 'Không Hoạt đọng',
+          value: CollectionStatus.DEACTIVE
         }
       ]
     },
     {
-      title: translate('collections.table.position'),
-      dataIndex: 'position',
+      title: 'Mã',
+      dataIndex: 'code',
       hideInSearch: true
     }
   ];

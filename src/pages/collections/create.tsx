@@ -19,7 +19,7 @@ import { useSearchParams } from 'react-router-dom';
 import { createCollection } from 'redux/collections/api';
 import { RootState } from 'redux/store';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { CollectionTypeEnum, TCollection } from 'types/collection';
+import { CollectionStatus, CollectionTypeEnum, TCollection } from 'types/collection';
 import * as yup from 'yup';
 import AddProductTable from './AddProductTable';
 
@@ -56,11 +56,10 @@ const CreateCollectionPage = () => {
   const form = useForm<Partial<TCollection & { products: any[] }>>({
     defaultValues: {
       name: '',
-      banner_url: '',
+      picUrl: '',
       description: '',
       products: [],
-      type,
-      position: 0
+      status: CollectionStatus.DEACTIVE
     },
     resolver: yupResolver(collectionSchema(translate))
   });

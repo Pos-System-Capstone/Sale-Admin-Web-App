@@ -49,16 +49,16 @@ const ModalCollectionForm = ({ trigger, onSubmit, selected = [] }: Props) => {
       fixed: 'left'
     },
     {
-      title: translate('combos.table.collectionNameEn'),
-      dataIndex: 'name_eng',
+      title: 'Mã Code',
+      dataIndex: 'code',
       fixed: 'left',
       hideInSearch: true
-    },
-    {
-      title: translate('combos.table.position'),
-      dataIndex: 'position',
-      hideInSearch: true
     }
+    // {
+    //   title: translate('combos.table.position'),
+    //   dataIndex: 'position',
+    //   hideInSearch: true
+    // }
   ];
 
   return (

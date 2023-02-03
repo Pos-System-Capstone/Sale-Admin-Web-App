@@ -32,6 +32,8 @@ const updateModifiersOfCategory = (
 const deleteModifiersOfCategory = (catId: string, modifierId: number) =>
   request.delete<number>(`/categories/${catId}/modifiers/${modifierId}`);
 
+const getCategoryDetails = (catId: string) => request.get<TCategory>(`/categories/${catId}`);
+
 const categoryApi = {
   ...generateAPIWithPaging<TCategory>('categories'),
   getExtraCategoriesFromCateId,
@@ -40,7 +42,8 @@ const categoryApi = {
   getChildByCategoryId,
   updateModifiersOfCategory,
   deleteModifiersOfCategory,
-  getProductsInCategory
+  getProductsInCategory,
+  getCategoryDetails
 };
 
 export default categoryApi;

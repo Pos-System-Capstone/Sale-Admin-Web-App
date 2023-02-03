@@ -44,7 +44,7 @@ const UpdateCollectionPage = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const { data: collection } = useQuery(['colections', Number(id)], () =>
-    getCollectionById(Number(id)).then((res) => res.data)
+    getCollectionById(id!).then((res) => res.data)
   );
   const form = useForm<Partial<TCollection>>({
     defaultValues: {
@@ -59,7 +59,7 @@ const UpdateCollectionPage = () => {
   }, [collection]);
 
   const onUpdateCollection = (values: TCollection) =>
-    updateCollection(+id!, values)
+    updateCollection(id!, values)
       .then(() =>
         enqueueSnackbar(translate('common.200'), {
           variant: 'success'

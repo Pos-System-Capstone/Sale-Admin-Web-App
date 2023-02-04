@@ -101,7 +101,10 @@ export default function Router() {
             { path: '', element: <BrandListPage /> },
             {
               path: ':brandId',
-              children: [{ path: '', element: <BrandDetail /> }]
+              children: [
+                { path: '', element: <BrandDetail /> },
+                { path: 'stores', element: <StoreOfBrandList /> }
+              ]
             },
             {
               path: 'new',
@@ -333,6 +336,7 @@ const UpdateCollectionPage = Loadable(lazy(() => import('../pages/collections/up
 const CreateCollectionPage = Loadable(lazy(() => import('../pages/collections/create')));
 
 // Store
+const StoreOfBrandList = Loadable(lazy(() => import('../pages/Stores/StoresOfBrandList')));
 const CreateStorePage = Loadable(lazy(() => import('../pages/Stores/create')));
 const UpdateStorePage = Loadable(lazy(() => import('../pages/Stores/update')));
 

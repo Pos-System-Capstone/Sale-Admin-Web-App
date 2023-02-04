@@ -1,4 +1,4 @@
-import { TBrand, TBrandDetail, TNewBrandCreate } from 'types/brand';
+import { TBrand, TBrandDetail, TBrandUpdate, TNewBrandCreate } from 'types/brand';
 import { BaseReponse } from 'types/response';
 import { TStore } from 'types/store';
 import { TUser, TUserCreate } from 'types/user';
@@ -21,12 +21,17 @@ const createNewBrand = (data: TNewBrandCreate) => {
   return requestWebAdmin.post<BaseReponse<TBrandDetail>>('brands', data);
 };
 
+const updateBrandInformation = (brandId: string, values: TBrandUpdate) => {
+  return requestWebAdmin.put<BaseReponse<TBrandDetail>>(`brands/${brandId}`, values);
+};
+
 const brandApi = {
   getBrandDetail,
   getStoreOfBrand,
   getListUserOfBrand,
   createUserOfBrand,
   createNewBrand,
+  updateBrandInformation,
   ...generateAPIWithPaging<TBrand>('brands')
 };
 

@@ -72,9 +72,9 @@ export const brandManagerSidebarConfig = [
     subheader: 'Dashboard',
     items: [
       {
-        title: 'Tổng quan',
-        path: PATH_DASHBOARD.general.app,
-        icon: ICONS.dashboard
+        title: 'Chi tiết thương hiệu',
+        path: PATH_DASHBOARD.brand.brandById(userInfoFromLocalStorage?.brandId),
+        icon: ICONS.tag
       }
     ]
   },
@@ -82,8 +82,8 @@ export const brandManagerSidebarConfig = [
     subheader: 'Quản lý thương hiệu',
     items: [
       {
-        title: 'Chi tiết thương hiệu',
-        path: PATH_DASHBOARD.brand.brandById(userInfoFromLocalStorage?.brandId),
+        title: 'Danh sách cửa hàng',
+        path: PATH_DASHBOARD.brand.storesInBrand(userInfoFromLocalStorage?.brandId),
         icon: ICONS.store
       },
       {
@@ -97,7 +97,7 @@ export const brandManagerSidebarConfig = [
         icon: ICONS.order
       }
     ]
-  },
+  }
   // {
   //   subheader: 'menu-subheader',
   //   items: [
@@ -150,21 +150,21 @@ export const brandManagerSidebarConfig = [
   //     }
   //   ]
   // },
-  {
-    subheader: 'Quản lý cửa hàng',
-    items: [
-      {
-        title: 'store',
-        path: PATH_DASHBOARD.stores.root,
-        icon: ICONS.store
-      },
-      {
-        title: 'log',
-        path: PATH_DASHBOARD.log.root,
-        icon: ICONS.tag
-      }
-    ]
-  }
+  // {
+  //   subheader: 'Quản lý cửa hàng',
+  //   items: [
+  //     {
+  //       title: 'store',
+  //       path: PATH_DASHBOARD.stores.root,
+  //       icon: ICONS.store
+  //     },
+  //     {
+  //       title: 'log',
+  //       path: PATH_DASHBOARD.log.root,
+  //       icon: ICONS.tag
+  //     }
+  //   ]
+  // }
 ];
 export const brandAdminSidebarConfig = [
   // {

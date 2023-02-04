@@ -15,6 +15,16 @@ export type TStore = {
   status: StoreStatus;
 };
 
+export type TStoreCreate = {
+  brandId: string;
+  name: string;
+  shortName: string;
+  email: string;
+  phone: string;
+  code: string;
+  address: string;
+};
+
 export type TStoreDetail = {
   id: string;
   brandId: string;

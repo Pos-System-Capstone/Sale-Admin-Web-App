@@ -4,7 +4,7 @@ import { BrandStatus, TBrandDetail } from 'types/brand';
 
 type Props = {
   currentBrandInformation: TBrandDetail | undefined;
-  onFinish: (values: any) => Promise<any>;
+  onFinish: () => void;
 };
 
 function UpdateBrandInformationForm({ currentBrandInformation, onFinish }: Props) {

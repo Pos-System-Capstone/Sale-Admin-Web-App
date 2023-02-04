@@ -1,7 +1,8 @@
 import { Stack } from '@mui/material';
 import brandApi from 'api/brand';
+import { UpdateConfirmDialog } from 'components/DeleteConfirmDialog';
 import { useSnackbar } from 'notistack';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { TBrandDetail, TBrandUpdate } from 'types/brand';
@@ -14,7 +15,7 @@ type Props = {
 
 const UpdateBrandInformation = ({ currentBrandInformation, onUpdateFormSuccessful }: Props) => {
   const { enqueueSnackbar } = useSnackbar();
-  const navigate = useNavigate();
+  const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false);
 
   const updateBrandForm = useForm<TBrandUpdate>({
     defaultValues: {
@@ -32,7 +33,7 @@ const UpdateBrandInformation = ({ currentBrandInformation, onUpdateFormSuccessfu
   }, [currentBrandInformation, updateBrandForm]);
 
   const onSubmitBrandInformationToUpdate = (values: TBrandUpdate) => {
-    console.log('values ne: ', values);
+    setIsOpenConfirmDialog(!isOpenConfirmDialog);
     return brandApi
       .updateBrandInformation(currentBrandInformation ? currentBrandInformation.id : '', values)
       .then(() => {
@@ -53,7 +54,14 @@ const UpdateBrandInformation = ({ currentBrandInformation, onUpdateFormSuccessfu
       <FormProvider {...updateBrandForm}>
         <UpdateBrandInformationForm
           currentBrandInformation={currentBrandInformation}
-          onFinish={updateBrandForm.handleSubmit(onSubmitBrandInformationToUpdate)}
+          onFinish={() => setIsOpenConfirmDialog(true)}
+        />
+        <UpdateConfirmDialog
+          title={'Xác nhận update thông tin'}
+          description={'Bạn chắc chắn muốn cập nhật thông tin ?'}
+          open={isOpenConfirmDialog}
+          onClose={() => setIsOpenConfirmDialog(false)}
+          onUpdate={updateBrandForm.handleSubmit(onSubmitBrandInformationToUpdate)}
         />
       </FormProvider>
     </Stack>

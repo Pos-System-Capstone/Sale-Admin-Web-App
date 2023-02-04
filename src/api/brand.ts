@@ -1,6 +1,6 @@
 import { TBrand, TBrandDetail, TBrandUpdate, TNewBrandCreate } from 'types/brand';
 import { BaseReponse } from 'types/response';
-import { TStore } from 'types/store';
+import { TStore, TStoreCreate, TStoreDetail } from 'types/store';
 import { TUser, TUserCreate } from 'types/user';
 import requestWebAdmin from 'utils/axios';
 import { generateAPIWithPaging } from './utils';
@@ -25,6 +25,10 @@ const updateBrandInformation = (brandId: string, values: TBrandUpdate) => {
   return requestWebAdmin.put<BaseReponse<TBrandDetail>>(`brands/${brandId}`, values);
 };
 
+const createNewBrandStore = (data: TStoreCreate) => {
+  return requestWebAdmin.post<BaseReponse<TStoreDetail>>('stores', data);
+};
+
 const brandApi = {
   getBrandDetail,
   getStoreOfBrand,
@@ -32,6 +36,7 @@ const brandApi = {
   createUserOfBrand,
   createNewBrand,
   updateBrandInformation,
+  createNewBrandStore,
   ...generateAPIWithPaging<TBrand>('brands')
 };
 

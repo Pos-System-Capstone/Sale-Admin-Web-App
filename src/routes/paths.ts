@@ -43,7 +43,8 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/brands'),
     list: path(ROOTS_DASHBOARD, '/brands/'),
     brandById: (id: any) => path(ROOTS_DASHBOARD, `/brands/${id}`),
-    storesInBrand: (id: any) => path(ROOTS_DASHBOARD, `/brands/${id}/stores`)
+    storesInBrand: (id: any) => path(ROOTS_DASHBOARD, `/brands/${id}/stores`),
+    newStore: (id: any) => path(ROOTS_DASHBOARD, `/brands/${id}/stores/new`)
     // all: path(ROOTS_DASHBOARD, '/mail/all')
   },
   mail: {

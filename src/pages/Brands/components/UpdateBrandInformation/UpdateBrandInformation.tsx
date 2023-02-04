@@ -16,7 +16,6 @@ type Props = {
 const UpdateBrandInformation = ({ currentBrandInformation, onUpdateFormSuccessful }: Props) => {
   const { enqueueSnackbar } = useSnackbar();
   const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false);
-  const navigate = useNavigate();
 
   const updateBrandForm = useForm<TBrandUpdate>({
     defaultValues: {
@@ -34,7 +33,6 @@ const UpdateBrandInformation = ({ currentBrandInformation, onUpdateFormSuccessfu
   }, [currentBrandInformation, updateBrandForm]);
 
   const onSubmitBrandInformationToUpdate = (values: TBrandUpdate) => {
-    // console.log('values ne: ', values);
     setIsOpenConfirmDialog(!isOpenConfirmDialog);
     return brandApi
       .updateBrandInformation(currentBrandInformation ? currentBrandInformation.id : '', values)

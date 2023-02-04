@@ -38,10 +38,8 @@ const CreateStorePage = () => {
     }
   });
   const onSubmitCreateNewStoreOfBrand = (values: TStoreCreate) => {
-    console.log('value ne:', values);
     const dataToUpdate = { ...values };
     dataToUpdate.brandId = brandId ?? '';
-    console.log('value update ne:', dataToUpdate);
     brandApi
       .createNewBrandStore(dataToUpdate)
       .then((res) => {
@@ -49,7 +47,6 @@ const CreateStorePage = () => {
           variant: 'success'
         });
         navigate(-1);
-        console.log(res);
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {

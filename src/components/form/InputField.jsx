@@ -13,13 +13,14 @@ const FormInput = ({ name, label = '', rules = null, defaultValue = '', ...props
           {...field}
           {...props}
           error={Boolean(fieldState.error)}
-          helperText={fieldState.error ? fieldState.error.message : props.helperText}
+          helpertext={fieldState.error ? fieldState.error.message : props.helperText}
           label={label}
+          placeholder={defaultValue}
+          defaultValue={defaultValue}
         />
       )}
       name={name}
       control={control}
-      defaultValue={defaultValue}
       rules={rules}
     />
   );

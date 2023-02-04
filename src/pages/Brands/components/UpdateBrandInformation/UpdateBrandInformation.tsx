@@ -1,0 +1,63 @@
+import { Stack } from '@mui/material';
+import brandApi from 'api/brand';
+import { useSnackbar } from 'notistack';
+import { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import { TBrandDetail, TBrandUpdate } from 'types/brand';
+import UpdateBrandInformationForm from './UpdateBrandInformationForm';
+
+type Props = {
+  currentBrandInformation: TBrandDetail | undefined;
+  onUpdateFormSuccessful: () => void;
+};
+
+const UpdateBrandInformation = ({ currentBrandInformation, onUpdateFormSuccessful }: Props) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
+
+  const updateBrandForm = useForm<TBrandUpdate>({
+    defaultValues: {
+      name: '',
+      email: '',
+      address: '',
+      phone: '',
+      picUrl: ''
+    }
+  });
+
+  useEffect(() => {
+    if (!currentBrandInformation) return;
+    updateBrandForm.reset({ ...currentBrandInformation });
+  }, [currentBrandInformation, updateBrandForm]);
+
+  const onSubmitBrandInformationToUpdate = (values: TBrandUpdate) => {
+    console.log('values ne: ', values);
+    return brandApi
+      .updateBrandInformation(currentBrandInformation ? currentBrandInformation.id : '', values)
+      .then(() => {
+        enqueueSnackbar(`Tạo thành công`, {
+          variant: 'success'
+        });
+        onUpdateFormSuccessful();
+      })
+      .catch((err) => {
+        enqueueSnackbar('Xảy ra lỗi, thử lại sau!', {
+          variant: 'error'
+        });
+      });
+  };
+
+  return (
+    <Stack spacing={2}>
+      <FormProvider {...updateBrandForm}>
+        <UpdateBrandInformationForm
+          currentBrandInformation={currentBrandInformation}
+          onFinish={updateBrandForm.handleSubmit(onSubmitBrandInformationToUpdate)}
+        />
+      </FormProvider>
+    </Stack>
+  );
+};
+
+export default UpdateBrandInformation;

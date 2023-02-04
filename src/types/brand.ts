@@ -22,4 +22,6 @@ export type TNewBrandCreate = {
   picUrl: string;
 };
 
+export type TBrandUpdate = TNewBrandCreate;
+
 export type TBrandDetail = TBrand;

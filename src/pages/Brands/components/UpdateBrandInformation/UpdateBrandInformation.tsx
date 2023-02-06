@@ -4,7 +4,6 @@ import { UpdateConfirmDialog } from 'components/DeleteConfirmDialog';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
 import { TBrandDetail, TBrandUpdate } from 'types/brand';
 import UpdateBrandInformationForm from './UpdateBrandInformationForm';
 

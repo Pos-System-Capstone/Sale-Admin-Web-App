@@ -82,6 +82,10 @@ export default function Login() {
             <strong>&nbsp;1234567</strong>
           </Alert>
           <Alert severity="info" sx={{ mb: 3 }}>
+            Test Store Manager : <strong>katinatstoremanager</strong> / password :
+            <strong>&nbsp;1234567</strong>
+          </Alert>
+          <Alert severity="info" sx={{ mb: 3 }}>
             Test Brand Admin : <strong>KatinatAdmin</strong> / password :
             <strong>&nbsp;1234567</strong>
           </Alert>

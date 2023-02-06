@@ -123,7 +123,10 @@ export default function Router() {
           children: [
             {
               path: ':storeId',
-              children: [{ path: '', element: <StoreDetail /> }]
+              children: [
+                { path: '', element: <StoreDetail /> },
+                { path: 'accounts', element: <StoreEmployeeList /> }
+              ]
             }
           ]
         },
@@ -347,6 +350,7 @@ const CreateStorePage = Loadable(
   lazy(() => import('../pages/Stores/components/CreateNewStore/CreateNewStore'))
 );
 const UpdateStorePage = Loadable(lazy(() => import('../pages/Stores/update')));
+const StoreEmployeeList = Loadable(lazy(() => import('../pages/accounts/AccountList')));
 
 // Store-Order
 const OrderListPage = Loadable(lazy(() => import('../pages/Orders/OrderList')));

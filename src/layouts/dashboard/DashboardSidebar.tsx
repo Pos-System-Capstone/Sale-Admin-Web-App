@@ -24,7 +24,8 @@ import {
   storeAppSidebarConfig,
   brandManagerSidebarConfig,
   systemAdminSidebarConfig,
-  brandAdminSidebarConfig
+  brandAdminSidebarConfig,
+  storeManagerSidebarConfig
 } from './SidebarConfig';
 import { Role } from 'utils/role';
 
@@ -128,7 +129,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
       return brandAdminSidebarConfig;
     }
     if (user?.role.includes(Role.StoreManager)) {
-      return storeAppSidebarConfig;
+      return storeManagerSidebarConfig;
     }
     // if (firstElementOfPath === ROOTS_DASHBOARD_SALE.split('/')[1]) return adminSidebarConfig;
     if (firstElementOfPath === ROOTS_DASHBOARD_REPORT.split('/')[1]) {

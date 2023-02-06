@@ -9,7 +9,9 @@ import { Box, Typography, Paper } from '@mui/material';
 import { SxProps } from '@mui/system';
 // utils
 import { fData } from 'utils/formatNumber';
-import { uploadfile } from 'redux/file/api';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+
+import { storage } from 'config';
 import { useSnackbar } from 'notistack';
 
 // ----------------------------------------------------------------------
@@ -84,29 +86,69 @@ export default function UploadAvatar({
   ...other
 }: UploadAvatarProps) {
   const { enqueueSnackbar } = useSnackbar();
-
   const onDrop = useCallback(
     async (acceptedFiles) => {
+      console.log('acceptedFiles', acceptedFiles);
       const file = acceptedFiles[0];
-      if (file) {
-        // upload image
-        const formData = new FormData();
-        formData.append('file', file);
-        try {
-          const res = await uploadfile(formData);
-          if (onFormChange) {
-            onFormChange(res.data);
-          }
-        } catch (err) {
-          enqueueSnackbar((err as any).message ?? 'Có lỗi', {
+      const storageRef = ref(storage, `/files/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+
+          // update progress
+          // setPercent(percent);
+        },
+        (err) => {
+          enqueueSnackbar(err.message ?? 'Có lỗi', {
             variant: 'error'
           });
           console.log(`err`, err);
+        },
+        () => {
+          // download url
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            console.log(url);
+            if (onFormChange) {
+              onFormChange(url);
+            }
+          });
         }
-      }
+      );
     },
-    [onFormChange, enqueueSnackbar]
+    [onFormChange]
   );
+
+  // const onUploadFile = (e, onFormChange) => {
+  //   setIsUploading(true);
+  //   console.log('e', e);
+  //   const file = e.target.files[0];
+  //   const storageRef = ref(storage, `/files/${file.name}`);
+  //   const uploadTask = uploadBytesResumable(storageRef, file);
+  //   uploadTask.on(
+  //     'state_changed',
+  //     (snapshot) => {
+  //       const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+
+  //       // update progress
+  //       // setPercent(percent);
+  //     },
+  //     (err) => {
+  //       enqueueSnackbar(err.message ?? 'Có lỗi', {
+  //         variant: 'error'
+  //       });
+  //       console.log(`err`, err);
+  //     },
+  //     () => {
+  //       // download url
+  //       getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+  //         console.log(url);
+  //         onFormChange(url);
+  //       });
+  //     }
+  //   );
+  // };
 
   const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone({
     multiple: false,

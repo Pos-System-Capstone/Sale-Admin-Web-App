@@ -1,9 +1,9 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+// import { yupResolver } from '@hookform/resolvers/yup';
 import { Card, Box, CircularProgress, Button, Stack } from '@mui/material';
 import categoryApi from 'api/category';
 import CategoryForm from 'components/form/common/Category/CategoryForm';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
-import { EditorState } from 'draft-js';
+// import { EditorState } from 'draft-js';
 
 import useDashboard from 'hooks/useDashboard';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
@@ -34,9 +34,9 @@ const CategoryInfoTab = ({ updateMode, category, isLoading }: Props) => {
   // const { data: category, isLoading } = useCategory(id!);
 
   const updateCategoryForm = useForm<TCategory>({
-    resolver: yupResolver(schema),
+    // resolver: yupResolver(schema),
     defaultValues: {
-      description: EditorState.createEmpty().toString()
+      // description: EditorState.createEmpty().toString()
     }
   });
 

@@ -1,11 +1,8 @@
-import { useEffect } from 'react';
 import { Box, Grid } from '@mui/material';
 import { DraftEditorField, InputField, SelectField, UploadImageField } from 'components/form';
 import useLocales from 'hooks/useLocales';
 import { Controller, useFormContext } from 'react-hook-form';
-import useCategories from 'hooks/categories/useCategories';
-import { CREATE_CATEGORY_TYPE_OPTIONS, TCategory } from 'types/category';
-import { useState } from 'react';
+import { CREATE_CATEGORY_TYPE_OPTIONS } from 'types/category';
 
 interface Props {
   updateMode?: boolean;
@@ -14,13 +11,6 @@ interface Props {
 const CategoryForm = ({ updateMode }: Props) => {
   const { translate } = useLocales();
   const { watch } = useFormContext();
-  const [categories, setCategories] = useState<TCategory[]>([]);
-
-  const { data } = useCategories({ 'only-root': true });
-
-  useEffect(() => {
-    setCategories(data ?? []);
-  }, [data]);
 
   // const categoryTreeData = useMemo<RenderTree[]>(() => {
   //   const generateTree: any = (category: TCategory) => {
@@ -92,14 +82,14 @@ const CategoryForm = ({ updateMode }: Props) => {
     <Grid container spacing={2}>
       <Grid item xs={12} sm={12} sx={{ textAlign: 'center' }}>
         <Box>
-          <UploadImageField.Avatar name="pic_url" label={translate('categories.table.thumbnail')} />
+          <UploadImageField name="picUrl" label={translate('categories.table.thumbnail')} />
         </Box>
       </Grid>
       <Grid item xs={12} sm={8}>
         <InputField fullWidth name="name" label="Tên danh mục" />
       </Grid>
       <Grid item xs={12} sm={4}>
-        <InputField fullWidth name="code" label="Mã danh mục" />
+        <InputField disable={updateMode} fullWidth name="code" label="Mã danh mục" />
       </Grid>
       <Grid item xs={12} sm={6}>
         <InputField type="number" fullWidth name="displayOrder" label="Thứ tự hiển thị" />

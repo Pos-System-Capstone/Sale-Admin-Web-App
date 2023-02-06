@@ -1,9 +1,8 @@
 /* eslint-disable camelcase */
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
-import { TabContext, TabList } from '@mui/lab';
 // material
-import { Button, Card, Tab, Box } from '@mui/material';
+import { Button, Card } from '@mui/material';
 import confirm from 'components/Modal/confirm';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
@@ -16,14 +15,16 @@ import { PATH_DASHBOARD } from 'routes/paths';
 import { TProductBase } from 'types/product';
 import { deleteProdById } from '../../redux/product/api';
 //
+import storeApi from 'api/store';
+import { useParams } from 'react-router';
 import { accountColumns } from './config';
-import brandApi from 'api/brand';
 
 // ----------------------------------------------------------------------
 
 export default function AccountListPage() {
   const [activeTab, setActiveTab] = useState('1');
   const ref = useRef<any>();
+  const { storeId } = useParams();
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
@@ -68,23 +69,12 @@ export default function AccountListPage() {
   useEffect(() => {
     const form = ref.current?.formControl;
     if (!form) return;
-    form.setValue('is-extra-cate', activeTab === '2');
   }, [activeTab, ref]);
 
   return (
     <Page
       title="Quản lý tài khoản"
       actions={() => [
-        // <Button
-        //   key="add-product-extra"
-        //   onClick={() => {
-        //     navigate(`${PATH_DASHBOARD.products.newProduct}?productType=${ProductTypeEnum.Extra}`);
-        //   }}
-        //   variant="outlined"
-        //   startIcon={<Icon icon={plusFill} />}
-        // >
-        //   Thêm extra
-        // </Button>,
         <Button
           key="add-account"
           onClick={() => {
@@ -93,29 +83,20 @@ export default function AccountListPage() {
           variant="contained"
           startIcon={<Icon icon={plusFill} />}
         >
-          Thêm tài khoản
+          Tạo mới tài khoản
         </Button>
       ]}
     >
       <Card>
-        <TabContext value={activeTab}>
-          <Box sx={{ mb: 2 }}>
-            <TabList onChange={handleChangeTab}>
-              <Tab label="Tài khoản Brand Admin" value="1" />
-              <Tab label="Tài khoản Store Manager" value="2" />
-              <Tab label="Tài khoản Store Staff" value="3" />
-            </TabList>
-          </Box>
-          <ResoTable
-            ref={ref}
-            pagination
-            getData={(params: any) => brandApi.getListUserOfBrand(params)}
-            onEdit={editProuct}
-            onDelete={onDelete}
-            columns={accountColumns}
-            rowKey="product_id"
-          />
-        </TabContext>
+        <ResoTable
+          ref={ref}
+          pagination
+          getData={(params: any) => storeApi.getStoreEmployees(storeId ?? '', params)}
+          onEdit={editProuct}
+          onDelete={onDelete}
+          columns={accountColumns}
+          rowKey="product_id"
+        />
       </Card>
     </Page>
   );

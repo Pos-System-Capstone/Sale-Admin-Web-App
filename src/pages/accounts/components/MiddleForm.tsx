@@ -5,9 +5,8 @@ import { useFormContext } from 'react-hook-form';
 import { CreateProductForm } from 'types/product';
 
 // import VariantForm from '../VariantForm';
-import { Card, CardTitle } from './Card';
-import BasicProductInfoForm from './form/AccountInfoForm';
-import ProductImagesForm from './form/ProductImagesForm';
+import { CardTitle } from './Card';
+import AccountInfoForm from './form/AccountInfoForm';
 
 type Props = {
   updateMode?: boolean;
@@ -20,26 +19,12 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
   return (
     <Box>
       <Stack spacing={3}>
-        <Card id="product-detail">
-          <Stack spacing={2} textAlign="left">
-            <CardTitle mb={2} variant="subtitle1">
-              Thông tin tài khoản
-            </CardTitle>
-            <BasicProductInfoForm />
-          </Stack>
-        </Card>
-        <Card>
-          <ProductImagesForm />
-        </Card>
-
-        {/* <Card id="seo">
+        <Stack spacing={2} textAlign="left">
           <CardTitle mb={2} variant="subtitle1">
-            SEO
+            Thông tin tài khoản
           </CardTitle>
-          <Box textAlign="left">
-            <SeoForm />
-          </Box>
-        </Card> */}
+          <AccountInfoForm />
+        </Stack>
       </Stack>
     </Box>
   );

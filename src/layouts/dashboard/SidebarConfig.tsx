@@ -67,6 +67,7 @@ export const systemAdminSidebarConfig = [
   }
 ];
 
+//BRAND MANAGER SIDEBAR CONFIG
 export const brandManagerSidebarConfig = [
   {
     subheader: 'Dashboard',
@@ -150,33 +151,10 @@ export const brandManagerSidebarConfig = [
   //     }
   //   ]
   // },
-  // {
-  //   subheader: 'Quản lý cửa hàng',
-  //   items: [
-  //     {
-  //       title: 'store',
-  //       path: PATH_DASHBOARD.stores.root,
-  //       icon: ICONS.store
-  //     },
-  //     {
-  //       title: 'log',
-  //       path: PATH_DASHBOARD.log.root,
-  //       icon: ICONS.tag
-  //     }
-  //   ]
-  // }
 ];
+
+// BRAND ADMIN SIDEBAR CONFIG
 export const brandAdminSidebarConfig = [
-  // {
-  //   subheader: 'Dashboard',
-  //   items: [
-  //     {
-  //       title: 'Tổng quan',
-  //       path: PATH_DASHBOARD.general.app,
-  //       icon: ICONS.dashboard
-  //     }
-  //   ]
-  // },
   {
     subheader: 'Quản lý đơn hàng',
     items: [
@@ -237,6 +215,30 @@ export const brandAdminSidebarConfig = [
         title: 'Bộ sưu tập',
         path: PATH_DASHBOARD.collections.list,
         icon: ICONS.collection
+      }
+    ]
+  }
+];
+
+// STORE MANAGER SIDEBAR CONFIG
+export const storeManagerSidebarConfig = [
+  {
+    subheader: 'Tổng quan',
+    items: [
+      {
+        title: 'Chi tiết cửa hàng',
+        path: PATH_DASHBOARD.stores.storeById(userInfoFromLocalStorage?.storeId),
+        icon: ICONS.store
+      }
+    ]
+  },
+  {
+    subheader: 'Quản lý hệ thống',
+    items: [
+      {
+        title: 'Danh sách nhân viên',
+        path: PATH_DASHBOARD.stores.accountInStore(userInfoFromLocalStorage?.storeId),
+        icon: ICONS.user
       }
     ]
   }
@@ -372,11 +374,6 @@ export const reportAppSidebarConfig = () => {
     {
       subheader: 'report.report',
       items: [
-        // {
-        //   title: 'report.productProgress',
-        //   path: PATH_REPORT.productProgress,
-        //   icon: ICONS.analytics
-        // },
         {
           title: 'report.productSale',
           path: PATH_REPORT.productSale,
@@ -392,11 +389,6 @@ export const reportAppSidebarConfig = () => {
           path: PATH_REPORT.dayReport,
           icon: ICONS.menu
         }
-        // {
-        //   title: 'report.promotion',
-        //   path: PATH_REPORT.promotion,
-        //   icon: ICONS.kanban
-        // },
         // {
         //   title: 'report.stores',
         //   path: PATH_REPORT.stores,

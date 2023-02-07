@@ -57,7 +57,7 @@ const UpdateConfirmDialog: React.FC<Props> = ({ open, onClose, onUpdate, title, 
       aria-describedby="warning-dialog-description"
     >
       <DialogTitle id="warning-dialog-title">
-        <Typography variant="h5">{title}</Typography>
+        <DialogContentText variant="h5">{title}</DialogContentText>
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="warning-dialog-description">{description}</DialogContentText>

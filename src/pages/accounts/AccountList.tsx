@@ -3,35 +3,38 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
 import { Button, Card } from '@mui/material';
-import confirm from 'components/Modal/confirm';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
-import useLocales from 'hooks/useLocales';
 import { useSnackbar } from 'notistack';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { TProductBase } from 'types/product';
-import { deleteProdById } from '../../redux/product/api';
 //
 import storeApi from 'api/store';
+import userApi from 'api/user';
+import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 import { useParams } from 'react-router';
+import { TUser, UserRole, UserStatus } from 'types/user';
 import { accountColumns } from './config';
 
 // ----------------------------------------------------------------------
 
 export default function AccountListPage() {
-  const [activeTab, setActiveTab] = useState('1');
   const ref = useRef<any>();
   const { storeId } = useParams();
+  const [deleteUser, setDeleteUser] = useState<TUser>({
+    id: '',
+    name: '',
+    username: '',
+    role: UserRole.StoreStaff,
+    status: UserStatus.ACTIVE
+  });
+  const [isOpenDeleteConfirmDialog, setIsOpenDeleteConfirmDialog] = useState(false);
 
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
-    setActiveTab(newValue);
-  };
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const { t } = useLocales();
 
   const editProuct = (data: TProductBase) => {
     if (data.product_type === 1) {
@@ -41,35 +44,47 @@ export default function AccountListPage() {
     }
   };
 
-  const onDelete = (currentDeleteItem: TProductBase) => {
-    confirm({
-      title: (
-        <>
-          Xác nhận xóa <strong>{currentDeleteItem?.product_name}</strong>
-        </>
-      ),
-      content: 'Sản phẩm này sẽ bị xoá khỏi hệ thống',
-      onOk: () => {
-        return deleteProdById(currentDeleteItem.product_id!)
-          .then((res) => {
-            enqueueSnackbar(t('common.deleteSuccess'), {
-              variant: 'success'
-            });
-          })
-          .then(() => ref.current?.reload())
-          .catch((err) => {
-            enqueueSnackbar(t('common.error'), {
-              variant: 'error'
-            });
-          });
-      }
-    });
+  const onDelete = (currentDeleteAccount?: TUser) => {
+    console.log('user to delete ne: ', currentDeleteAccount);
+    return userApi
+      .updateUserStatus(deleteUser.id, UserStatus.DEACTIVATE)
+      .then(() => {
+        enqueueSnackbar('Xoá thành công', { variant: 'success' });
+      })
+      .catch(() => {
+        enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
+          variant: 'error'
+        });
+      });
   };
+  // confirm({
+  //   title: (
+  //     <>
+  //       Xác nhận xóa <strong>{currentDeleteAccount?.name}</strong>
+  //     </>
+  //   ),
+  //   content: 'Người dùng sẽ bị xoá khỏi hệ thống',
+  //   onOk: () => {
+  //     return userApi
+  //       .updateUserStatus(currentDeleteAccount.id, UserStatus.DEACTIVATE)
+  //       .then((res) => {
+  //         enqueueSnackbar('Xoá thành công', {
+  //           variant: 'success'
+  //         });
+  //       })
+  //       .then(() => ref.current?.reload())
+  //       .catch((err) => {
+  //         enqueueSnackbar('Có lỗi xảy ra, vui lòng thử lại!', {
+  //           variant: 'error'
+  //         });
+  //       });
+  //   }
+  // });
 
   useEffect(() => {
     const form = ref.current?.formControl;
     if (!form) return;
-  }, [activeTab, ref]);
+  }, [ref]);
 
   return (
     <Page
@@ -92,12 +107,22 @@ export default function AccountListPage() {
           ref={ref}
           pagination
           getData={(params: any) => storeApi.getStoreEmployees(storeId ?? '', params)}
-          onEdit={editProuct}
-          onDelete={onDelete}
+          onEdit={(user: TUser) => {
+            navigate(`${PATH_DASHBOARD.user.profileById(user.id)}`);
+          }}
+          onDelete={(user: TUser) => (setIsOpenDeleteConfirmDialog(true), setDeleteUser(user))}
           columns={accountColumns}
-          rowKey="product_id"
+          rowKey="id"
         />
       </Card>
+
+      <DeleteConfirmDialog
+        open={isOpenDeleteConfirmDialog}
+        onClose={() => setIsOpenDeleteConfirmDialog(false)}
+        onDelete={() => onDelete(deleteUser)}
+        title={'Xác nhận xoá người dùng'}
+        description={'Người dùng này sẽ bị xoá khỏi hệ thống'}
+      />
     </Page>
   );
 }

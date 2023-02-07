@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 // material
-import { Card, DialogContent, Stack, Typography } from '@mui/material';
+import { Card, DialogContent, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import storeApi from 'api/store';
 import Page from 'components/Page';
 import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
@@ -8,6 +8,7 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import { useRef } from 'react';
 import { useQuery } from 'react-query';
 // components
+import { Visibility } from '@mui/icons-material';
 import Label from 'components/Label';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
@@ -117,6 +118,21 @@ const StoreDetailPage = () => {
           <Label color="warning"> Không hoạt động </Label>
         );
       }
+    },
+    {
+      title: 'Chi tiết',
+      hideInSearch: true,
+      render: (_: any, employee: TEmployee) => (
+        <Tooltip title="Chi tiết">
+          {/* <IconButton onClick={() => setDetailBrand(brand.id)} size="large"> */}
+          <IconButton
+            onClick={() => navigate(`${PATH_DASHBOARD.user.profileById(employee.id)}`)}
+            size="large"
+          >
+            <Visibility />
+          </IconButton>
+        </Tooltip>
+      )
     }
   ];
 
@@ -140,14 +156,11 @@ const StoreDetailPage = () => {
         <Stack spacing={2}>
           <Typography variant="h5">Danh sách nhân viên</Typography>
           <ResoTable
+            showAction={false}
             ref={tableRef}
             rowKey="store_id"
             getData={(params: any) => storeApi.getStoreEmployees(storeId ?? '', params)}
             columns={employeeDetailColumns}
-            onDelete={() => {}}
-            onEdit={(employee: TEmployee) => {
-              navigate(`${PATH_DASHBOARD.user.profileById(employee.id)}`);
-            }}
           />
         </Stack>
       </Card>

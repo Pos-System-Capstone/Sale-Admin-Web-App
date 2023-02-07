@@ -2,10 +2,9 @@
 import collectionApi from 'api/collection';
 import { useQuery } from 'react-query';
 
-const useCollection = (id?: string) => {
-    return useQuery(['collections', id], () => collectionApi.getById(id).then((res) => res.data), {
+export const useCollectionDetails = (id: string, params?: any) => {
+    return useQuery(['collections', id], () => collectionApi.getCollectionById(id, params).then((res) => res.data), {
         enabled: Boolean(id)
     });
 };
 
-export default useCollection;

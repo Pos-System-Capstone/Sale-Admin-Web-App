@@ -82,7 +82,7 @@ const BrandListPage = () => {
         <Stack spacing={2}>
           <ResoTable
             showAction={false}
-            rowKey="brand_id"
+            rowKey="id"
             getData={(params: any) => brandApi.get(params)}
             columns={brandColumns}
           />

@@ -1,9 +1,4 @@
-/* eslint-disable camelcase */
-import plusFill from '@iconify/icons-eva/plus-fill';
-import { Icon } from '@iconify/react';
 // material
-import { Button, Card } from '@mui/material';
-import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { useSnackbar } from 'notistack';
 import { useEffect, useRef, useState } from 'react';
@@ -12,18 +7,21 @@ import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { TProductBase } from 'types/product';
 //
+import { Box, Stack } from '@mui/material';
+import brandApi from 'api/brand';
 import storeApi from 'api/store';
 import userApi from 'api/user';
 import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
+import useAuth from 'hooks/useAuth';
 import { useParams } from 'react-router';
 import { TUser, UserRole, UserStatus } from 'types/user';
-import { accountColumns } from './config';
+import { accountColumns } from '../config';
 
 // ----------------------------------------------------------------------
 
-export default function AccountListPage() {
+export default function AccountsList() {
   const ref = useRef<any>();
-  const { storeId } = useParams();
+  const { storeId, brandId } = useParams();
   const [deleteUser, setDeleteUser] = useState<TUser>({
     id: '',
     name: '',
@@ -31,10 +29,12 @@ export default function AccountListPage() {
     role: UserRole.StoreStaff,
     status: UserStatus.ACTIVE
   });
+
   const [isOpenDeleteConfirmDialog, setIsOpenDeleteConfirmDialog] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const editProuct = (data: TProductBase) => {
     if (data.product_type === 1) {
@@ -56,6 +56,18 @@ export default function AccountListPage() {
           variant: 'error'
         });
       });
+  };
+
+  const handleCallListDataBaseOnRole = (params: any) => {
+    if (storeId) {
+      return storeApi.getStoreEmployees(storeId, params);
+    } else if (brandId) {
+      const newQueryParam = {
+        ...params,
+        role: user?.role
+      };
+      return brandApi.getListUserOfBrand(brandId, newQueryParam);
+    } else return;
   };
   // confirm({
   //   title: (
@@ -87,26 +99,12 @@ export default function AccountListPage() {
   }, [ref]);
 
   return (
-    <Page
-      title="Quản lý tài khoản"
-      actions={() => [
-        <Button
-          key="add-account"
-          onClick={() => {
-            navigate(PATH_DASHBOARD.accounts.new);
-          }}
-          variant="contained"
-          startIcon={<Icon icon={plusFill} />}
-        >
-          Tạo mới tài khoản
-        </Button>
-      ]}
-    >
-      <Card>
+    <Stack spacing={2}>
+      <Box>
         <ResoTable
           ref={ref}
           pagination
-          getData={(params: any) => storeApi.getStoreEmployees(storeId ?? '', params)}
+          getData={(params: any) => handleCallListDataBaseOnRole(params)}
           onEdit={(user: TUser) => {
             navigate(`${PATH_DASHBOARD.user.profileById(user.id)}`);
           }}
@@ -114,15 +112,15 @@ export default function AccountListPage() {
           columns={accountColumns}
           rowKey="id"
         />
-      </Card>
 
-      <DeleteConfirmDialog
-        open={isOpenDeleteConfirmDialog}
-        onClose={() => setIsOpenDeleteConfirmDialog(false)}
-        onDelete={() => onDelete(deleteUser)}
-        title={'Xác nhận xoá người dùng'}
-        description={'Người dùng này sẽ bị xoá khỏi hệ thống'}
-      />
-    </Page>
+        <DeleteConfirmDialog
+          open={isOpenDeleteConfirmDialog}
+          onClose={() => setIsOpenDeleteConfirmDialog(false)}
+          onDelete={() => onDelete(deleteUser)}
+          title={'Xác nhận xoá người dùng'}
+          description={'Người dùng này sẽ bị xoá khỏi hệ thống'}
+        />
+      </Box>
+    </Stack>
   );
 }

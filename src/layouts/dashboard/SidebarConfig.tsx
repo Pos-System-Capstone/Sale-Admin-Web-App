@@ -40,16 +40,16 @@ const userInfoFromLocalStorage = JSON.parse(getUserInfo() ?? '');
 
 // SYSTEM ADMIN SIDEBAR CONFIG
 export const systemAdminSidebarConfig = [
-  {
-    subheader: 'Tổng quan',
-    items: [
-      {
-        title: 'Tổng quan',
-        path: PATH_DASHBOARD.general.app,
-        icon: ICONS.dashboard
-      }
-    ]
-  },
+  // {
+  //   subheader: 'Tổng quan',
+  //   items: [
+  //     {
+  //       title: 'Tổng quan',
+  //       path: PATH_DASHBOARD.general.app,
+  //       icon: ICONS.dashboard
+  //     }
+  //   ]
+  // },
   {
     subheader: 'Quản lý hệ thống',
     items: [
@@ -57,11 +57,6 @@ export const systemAdminSidebarConfig = [
         title: 'Danh sách thương hiệu',
         path: PATH_DASHBOARD.brand.root,
         icon: ICONS.store
-      },
-      {
-        title: 'Danh sách tài khoản',
-        path: PATH_DASHBOARD.accounts.root,
-        icon: ICONS.user
       }
     ]
   }

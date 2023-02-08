@@ -350,7 +350,7 @@ const CreateStorePage = Loadable(
   lazy(() => import('../pages/Stores/components/CreateNewStore/CreateNewStore'))
 );
 const UpdateStorePage = Loadable(lazy(() => import('../pages/Stores/update')));
-const StoreEmployeeList = Loadable(lazy(() => import('../pages/accounts/AccountList')));
+const StoreEmployeeList = Loadable(lazy(() => import('../pages/accounts/AccountListPage')));
 
 // Store-Order
 const OrderListPage = Loadable(lazy(() => import('../pages/Orders/OrderList')));
@@ -370,7 +370,7 @@ const CreateComboPage = Loadable(lazy(() => import('../pages/Products/Combos/Cre
 const UpdateComboPage = Loadable(lazy(() => import('../pages/Products/Combos/UpdateCombo')));
 
 // accounts
-const AccountListPage = Loadable(lazy(() => import('../pages/accounts/AccountList')));
+const AccountListPage = Loadable(lazy(() => import('../pages/accounts/AccountListPage')));
 const CreateAccount = Loadable(lazy(() => import('../pages/accounts/CreateAccount')));
 
 //log

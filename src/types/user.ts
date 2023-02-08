@@ -53,3 +53,14 @@ export const CREATE_USER_ROLE_OPTIONS = [
     label: 'StoreManager'
   }
 ];
+
+export const UPDATE_USER_STATUS = [
+  {
+    value: UserStatus.ACTIVE,
+    label: 'Active'
+  },
+  {
+    value: UserStatus.DEACTIVATE,
+    label: 'Deactivate'
+  }
+];

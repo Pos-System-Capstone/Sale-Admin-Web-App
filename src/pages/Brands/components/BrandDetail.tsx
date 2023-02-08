@@ -1,17 +1,13 @@
-import { Visibility } from '@mui/icons-material';
 import { TabContext, TabList } from '@mui/lab';
 import {
   Avatar,
   Box,
   Button,
   Card,
-  Chip,
   DialogContent,
   DialogTitle,
-  IconButton,
   Stack,
   Tab,
-  Tooltip,
   Typography
 } from '@mui/material';
 import brandApi from 'api/brand';
@@ -23,16 +19,15 @@ import { useSnackbar } from 'notistack';
 import AccountsList from 'pages/accounts/components/AccountsList';
 import StoresList from 'pages/Stores/components/StoresList';
 import { useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router';
-import { PATH_DASHBOARD } from 'routes/paths';
 import { BrandStatus, TBrandDetail } from 'types/brand';
-import { StoreStatus, TStore } from 'types/store';
-import { TTableColumn } from 'types/table';
-import { TUser, TUserCreate, UserStatus } from 'types/user';
+import { TUserCreate, UserStatus } from 'types/user';
 import { Role } from 'utils/role';
+import AddAccountModal from './AddAccountModel';
 import UpdateBrandInformation from './UpdateBrandInformation/UpdateBrandInformation';
+import { SHA256 } from 'crypto-js';
 
 const BrandDetailPage = () => {
   const { brandId } = useParams();
@@ -41,6 +36,7 @@ const BrandDetailPage = () => {
   const { user } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
   const [openUpdateBrandInformationForm, setOpenUpdateBrandInformationForm] = useState(false);
+  const [openAddAccountModel, setOpenAddAccountModel] = useState(false);
   const { data: brand, refetch } = useQuery(
     ['brands', brandId],
     () => brandApi.getBrandDetail(brandId!).then((res) => res.data),
@@ -84,96 +80,15 @@ const BrandDetailPage = () => {
     }
   ];
 
-  const storeDetailColumns: ResoDescriptionColumnType<TStore>[] = [
-    {
-      title: 'STT',
-      dataIndex: 'index',
-      hideInSearch: true
-    },
-    {
-      title: 'Tên đầy đủ',
-      dataIndex: 'name',
-      hideInSearch: true
-    },
-    {
-      title: 'Tên rút gọn',
-      dataIndex: 'shortName'
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      hideInSearch: true
-    },
-    {
-      title: 'Địa chỉ',
-      dataIndex: 'address',
-      hideInSearch: true
-    },
-    {
-      title: 'Trạng thái',
-      dataIndex: 'status',
-      hideInSearch: true,
-      render: (status) => {
-        return status === StoreStatus.ACTIVE ? (
-          <Label color="primary">Hoạt động </Label>
-        ) : (
-          <Label color="warning"> Không hoạt động </Label>
-        );
-      }
-    },
-    {
-      title: 'Chi tiết',
-      fixed: 'right',
-      hideInSearch: true,
-      render: (_: any, store: TStore) => (
-        <Tooltip title="Chi tiết">
-          <IconButton
-            onClick={() => navigate(PATH_DASHBOARD.stores.storeById(store.id))}
-            size="large"
-          >
-            <Visibility />
-          </IconButton>
-        </Tooltip>
-      )
-    }
-  ];
-
   const [activeTab, setActiveTab] = useState('1');
   const [loading, setLoading] = useState(false);
 
-  const accountColumns: TTableColumn<TUser>[] = [
-    {
-      title: 'STT',
-      dataIndex: 'index',
-      hideInSearch: true
-    },
-    {
-      title: 'Tên tài khoản',
-      dataIndex: 'username'
-    },
-    {
-      title: 'Họ và tên',
-      dataIndex: 'name',
-      hideInSearch: true
-    },
-    {
-      title: 'Vị trí',
-      dataIndex: 'role',
-      render: (type) => <Chip label={type} />
-    },
-    {
-      title: 'Trạng thái',
-      dataIndex: 'status',
-      width: 150,
-      hideInSearch: true,
-      render: (status) => (
-        <Label color={status == UserStatus.ACTIVE ? 'primary' : 'default'}>
-          {status == UserStatus.ACTIVE ? 'Hoạt động' : 'Ngừng hoạt động'}
-        </Label>
-      )
-    }
-  ];
-  const [openAddAccountModel, setOpenAddAccountModel] = useState(false);
+  const handleChangeTab = (_event: React.SyntheticEvent, newValue: string) => {
+    setLoading(true);
+    setActiveTab(newValue);
+    setLoading(false);
+  };
+
   const addAccountForm = useForm<TUserCreate>({
     defaultValues: {
       brandId: brandId,
@@ -182,15 +97,12 @@ const BrandDetailPage = () => {
     shouldUnregister: false
   });
 
-  const handleChangeTab = (_event: React.SyntheticEvent, newValue: string) => {
-    setLoading(true);
-    setActiveTab(newValue);
-    setLoading(false);
-  };
   const onSubmitCreateUser = (values: TUserCreate) => {
     console.log(`data`, values);
+    const createUserData = { ...values };
+    createUserData.password = SHA256(createUserData.password).toString();
     return brandApi
-      .createUserOfBrand(brandId!, values)
+      .createUserOfBrand(brandId!, createUserData)
       .then((res) => {
         enqueueSnackbar(`Tạo thành công`, {
           variant: 'success'
@@ -198,7 +110,7 @@ const BrandDetailPage = () => {
         setOpenAddAccountModel(false);
       })
       .catch((err) => {
-        enqueueSnackbar(err.status + `:` + err.title, {
+        enqueueSnackbar('Có lỗi xảy ra! Vui lòng thử lại!', {
           variant: 'error'
         });
       });
@@ -275,13 +187,23 @@ const BrandDetailPage = () => {
 
       {/* Show list account in brand */}
       {user?.role.includes(Role.SystemAdmin) ? (
-        <Card sx={{ my: 2 }}>
+        <Card sx={{ my: 2, p: 5 }}>
           <TabContext value={activeTab}>
-            <Box sx={{ mb: 2 }}>
+            <Box sx={{ mb: 2 }} display={'flex'} justifyContent={'space-between'}>
               <TabList onChange={handleChangeTab}>
                 <Tab label="Danh sách cửa hàng" value="1" />
                 <Tab label="Danh sách tài khoản" value="2" />
               </TabList>
+              {activeTab === '2' && (
+                <Box>
+                  <Button
+                    onClick={() => setOpenAddAccountModel(!openAddAccountModel)}
+                    variant="contained"
+                  >
+                    Tạo tài khoản mới
+                  </Button>
+                </Box>
+              )}
             </Box>
             <Stack spacing={2}>
               {activeTab === '1' ? (
@@ -306,6 +228,13 @@ const BrandDetailPage = () => {
           </Stack>
         </Card>
       )}
+      <FormProvider {...addAccountForm}>
+        <AddAccountModal
+          onClose={() => setOpenAddAccountModel(false)}
+          open={openAddAccountModel}
+          onFinish={addAccountForm.handleSubmit(onSubmitCreateUser)}
+        />
+      </FormProvider>
     </Page>
   );
 };

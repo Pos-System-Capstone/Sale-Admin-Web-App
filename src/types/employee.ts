@@ -3,6 +3,12 @@ export enum EmployeeStatus {
   DEACTIVATED = 'Deactivated'
 }
 
+export type TEmployeeCreate = {
+  name: string;
+  username: string;
+  password: string;
+};
+
 export type TEmployee = {
   id: string;
   name: string;

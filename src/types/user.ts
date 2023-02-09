@@ -13,12 +13,13 @@ export enum UserRole {
   SystemAdmin = 'SysAdmin',
   BrandManager = 'BrandManager',
   BrandAdmin = 'BrandAdmin',
-  StoreManager = 'StoreManager'
+  StoreManager = 'StoreManager',
+  StoreStaff = 'Staff'
 }
 
 export enum UserStatus {
   ACTIVE = 'Active',
-  DEACTIVE = 'Deactive'
+  DEACTIVATE = 'Deactivate'
 }
 export type TUserCreate = {
   brandId: string;
@@ -27,6 +28,11 @@ export type TUserCreate = {
   password: string;
   status: string;
   role: string;
+};
+
+export type TUpdateUser = {
+  name?: string;
+  password?: string;
 };
 
 export type TUserInfo = TUser & {
@@ -45,5 +51,16 @@ export const CREATE_USER_ROLE_OPTIONS = [
   {
     value: UserRole.StoreManager,
     label: 'StoreManager'
+  }
+];
+
+export const UPDATE_USER_STATUS = [
+  {
+    value: UserStatus.ACTIVE,
+    label: 'Active'
+  },
+  {
+    value: UserStatus.DEACTIVATE,
+    label: 'Deactivate'
   }
 ];

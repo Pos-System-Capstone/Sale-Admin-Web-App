@@ -29,7 +29,7 @@ const AddAccountModal = ({ onClose, onFinish, ...modalProps }: Props) => {
       <DialogContent>
         <Stack spacing={2}>
           <InputField label="Tên tài khoản" name="username"></InputField>
-          <InputField label="Mật khẩu" name="password"></InputField>
+          <InputField type={'password'} label="Mật khẩu" name="password"></InputField>
           <InputField label="Họ và tên" name="name"></InputField>
           <SelectField
             options={CREATE_USER_ROLE_OPTIONS}

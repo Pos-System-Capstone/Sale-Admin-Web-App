@@ -3,5 +3,6 @@ export enum Role {
     SystemAdmin = 'SysAdmin',
     BrandManager = 'BrandManager',
     BrandAdmin = 'BrandAdmin',
-    StoreManager = 'StoreManager'
+    StoreManager = 'StoreManager',
+    StoreStaff = 'Staff'
 }

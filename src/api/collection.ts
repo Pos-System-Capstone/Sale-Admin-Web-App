@@ -7,8 +7,13 @@ import { generateAPIWithPaging } from './utils';
 const getProductsInCollection = (collectionId: string, params?: any) =>
   request.get<BaseReponse<TProductCollection>>(`/collections/${collectionId}/products`);
 
+const getCollectionById = (id: string, params?: any) => {
+  return request.get<TCollection>(`/collections/${id}`, { params });
+};
+
 const collectionApi = {
-  ...generateAPIWithPaging<TCollection>('categories'),
+  ...generateAPIWithPaging<TCollection>('collections'),
+  getCollectionById,
   getProductsInCollection
 };
 

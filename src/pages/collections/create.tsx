@@ -1,27 +1,24 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+// import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Card, Grid, Stack, Typography } from '@mui/material';
+import collectionApi from 'api/collection';
 import { InputField, UploadImageField } from 'components/form';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
-import ModalProductForm from 'components/ModalProductForm/ModalProductForm';
+// import ModalProductForm from 'components/ModalProductForm/ModalProductForm';
 import Page from 'components/Page';
 import useDashboard from 'hooks/useDashboard';
 import useLocales from 'hooks/useLocales';
 import { TFunction } from 'i18next';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
-import { get, unionBy } from 'lodash';
+import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
-import { CardTitle } from 'pages/Products/components/Card';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
-import { createCollection } from 'redux/collections/api';
-import { RootState } from 'redux/store';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { CollectionStatus, CollectionTypeEnum, TCollection } from 'types/collection';
+import { CollectionTypeEnum, TCollection } from 'types/collection';
 import * as yup from 'yup';
-import AddProductTable from './AddProductTable';
+// import AddProductTable from './AddProductTable';
 
 const marks = [
   {
@@ -53,21 +50,20 @@ const CreateCollectionPage = () => {
         )
     });
 
-  const form = useForm<Partial<TCollection & { products: any[] }>>({
+  const form = useForm<TCollection>({
     defaultValues: {
       name: '',
       picUrl: '',
-      description: '',
-      products: [],
-      status: CollectionStatus.DEACTIVE
-    },
-    resolver: yupResolver(collectionSchema(translate))
+      description: ''
+      // products: [],
+      // status: CollectionStatus.DEACTIVE
+    }
+    // resolver: yupResolver(collectionSchema(translate))
   });
   const { setNavOpen } = useDashboard();
   const { enqueueSnackbar } = useSnackbar();
 
   const navigate = useNavigate();
-  const { stores } = useSelector((state: RootState) => state.admin);
 
   const {
     handleSubmit,
@@ -77,18 +73,20 @@ const CreateCollectionPage = () => {
     control
   } = form;
 
-  const products = watch('products');
-  const setProducts = (products: any[]) => {
-    setValue('products', products);
-  };
+  // const products = watch('products');
+  // const setProducts = (products: any[]) => {
+  //   setValue('products', products);
+  // };
 
-  const onSubmit = (values: any) =>
-    createCollection(values)
+  const onSubmit = (values: TCollection) => {
+    console.log('collecttionCreate ', values);
+    collectionApi
+      .create(values)
       .then((res) => {
         enqueueSnackbar(`Thêm thành công`, {
           variant: 'success'
         });
-        navigate(`${PATH_DASHBOARD.collections.root}/${res.data}`);
+        navigate(`${PATH_DASHBOARD.collections.root}/${res.data.id}`);
       })
       .catch((err) => {
         const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
@@ -96,14 +94,15 @@ const CreateCollectionPage = () => {
           variant: 'error'
         });
       });
-
-  const handleAddProd = (ids: number[], selectedProds: any[]) => {
-    const allSelectedProds = unionBy(products, selectedProds, 'product_id');
-    const updateSelectedProds = allSelectedProds
-      .filter(({ product_id }: { product_id: number }) => ids.includes(product_id))
-      .map((p, idx) => ({ ...p, position: idx }));
-    setProducts([...updateSelectedProds]);
   };
+
+  // const handleAddProd = (ids: number[], selectedProds: any[]) => {
+  //   const allSelectedProds = unionBy(products, selectedProds, 'product_id');
+  //   const updateSelectedProds = allSelectedProds
+  //     .filter(({ product_id }: { product_id: number }) => ids.includes(product_id))
+  //     .map((p, idx) => ({ ...p, position: idx }));
+  //   setProducts([...updateSelectedProds]);
+  // };
 
   return (
     <Page
@@ -138,40 +137,27 @@ const CreateCollectionPage = () => {
         </DashboardNavLayout>
         <Stack spacing={2}>
           <Card>
-            <CardTitle pb={2} variant="subtitle1">
-              {isMenuCollection
-                ? translate('collections.createInfo')
-                : translate('collections.groupCollection')}
-            </CardTitle>
             <Box>
               <Grid spacing={2} container>
                 <Grid item xs={4}>
                   <UploadImageField.Avatar
-                    label={translate('collections.table.banner_url')}
-                    name="banner_url"
+                    label="Hình ảnh"
+                    name="picUrl"
                     style={{ margin: '0 auto 40px' }}
                   />
                 </Grid>
                 <Grid item xs={8}>
                   <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={8}>
                       <InputField
                         fullWidth
                         name="name"
                         label={translate('collections.table.collectionName')}
                       />
                     </Grid>
-                    {isMenuCollection && (
-                      <Grid item xs={6}>
-                        <InputField
-                          label={translate('collections.table.position')}
-                          name="position"
-                          type="number"
-                          min={0}
-                          fullWidth
-                        />
-                      </Grid>
-                    )}
+                    <Grid item xs={12} sm={4}>
+                      <InputField fullWidth name="code" label="Mã rút gọn" />
+                    </Grid>
                     <Grid item xs={12} sm={12}>
                       <InputField
                         size="small"
@@ -187,7 +173,7 @@ const CreateCollectionPage = () => {
               </Grid>
             </Box>
           </Card>
-          <Card>
+          {/* <Card>
             <Stack spacing={1} direction="row" justifyContent="space-between" alignItems="center">
               <CardTitle mb={2} variant="subtitle1">
                 {translate('collections.productInCollection')}
@@ -202,7 +188,7 @@ const CreateCollectionPage = () => {
             <Box mt={2}>
               <AddProductTable control={control} />
             </Box>
-          </Card>
+          </Card> */}
         </Stack>
       </FormProvider>
     </Page>

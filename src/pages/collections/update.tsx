@@ -6,14 +6,15 @@ import Page from 'components/Page';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQuery } from 'react-query';
+
 import { useLocation, useParams } from 'react-router-dom';
-import { getCollectionById, updateCollection } from 'redux/collections/api';
+import { updateCollection } from 'redux/collections/api';
 import { TCollection } from 'types/collection';
 import CollectionInfoTab from './tabs/CollectionInfoTab';
 import ProductInCollectionTab from './tabs/ProductInCollectionTab';
+import { useCollectionDetails } from 'hooks/useCollections';
 
 enum TabType {
   COLLECTION_INFO = 'COLLETION_INFO',
@@ -43,21 +44,18 @@ const UpdateCollectionPage = () => {
   const [currentTab, setCurrentTab] = React.useState<TabType>(TabType.COLLECTION_INFO);
   const { enqueueSnackbar } = useSnackbar();
 
-  const { data: collection } = useQuery(['colections', Number(id)], () =>
-    getCollectionById(id!).then((res) => res.data)
-  );
-  const form = useForm<Partial<TCollection>>({
+  const { data: collection } = useCollectionDetails(id!, { page: 1, size: 10 });
+  const form = useForm<TCollection>({
     defaultValues: {
       ...collection
     }
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (collection) {
-      form.reset(collection as TCollection);
+      form.reset(collection);
     }
-  }, [collection]);
-
+  }, [collection, form]);
   const onUpdateCollection = (values: TCollection) =>
     updateCollection(id!, values)
       .then(() =>

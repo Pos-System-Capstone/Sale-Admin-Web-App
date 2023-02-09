@@ -1,11 +1,8 @@
-import { useEffect } from 'react';
-import { Box, Grid } from '@mui/material';
+import { Grid, Stack } from '@mui/material';
 import { DraftEditorField, InputField, SelectField, UploadImageField } from 'components/form';
 import useLocales from 'hooks/useLocales';
 import { Controller, useFormContext } from 'react-hook-form';
-import useCategories from 'hooks/categories/useCategories';
-import { CREATE_CATEGORY_TYPE_OPTIONS, TCategory } from 'types/category';
-import { useState } from 'react';
+import { CREATE_CATEGORY_TYPE_OPTIONS } from 'types/category';
 
 interface Props {
   updateMode?: boolean;
@@ -14,103 +11,32 @@ interface Props {
 const CategoryForm = ({ updateMode }: Props) => {
   const { translate } = useLocales();
   const { watch } = useFormContext();
-  const [categories, setCategories] = useState<TCategory[]>([]);
-
-  const { data } = useCategories({ 'only-root': true });
-
-  useEffect(() => {
-    setCategories(data ?? []);
-  }, [data]);
-
-  // const categoryTreeData = useMemo<RenderTree[]>(() => {
-  //   const generateTree: any = (category: TCategory) => {
-  //     if (!category.is_container) {
-  //       return {
-  //         id: category.cate_id,
-  //         name: category.cate_name,
-  //         children: [],
-  //         isContainer: category.is_container
-  //       };
-  //     }
-  //     return {
-  //       id: category.id,
-  //       name: category.name
-  //       // isContainer: category.is_container,
-  //       // children: category.childs?.length ? category.childs.map(generateTree) : [<div key="stub" />]
-  //     };
-  //   };
-
-  //   return (
-  //     categories?.map((c) => ({
-  //       id: `${c.id}`,
-  //       name: c.name
-  //       // isContainer: c.is_container,
-  //       // children: c?.childs.map(generateTree)
-  //     })) ?? []
-  //   );
-  // }, [categories]);
-
-  // const getChilds = async (cateId?: number) => {
-  //   let results = await getCategoryChilds(Number(cateId));
-  //   const updateCategories = cloneDeep([...categories]);
-  //   let foundedParent = null;
-  //   for (const childCate of updateCategories) {
-  //     foundedParent = findParentCateFromCate(childCate, cateId!);
-  //     if (foundedParent) break;
-  //   }
-  //   if (foundedParent) {
-  //     foundedParent.childs = results;
-  //   }
-  //   setCategories(updateCategories);
-  // };
-
-  // const findParentCateFromCate = (cate: TCategory, parentCateId: number): TCategory | null => {
-  //   if (cate.cate_id === parentCateId) {
-  //     return cate;
-  //   }
-  //   if (!cate.childs) return null;
-  //   for (const childCate of cate.childs) {
-  //     const foundedParent = findParentCateFromCate(childCate, parentCateId!);
-  //     if (foundedParent) return foundedParent;
-  //   }
-  //   return null;
-  // };
-
-  // const checkIsRootCategory = (id: string, cates: TCategory[]): boolean => {
-  //   return cates?.some((c) => {
-  //     if (c.id === Number(id)) {
-  //       return c.is_container;
-  //     }
-  //     if (c.childs) {
-  //       return checkIsRootCategory(id, c.childs);
-  //     }
-  //     return false;
-  //   });
-  // };
-
+  const type = watch('categoryType');
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} sm={12} sx={{ textAlign: 'center' }}>
-        <Box>
-          <UploadImageField.Avatar name="pic_url" label={translate('categories.table.thumbnail')} />
-        </Box>
+      <Grid alignItems={'center'} item xs={12} sm={4}>
+        <UploadImageField.Avatar label="Hình ảnh" name="picUrl" style={{ margin: '0 auto 40px' }} />
       </Grid>
-      <Grid item xs={12} sm={8}>
-        <InputField fullWidth name="name" label="Tên danh mục" />
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <InputField fullWidth name="code" label="Mã danh mục" />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <InputField type="number" fullWidth name="displayOrder" label="Thứ tự hiển thị" />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <SelectField
-          fullWidth
-          options={CREATE_CATEGORY_TYPE_OPTIONS}
-          name="categoryType"
-          label="Loại danh mục"
-        ></SelectField>
+      <Grid spacing={2} xs={12} sm={8}>
+        <Grid item xs={12} sm={6}></Grid>
+        <Stack ml={2} my={2} direction="column" spacing={2}>
+          <InputField fullWidth name="name" label="Tên danh mục" />
+          <InputField disabled={updateMode} fullWidth name="code" label="Mã danh mục" />
+          <InputField
+            // InputLabelProps={{ shrink: true }}
+            type="number"
+            fullWidth
+            name="displayOrder"
+            label="Thứ tự hiển thị"
+          />
+          <SelectField
+            fullWidth
+            disabled={updateMode}
+            options={CREATE_CATEGORY_TYPE_OPTIONS}
+            name="categoryType"
+            label="Loại danh mục"
+          ></SelectField>
+        </Stack>
       </Grid>
       <Grid item xs={12}>
         <Controller

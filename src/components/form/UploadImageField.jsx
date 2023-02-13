@@ -20,6 +20,10 @@ import closeFill from '@iconify/icons-eva/close-fill';
 import { ReactComponent as UploadSVG } from '../../assets/images/upload.svg';
 import { uploadfile } from '../../redux/file/api';
 
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+
+import { storage } from 'config';
+
 const UploadImage = styled('img')({
   // width: '80px',
   height: '80px',
@@ -59,6 +63,35 @@ const UploadImageField = ({ name, label, defaultValue = '' }) => {
       console.log(`err`, err);
     }
     setIsUploading(false);
+  };
+  const onUploadFile = (e, onFormChange) => {
+    setIsUploading(true);
+    console.log('e', e);
+    const file = e.target.files[0];
+    const storageRef = ref(storage, `/files/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+
+        // update progress
+        // setPercent(percent);
+      },
+      (err) => {
+        enqueueSnackbar(err.message ?? 'Có lỗi', {
+          variant: 'error'
+        });
+        console.log(`err`, err);
+      },
+      () => {
+        // download url
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log(url);
+          onFormChange(url);
+        });
+      }
+    );
   };
 
   return (
@@ -106,7 +139,7 @@ const UploadImageField = ({ name, label, defaultValue = '' }) => {
               color="primary"
               accept="image/*"
               type="file"
-              onChange={(e) => onUpload(e, field.onChange)}
+              onChange={(e) => onUploadFile(e, field.onChange)}
               id="icon-button-file"
               style={{ display: 'none' }}
             />

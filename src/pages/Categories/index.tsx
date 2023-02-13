@@ -12,6 +12,7 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
+import { transformDraftToStr } from 'pages/Products/utils';
 import { useEffect, useRef, useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
@@ -110,6 +111,27 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
           variant: 'error'
         });
       });
+  const deactiveCategoryHandler = () => {
+    console.log(`data`, currentDeleteItem);
+    const category = currentDeleteItem;
+    category!.status = CategoryStatus.DEACTIVE;
+    return categoryApi
+      .update(category?.id, transformDraftToStr(category))
+      .then(() => setCurrentDeleteItem(null))
+      .then(tableRef.current?.reload)
+      .then(() =>
+        enqueueSnackbar(`Xóa thành công`, {
+          variant: 'success'
+        })
+      )
+      .then(() => tableRef.current?.reload())
+      .catch((err) => {
+        const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
+        enqueueSnackbar(errMsg, {
+          variant: 'error'
+        });
+      });
+  };
 
   const deleteCategoryHander = () =>
     deleteCategoyById(currentDeleteItem!.id)
@@ -154,7 +176,7 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
       <DeleteConfirmDialog
         open={Boolean(currentDeleteItem)}
         onClose={() => setCurrentDeleteItem(null)}
-        onDelete={deleteCategoryHander}
+        onDelete={deactiveCategoryHandler}
         title={
           <>
             {translate('common.confirmDeleteTitle')} <strong>{currentDeleteItem?.name}</strong>

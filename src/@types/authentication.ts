@@ -1,4 +1,3 @@
-import firebase from 'firebase/app';
 
 export type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -57,11 +56,11 @@ export type FirebaseContextType = {
   isInitialized: boolean;
   user: AuthUser;
   method: 'firebase';
-  login: (email: string, password: string) => Promise<firebase.auth.UserCredential>;
+  // login: (email: string, password: string) => Promise<firebase.auth.UserCredential>;
   register: (email: string, password: string, firstName: string, lastName: string) => Promise<void>;
-  loginWithGoogle: () => Promise<firebase.auth.UserCredential>;
-  loginWithFaceBook: () => Promise<firebase.auth.UserCredential>;
-  loginWithTwitter: () => Promise<firebase.auth.UserCredential>;
+  // loginWithGoogle: () => Promise<firebase.auth.UserCredential>;
+  // loginWithFaceBook: () => Promise<firebase.auth.UserCredential>;
+  // loginWithTwitter: () => Promise<firebase.auth.UserCredential>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   updateProfile: VoidFunction;

@@ -28,28 +28,15 @@ const CollectionInfoTab = ({ onSubmit }: { onSubmit: Function }) => {
         <CardTitle>{translate('collections.collectionInfoTab')}</CardTitle>
         <Grid spacing={2} container>
           <Grid item xs={4}>
-            <UploadImageField.Avatar
-              label={translate('collections.table.banner_url')}
-              name="banner_url"
-            />
+            <UploadImageField.Avatar label="Hình ảnh" name="picUrl" />
           </Grid>
           <Grid item xs={8}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <InputField
-                  fullWidth
-                  name="name"
-                  label={translate('collections.table.collectionName')}
-                />
+                <InputField fullWidth name="name" label="Tên bộ sưu tập" />
               </Grid>
               <Grid item xs={6}>
-                <InputField
-                  label={translate('collections.table.position')}
-                  name="position"
-                  type="number"
-                  fullWidth
-                  min={0}
-                />
+                <InputField label="Mã bộ sưu tập" disabled name="code" fullWidth />
               </Grid>
               <Grid item xs={12} sm={12}>
                 <InputField
@@ -58,7 +45,7 @@ const CollectionInfoTab = ({ onSubmit }: { onSubmit: Function }) => {
                   multiline
                   fullWidth
                   name="description"
-                  label={translate('collections.table.description')}
+                  label="Mô tả"
                 />
               </Grid>
             </Grid>

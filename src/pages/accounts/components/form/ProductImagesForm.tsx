@@ -45,7 +45,7 @@ const ProductImagesForm = (props: Props) => {
     const requests = Array.from(files).map((file: any) => {
       const formData = new FormData();
       formData.append('file', file);
-      return uploadfile(formData).then((res) => res.data);
+      return uploadfile(formData);
     });
     const listURL = await Promise.all(requests);
 

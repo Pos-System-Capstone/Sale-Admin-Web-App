@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
-import { Button, Card, Stack } from '@mui/material';
+import { Avatar, Button, Card, Stack } from '@mui/material';
+import collectionApi from 'api/collection';
 import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 // components
 import Page from 'components/Page';
@@ -12,9 +13,9 @@ import { useSnackbar } from 'notistack';
 // material
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { deleteCollection, getCollections } from 'redux/collections/api';
+import { deleteCollection } from 'redux/collections/api';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { CollectionStatus, CollectionTypeEnum, TCollection } from 'types/collection';
+import { CollectionStatus, TCollection } from 'types/collection';
 import { TTableColumn } from 'types/table';
 
 const CollectionListPage = () => {
@@ -30,6 +31,19 @@ const CollectionListPage = () => {
       title: 'Tên',
       dataIndex: 'name',
       fixed: 'left'
+    },
+    {
+      title: 'Hình ảnh',
+      dataIndex: 'picUrl',
+      hideInSearch: true,
+      render: (src, { product_name }: any) => (
+        <Avatar
+          alt={product_name}
+          src={src}
+          variant="square"
+          style={{ width: '54px', height: '54px' }}
+        />
+      )
     },
     {
       title: 'Trạng thái',
@@ -74,17 +88,17 @@ const CollectionListPage = () => {
     <Page
       title={translate('collections.list')}
       actions={() => [
-        <Button
-          key="add-group-combo"
-          onClick={() => {
-            navigate(
-              `${PATH_DASHBOARD.collections.new}?type=${CollectionTypeEnum.GroupCollection}`
-            );
-          }}
-          variant="outlined"
-        >
-          Tạo nhóm combo
-        </Button>,
+        // <Button
+        //   key="add-group-combo"
+        //   onClick={() => {
+        //     navigate(
+        //       `${PATH_DASHBOARD.collections.new}?type=${CollectionTypeEnum.GroupCollection}`
+        //     );
+        //   }}
+        //   variant="outlined"
+        // >
+        //   Tạo nhóm combo
+        // </Button>,
         <Button
           key="add-collection"
           onClick={() => {
@@ -118,7 +132,7 @@ const CollectionListPage = () => {
             }
             onDelete={setCurrentDeleteItem}
             rowKey="id"
-            getData={getCollections}
+            getData={collectionApi.get}
             columns={columns}
           />
         </Stack>

@@ -5,26 +5,72 @@ import storeApi from 'api/store';
 import Page from 'components/Page';
 import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 import ResoTable from 'components/ResoTable/ResoTable';
-import { useRef } from 'react';
-import { useQuery } from 'react-query';
+import { useEffect, useRef, useState } from 'react';
 // components
 import { Visibility } from '@mui/icons-material';
 import Label from 'components/Label';
+import useAuth from 'hooks/useAuth';
+import { useSnackbar } from 'notistack';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { EmployeeStatus, TEmployee } from 'types/employee';
 import { StoreStatus, TStoreDetail } from 'types/store';
 import { TTableColumn } from 'types/table';
+import { Role } from 'utils/role';
 
 const StoreDetailPage = () => {
   const { storeId } = useParams();
-  const { data: store, isLoading } = useQuery(
-    ['stores', storeId],
-    () => storeApi.getStoreDetail(storeId!).then((res) => res.data),
-    {
-      enabled: Boolean(storeId)
+  const { user } = useAuth();
+  const [store, setStore] = useState<TStoreDetail>();
+  const [isLoading, setIsLoading] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+
+  // const { data: store, isLoading } = useQuery(
+  //   ['stores', storeId],
+  //   () => storeApi.getStoreDetail(storeId!).then((res) => res.data),
+  //   {
+  //     enabled: Boolean(storeId)
+  //   }
+  // );
+
+  const handleGetStoreDetail = async () => {
+    //call data base on store of store manager when logged
+    if (user?.role.includes(Role.StoreManager) || user?.role.includes(Role.StoreStaff)) {
+      return await storeApi
+        .getStoreDetail(user.storeId)
+        .then((res) => {
+          const storeData = res.data;
+          setStore(storeData);
+          setIsLoading(!isLoading);
+        })
+        .catch(() => {
+          setIsLoading(!isLoading);
+          enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
+            variant: 'error'
+          });
+        });
     }
-  );
+    //call data when user redirect from store list to see store detail
+    return await storeApi
+      .getStoreDetail(storeId!)
+      .then((res) => {
+        const storeData = res.data;
+        setStore(storeData);
+        setIsLoading(!isLoading);
+      })
+      .catch(() => {
+        setIsLoading(!isLoading);
+        enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
+          variant: 'error'
+        });
+      });
+  };
+
+  useEffect(() => {
+    setIsLoading(!isLoading);
+    handleGetStoreDetail();
+  }, [storeId]);
+
   const navigate = useNavigate();
   const tableRef = useRef<any>();
 
@@ -71,19 +117,6 @@ const StoreDetailPage = () => {
         );
       }
     }
-    // {
-    //   title: 'Chi tiết',
-    //   fixed: 'right',
-    //   hideInSearch: true,
-    //   render: (_: any, brand: TBrand) => (
-    //     <Tooltip title="Chi tiết">
-    //       {/* <IconButton onClick={() => setDetailBrand(brand.id)} size="large"> */}
-    //       <IconButton onClick={() => navigate(`${brand.id}`)} size="large">
-    //         <Visibility />
-    //       </IconButton>
-    //     </Tooltip>
-    //   )
-    // }
   ];
 
   const employeeDetailColumns: TTableColumn<TEmployee>[] = [
@@ -100,7 +133,6 @@ const StoreDetailPage = () => {
     {
       title: 'Tên tài khoản',
       dataIndex: 'username'
-      // renderFormItem: () => <AutoCompleteStoreSelect name="brand_id" label="Nhãn Hiệu" />
     },
     {
       title: 'Chức vụ',

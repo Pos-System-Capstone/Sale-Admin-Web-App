@@ -15,8 +15,6 @@ import { PATH_DASHBOARD } from 'routes/paths';
 import { TUser, UserRole, UserStatus } from 'types/user';
 import { accountColumns } from '../config';
 
-// ----------------------------------------------------------------------
-
 export default function AccountsList() {
   const ref = useRef<any>();
   const { storeId, brandId } = useParams();
@@ -65,13 +63,10 @@ export default function AccountsList() {
     if (storeId) {
       return storeApi.getStoreEmployees(storeId, params);
     } else if (brandId) {
-      const newQueryParam = {
-        ...params,
-        role: user?.role
-      };
-      return brandApi.getListUserOfBrand(brandId, newQueryParam);
+      return brandApi.getListUserOfBrand(brandId, params);
     } else return;
   };
+
   // confirm({
   //   title: (
   //     <>

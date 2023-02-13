@@ -4,6 +4,26 @@ import { EmployeeStatus } from 'types/employee';
 
 import { TTableColumn } from 'types/table';
 import { TUser } from 'types/user';
+import { Role } from 'utils/role';
+
+const roleEnumArray = [
+  {
+    label: 'Brand Admin',
+    value: Role.BrandAdmin
+  },
+  {
+    label: 'Brand Manager',
+    value: Role.BrandManager
+  },
+  {
+    label: 'Store Manager',
+    value: Role.StoreManager
+  },
+  {
+    label: 'Staff',
+    value: Role.StoreStaff
+  }
+];
 
 export const accountColumns: TTableColumn<TUser>[] = [
   {
@@ -23,7 +43,9 @@ export const accountColumns: TTableColumn<TUser>[] = [
   {
     title: 'Chức vụ',
     dataIndex: 'role',
-    hideInSearch: true
+    valueType: 'select',
+    valueEnum: roleEnumArray
+    // hideInSearch: true
   },
   {
     title: 'Trạng thái',

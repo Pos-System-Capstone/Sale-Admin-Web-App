@@ -100,7 +100,7 @@ export default function Router() {
           children: [
             { path: '', element: <BrandListPage /> },
             {
-              path: ':brandId',
+              path: 'detail',
               children: [
                 { path: '', element: <BrandDetail /> },
                 {

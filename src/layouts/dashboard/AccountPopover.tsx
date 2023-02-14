@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react';
 import { useSnackbar } from 'notistack';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import personFill from '@iconify/icons-eva/person-fill';
 import settings2Fill from '@iconify/icons-eva/settings-2-fill';
@@ -18,33 +18,36 @@ import { MIconButton } from '../../components/@material-extend';
 import MyAvatar from '../../components/MyAvatar';
 import MenuPopover from '../../components/MenuPopover';
 import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
-import { getUserInfo } from 'utils/utils';
-
-// ----------------------------------------------------------------------
-
-const userInfoFromLocalStorage = JSON.parse(getUserInfo() ?? '');
-
-const MENU_OPTIONS = [
-  {
-    label: 'Home',
-    icon: homeFill,
-    linkTo: '/'
-  },
-  {
-    label: 'Profile',
-    icon: personFill,
-    linkTo: PATH_DASHBOARD.user.profileById(userInfoFromLocalStorage.id.toString())
-  },
-  {
-    label: 'Settings',
-    icon: settings2Fill,
-    linkTo: PATH_DASHBOARD.user.account
-  }
-];
-
-// ----------------------------------------------------------------------
+import { getUserInfo, removeLocalStorage } from 'utils/utils';
+import { TUser, UserRole, UserStatus } from 'types/user';
 
 export default function AccountPopover() {
+  const [userInfoFromLocalStorage, setUserInfoFromLocalStorage] = useState<TUser>({
+    id: '',
+    name: '',
+    username: '',
+    role: UserRole.StoreStaff,
+    status: UserStatus.ACTIVE
+  });
+
+  const MENU_OPTIONS = [
+    {
+      label: 'Home',
+      icon: homeFill,
+      linkTo: '/'
+    },
+    {
+      label: 'Profile',
+      icon: personFill,
+      linkTo: PATH_DASHBOARD.user.profileById(userInfoFromLocalStorage.id.toString())
+    },
+    {
+      label: 'Settings',
+      icon: settings2Fill,
+      linkTo: PATH_DASHBOARD.user.account
+    }
+  ];
+
   const navigate = useNavigate();
   const anchorRef = useRef(null);
   const { user, logout } = useAuth();
@@ -53,7 +56,6 @@ export default function AccountPopover() {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
-    console.log('user ne: ', userInfoFromLocalStorage);
     setOpen(true);
   };
   const handleClose = () => {
@@ -66,12 +68,17 @@ export default function AccountPopover() {
       if (isMountedRef.current) {
         navigate('/');
         handleClose();
+        removeLocalStorage('USER_INFO');
       }
     } catch (error) {
       console.error(error);
       enqueueSnackbar('Unable to logout', { variant: 'error' });
     }
   };
+
+  useEffect(() => {
+    setUserInfoFromLocalStorage(JSON.parse(getUserInfo() ?? ''));
+  }, []);
 
   return (
     <>

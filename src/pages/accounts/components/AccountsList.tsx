@@ -9,17 +9,20 @@ import storeApi from 'api/store';
 import userApi from 'api/user';
 import { UpdateConfirmDialog } from 'components/DeleteConfirmDialog';
 import useAuth from 'hooks/useAuth';
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { TUser, UserRole, UserStatus } from 'types/user';
-import { accountColumns } from '../config';
-
-// ----------------------------------------------------------------------
+import { roleEnumArray } from '../config';
+import Label from 'components/Label';
+import { Role } from 'utils/role';
+import { EmployeeStatus } from 'types/employee';
+import { TTableColumn } from 'types/table';
 
 export default function AccountsList() {
   const ref = useRef<any>();
   const { storeId, brandId } = useParams();
+  const location = useLocation();
   const [deleteUser, setDeleteUser] = useState<TUser>({
     id: '',
     name: '',
@@ -33,6 +36,50 @@ export default function AccountsList() {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  console.log('path name ne: ', location.pathname.includes('brands'));
+
+  const accountColumns: TTableColumn<TUser>[] = [
+    {
+      title: 'STT',
+      dataIndex: 'index',
+      hideInSearch: true
+    },
+    {
+      title: 'Tên nhân viên',
+      dataIndex: 'name',
+      hideInSearch: true
+    },
+    {
+      title: 'Tên tài khoản',
+      dataIndex: 'username'
+    },
+    {
+      title: 'Chức vụ',
+      dataIndex: 'role',
+      valueType: 'select',
+      valueEnum: roleEnumArray,
+      hideInSearch:
+        location.pathname.includes('brands') &&
+        (user?.role.includes(Role.SystemAdmin) ||
+          user?.role.includes(Role.BrandAdmin) ||
+          user?.role.includes(Role.BrandAdmin))
+          ? false
+          : true
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'status',
+      hideInSearch: true,
+      render: (status: EmployeeStatus) => {
+        return status === EmployeeStatus.ACTIVE ? (
+          <Label color="primary">Hoạt động </Label>
+        ) : (
+          <Label color="warning"> Không hoạt động </Label>
+        );
+      }
+    }
+  ];
 
   const onDelete = (currentDeleteAccount?: TUser) => {
     // console.log('user to delete ne: ', currentDeleteAccount);
@@ -62,16 +109,20 @@ export default function AccountsList() {
   };
 
   const handleCallListDataBaseOnRole = (params: any) => {
-    if (storeId) {
+    if (user?.storeId && user?.role.includes(Role.StoreManager)) {
+      return storeApi.getStoreEmployees(user.storeId, params);
+    } else if (
+      user?.brandId &&
+      (user?.role.includes(Role.BrandManager) || user?.role.includes(Role.BrandAdmin))
+    ) {
+      return brandApi.getListUserOfBrand(user.brandId, params);
+    } else if (storeId) {
       return storeApi.getStoreEmployees(storeId, params);
     } else if (brandId) {
-      const newQueryParam = {
-        ...params,
-        role: user?.role
-      };
-      return brandApi.getListUserOfBrand(brandId, newQueryParam);
+      return brandApi.getListUserOfBrand(brandId, params);
     } else return;
   };
+
   // confirm({
   //   title: (
   //     <>

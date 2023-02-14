@@ -35,7 +35,7 @@ export default function App() {
         })
       })
   );
-  const { isInitialized } = useAuth();
+  // const { isInitialized } = useAuth();
 
   return (
     <QueryClientProvider client={queryClient}>

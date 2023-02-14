@@ -1,40 +1,56 @@
-// import AutocompleteCategory from 'components/form/common/Category/AutocompleteCategory';
-import Label from 'components/Label';
-import { EmployeeStatus } from 'types/employee';
+import { Role } from 'utils/role';
 
-import { TTableColumn } from 'types/table';
-import { TUser } from 'types/user';
-
-export const accountColumns: TTableColumn<TUser>[] = [
+export const roleEnumArray = [
   {
-    title: 'STT',
-    dataIndex: 'index',
-    hideInSearch: true
+    label: 'Brand Admin',
+    value: Role.BrandAdmin
   },
   {
-    title: 'Tên nhân viên',
-    dataIndex: 'name',
-    hideInSearch: true
+    label: 'Brand Manager',
+    value: Role.BrandManager
   },
   {
-    title: 'Tên tài khoản',
-    dataIndex: 'username'
+    label: 'Store Manager',
+    value: Role.StoreManager
   },
   {
-    title: 'Chức vụ',
-    dataIndex: 'role',
-    hideInSearch: true
-  },
-  {
-    title: 'Trạng thái',
-    dataIndex: 'status',
-    hideInSearch: true,
-    render: (status) => {
-      return status === EmployeeStatus.ACTIVE ? (
-        <Label color="primary">Hoạt động </Label>
-      ) : (
-        <Label color="warning"> Không hoạt động </Label>
-      );
-    }
+    label: 'Staff',
+    value: Role.StoreStaff
   }
 ];
+
+// export const accountColumns: TTableColumn<TUser>[] = [
+//   {
+//     title: 'STT',
+//     dataIndex: 'index',
+//     hideInSearch: true
+//   },
+//   {
+//     title: 'Tên nhân viên',
+//     dataIndex: 'name',
+//     hideInSearch: true
+//   },
+//   {
+//     title: 'Tên tài khoản',
+//     dataIndex: 'username'
+//   },
+//   {
+//     title: 'Chức vụ',
+//     dataIndex: 'role',
+//     valueType: 'select',
+//     valueEnum: roleEnumArray,
+//     hideInSearch: user?.role.includes(Role.SystemAdmin) ? true : false
+//   },
+//   {
+//     title: 'Trạng thái',
+//     dataIndex: 'status',
+//     hideInSearch: true,
+//     render: (status) => {
+//       return status === EmployeeStatus.ACTIVE ? (
+//         <Label color="primary">Hoạt động </Label>
+//       ) : (
+//         <Label color="warning"> Không hoạt động </Label>
+//       );
+//     }
+//   }
+// ];

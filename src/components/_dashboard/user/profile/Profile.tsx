@@ -6,11 +6,10 @@ import Page from 'components/Page';
 import { SHA256 } from 'crypto-js';
 import useAuth from 'hooks/useAuth';
 import { useSnackbar } from 'notistack';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
-import { TUpdateUser } from 'types/user';
+import { TUpdateUser, TUser } from 'types/user';
 import { Role } from 'utils/role';
 import ProfileAbout from './ProfileAbout';
 
@@ -24,13 +23,21 @@ export default function Profile({ updateMode }: Props) {
   const updateUserInfoForm = useForm<TUpdateUser>();
   const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false);
   const { user } = useAuth();
+  const [userInfo, setUserInfo] = useState<TUser>();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const getUserInfo = async () => {
-    const userInfo = await userApi.getById(accountId ?? '').then((res) => res.data);
-    return userInfo;
-  };
-
-  const { data: userInfo, isLoading, error } = useQuery('user', getUserInfo);
+  const getUserInfo = async () =>
+    await userApi
+      .getById(accountId ?? '')
+      .then((res) => {
+        setUserInfo(res.data);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
+          variant: 'error'
+        });
+      });
 
   const handleSubmitUpdateUserInfoForm = (updateUserInformationFromForm: TUpdateUser) => {
     const updateUserInformation = { ...updateUserInformationFromForm };
@@ -56,6 +63,11 @@ export default function Profile({ updateMode }: Props) {
     else if (user?.role.includes(Role.BrandManager)) {
     }
   };
+
+  useEffect(() => {
+    setIsLoading(!isLoading);
+    getUserInfo();
+  }, [accountId]);
 
   return isLoading ? (
     <CircularProgress />

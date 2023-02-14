@@ -3,7 +3,6 @@ import { useParams } from 'react-router';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { PATH_STORE_APP } from 'routes/storeAppPaths';
-import { getUserInfo } from 'utils/utils';
 import SvgIconStyle from '../../components/SvgIconStyle';
 import { PATH_DASHBOARD } from '../../routes/paths';
 
@@ -36,8 +35,6 @@ const ICONS = {
   collection: getIcon('ic_collection')
 };
 
-const userInfoFromLocalStorage = JSON.parse(getUserInfo() ?? '');
-
 // SYSTEM ADMIN SIDEBAR CONFIG
 export const systemAdminSidebarConfig = [
   // {
@@ -69,7 +66,7 @@ export const brandManagerSidebarConfig = [
     items: [
       {
         title: 'Chi tiết thương hiệu',
-        path: PATH_DASHBOARD.brand.brandById(userInfoFromLocalStorage?.brandId),
+        path: PATH_DASHBOARD.brand.brandDetail,
         icon: ICONS.tag
       }
     ]
@@ -79,7 +76,7 @@ export const brandManagerSidebarConfig = [
     items: [
       {
         title: 'Danh sách cửa hàng',
-        path: PATH_DASHBOARD.brand.storesInBrand(userInfoFromLocalStorage?.brandId),
+        path: PATH_DASHBOARD.brand.storesInBrand,
         icon: ICONS.store
       },
       {
@@ -222,7 +219,7 @@ export const storeManagerSidebarConfig = [
     items: [
       {
         title: 'Chi tiết cửa hàng',
-        path: PATH_DASHBOARD.stores.storeById(userInfoFromLocalStorage?.storeId),
+        path: PATH_DASHBOARD.stores.storeDetail,
         icon: ICONS.store
       }
     ]
@@ -232,7 +229,7 @@ export const storeManagerSidebarConfig = [
     items: [
       {
         title: 'Danh sách nhân viên',
-        path: PATH_DASHBOARD.stores.accountInStore(userInfoFromLocalStorage?.storeId),
+        path: PATH_DASHBOARD.stores.accountInStore,
         icon: ICONS.user
       }
     ]

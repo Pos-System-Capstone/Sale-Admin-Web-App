@@ -14,34 +14,30 @@ import brandApi from 'api/brand';
 import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
+import { SHA256 } from 'crypto-js';
 import useAuth from 'hooks/useAuth';
 import { useSnackbar } from 'notistack';
 import AccountsList from 'pages/accounts/components/AccountsList';
 import StoresList from 'pages/Stores/components/StoresList';
-import { useRef, useState } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
-import { useNavigate, useParams } from 'react-router';
 import { BrandStatus, TBrandDetail } from 'types/brand';
 import { TUserCreate, UserStatus } from 'types/user';
 import { Role } from 'utils/role';
 import AddAccountModal from './AddAccountModel';
 import UpdateBrandInformation from './UpdateBrandInformation/UpdateBrandInformation';
-import { SHA256 } from 'crypto-js';
 
 const BrandDetailPage = () => {
-  const { brandId } = useParams();
-  const navigate = useNavigate();
-  const ref = useRef<any>();
   const { user } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
   const [openUpdateBrandInformationForm, setOpenUpdateBrandInformationForm] = useState(false);
   const [openAddAccountModel, setOpenAddAccountModel] = useState(false);
   const { data: brand, refetch } = useQuery(
-    ['brands', brandId],
-    () => brandApi.getBrandDetail(brandId!).then((res) => res.data),
+    ['brands', user?.brandId],
+    () => brandApi.getBrandDetail(user?.brandId).then((res) => res.data),
     {
-      enabled: Boolean(brandId)
+      enabled: Boolean(user?.brandId)
     }
   );
   const brandDetailColumns: ResoDescriptionColumnType<TBrandDetail>[] = [
@@ -91,18 +87,17 @@ const BrandDetailPage = () => {
 
   const addAccountForm = useForm<TUserCreate>({
     defaultValues: {
-      brandId: brandId,
+      brandId: user?.brandId,
       status: UserStatus.ACTIVE
     },
     shouldUnregister: false
   });
 
   const onSubmitCreateUser = (values: TUserCreate) => {
-    console.log(`data`, values);
     const createUserData = { ...values };
     createUserData.password = SHA256(createUserData.password).toString();
     return brandApi
-      .createUserOfBrand(brandId!, createUserData)
+      .createUserOfBrand(user?.brandId, createUserData)
       .then((res) => {
         enqueueSnackbar(`Tạo thành công`, {
           variant: 'success'

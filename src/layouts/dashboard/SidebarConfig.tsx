@@ -69,7 +69,7 @@ export const brandManagerSidebarConfig = [
     items: [
       {
         title: 'Chi tiết thương hiệu',
-        path: PATH_DASHBOARD.brand.brandById(userInfoFromLocalStorage.brandId),
+        path: PATH_DASHBOARD.brand.brandDetail,
         icon: ICONS.tag
       }
     ]
@@ -79,7 +79,7 @@ export const brandManagerSidebarConfig = [
     items: [
       {
         title: 'Danh sách cửa hàng',
-        path: PATH_DASHBOARD.brand.storesInBrand(userInfoFromLocalStorage.brandId),
+        path: PATH_DASHBOARD.brand.storesInBrand,
         icon: ICONS.store
       },
       {

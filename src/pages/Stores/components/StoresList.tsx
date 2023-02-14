@@ -8,14 +8,14 @@ import brandApi from 'api/brand';
 import ResoTable from 'components/ResoTable/ResoTable';
 // components
 import { ResoDescriptionColumnType } from 'components/ResoDescriptions';
-import { useParams } from 'react-router';
+import useAuth from 'hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { StoreStatus, TStore } from 'types/store';
 
 const StoresList = () => {
   const navigate = useNavigate();
-  const { brandId } = useParams();
+  const { user } = useAuth();
 
   const storeDetailColumns: ResoDescriptionColumnType<TStore>[] = [
     {
@@ -78,7 +78,7 @@ const StoresList = () => {
           pagination
           showAction={false}
           rowKey="store_id"
-          getData={(params: any) => brandApi.getStoreOfBrand(brandId!, params)}
+          getData={(params: any) => brandApi.getStoreOfBrand(user?.brandId, params)}
           columns={storeDetailColumns}
         />
       </Box>

@@ -1,15 +1,51 @@
+export type TProduct = {
+  data: any;
+  id: string;
+  code: string;
+  name: string;
+  sellingPrice?: number;
+  picUrl?: string;
+  status: ProductStatusEnum;
+  historicalPrice?: number;
+  discountPrice?: number;
+  description?: string;
+  displayOrder: number;
+  size: ProductSizeEnum;
+  type: ProductTypeEnum;
+  parentProductId?: string;
+  brandId?: string;
+  categoryId?: string;
+};
+
+export type TProductCreate = {
+  name: string;
+  code: string;
+  sellingPrice: number;
+  picUrl: string;
+  categoryId: string;
+  historicalPrice: number;
+  discountPrice: number;
+  description: string;
+  displayOrder: number;
+  size: ProductSizeEnum;
+  type: ProductTypeEnum;
+  parentProductId: string;
+};
+
 export enum ProductTypeEnum {
-  Single = 0,
-  Room = 2,
-  AdditionFee = 3,
-  Extra = 5,
-  General = 6,
-  Detail = 7,
-  CardPayment = 8,
-  Combo = 1,
-  Sample = 9,
-  Complex = 10,
-  CHARGES = 11
+  Single = 'SINGLE',
+  Master = 'MASTER',
+  HAS_EXTRA = 'HAS_EXTRA',
+  Extra = 'EXTRA'
+}
+export enum ProductSizeEnum {
+  Small = 'S',
+  Medium = 'M',
+  Large = 'L'
+}
+export enum ProductStatusEnum {
+  Active = 'Active',
+  Deactive = 'Deactive'
 }
 
 export enum CombinationModeEnum {
@@ -159,3 +195,36 @@ export type ComboProductType = {
   min: number;
   max: number;
 };
+
+export const PRODUCT_TYPE_OPTIONS = [
+  {
+    value: ProductTypeEnum.Single,
+    label: 'Sản phẩm đơn'
+  },
+  {
+    value: ProductTypeEnum.Master,
+    label: 'Sản phẩm cha'
+  },
+  {
+    value: ProductTypeEnum.Extra,
+    label: 'Sản phẩm extra'
+  },
+  {
+    value: ProductTypeEnum.HAS_EXTRA,
+    label: 'Sản phẩm có extra'
+  }
+];
+export const PRODUCT_SIZE_OPTIONS = [
+  {
+    value: ProductSizeEnum.Small,
+    label: 'Size S'
+  },
+  {
+    value: ProductSizeEnum.Medium,
+    label: 'Size M'
+  },
+  {
+    value: ProductSizeEnum.Large,
+    label: 'Size L'
+  }
+];

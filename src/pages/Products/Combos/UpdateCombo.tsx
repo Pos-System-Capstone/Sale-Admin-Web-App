@@ -23,7 +23,6 @@ import SeoForm from 'components/form/Seo/SeoForm';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import ModalForm from 'components/ModalForm/ModalForm';
 import Page from 'components/Page';
-import useProduct from 'hooks/products/useProduct';
 import useLocales from 'hooks/useLocales';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { get } from 'lodash';
@@ -44,6 +43,7 @@ import ProductImagesForm from '../components/form/ProductImagesForm';
 import { validationSchema } from '../type';
 import { normalizeProductCombo, transformComboForm, transformDraftToStr } from '../utils';
 import ChoiceGroupComboForm from './components/form/ChoiceGroupComboForm';
+import { useProduct } from 'hooks/products/useProduct';
 
 interface Props {}
 const STEPS = ['Thông tin', 'Nhóm sản phẩm'];
@@ -141,10 +141,7 @@ const UpdateCombo = (props: Props) => {
 
   const onSubmit = (values: any) => {
     const data = transformDraftToStr(values);
-    return updateProdById(
-      Number(comboId),
-      transformComboForm(data, CombinationModeEnum.ChoiceCombo)
-    )
+    return updateProdById(comboId!, transformComboForm(data, CombinationModeEnum.ChoiceCombo))
       .then((res) => {
         enqueueSnackbar(`Cập nhật thành công ${values.product_name}`, {
           variant: 'success'

@@ -1,8 +1,8 @@
-import { TProductBase } from 'types/product';
+import { TProduct } from 'types/product';
 import { generateAPIWithPaging } from './utils';
 
 const productApi = {
-  ...generateAPIWithPaging<TProductBase>('admin/products')
+  ...generateAPIWithPaging<TProduct>('products')
 };
 
 export default productApi;

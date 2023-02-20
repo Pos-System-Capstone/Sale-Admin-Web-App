@@ -4,10 +4,10 @@ import { useQuery } from 'react-query';
 const useCategories = (params?: any) => {
   return useQuery(
     ['categories', params],
-    () => categoryApi.get(params).then((res) => res.data.data),
-    {
-      refetchOnWindowFocus: false
-    }
+    () => categoryApi.get(params).then((res) => res.data.items)
+    // {
+    //   refetchOnWindowFocus: false
+    // }
   );
 };
 

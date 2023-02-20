@@ -1,6 +1,5 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { Typography } from '@mui/material';
-import useCategories from 'hooks/categories/useCategories';
 import { useFormContext } from 'react-hook-form';
 
 interface Props {
@@ -11,7 +10,7 @@ const CategoryTreeForm = ({ isExtraCate = false }: Props) => {
   const {
     formState: { errors }
   } = useFormContext();
-  const { data: categories } = useCategories({ 'is-extra': isExtraCate, 'only-root': true });
+  // const { data: categories } = useCategories({ 'is-extra': isExtraCate, 'only-root': true });
 
   // const categoryTreeData = useMemo<RenderTree[]>(() => {
   //   const generateTree: any = (category: TCategory) => {

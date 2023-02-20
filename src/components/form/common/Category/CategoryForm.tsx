@@ -1,7 +1,7 @@
 import { Grid, Stack } from '@mui/material';
-import { DraftEditorField, InputField, SelectField, UploadImageField } from 'components/form';
+import { InputField, SelectField, UploadImageField } from 'components/form';
 import useLocales from 'hooks/useLocales';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { CREATE_CATEGORY_TYPE_OPTIONS } from 'types/category';
 
 interface Props {
@@ -39,18 +39,7 @@ const CategoryForm = ({ updateMode }: Props) => {
         </Stack>
       </Grid>
       <Grid item xs={12}>
-        <Controller
-          name="description"
-          render={({ field }) => {
-            return (
-              <DraftEditorField
-                ariaLabel="Mô tả chi tiếtÏ"
-                value={field.value}
-                onChange={field.onChange}
-              />
-            );
-          }}
-        />
+        <InputField fullWidth name="discription" label="Mô tả" />
       </Grid>
       {/* {!isExtra && (
         <Grid item xs={12}>

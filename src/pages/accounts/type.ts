@@ -7,7 +7,7 @@ export const DEFAULT_VALUES: UpdateProductForm = {
   code: 'TEST',
   product_name: 'Test sp',
   description: 'mo ta',
-  product_type: 6,
+  // product_type: 6,
   pic_url: '',
   hasVariant: true,
   seo_name: 'seo link',

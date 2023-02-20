@@ -181,12 +181,12 @@ export const brandAdminSidebarConfig = [
         title: 'Danh sách sản phẩm',
         path: PATH_DASHBOARD.products.list,
         icon: ICONS.product
-      },
-      {
-        title: 'Danh sách combo',
-        path: PATH_DASHBOARD.combos.list,
-        icon: ICONS.combo
       }
+      // {
+      //   title: 'Danh sách combo',
+      //   path: PATH_DASHBOARD.combos.list,
+      //   icon: ICONS.combo
+      // }
     ]
   },
   {

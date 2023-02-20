@@ -152,6 +152,6 @@ export const transformComboForm = (
       base_product_id: g.base_product_id
     });
   });
-  data.product_type = ProductTypeEnum.Combo;
+  data.product_type = ProductTypeEnum.Single;
   return data as CreateComboRequest;
 };

@@ -25,7 +25,7 @@ const ConditionForm = ({ updateMode }: Props) => {
   const { watch } = useFormContext();
   const [categories, setCategories] = useState<TCategory[]>([]);
 
-  const { data } = useCategories({ 'only-root': true });
+  const { data } = useCategories({ page: 1, size: 100 });
 
   useEffect(() => {
     setCategories(data ?? []);

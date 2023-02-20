@@ -1,10 +1,9 @@
 export type BaseReponse<T> = {
-  data: T[];
-  metadata: {
-    page: number;
-    size: number;
-    total: number;
-  };
+  items: T[];
+  page: number;
+  size: number;
+  total: number;
+  totalPages: number;
 };
 
 export type TRequestPaging = {

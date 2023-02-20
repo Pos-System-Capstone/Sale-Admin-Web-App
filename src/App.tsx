@@ -4,7 +4,7 @@ import Router from './routes';
 import ThemeConfig from './theme';
 import GlobalStyles from './theme/globalStyles';
 // hooks
-import useAuth from './hooks/useAuth';
+// import useAuth from './hooks/useAuth';
 // components
 import RtlLayout from './components/RtlLayout';
 import ScrollToTop from './components/ScrollToTop';

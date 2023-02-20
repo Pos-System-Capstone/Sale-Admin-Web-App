@@ -1,16 +1,16 @@
 import { CreateComboForm } from 'types/product';
 import request from '../../utils/axios';
 
-export const createMasterProd = (data: any) => request.post<number>(`/admin/products`, data);
+export const createMasterProd = (data: any) => request.post<number>(`/products`, data);
 
-export const getProdById = (id: number) => request.get(`/admin/products/${id}`);
+export const getProdById = (id: number) => request.get(`/products/${id}`);
 
-export const updateProdById = (id: number, data: any) => request.put(`/admin/products/${id}`, data);
+export const updateProdById = (id: string, data: any) => request.put(`/products/${id}`, data);
 
-export const deleteProdById = (id: number) => request.delete(`/admin/products/${id}`);
+export const deleteProdById = (id: number) => request.delete(`/products/${id}`);
 
 export const getAllProduct = (params: any = {}) =>
-  request.get('/admin/products', {
+  request.get('/products', {
     params
   });
 

@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router';
 import { deleteProdById, getAllProduct } from 'redux/product/api';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { CollectionTypeEnum } from 'types/collection';
-import { ProductTypeEnum, TProductBase } from 'types/product';
+import { TProductBase } from 'types/product';
 import { comboColumns } from './components/columns';
 
 interface Props {}
@@ -82,9 +82,9 @@ const ComboList = (props: Props) => {
           <ResoTable
             pagination
             ref={ref}
-            defaultFilters={{
-              'product-type': ProductTypeEnum.Combo
-            }}
+            // defaultFilters={{
+            //   'product-type': ProductTypeEnum.Combo
+            // }}
             getData={getAllProduct}
             onEdit={(data: TProductBase) =>
               navigate(`${PATH_DASHBOARD.combos.editById(data.product_id)}`)

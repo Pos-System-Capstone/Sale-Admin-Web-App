@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
-import { TabContext, TabList } from '@mui/lab';
+// import { TabContext, TabList } from '@mui/lab';
 // material
-import { Button, Card, Tab, Box } from '@mui/material';
+import { Button, Card } from '@mui/material';
 import confirm from 'components/Modal/confirm';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
@@ -13,10 +13,11 @@ import React, { useEffect, useRef, useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { ProductTypeEnum, TProductBase } from 'types/product';
-import { deleteProdById, getAllProduct } from '../../redux/product/api';
+import { ProductTypeEnum, TProduct, TProductBase } from 'types/product';
+import { deleteProdById } from '../../redux/product/api';
 //
 import { productColumns } from './config';
+import productApi from 'api/product';
 
 // ----------------------------------------------------------------------
 
@@ -31,12 +32,8 @@ export default function EcommerceShop() {
   const navigate = useNavigate();
   const { t } = useLocales();
 
-  const editProuct = (data: TProductBase) => {
-    if (data.product_type === 1) {
-      navigate(`${PATH_DASHBOARD.combos.editById(data.product_id)}`);
-    } else {
-      navigate(`${PATH_DASHBOARD.products.root}/${data.product_id}`);
-    }
+  const editProduct = (data: TProduct) => {
+    navigate(`${PATH_DASHBOARD.products.root}/${data.id}`);
   };
 
   const onDelete = (currentDeleteItem: TProductBase) => {
@@ -97,23 +94,23 @@ export default function EcommerceShop() {
       ]}
     >
       <Card>
-        <TabContext value={activeTab}>
+        {/* <TabContext value={activeTab}>
           <Box>
             <TabList onChange={handleChangeTab}>
               <Tab label="Danh mục sản phẩm" value="1" />
               <Tab label="Danh mục extra" value="2" />
             </TabList>
-          </Box>
-          <ResoTable
-            ref={ref}
-            pagination
-            getData={getAllProduct}
-            onEdit={editProuct}
-            onDelete={onDelete}
-            columns={productColumns}
-            rowKey="product_id"
-          />
-        </TabContext>
+          </Box> */}
+        <ResoTable
+          ref={ref}
+          pagination
+          getData={productApi.get}
+          onEdit={editProduct}
+          onDelete={onDelete}
+          columns={productColumns}
+          rowKey="product_id"
+        />
+        {/* </TabContext> */}
       </Card>
     </Page>
   );

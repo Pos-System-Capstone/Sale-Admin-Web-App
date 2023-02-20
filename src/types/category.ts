@@ -20,8 +20,8 @@ export interface TCategoryCreate {
   picUrl: string;
 }
 export enum CategoryType {
-  NORMAL = 'NORMAL',
-  EXTRA = 'EXTRA'
+  NORMAL = 'Normal',
+  EXTRA = 'Extra'
 }
 export enum CategoryStatus {
   ACTIVE = 'Active',
@@ -50,10 +50,10 @@ export interface CategoryExtraCate {
 export const CREATE_CATEGORY_TYPE_OPTIONS = [
   {
     value: CategoryType.NORMAL,
-    label: 'NORMAL'
+    label: 'Normal'
   },
   {
     value: CategoryType.EXTRA,
-    label: 'EXTRA'
+    label: 'Extra'
   }
 ];

@@ -32,6 +32,15 @@ export type TProductCreate = {
   parentProductId: string;
 };
 
+export type TProductInCollection = {
+  id: string;
+  productName: string;
+  description: string;
+  productCode: string;
+  picUrl: string;
+  sellingPrice: number;
+};
+
 export enum ProductTypeEnum {
   Single = 'SINGLE',
   Master = 'MASTER',
@@ -102,11 +111,6 @@ export type TProductBase = {
   /** Giá của sản phẩm sẽ được sử dụng khi sản phẩm này không được cấu hình giá ở bảng `ProductInMenu` */
   price?: number;
 };
-
-export type TProductInCollection = TProductBase & {
-  position?: number;
-};
-
 export type TProductMaster = TProductBase & {
   child_products: TProductBase[];
 };

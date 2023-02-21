@@ -5,19 +5,18 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import productApi from 'api/product';
 import { useSnackbar } from 'notistack';
-import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { ProductTypeEnum, TProductMaster } from 'types/product';
+import { ProductTypeEnum } from 'types/product';
 import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from '../../components/Page';
 import useDashboard from '../../hooks/useDashboard';
 import { DashboardNavLayout } from '../../layouts/dashboard/DashboardNavbar';
 import MiddleForm from './components/MiddleForm';
 import { UpdateProductForm, validationSchema } from './type';
-import { normalizeProductData, transformDraftToStr, transformProductForm } from './utils';
+import { transformDraftToStr, transformProductForm } from './utils';
 
 const CreateProduct = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -40,18 +39,18 @@ const CreateProduct = () => {
 
   const { data, isLoading } = useQuery(
     ['products', Number(cloneProductId)],
-    () => productApi.getById(cloneProductId).then((res) => res.data as TProductMaster),
+    () => productApi.getById(cloneProductId).then((res) => res.data),
     {
       enabled: Boolean(cloneProductId),
       staleTime: Infinity
     }
   );
 
-  useEffect(() => {
-    if (data) {
-      reset({ ...normalizeProductData(data) });
-    }
-  }, [data, reset]);
+  // useEffect(() => {
+  //   if (data) {
+  //     reset({ ...normalizeProductData(data) });
+  //   }
+  // }, [data, reset]);
 
   const onSubmit = (values: UpdateProductForm) => {
     const data = transformDraftToStr(values);

@@ -50,7 +50,7 @@ export const transformMenuForm = (values: any) => {
 };
 
 export const menuSchema = yup.object({
-  menu_name: yup.string().required('Vui lòng nhập tên bảng giá'),
+  // menu_name: yup.string().required('Vui lòng nhập tên bảng giá'),
   time_ranges: yup.array().when('allDay', {
     is: false, // alternatively: (val) => val == true
     then: yup

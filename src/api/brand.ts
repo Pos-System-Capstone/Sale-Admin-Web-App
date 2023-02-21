@@ -10,6 +10,11 @@ const getBrandDetail = (brandId: string) => requestWebAdmin.get<TBrandDetail>(`b
 const getStoreOfBrand = (brandId: string, params?: any) => {
   return requestWebAdmin.get<BaseReponse<TStore>>(`brands/${brandId}/stores`, { params });
 };
+
+const getStoresOfBrandWithoutPaging = () => {
+  return requestWebAdmin.get<BaseReponse<TStoreDetail>>(`brands/stores`);
+};
+
 const getListUserOfBrand = (brandId: string, params?: any) => {
   return requestWebAdmin.get<BaseReponse<TUser>>(`brands/${brandId}/users`, { params });
 };
@@ -37,6 +42,7 @@ const brandApi = {
   createNewBrand,
   updateBrandInformation,
   createNewBrandStore,
+  getStoresOfBrandWithoutPaging,
   ...generateAPIWithPaging<TBrand>('brands')
 };
 

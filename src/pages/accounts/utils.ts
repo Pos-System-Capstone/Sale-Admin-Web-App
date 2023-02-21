@@ -6,7 +6,6 @@ import {
   ComboProductType,
   CreateComboForm,
   CreateComboRequest,
-  ProductTypeEnum,
   TProductBase,
   TProductCombo,
   TProductMaster
@@ -152,6 +151,6 @@ export const transformComboForm = (
       base_product_id: g.base_product_id
     });
   });
-  data.product_type = ProductTypeEnum.Combo;
+  // data.product_type = ProductTypeEnum.Combo;
   return data as CreateComboRequest;
 };

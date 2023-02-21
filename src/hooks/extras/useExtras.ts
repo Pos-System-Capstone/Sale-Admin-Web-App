@@ -6,7 +6,7 @@ const useExtras = (params?: any) => {
     ['extras', params],
     () => categoryApi.get({ ...(params || {}), 'is-extra': true }),
     {
-      select: (res) => res.data.data
+      select: (res) => res.data.items
     }
   );
 };

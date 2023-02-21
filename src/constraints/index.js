@@ -1,3 +1,5 @@
+import { ProductTypeEnum } from 'types/product';
+
 export const PRODUCT_MASTER = 6;
 export const PRODUCT_EXTRA = 5;
 export const PRODUCT_DETAIL = 7;
@@ -7,33 +9,23 @@ export const PRODUCT_COMPLEX = 10;
 
 export const PRODUCT_TYPE_DATA = [
   {
-    value: PRODUCT_MASTER,
-    typeCode: 'master',
-    label: 'Dòng sản phẩm'
+    value: ProductTypeEnum.Single,
+    typeCode: 'SINGLE',
+    label: 'Sản phẩm đơn'
   },
   {
-    value: PRODUCT_COMPLEX,
-    typeCode: 'complex',
-    label: 'SP Kết hợp'
+    value: ProductTypeEnum.Master,
+    typeCode: 'MASTER',
+    label: 'Sản phẩm cha'
   },
   {
-    value: PRODUCT_COMBO,
-    typeCode: 'combo',
-    label: 'SP Combo'
+    value: ProductTypeEnum.HAS_EXTRA,
+    typeCode: 'HAS_EXTRA',
+    label: 'Sản phẩm có extra'
   },
   {
-    value: `${PRODUCT_SINGLE}`,
-    typeCode: 'single',
-    label: 'SP Đơn'
-  },
-  {
-    value: PRODUCT_DETAIL,
-    typeCode: 'child',
-    label: 'SP Con'
-  },
-  {
-    value: PRODUCT_EXTRA,
-    typeCode: 'extra',
+    value: ProductTypeEnum.Extra,
+    typeCode: 'EXTRA',
     label: 'SP Extra'
   }
 ];

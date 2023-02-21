@@ -3,7 +3,6 @@ import Router from './routes';
 // theme
 import ThemeConfig from './theme';
 import GlobalStyles from './theme/globalStyles';
-// hooks
 // components
 import Settings from 'components/settings';
 import { useState } from 'react';

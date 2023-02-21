@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router';
 import { TCategoryCreate } from 'types/category';
 import * as yup from 'yup';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { transformDraftToStr } from 'pages/Products/utils';
 
 interface Props {}
 
@@ -35,10 +34,9 @@ const CreateCategory = (props: Props) => {
   });
 
   const onSubmit = (values: TCategoryCreate) => {
-    const data = transformDraftToStr(values);
-    console.log(`data`, data);
+    console.log(`data`, values);
     return categoryApi
-      .create(data)
+      .create(values)
       .then((res) => {
         enqueueSnackbar(`Tạo thành công`, {
           variant: 'success'

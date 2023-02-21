@@ -78,7 +78,7 @@ const ChoiceGroupComboForm = (props: Props) => {
     productInCollections.forEach((productData, idx) => {
       if (newGroups[idx]) {
         newGroups[idx].combination_mode = CombinationModeEnum.ChoiceCombo;
-        newGroups[idx].products = productData.data.data.map((p) => ({
+        newGroups[idx].products = productData.data.items.map((p) => ({
           ...p,
           min: 0,
           max: 1,

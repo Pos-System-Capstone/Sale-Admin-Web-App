@@ -4,12 +4,16 @@ import { Icon } from '@iconify/react';
 // material
 import { Button, Card, Chip, Stack, Typography } from '@mui/material';
 import menuApi from 'api/menu';
+import MenuForm from 'components/form/Menu/MenuForm';
 import confirm from 'components/Modal/confirm';
+import ModalForm from 'components/ModalForm/ModalForm';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { DAY_OF_WEEK_CONFIG_VALUE_BY_BIT } from 'constraints';
+import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import { useRef } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 // components
 import { useNavigate } from 'react-router-dom';
 import { getMenus } from 'redux/menu/api';
@@ -96,6 +100,16 @@ const MenusPage = () => {
   const tableRef = useRef<any>();
   const { enqueueSnackbar } = useSnackbar();
 
+  const createMenuForm = useForm({
+    // resolver: yupResolver(menuSchema),
+    shouldUnregister: true,
+    defaultValues: {
+      time_ranges: [{ from: null, to: null }],
+      allDay: false,
+      priority: 0
+    }
+  });
+
   const onDeleteMenu = async (menuId: number) => {
     try {
       await menuApi.delete(menuId);
@@ -123,32 +137,65 @@ const MenusPage = () => {
     });
   };
 
+  const convertTimeToInteger = (time: string) => {
+    const array = time.split(':');
+    return parseInt(array[0], 10) * 60 + parseInt(array[1], 10);
+  };
+
+  const processDayFiter = (dayOfWeek: number[]) => {
+    let totalDay = 0;
+    dayOfWeek.map((number) => {
+      totalDay += number;
+    });
+    return totalDay;
+  };
+
   return (
     <Page
-      title="Bảng giá"
+      title="Danh sách menu"
       actions={() => [
-        // <ModalForm
-        //   key="create-menu"
-        //   onOk={handleSubmitCreateNewForm}
-        //   title={<Typography variant="h3">Thêm Bảng giá</Typography>}
-        //   trigger={
-        //     <Button variant="contained" startIcon={<Icon icon={plusFill} />}>
-        //       Thêm Bảng giá
-        //     </Button>
-        //   }
-        // >
-        //   <FormProvider {...createMenuForm}>
-        //     <MenuForm />
-        //   </FormProvider>
-        // </ModalForm>
-        <Button
-          key={'create_menu_button'}
-          variant="contained"
-          startIcon={<Icon icon={plusFill} />}
-          onClick={() => navigate('new')}
+        <ModalForm
+          key="create-menu"
+          onOk={async () => {
+            try {
+              await createMenuForm.handleSubmit(
+                (data: any) => {
+                  const startTimeToInt = convertTimeToInteger(
+                    moment(data.startTime).format('hh:mm')
+                  );
+                  const endTimeToInt = convertTimeToInteger(moment(data.endTime).format('hh:mm'));
+                  const dayFilter = processDayFiter(data.dayFilter);
+                  console.log('dayFilter', dayFilter);
+                  // return menuApi.create(transformMenuForm(data));
+                },
+                (e) => {
+                  throw e;
+                }
+              )();
+              // enqueueSnackbar('Tạp bảng giá thành công', {
+              //   variant: 'success'
+              // });
+              // tableRef.current?.reload();
+              // return true;
+            } catch (error) {
+              console.log(`error`, error);
+              enqueueSnackbar((error as any).message, {
+                variant: 'error'
+              });
+              return false;
+            }
+          }}
+          title={<Typography variant="h3">Thêm Bảng giá</Typography>}
+          trigger={
+            <Button variant="contained" startIcon={<Icon icon={plusFill} />}>
+              Thêm Bảng giá
+            </Button>
+          }
         >
-          Thêm Bảng giá
-        </Button>
+          <FormProvider {...createMenuForm}>
+            <MenuForm />
+          </FormProvider>
+        </ModalForm>
       ]}
     >
       <Card>

@@ -4,7 +4,6 @@ import { DraftEditorField } from 'components/form';
 import SeoForm from 'components/form/Seo/SeoForm';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
-import useProduct from 'hooks/products/useProduct';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
@@ -20,6 +19,7 @@ import ProductImagesForm from '../components/form/ProductImagesForm';
 import { validationSchema } from '../type';
 import { normalizeProductCombo, transformComboForm } from '../utils';
 import ChoiceGroupComboForm from './components/form/ChoiceGroupComboForm';
+import { useProduct } from 'hooks/products/useProduct';
 interface Props {}
 const STEPS = ['Thông tin', 'Nhóm sản phẩm'];
 

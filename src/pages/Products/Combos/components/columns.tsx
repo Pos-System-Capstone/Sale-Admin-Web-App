@@ -36,7 +36,7 @@ export const comboColumns: TTableColumn<TProductBase>[] = [
   {
     title: 'Danh mục',
     dataIndex: 'cate_name',
-    renderFormItem: () => <AutocompleteCategory name="cat-id" label="Danh mục" />
+    renderFormItem: () => <AutocompleteCategory isExtra={false} name="cat-id" label="Danh mục" />
   },
   {
     title: 'Trạng thái',

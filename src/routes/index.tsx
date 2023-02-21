@@ -197,7 +197,6 @@ export default function Router() {
           path: 'menus',
           children: [
             { path: '', element: <MenusPage /> },
-            { path: 'new', element: <CreateNewMenuPage /> },
             { path: ':id', element: <UpdateMenuPage /> }
           ]
         },
@@ -337,9 +336,6 @@ const CreateNewBrand = Loadable(
 
 // Menu
 const MenusPage = Loadable(lazy(() => import('../pages/Menus')));
-const CreateNewMenuPage = Loadable(
-  lazy(() => import('../pages/Menus/components/CreateNewMenu/CreateNewMenu'))
-);
 const UpdateMenuPage = Loadable(lazy(() => import('../pages/Menus/update')));
 const MenuInStorePage = Loadable(lazy(() => import('../pages/Menus/MenuInStore')));
 

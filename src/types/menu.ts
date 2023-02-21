@@ -34,7 +34,8 @@ export type TStoreApplyMenuRequest = {
 };
 
 export type TCreateMenuInformation = {
-  storeId: string;
+  isBaseMenu: boolean;
+  code: string;
   priority: number;
   dateFilter: number;
   startTime: number;

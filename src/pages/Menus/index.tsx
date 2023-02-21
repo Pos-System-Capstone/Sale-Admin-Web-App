@@ -18,7 +18,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { getMenus } from 'redux/menu/api';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { Menu } from 'types/menu';
+import { Menu, TCreateMenuInformation } from 'types/menu';
 import { TTableColumn } from 'types/table';
 import { fDate } from 'utils/formatTime';
 
@@ -137,6 +137,10 @@ const MenusPage = () => {
     });
   };
 
+  // const handleGetListMenu = (param? : any) => {
+  //   return
+  // }
+
   const convertTimeToInteger = (time: string) => {
     const array = time.split(':');
     return parseInt(array[0], 10) * 60 + parseInt(array[1], 10);
@@ -150,6 +154,33 @@ const MenusPage = () => {
     return totalDay;
   };
 
+  const handleProcessCreateNewMenuRequest = (data: any) => {
+    const { code, statTime, endTime, dayFilter, priority, allDay, isBaseMenu } = data;
+    let startTimeToInt = 0;
+    let endTimeToInt = 0;
+
+    if (allDay) {
+      startTimeToInt = 0;
+      endTimeToInt = 1439;
+    } else {
+      // convert all data to int to send request
+      startTimeToInt = convertTimeToInteger(moment(statTime).format('hh:mm'));
+      endTimeToInt = convertTimeToInteger(moment(endTime).format('hh:mm'));
+    }
+
+    const dayFilterTotal = processDayFiter(dayFilter);
+    const processedData: TCreateMenuInformation = {
+      isBaseMenu: isBaseMenu,
+      code: code,
+      priority: parseInt(priority),
+      dateFilter: dayFilterTotal,
+      startTime: startTimeToInt,
+      endTime: endTimeToInt
+    };
+
+    return processedData;
+  };
+
   return (
     <Page
       title="Danh sách menu"
@@ -160,12 +191,8 @@ const MenusPage = () => {
             try {
               await createMenuForm.handleSubmit(
                 (data: any) => {
-                  const startTimeToInt = convertTimeToInteger(
-                    moment(data.startTime).format('hh:mm')
-                  );
-                  const endTimeToInt = convertTimeToInteger(moment(data.endTime).format('hh:mm'));
-                  const dayFilter = processDayFiter(data.dayFilter);
-                  console.log('dayFilter', dayFilter);
+                  const requestOfCreateNewMenu = handleProcessCreateNewMenuRequest(data);
+                  console.log('data ne: ', requestOfCreateNewMenu);
                   // return menuApi.create(transformMenuForm(data));
                 },
                 (e) => {

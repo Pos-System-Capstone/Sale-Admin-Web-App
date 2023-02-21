@@ -20,6 +20,8 @@ const MenuForm = (props: Props) => {
     control
   });
 
+  const isBaseMenu = watch('isBaseMenu');
+
   // const renderTimeRangeForm = () => (
   //   <Grid item xs={12}>
   //     <FormLabel component="p" title="Khung giờ" />
@@ -176,7 +178,7 @@ const MenuForm = (props: Props) => {
           <CheckBoxField
             size="small"
             fullWidth
-            name="is_brand_mode"
+            name="isBaseMenu"
             label="Áp dụng toàn hệ thống"
             value="true"
           />
@@ -185,7 +187,20 @@ const MenuForm = (props: Props) => {
           <InputField size="small" fullWidth name="code" label="Mã menu" />
         </Grid>
         <Grid item xs={12} md={6}>
-          <InputField type="number" size="small" fullWidth name="priority" label="Cấp độ ưu tiên" />
+          <InputField
+            size="small"
+            type="number"
+            fullWidth
+            name="priority"
+            disabled={isBaseMenu}
+            defaultValue="0"
+            label="Cấp độ ưu tiên"
+          />
+          <Typography color="red" variant="caption">
+            {isBaseMenu
+              ? 'Menu toàn hệ thống có ưu tiên là 0'
+              : 'Ưu tiên rất quan trọng, chú ý nhập đúng!'}
+          </Typography>
         </Grid>
 
         <Grid item xs={12}>

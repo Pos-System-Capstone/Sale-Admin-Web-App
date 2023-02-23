@@ -37,8 +37,6 @@ export default function AccountsList() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  console.log('path name ne: ', location.pathname.includes('brands'));
-
   const accountColumns: TTableColumn<TUser>[] = [
     {
       title: 'STT',
@@ -109,13 +107,25 @@ export default function AccountsList() {
   };
 
   const handleCallListDataBaseOnRole = (params: any) => {
+    let newParam = { ...params };
     if (user?.storeId && user?.role.includes(Role.StoreManager)) {
-      return storeApi.getStoreEmployees(user.storeId, params);
-    } else if (
-      user?.brandId &&
-      (user?.role.includes(Role.BrandManager) || user?.role.includes(Role.BrandAdmin))
-    ) {
-      return brandApi.getListUserOfBrand(user.brandId, params);
+      newParam = {
+        role: Role.StoreStaff,
+        ...newParam
+      };
+      return storeApi.getStoreEmployees(user.storeId, newParam);
+    } else if (user?.brandId && user?.role.includes(Role.BrandAdmin)) {
+      newParam = {
+        role: Role.BrandManager,
+        ...newParam
+      };
+      return brandApi.getListUserOfBrand(user.brandId, newParam);
+    } else if (user?.brandId && user?.role.includes(Role.BrandManager)) {
+      newParam = {
+        role: Role.StoreManager,
+        ...newParam
+      };
+      return brandApi.getListUserOfBrand(user.brandId, newParam);
     } else if (storeId) {
       return storeApi.getStoreEmployees(storeId, params);
     } else if (brandId) {
@@ -164,6 +174,7 @@ export default function AccountsList() {
           onDelete={(user: TUser) => (setIsOpenDeleteConfirmDialog(true), setDeleteUser(user))}
           columns={accountColumns}
           rowKey="id"
+          key={'accountList'}
         />
 
         <UpdateConfirmDialog

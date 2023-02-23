@@ -48,10 +48,6 @@ export const CREATE_USER_ROLE_OPTIONS = [
     value: UserRole.BrandManager,
     label: 'BrandManager'
   },
-  {
-    value: UserRole.StoreManager,
-    label: 'StoreManager'
-  }
 ];
 
 export const UPDATE_USER_STATUS = [

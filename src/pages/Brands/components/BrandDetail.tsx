@@ -22,6 +22,7 @@ import StoresList from 'pages/Stores/components/StoresList';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
+import { useParams } from 'react-router';
 import { BrandStatus, TBrandDetail } from 'types/brand';
 import { TUserCreate, UserStatus } from 'types/user';
 import { Role } from 'utils/role';
@@ -29,17 +30,19 @@ import AddAccountModal from './AddAccountModel';
 import UpdateBrandInformation from './UpdateBrandInformation/UpdateBrandInformation';
 
 const BrandDetailPage = () => {
+  const { brandId } = useParams();
   const { user } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
   const [openUpdateBrandInformationForm, setOpenUpdateBrandInformationForm] = useState(false);
   const [openAddAccountModel, setOpenAddAccountModel] = useState(false);
-  const { data: brand, refetch } = useQuery(
-    ['brands', user?.brandId],
-    () => brandApi.getBrandDetail(user?.brandId).then((res) => res.data),
-    {
-      enabled: Boolean(user?.brandId)
+
+  const { data: brand, refetch } = useQuery(['brands', user?.brandId], async () => {
+    if (brandId) {
+      return await brandApi.getBrandDetail(brandId).then((res) => res.data);
     }
-  );
+    return await brandApi.getBrandDetail(user?.brandId).then((res) => res.data);
+  });
+
   const brandDetailColumns: ResoDescriptionColumnType<TBrandDetail>[] = [
     {
       title: 'Tên nhãn hiệu',
@@ -87,7 +90,7 @@ const BrandDetailPage = () => {
 
   const addAccountForm = useForm<TUserCreate>({
     defaultValues: {
-      brandId: user?.brandId,
+      brandId: brandId ?? '',
       status: UserStatus.ACTIVE
     },
     shouldUnregister: false
@@ -97,7 +100,7 @@ const BrandDetailPage = () => {
     const createUserData = { ...values };
     createUserData.password = SHA256(createUserData.password).toString();
     return brandApi
-      .createUserOfBrand(user?.brandId, createUserData)
+      .createUserOfBrand(brandId ?? '', createUserData)
       .then((res) => {
         enqueueSnackbar(`Tạo thành công`, {
           variant: 'success'

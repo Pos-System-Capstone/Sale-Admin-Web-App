@@ -1,13 +1,17 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { MobileTimePicker } from '@mui/lab';
-import { Box, Divider, FormLabel, Grid, Stack, TextField, Typography } from '@mui/material';
+import { Box, FormLabel, Grid, Stack, TextField, Typography } from '@mui/material';
+import brandApi from 'api/brand';
 import { DAY_OF_WEEK_CONFIG_VALUE_BY_BIT } from 'constraints';
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
+import useAuth from 'hooks/useAuth';
+import { Controller, useFormContext } from 'react-hook-form';
+import { useQuery } from 'react-query';
 import { CheckBoxField, InputField, SelectField, SwitchField } from '..';
 
 interface Props {}
 
 const MenuForm = (props: Props) => {
+  const { user } = useAuth();
   const {
     control,
     watch,
@@ -15,12 +19,20 @@ const MenuForm = (props: Props) => {
   } = useFormContext();
   const isAllDay = watch('allDay');
 
-  const { fields, append, remove } = useFieldArray({
-    name: 'time_ranges',
-    control
-  });
-
   const isBaseMenu = watch('isBaseMenu');
+
+  const { data: hasBaseMenu } = useQuery(
+    ['hasBaseMenu'],
+    () => brandApi.checkBrandHasBaseMenu(user?.brandId).then((res) => res.data),
+    {
+      enabled: Boolean(user?.brandId)
+    }
+  );
+
+  // const { fields, append, remove } = useFieldArray({
+  //   name: 'time_ranges',
+  //   control
+  // });
 
   // const renderTimeRangeForm = () => (
   //   <Grid item xs={12}>
@@ -166,7 +178,6 @@ const MenuForm = (props: Props) => {
             />
           </Stack>
         </Box>
-        <Divider sx={{ my: 1 }} />
       </>
     </Grid>
   );
@@ -174,17 +185,28 @@ const MenuForm = (props: Props) => {
   return (
     <div>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <CheckBoxField
-            size="small"
-            fullWidth
-            name="isBaseMenu"
-            label="Áp dụng toàn hệ thống"
-            value="true"
-          />
-        </Grid>
+        {!hasBaseMenu?.hasBaseMenu && (
+          <Grid item xs={12}>
+            <CheckBoxField
+              size="small"
+              fullWidth
+              name="isBaseMenu"
+              label="Áp dụng toàn hệ thống"
+              value="true"
+            />
+          </Grid>
+        )}
         <Grid item xs={12} md={6}>
           <InputField size="small" fullWidth name="code" label="Mã menu" />
+          <ErrorMessage
+            errors={errors}
+            name="code"
+            render={({ message }) => (
+              <Typography color="red" variant="caption">
+                {message}
+              </Typography>
+            )}
+          />
         </Grid>
         <Grid item xs={12} md={6}>
           <InputField
@@ -193,7 +215,7 @@ const MenuForm = (props: Props) => {
             fullWidth
             name="priority"
             disabled={isBaseMenu}
-            defaultValue="0"
+            defaultValue={hasBaseMenu ? '0' : '1'}
             label="Cấp độ ưu tiên"
           />
           <Typography color="red" variant="caption">
@@ -201,6 +223,15 @@ const MenuForm = (props: Props) => {
               ? 'Menu toàn hệ thống có ưu tiên là 0'
               : 'Ưu tiên rất quan trọng, chú ý nhập đúng!'}
           </Typography>
+          <ErrorMessage
+            errors={errors}
+            name="time_ranges"
+            render={({ message }) => (
+              <Typography color="red" variant="caption">
+                {message}
+              </Typography>
+            )}
+          />
         </Grid>
 
         <Grid item xs={12}>

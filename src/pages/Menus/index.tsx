@@ -1,22 +1,25 @@
 /* eslint-disable camelcase */
+import { yupResolver } from '@hookform/resolvers/yup';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
 import { Button, Card, Chip, Stack, Typography } from '@mui/material';
 import menuApi from 'api/menu';
+import { menuSchema } from 'components/form/Menu/helper';
 import MenuForm from 'components/form/Menu/MenuForm';
 import confirm from 'components/Modal/confirm';
 import ModalForm from 'components/ModalForm/ModalForm';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { DAY_OF_WEEK_CONFIG_VALUE_BY_BIT } from 'constraints';
+import useAuth from 'hooks/useAuth';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import { useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 // components
 import { useNavigate } from 'react-router-dom';
-import { getMenus } from 'redux/menu/api';
+import { getMenusOfBrand } from 'redux/menu/api';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { Menu, TCreateMenuInformation } from 'types/menu';
 import { TTableColumn } from 'types/table';
@@ -99,13 +102,15 @@ const MenusPage = () => {
   const navigate = useNavigate();
   const tableRef = useRef<any>();
   const { enqueueSnackbar } = useSnackbar();
+  const { user } = useAuth();
 
   const createMenuForm = useForm({
-    // resolver: yupResolver(menuSchema),
+    resolver: yupResolver(menuSchema),
     shouldUnregister: true,
     defaultValues: {
       time_ranges: [{ from: null, to: null }],
       allDay: false,
+      isBaseMenu: false,
       priority: 0
     }
   });
@@ -155,7 +160,7 @@ const MenusPage = () => {
   };
 
   const handleProcessCreateNewMenuRequest = (data: any) => {
-    const { code, statTime, endTime, dayFilter, priority, allDay, isBaseMenu } = data;
+    const { code, startTime, endTime, dayFilter, priority, allDay, isBaseMenu } = data;
     let startTimeToInt = 0;
     let endTimeToInt = 0;
 
@@ -164,8 +169,8 @@ const MenusPage = () => {
       endTimeToInt = 1439;
     } else {
       // convert all data to int to send request
-      startTimeToInt = convertTimeToInteger(moment(statTime).format('hh:mm'));
-      endTimeToInt = convertTimeToInteger(moment(endTime).format('hh:mm'));
+      startTimeToInt = convertTimeToInteger(moment(startTime).format('HH:mm'));
+      endTimeToInt = convertTimeToInteger(moment(endTime).format('HH:mm'));
     }
 
     const dayFilterTotal = processDayFiter(dayFilter);
@@ -192,18 +197,17 @@ const MenusPage = () => {
               await createMenuForm.handleSubmit(
                 (data: any) => {
                   const requestOfCreateNewMenu = handleProcessCreateNewMenuRequest(data);
-                  console.log('data ne: ', requestOfCreateNewMenu);
-                  // return menuApi.create(transformMenuForm(data));
+                  return menuApi.create(requestOfCreateNewMenu);
                 },
                 (e) => {
                   throw e;
                 }
               )();
-              // enqueueSnackbar('Tạp bảng giá thành công', {
-              //   variant: 'success'
-              // });
-              // tableRef.current?.reload();
-              // return true;
+              enqueueSnackbar('Tạp bảng giá thành công', {
+                variant: 'success'
+              });
+              tableRef.current?.reload();
+              return true;
             } catch (error) {
               console.log(`error`, error);
               enqueueSnackbar((error as any).message, {
@@ -234,7 +238,7 @@ const MenusPage = () => {
             onEdit={(menu: Menu) =>
               navigate(`${PATH_DASHBOARD.tradingReport.root}/${menu.menu_id}`, { state: menu })
             }
-            getData={getMenus}
+            getData={(params: any) => getMenusOfBrand(user?.brandId, params)}
             columns={menuColumns}
           />
         </Stack>

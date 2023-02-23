@@ -50,20 +50,33 @@ export const transformMenuForm = (values: any) => {
 };
 
 export const menuSchema = yup.object({
-  // menu_name: yup.string().required('Vui lòng nhập tên bảng giá'),
-  time_ranges: yup.array().when('allDay', {
-    is: false, // alternatively: (val) => val == true
-    then: yup
-      .array()
-      .of(
-        yup.object({
-          from: yup.date().required('Vui lòng chọn giờ').typeError('Vui lòng chọn giờ'),
-          to: yup.date().required('Vui lòng chọn giờ').typeError('Vui lòng chọn giờ')
-        })
-      )
-      .min(1, 'Vui lòng chọn ít nhất một khung giờ'),
-    otherwise: yup.array().min(0)
-  })
+  code: yup.string().required('Vui lòng nhập menu code'),
+  dayFilter: yup.array().min(1, 'Vui lòng chọn ngày áp dụng'),
+  priority: yup.number().required(),
+  startTime: yup.date().required('Vui lòng nhập thời gian bắt đầu'),
+  endTime: yup
+    .date()
+    .required('Vui lòng nhập thời gian kết thúc')
+    .when(
+      'startTime',
+      (started, yup) =>
+        started &&
+        yup.required('Vui lòng nhập thời gian kết thúc').min(started, 'Thời gian kết thúc sai')
+    )
+
+  // time_ranges: yup.array().when('allDay', {
+  //   is: false, // alternatively: (val) => val == true
+  //   then: yup
+  //     .array()
+  //     .of(
+  //       yup.object({
+  //         from: yup.date().required('Vui lòng chọn giờ').typeError('Vui lòng chọn giờ'),
+  //         to: yup.date().required('Vui lòng chọn giờ').typeError('Vui lòng chọn giờ')
+  //       })
+  //     )
+  //     .min(1, 'Vui lòng chọn ít nhất một khung giờ'),
+  //   otherwise: yup.array().min(0)
+  // })
 });
 
 export const menuInStoreSchema = yup.object({

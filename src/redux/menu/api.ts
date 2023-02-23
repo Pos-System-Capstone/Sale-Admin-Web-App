@@ -14,6 +14,11 @@ export const getMenus = (params: any) =>
     params
   });
 
+export const getMenusOfBrand = (brandId: string, params: any) =>
+  request.get<Menu>(`brands/${brandId}/menus`, {
+    params
+  });
+
 export const getStoreApplyMenus = (menuId: number, params?: any): any =>
   request.get<StoreInMenu>(`/menus/${menuId}/stores`, {
     params

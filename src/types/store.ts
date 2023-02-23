@@ -37,6 +37,14 @@ export type TStoreDetail = {
   code: string;
 };
 
+export type TStoreInMenu = {
+  id: string;
+  priority: number;
+  dateFilter: number;
+  startTime: number;
+  endTime: number;
+};
+
 export type StoreInMenu = {
   menu_in_store_id: number;
   menu_id?: number;

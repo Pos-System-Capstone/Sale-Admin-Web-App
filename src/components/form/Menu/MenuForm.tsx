@@ -4,6 +4,7 @@ import { Box, FormLabel, Grid, Stack, TextField, Typography } from '@mui/materia
 import brandApi from 'api/brand';
 import { DAY_OF_WEEK_CONFIG_VALUE_BY_BIT } from 'constraints';
 import useAuth from 'hooks/useAuth';
+import { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { CheckBoxField, InputField, SelectField, SwitchField } from '..';
@@ -19,7 +20,7 @@ const MenuForm = (props: Props) => {
   } = useFormContext();
   const isAllDay = watch('allDay');
 
-  const isBaseMenu = watch('isBaseMenu');
+  const [isBaseMenu, setIsBaseMenu] = useState(watch('isBaseMenu'));
 
   const { data: hasBaseMenu } = useQuery(
     ['hasBaseMenu'],
@@ -28,6 +29,12 @@ const MenuForm = (props: Props) => {
       enabled: Boolean(user?.brandId)
     }
   );
+
+  useEffect(() => {
+    if (hasBaseMenu?.hasBaseMenu) {
+      setIsBaseMenu(false);
+    }
+  }, [hasBaseMenu?.hasBaseMenu]);
 
   // const { fields, append, remove } = useFieldArray({
   //   name: 'time_ranges',
@@ -211,11 +218,10 @@ const MenuForm = (props: Props) => {
         <Grid item xs={12} md={6}>
           <InputField
             size="small"
-            type="number"
             fullWidth
             name="priority"
             disabled={isBaseMenu}
-            defaultValue={hasBaseMenu ? '0' : '1'}
+            defaultValue={isBaseMenu ? '0' : '1'}
             label="Cấp độ ưu tiên"
           />
           <Typography color="red" variant="caption">
@@ -223,9 +229,10 @@ const MenuForm = (props: Props) => {
               ? 'Menu toàn hệ thống có ưu tiên là 0'
               : 'Ưu tiên rất quan trọng, chú ý nhập đúng!'}
           </Typography>
+          <br />
           <ErrorMessage
             errors={errors}
-            name="time_ranges"
+            name="priority"
             render={({ message }) => (
               <Typography color="red" variant="caption">
                 {message}

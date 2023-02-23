@@ -1,3 +1,5 @@
+import { Role } from 'utils/role';
+
 export type Menu = {
   menu_id: number;
   store_id?: number;
@@ -11,6 +13,37 @@ export type Menu = {
   priority: number;
   create_at?: any;
   store_names: any[];
+};
+
+export enum DateFilter {
+  MONDAY = 'Monday',
+  TUESDAY = 'Tuesday',
+  WEDNESDAY = 'Wednesday',
+  THURSDAY = 'Thursday',
+  FRIDAY = 'Friday',
+  SATURDAY = 'Saturday',
+  SUNDAY = 'Sunday'
+}
+
+export enum MenuStatus {
+  ACTIVE = 'Active',
+  DEACTIVE = 'Deactive'
+}
+
+export type PosMenu = {
+  id: string;
+  code: string;
+  priority: number;
+  dateFilter: DateFilter[];
+  startTime: string;
+  endTime: string;
+  status: MenuStatus;
+  createdBy: Role;
+  createdAt: string;
+  updatedBy: string;
+  updatedAt: string;
+  products: [];
+  stores: [];
 };
 
 export type TCreateMenu = {

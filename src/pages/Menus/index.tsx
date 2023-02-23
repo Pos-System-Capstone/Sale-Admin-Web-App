@@ -11,7 +11,6 @@ import confirm from 'components/Modal/confirm';
 import ModalForm from 'components/ModalForm/ModalForm';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
-import { DAY_OF_WEEK_CONFIG_VALUE_BY_BIT } from 'constraints';
 import useAuth from 'hooks/useAuth';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
@@ -21,67 +20,44 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { getMenusOfBrand } from 'redux/menu/api';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { Menu, TCreateMenuInformation } from 'types/menu';
+import { Menu, PosMenu, TCreateMenuInformation } from 'types/menu';
 import { TTableColumn } from 'types/table';
-import { fDate } from 'utils/formatTime';
 
-export const menuColumns: TTableColumn<Menu>[] = [
+export const menuColumns: TTableColumn<PosMenu>[] = [
   {
-    title: 'Tên bảng giá',
-    dataIndex: 'menu_name'
-  },
-  {
-    title: 'Áp dụng',
-    dataIndex: 'is_brand_mode',
-    valueType: 'select',
-    valueEnum: [
-      {
-        label: 'Toàn hệ thống',
-        value: true
-      },
-      {
-        label: 'Theo cửa hàng',
-        value: false
-      }
-    ]
+    title: 'Code',
+    dataIndex: 'code'
   },
   {
     title: 'Thời gian hiệu lực',
     hideInSearch: true,
-    render: (_, data: Menu) =>
-      data.start_time && data.end_time ? (
+    render: (_, data: PosMenu) =>
+      data.startTime && data.endTime ? (
         <Typography>
-          {fDate(data.start_time)} - {fDate(data.end_time)}
+          <Chip
+            size="small"
+            key={data.code}
+            label={moment(data.startTime, 'HH:mm:ss').format('HH:mm')}
+          />{' '}
+          -{' '}
+          <Chip
+            size="small"
+            key={data.code}
+            label={moment(data.endTime, 'HH:mm:ss').format('HH:mm')}
+          />
         </Typography>
       ) : (
         '-'
       )
   },
   {
-    title: 'Khung giờ',
-    dataIndex: 'time_ranges',
+    title: 'Ngày áp dụng',
+    dataIndex: 'dateFilter',
     hideInSearch: true,
-    render: (_: any, { time_ranges }: Menu) => (
+    render: (_: any, { dateFilter }: PosMenu) => (
       <Stack direction="row" spacing={1}>
-        {time_ranges?.map(([from, to]) => (
-          <Chip size="small" key={`${from}-${to}`} label={`${from}-${to}`} />
-        ))}
-      </Stack>
-    )
-  },
-  {
-    title: 'Ngày hoạt động',
-    dataIndex: 'day_filters',
-    valueType: 'select',
-    valueEnum: DAY_OF_WEEK_CONFIG_VALUE_BY_BIT,
-    render: (_: any, { day_filters: dayFilters, menu_id }: Menu) => (
-      <Stack direction="row" spacing={1}>
-        {dayFilters?.map((day) => (
-          <Chip
-            size="small"
-            key={`${menu_id}-${day}`}
-            label={DAY_OF_WEEK_CONFIG_VALUE_BY_BIT.find(({ value }) => value === day)?.label}
-          />
+        {dateFilter?.map((date) => (
+          <Chip size="small" key={date} label={date} />
         ))}
       </Stack>
     )
@@ -93,9 +69,46 @@ export const menuColumns: TTableColumn<Menu>[] = [
   },
   {
     title: 'Ngày tạo',
-    dataIndex: 'create_at',
-    hideInSearch: true
+    dataIndex: 'createdAt',
+    hideInSearch: true,
+    render: (_: any, { createdAt }: PosMenu) => (
+      <Stack direction="row" spacing={1}>
+        <Chip size="small" key={createdAt} label={moment(createdAt).format('DD/MM/YYYY')} />
+      </Stack>
+    )
   }
+  // {
+  //   title: 'Áp dụng',
+  //   dataIndex: 'is_brand_mode',
+  //   valueType: 'select',
+  //   valueEnum: [
+  //     {
+  //       label: 'Toàn hệ thống',
+  //       value: true
+  //     },
+  //     {
+  //       label: 'Theo cửa hàng',
+  //       value: false
+  //     }
+  //   ]
+  // },
+  // {
+  //   title: 'Ngày hoạt động',
+  //   dataIndex: 'day_filters',
+  //   valueType: 'select',
+  //   valueEnum: DAY_OF_WEEK_CONFIG_VALUE_BY_BIT,
+  //   render: (_: any, { day_filters: dayFilters, menu_id }: Menu) => (
+  //     <Stack direction="row" spacing={1}>
+  //       {dayFilters?.map((day) => (
+  //         <Chip
+  //           size="small"
+  //           key={`${menu_id}-${day}`}
+  //           label={DAY_OF_WEEK_CONFIG_VALUE_BY_BIT.find(({ value }) => value === day)?.label}
+  //         />
+  //       ))}
+  //     </Stack>
+  //   )
+  // },
 ];
 
 const MenusPage = () => {
@@ -110,8 +123,7 @@ const MenusPage = () => {
     defaultValues: {
       time_ranges: [{ from: null, to: null }],
       allDay: false,
-      isBaseMenu: false,
-      priority: 0
+      isBaseMenu: false
     }
   });
 
@@ -141,10 +153,6 @@ const MenusPage = () => {
       onCancle: () => {}
     });
   };
-
-  // const handleGetListMenu = (param? : any) => {
-  //   return
-  // }
 
   const convertTimeToInteger = (time: string) => {
     const array = time.split(':');
@@ -197,20 +205,30 @@ const MenusPage = () => {
               await createMenuForm.handleSubmit(
                 (data: any) => {
                   const requestOfCreateNewMenu = handleProcessCreateNewMenuRequest(data);
-                  return menuApi.create(requestOfCreateNewMenu);
+                  return menuApi
+                    .create(requestOfCreateNewMenu)
+                    .then((res) => {
+                      enqueueSnackbar('Tạo menu thành công', {
+                        variant: 'success'
+                      });
+                      tableRef.current?.reload();
+                      return true;
+                    })
+                    .catch((err) => {
+                      enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
+                        variant: 'error'
+                      });
+                      return false;
+                    });
                 },
                 (e) => {
                   throw e;
                 }
               )();
-              enqueueSnackbar('Tạp bảng giá thành công', {
-                variant: 'success'
-              });
-              tableRef.current?.reload();
               return true;
             } catch (error) {
               console.log(`error`, error);
-              enqueueSnackbar((error as any).message, {
+              enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
                 variant: 'error'
               });
               return false;
@@ -219,7 +237,7 @@ const MenusPage = () => {
           title={<Typography variant="h3">Thêm Bảng giá</Typography>}
           trigger={
             <Button variant="contained" startIcon={<Icon icon={plusFill} />}>
-              Thêm Bảng giá
+              Tạo menu mới
             </Button>
           }
         >

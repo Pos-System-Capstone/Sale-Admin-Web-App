@@ -61,6 +61,37 @@ export const DAY_OF_WEEK = [
   }
 ];
 
+export const DAY_OF_WEEK_CONFIG_VALUE_BY_BIT = [
+  {
+    label: 'Thứ hai',
+    value: 2
+  },
+  {
+    label: 'Thứ ba',
+    value: 4
+  },
+  {
+    label: 'Thứ tư',
+    value: 8
+  },
+  {
+    label: 'Thứ năm',
+    value: 16
+  },
+  {
+    label: 'Thứ sáu',
+    value: 32
+  },
+  {
+    label: 'Thứ bảy',
+    value: 64
+  },
+  {
+    label: 'Chủ nhật',
+    value: 1
+  }
+];
+
 export const STORE_NAME = [
   {
     label: 'HCM.PA.SH.15FNTMK',

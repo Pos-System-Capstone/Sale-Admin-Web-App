@@ -128,6 +128,25 @@ export type TProductCombo = TProductBase & {
   }[];
 };
 
+export type TProductStatus = {
+  ACTIVE: 'ACTIVE';
+  DEACTIVE: 'DEATIVE';
+};
+
+export type TProductType = {
+  SINGLE: 'SINGLE';
+  MASTER: 'MASTER';
+  EXTRA: 'EXTRA';
+  HAS_EXTRA: 'HAS_EXTRA';
+};
+
+// product for creating menu
+export type TProductOfCreateMenu = {
+  id: string;
+  sellingPrice: number;
+  discountPrice: number;
+};
+
 export type TProductInMenu = {
   product_id: number;
   price1: number;

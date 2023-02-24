@@ -11,6 +11,15 @@ const getBrandDetail = (brandId: string) => requestWebAdmin.get<TBrandDetail>(`b
 const getStoreOfBrand = (brandId: string, params?: any) => {
   return requestWebAdmin.get<BaseReponse<TStore>>(`brands/${brandId}/stores`, { params });
 };
+
+const checkBrandHasBaseMenu = (brandId: string) => {
+  return requestWebAdmin.get<{ hasBaseMenu: boolean }>(`brands/${brandId}/menus/hasBaseMenu`);
+};
+
+const getStoresOfBrandWithoutPaging = () => {
+  return requestWebAdmin.get<BaseReponse<TStoreDetail>>(`brands/stores`);
+};
+
 const getListUserOfBrand = (brandId: string, params?: any) => {
   return requestWebAdmin.get<BaseReponse<TUser>>(`brands/${brandId}/users`, { params });
 };
@@ -33,11 +42,13 @@ const createNewBrandStore = (data: TStoreCreate) => {
 const brandApi = {
   getBrandDetail,
   getStoreOfBrand,
+  checkBrandHasBaseMenu,
   getListUserOfBrand,
   createUserOfBrand,
   createNewBrand,
   updateBrandInformation,
   createNewBrandStore,
+  getStoresOfBrandWithoutPaging,
   ...generateAPIWithPaging<TBrand>('brands')
 };
 

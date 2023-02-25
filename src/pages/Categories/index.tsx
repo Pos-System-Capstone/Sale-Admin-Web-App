@@ -18,7 +18,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addCategoy, deleteCategoyById, editCategory } from 'redux/category/api';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { CategoryStatus, TCategory } from 'types/category';
+import { CategoryStatus, CategoryType, TCategory } from 'types/category';
 import { TTableColumn } from 'types/table';
 
 const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
@@ -32,7 +32,7 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
   const [updateCateId, setUpdateCateId] = useState<number | null>(null);
   const [currentDeleteItem, setCurrentDeleteItem] = useState<TCategory | null>(null);
 
-  const columns: TTableColumn<TCategory>[] = [
+  const categoryColumns: TTableColumn<TCategory>[] = [
     {
       title: 'STT',
       dataIndex: 'index',
@@ -77,7 +77,7 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
   useEffect(() => {
     const form = tableRef.current?.formControl;
     if (form) {
-      form.setValue('is-extra', isExtra);
+      form.setValue('type', isExtra ? CategoryType.EXTRA : CategoryType.NORMAL);
     }
   }, [isExtra, tableRef]);
 
@@ -187,7 +187,7 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
         <Stack spacing={2}>
           <ResoTable
             defaultFilters={{
-              'is-extra': isExtra
+              type: isExtra ? CategoryType.EXTRA : CategoryType.NORMAL
             }}
             ref={tableRef}
             onEdit={(cate: TCategory) => {
@@ -196,7 +196,7 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
             onDelete={(cate: TCategory) => setCurrentDeleteItem(cate)}
             rowKey="id"
             getData={categoryApi.get}
-            columns={columns}
+            columns={categoryColumns}
           />
         </Stack>
       </Card>

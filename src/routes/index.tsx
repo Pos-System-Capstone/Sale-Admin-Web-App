@@ -164,6 +164,7 @@ export default function Router() {
             { path: '', element: <Products /> },
             { path: 'new', element: <CreateProduct /> },
             { path: ':id', element: <UpdateProduct /> },
+            { path: 'extras', element: <Products /> },
             { path: 'master', element: <Products /> }
           ]
         },

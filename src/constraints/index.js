@@ -9,24 +9,24 @@ export const PRODUCT_COMPLEX = 10;
 
 export const PRODUCT_TYPE_DATA = [
   {
-    value: ProductTypeEnum.Single,
+    value: ProductTypeEnum.SINGLE,
     typeCode: 'SINGLE',
     label: 'Sản phẩm đơn'
   },
   {
-    value: ProductTypeEnum.Master,
-    typeCode: 'MASTER',
+    value: ProductTypeEnum.PARENT,
+    typeCode: 'PARENT',
     label: 'Sản phẩm cha'
   },
   {
-    value: ProductTypeEnum.HAS_EXTRA,
-    typeCode: 'HAS_EXTRA',
-    label: 'Sản phẩm có extra'
+    value: ProductTypeEnum.CHILD,
+    typeCode: 'CHILD',
+    label: 'Sản phẩm con'
   },
   {
-    value: ProductTypeEnum.Extra,
+    value: ProductTypeEnum.EXTRA,
     typeCode: 'EXTRA',
-    label: 'SP Extra'
+    label: 'Sản phẩm  Extra'
   }
 ];
 

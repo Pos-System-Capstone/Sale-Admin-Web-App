@@ -25,7 +25,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
 
   // const cateId = watch('id');
   const productType = watch('type');
-  const isExtraProduct = productType === ProductTypeEnum.Extra;
+  const isExtraProduct = productType === ProductTypeEnum.EXTRA;
 
   return (
     <Box>
@@ -56,7 +56,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
             </Box>
           </Stack>
         </Card>
-        {productType == ProductTypeEnum.Single && (
+        {productType == ProductTypeEnum.SINGLE && (
           <Card id="variants">
             <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại</CardTitle>
             <Grid container spacing={2}>
@@ -79,7 +79,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
             </Grid>
           </Card>
         )}
-        {productType == ProductTypeEnum.Master && (
+        {productType == ProductTypeEnum.PARENT && (
           <Card id="variants">
             <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại</CardTitle>
             <Grid container spacing={2}>
@@ -95,7 +95,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
           </Card>
         )}
 
-        {productType == ProductTypeEnum.Extra && (
+        {productType == ProductTypeEnum.EXTRA && (
           <Card id="variants">
             <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại extra</CardTitle>
             <Grid container spacing={2}>

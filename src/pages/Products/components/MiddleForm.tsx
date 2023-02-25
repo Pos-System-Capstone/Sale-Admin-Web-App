@@ -5,7 +5,12 @@ import { SelectField } from 'components/form';
 // import useExtraCategory from 'hooks/extra-categories/useExtraCategoy';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { PRODUCT_TYPE_OPTIONS, ProductTypeEnum, TProduct } from 'types/product';
+import {
+  PRODUCT_SIZE_OPTIONS,
+  PRODUCT_TYPE_OPTIONS,
+  ProductTypeEnum,
+  TProduct
+} from 'types/product';
 import { Card, CardTitle } from './Card';
 import BasicProductInfoForm from './form/BasicProductInfoForm';
 import AutocompleteCategory from 'components/form/common/Category/AutocompleteCategory';
@@ -20,7 +25,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
 
   // const cateId = watch('id');
   const productType = watch('type');
-  const isExtraProduct = productType === ProductTypeEnum.Extra;
+  const isExtraProduct = productType === ProductTypeEnum.EXTRA;
 
   return (
     <Box>
@@ -51,93 +56,30 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
             </Box>
           </Stack>
         </Card>
-
-        {/* <Card>
-          <Stack direction="row" spacing={1}>
-            <CardTitle variant="subtitle1">Tuỳ chỉnh cho sản phẩm</CardTitle>
-            <Tooltip
-              title="Các tuỳ chỉnh cho sản phẩm phụ thuộc vào Danh mục chứa sản phẩm"
-              placement="right"
-              arrow
-            >
-              <Info />
-            </Tooltip>
-          </Stack>
-          {modifiers.map((modifier, optIndex) => (
-            <Box key={`variant-${modifier.id}`}>
-              <Stack direction="row" spacing={2}>
-                <InputField
-                  name={`modifiers.${optIndex}.modifierName`}
-                  size="small"
-                  label="Tên tùy chỉnh"
+        {productType == ProductTypeEnum.SINGLE && (
+          <Card id="variants">
+            <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại</CardTitle>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <AutocompleteCategory
+                  isExtra={false}
+                  name="categoryId"
+                  label="Danh mục chứa sản phẩm"
                 />
+              </Grid>
+              <Grid item xs={6}>
                 <SelectField
-                  options={[
-                    {
-                      label: 'Single choice',
-                      value: 'single-choice'
-                    },
-                    {
-                      label: 'Multiple',
-                      value: 'multiple'
-                    }
-                  ]}
-                  name={`modifiers.${optIndex}.selectType`}
-                  size="small"
-                  label="Kiểu"
-                  sx={{ width: '150px' }}
-                />
-                <Box flex={1}>
-                  <AutoCompleteField
-                    name={`modifiers.${optIndex}.values`}
-                    label="Giá trị"
-                    multiple
-                    freeSolo
-                    size="small"
-                    variant="outlined"
-                    options={[]}
-                    limitTags={2}
-                    fullWidth
-                  />
-                </Box>
-                <IconButton onClick={() => removeModifier(optIndex)} sx={{ color: 'red' }}>
-                  <Icon icon={trashIcon} />
-                </IconButton>
-              </Stack>
-            </Box>
-          ))}
-          <Divider />
-          <span>
-            <Button
-              onClick={() =>
-                appendModifier({
-                  modifierName: '',
-                  selectType: '',
-                  values: []
-                })
-              }
-              variant="outlined"
-            >
-              Thêm tùy chỉnh
-            </Button>
-          </span>
-        </Card> */}
-        {productType == ProductTypeEnum.Single && (
-          <Card id="variants">
-            <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại</CardTitle>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <AutocompleteCategory
-                  isExtra={false}
-                  name="categoryId"
-                  label="Danh mục chứa sản phẩm"
-                />
+                  fullWidth
+                  disabled={updateMode}
+                  options={PRODUCT_SIZE_OPTIONS}
+                  name="size"
+                  label="Kích cở sản phẩm"
+                ></SelectField>
               </Grid>
-              <Grid item xs={6}></Grid>
             </Grid>
           </Card>
         )}
-        {productType == ProductTypeEnum.Master && (
+        {productType == ProductTypeEnum.PARENT && (
           <Card id="variants">
             <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại</CardTitle>
             <Grid container spacing={2}>
@@ -153,7 +95,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
           </Card>
         )}
 
-        {productType == ProductTypeEnum.Extra && (
+        {productType == ProductTypeEnum.EXTRA && (
           <Card id="variants">
             <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại extra</CardTitle>
             <Grid container spacing={2}>

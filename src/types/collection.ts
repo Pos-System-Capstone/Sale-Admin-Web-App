@@ -14,6 +14,8 @@
 //   position: number;
 // };
 
+import { TProductInCollection } from './product';
+
 export type TCollection = {
   id: string;
   name: string;
@@ -21,6 +23,7 @@ export type TCollection = {
   status: CollectionStatus;
   picUrl: string;
   description: string;
+  products: TProductInCollection[];
 };
 export enum CollectionStatus {
   ACTIVE = 'Active',

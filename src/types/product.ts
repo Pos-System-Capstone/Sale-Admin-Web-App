@@ -32,11 +32,20 @@ export type TProductCreate = {
   parentProductId: string;
 };
 
+export type TProductInCollection = {
+  id: string;
+  productName: string;
+  description: string;
+  productCode: string;
+  picUrl: string;
+  sellingPrice: number;
+};
+
 export enum ProductTypeEnum {
-  Single = 'SINGLE',
-  Master = 'MASTER',
-  HAS_EXTRA = 'HAS_EXTRA',
-  Extra = 'EXTRA'
+  SINGLE = 'SINGLE',
+  PARENT = 'PARENT',
+  CHILD = 'CHILD',
+  EXTRA = 'EXTRA'
 }
 export enum ProductSizeEnum {
   Small = 'S',
@@ -102,11 +111,6 @@ export type TProductBase = {
   /** Giá của sản phẩm sẽ được sử dụng khi sản phẩm này không được cấu hình giá ở bảng `ProductInMenu` */
   price?: number;
 };
-
-export type TProductInCollection = TProductBase & {
-  position?: number;
-};
-
 export type TProductMaster = TProductBase & {
   child_products: TProductBase[];
 };
@@ -217,20 +221,20 @@ export type ComboProductType = {
 
 export const PRODUCT_TYPE_OPTIONS = [
   {
-    value: ProductTypeEnum.Single,
+    value: ProductTypeEnum.SINGLE,
     label: 'Sản phẩm đơn'
   },
   {
-    value: ProductTypeEnum.Master,
+    value: ProductTypeEnum.PARENT,
     label: 'Sản phẩm cha'
   },
   {
-    value: ProductTypeEnum.Extra,
+    value: ProductTypeEnum.EXTRA,
     label: 'Sản phẩm extra'
   },
   {
-    value: ProductTypeEnum.HAS_EXTRA,
-    label: 'Sản phẩm có extra'
+    value: ProductTypeEnum.CHILD,
+    label: 'Sản phẩm con'
   }
 ];
 export const PRODUCT_SIZE_OPTIONS = [

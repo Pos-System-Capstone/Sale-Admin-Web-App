@@ -182,11 +182,6 @@ export const brandAdminSidebarConfig = [
         path: PATH_DASHBOARD.products.list,
         icon: ICONS.product
       }
-      // {
-      //   title: 'Danh sách combo',
-      //   path: PATH_DASHBOARD.combos.list,
-      //   icon: ICONS.combo
-      // }
     ]
   },
   {
@@ -194,7 +189,7 @@ export const brandAdminSidebarConfig = [
     path: PATH_DASHBOARD.group.root,
     items: [
       {
-        title: 'Danh mục sản phẩm',
+        title: 'Danh mục sản phẩm thường',
         path: PATH_DASHBOARD.categories.list,
         icon: ICONS.category
       },
@@ -204,7 +199,7 @@ export const brandAdminSidebarConfig = [
         icon: ICONS.extraCategory
       },
       {
-        title: 'Bộ sưu tập',
+        title: 'Bộ sưu tập sản phẩm',
         path: PATH_DASHBOARD.collections.list,
         icon: ICONS.collection
       }

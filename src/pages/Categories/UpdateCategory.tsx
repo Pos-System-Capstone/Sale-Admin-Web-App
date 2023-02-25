@@ -7,7 +7,8 @@ import { useState } from 'react';
 import { useParams } from 'react-router';
 import CategoryExtraTab from './components/CategoryExtraTab';
 import CategoryInfoTab from './components/CategoryInfoTab';
-import CategoryModifierTab from './components/CategoryModifierTab';
+import ExtraCategoriesInCategoryTab from './components/ExtraCategoriesInCategoryTab';
+import { CategoryType } from 'types/category';
 interface Props {}
 
 const UpdateCategory = (props: Props) => {
@@ -34,7 +35,9 @@ const UpdateCategory = (props: Props) => {
             <TabList onChange={handleChangeTab}>
               <Tab label="Thông tin chung" value="1" />
               <Tab label="Sản phẩm trong danh mục" value="2" />
-              <Tab label="Tuỳ chỉnh" value="3" />
+              {category?.categoryType == CategoryType.NORMAL && (
+                <Tab label="Danh sách Extra trong danh mục" value="3" />
+              )}
             </TabList>
           </Box>
 
@@ -49,11 +52,13 @@ const UpdateCategory = (props: Props) => {
                 <CategoryExtraTab />
               </Stack>
             </TabPanel>
-            <TabPanel value="3">
-              <Stack spacing={2}>
-                <CategoryModifierTab />
-              </Stack>
-            </TabPanel>
+            {category?.categoryType === CategoryType.NORMAL && (
+              <TabPanel value="3">
+                <Stack spacing={2}>
+                  <ExtraCategoriesInCategoryTab />
+                </Stack>
+              </TabPanel>
+            )}
           </Stack>
         </TabContext>
       </Page>

@@ -85,7 +85,13 @@ const UpdateCollectionPage = () => {
       value: TabType.PRODUCT_COLLECTION,
       label: translate('collections.productTab'),
       icon: <Icon icon={roundReceipt} width={20} height={20} />,
-      component: <ProductInCollectionTab id={id} onSubmit={form.handleSubmit(onUpdateCollection)} />
+      component: (
+        <ProductInCollectionTab
+          productList={collection?.products}
+          id={id}
+          onSubmit={form.handleSubmit(onUpdateCollection)}
+        />
+      )
     }
   ];
 

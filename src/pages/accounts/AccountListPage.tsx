@@ -9,12 +9,15 @@ import { useEffect, useRef } from 'react';
 import Page from 'components/Page';
 import { Button, Card } from '@mui/material';
 import AccountsList from './components/AccountsList';
+import useAuth from 'hooks/useAuth';
+import { Role } from 'utils/role';
 //
 
 // ----------------------------------------------------------------------
 
 export default function AccountListPage() {
   const ref = useRef<any>();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,16 +29,18 @@ export default function AccountListPage() {
     <Page
       title="Quản lý tài khoản"
       actions={() => [
-        <Button
-          key="add-account"
-          onClick={() => {
-            navigate(PATH_DASHBOARD.accounts.new);
-          }}
-          variant="contained"
-          startIcon={<Icon icon={plusFill} />}
-        >
-          Tạo mới tài khoản
-        </Button>
+        user?.role.includes(Role.StoreManager) && (
+          <Button
+            key="add-account"
+            onClick={() => {
+              navigate(PATH_DASHBOARD.accounts.new);
+            }}
+            variant="contained"
+            startIcon={<Icon icon={plusFill} />}
+          >
+            Tạo mới tài khoản
+          </Button>
+        )
       ]}
     >
       <Card>

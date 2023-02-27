@@ -8,6 +8,8 @@ export type TUser = {
   name: string;
   role: UserRole;
   status: UserStatus;
+  brandId?: string;
+  storeId?: string;
 };
 export enum UserRole {
   SystemAdmin = 'SysAdmin',
@@ -47,7 +49,7 @@ export const CREATE_USER_ROLE_OPTIONS = [
   {
     value: UserRole.BrandManager,
     label: 'BrandManager'
-  },
+  }
 ];
 
 export const UPDATE_USER_STATUS = [

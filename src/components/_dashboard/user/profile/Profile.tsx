@@ -1,4 +1,3 @@
-// material
 import { Button, Card, CircularProgress, Grid } from '@mui/material';
 import userApi from 'api/user';
 import { UpdateConfirmDialog } from 'components/DeleteConfirmDialog';
@@ -44,7 +43,7 @@ export default function Profile({ updateMode }: Props) {
     if (updateUserInformation.password) {
       updateUserInformation.password = SHA256(updateUserInformation.password ?? '').toString();
     }
-    // Handle submit form for STORE MANAGER
+    // Handle submit form for STORE MANAGER update STAFF
     if (user?.role.includes(Role.StoreManager)) {
       userApi
         .updateUserInformation(accountId ?? '', updateUserInformation, user.storeId)
@@ -52,6 +51,7 @@ export default function Profile({ updateMode }: Props) {
           enqueueSnackbar(`cập nhật thành công`, {
             variant: 'success'
           });
+          setIsOpenConfirmDialog(!isOpenConfirmDialog);
         })
         .catch((err) => {
           enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
@@ -59,8 +59,21 @@ export default function Profile({ updateMode }: Props) {
           });
         });
     }
-    // Handle submit form for BRAND MANAGER
+    // Handle submit form for BRAND MANAGER update STORE MANAGER
     else if (user?.role.includes(Role.BrandManager)) {
+      userApi
+        .updateUserInformation(accountId ?? '', updateUserInformation, userInfo?.storeId)
+        ?.then((res) => {
+          enqueueSnackbar(`cập nhật thành công`, {
+            variant: 'success'
+          });
+          setIsOpenConfirmDialog(!isOpenConfirmDialog);
+        })
+        .catch((err) => {
+          enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
+            variant: 'error'
+          });
+        });
     }
   };
 
@@ -80,12 +93,17 @@ export default function Profile({ updateMode }: Props) {
               <ProfileAbout updateMode={updateMode} userInfo={userInfo} />
             </Grid>
             <Grid item xs={12} sm={12} display={'flex'} justifyContent={'end'}>
-              {((user?.role.includes(Role.StoreManager) &&
-                userInfo?.role.includes(Role.StoreStaff)) ||
+              {/* System admin => update brand manager or brand admin info */}
+              {/* Brand Manager => update store manager info */}
+              {/* Store Manager => update staff info */}
+              {/* User account => update their info */}
+              {((user?.role.includes(Role.SystemAdmin) &&
+                (userInfo?.role.includes(Role.BrandAdmin) ||
+                  userInfo?.role.includes(Role.BrandManager))) ||
                 (user?.role.includes(Role.BrandManager) &&
                   userInfo?.role.includes(Role.StoreManager)) ||
-                (user?.role.includes(Role.BrandAdmin) &&
-                  userInfo?.role.includes(Role.BrandAdmin)) ||
+                (user?.role.includes(Role.StoreManager) &&
+                  userInfo?.role.includes(Role.StoreStaff)) ||
                 user?.name === userInfo?.name) && (
                 <Button
                   onClick={() => setIsOpenConfirmDialog(!isOpenConfirmDialog)}

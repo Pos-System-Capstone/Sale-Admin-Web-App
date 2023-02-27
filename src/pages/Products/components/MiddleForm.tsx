@@ -14,6 +14,7 @@ import {
 import { Card, CardTitle } from './Card';
 import BasicProductInfoForm from './form/BasicProductInfoForm';
 import AutocompleteCategory from 'components/form/common/Category/AutocompleteCategory';
+import AutocompleteProduct from './form/AutocompleteProduct';
 
 type Props = {
   updateMode?: boolean;
@@ -23,9 +24,7 @@ type Props = {
 const MiddleForm: React.FC<Props> = ({ updateMode }) => {
   const { watch } = useFormContext<TProduct>();
 
-  // const cateId = watch('id');
   const productType = watch('type');
-  const isExtraProduct = productType === ProductTypeEnum.EXTRA;
 
   return (
     <Box>
@@ -56,7 +55,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
             </Box>
           </Stack>
         </Card>
-        {productType == ProductTypeEnum.SINGLE && (
+        {productType === ProductTypeEnum.SINGLE && (
           <Card id="variants">
             <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại</CardTitle>
             <Grid container spacing={2}>
@@ -65,6 +64,34 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
                   isExtra={false}
                   name="categoryId"
                   label="Danh mục chứa sản phẩm"
+                />
+              </Grid>
+            </Grid>
+          </Card>
+        )}
+        {productType === ProductTypeEnum.PARENT && (
+          <Card id="variants">
+            <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại</CardTitle>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <AutocompleteCategory
+                  isExtra={false}
+                  name="categoryId"
+                  label="Danh mục chứa sản phẩm"
+                />
+              </Grid>
+            </Grid>
+          </Card>
+        )}
+        {productType === ProductTypeEnum.CHILD && (
+          <Card id="variants">
+            <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại</CardTitle>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <AutocompleteProduct
+                  type={ProductTypeEnum.PARENT}
+                  name="parentProductId"
+                  label="Sản phẩm cha"
                 />
               </Grid>
               <Grid item xs={6}>
@@ -79,23 +106,8 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
             </Grid>
           </Card>
         )}
-        {productType == ProductTypeEnum.PARENT && (
-          <Card id="variants">
-            <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại</CardTitle>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <AutocompleteCategory
-                  isExtra={false}
-                  name="categoryId"
-                  label="Danh mục chứa sản phẩm"
-                />
-              </Grid>
-              <Grid item xs={6}></Grid>
-            </Grid>
-          </Card>
-        )}
 
-        {productType == ProductTypeEnum.EXTRA && (
+        {productType === ProductTypeEnum.EXTRA && (
           <Card id="variants">
             <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại extra</CardTitle>
             <Grid container spacing={2}>

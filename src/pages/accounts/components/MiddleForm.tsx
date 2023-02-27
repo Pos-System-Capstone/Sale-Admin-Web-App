@@ -5,7 +5,6 @@ import { useFormContext } from 'react-hook-form';
 import { CreateProductForm } from 'types/product';
 
 // import VariantForm from '../VariantForm';
-import { CardTitle } from './Card';
 import AccountInfoForm from './form/AccountInfoForm';
 
 type Props = {
@@ -20,9 +19,6 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
     <Box>
       <Stack spacing={3}>
         <Stack spacing={2} textAlign="left">
-          <CardTitle mb={2} variant="subtitle1">
-            Thông tin tài khoản
-          </CardTitle>
           <AccountInfoForm />
         </Stack>
       </Stack>

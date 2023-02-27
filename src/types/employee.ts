@@ -3,10 +3,13 @@ export enum EmployeeStatus {
   DEACTIVATED = 'Deactivated'
 }
 
+// System Admin need BrandId and Role when create brand admin and brand manager
 export type TEmployeeCreate = {
   name: string;
   username: string;
   password: string;
+  brandId?: string;
+  role?: string;
 };
 
 export type TEmployee = {

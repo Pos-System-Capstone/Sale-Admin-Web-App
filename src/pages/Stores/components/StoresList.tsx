@@ -9,12 +9,13 @@ import ResoTable from 'components/ResoTable/ResoTable';
 // components
 import { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 import useAuth from 'hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { StoreStatus, TStore } from 'types/store';
 
 const StoresList = () => {
   const navigate = useNavigate();
+  const { brandId } = useParams();
   const { user } = useAuth();
 
   const storeDetailColumns: ResoDescriptionColumnType<TStore>[] = [
@@ -71,6 +72,13 @@ const StoresList = () => {
     }
   ];
 
+  const handleGetStoreOfBrand = (params: any) => {
+    if (brandId) {
+      return brandApi.getStoreOfBrand(brandId, params);
+    }
+    return brandApi.getStoreOfBrand(user?.brandId, params);
+  };
+
   return (
     <Stack spacing={2}>
       <Box>
@@ -78,7 +86,7 @@ const StoresList = () => {
           pagination
           showAction={false}
           rowKey="store_id"
-          getData={(params: any) => brandApi.getStoreOfBrand(user?.brandId, params)}
+          getData={(params: any) => handleGetStoreOfBrand(params)}
           columns={storeDetailColumns}
         />
       </Box>

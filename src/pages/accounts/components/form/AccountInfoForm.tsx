@@ -10,44 +10,66 @@ const AccountInfoForm = (props: Props) => {
 
   return (
     <>
-      {user?.role.includes(Role.BrandManager) && (
-        <Box>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <InputField fullWidth name="name" label="Tên người dùng" required size="small" />
-            </Grid>
-            <Grid item xs={6}>
-              <InputField fullWidth name="username" label="Tên đăng nhập" required size="small" />
-            </Grid>
-            <Grid item xs={6}>
-              <InputField
-                fullWidth
-                type={'password'}
-                name="password"
-                label="Mật khẩu"
-                required
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={6}>
+      <Box>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <InputField fullWidth name="name" label="Tên người dùng" required size="small" />
+          </Grid>
+          <Grid item xs={6}>
+            <InputField fullWidth name="username" label="Tên đăng nhập" required size="small" />
+          </Grid>
+          <Grid item xs={6}>
+            <InputField
+              fullWidth
+              type={'password'}
+              name="password"
+              label="Mật khẩu"
+              required
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            {user?.role.includes(Role.SystemAdmin) && (
               <SelectField
                 options={[
                   {
-                    label: 'Store Manager',
-                    value: 'StoreManager'
+                    label: 'Brand Admin',
+                    value: Role.BrandAdmin
                   },
                   {
-                    label: 'Store Staff',
-                    value: 'Staff'
+                    label: 'Brand Manager',
+                    value: Role.BrandManager
                   }
                 ]}
                 // name={`modifiers.${optIndex}.selectType`}
                 size="small"
-                label="Quyền"
-                sx={{ width: '150px' }}
                 name="role"
+                fullWidth
+                label="Quyền"
               />
-            </Grid>
+            )}
+            {user?.role.includes(Role.BrandManager) && (
+              <TextField
+                fullWidth
+                label="Quyền"
+                disabled
+                defaultValue={Role.StoreManager}
+                placeholder={Role.StoreManager}
+                size="small"
+              />
+            )}
+            {user?.role.includes(Role.StoreManager) && (
+              <TextField
+                fullWidth
+                label="Quyền"
+                disabled
+                defaultValue={Role.StoreStaff}
+                placeholder={Role.StoreStaff}
+                size="small"
+              />
+            )}
+          </Grid>
+          {/* {user?.role.includes(Role.BrandAdmin) || user?.role.includes(Role.BrandManager) && (
             <Grid item xs={6}>
               <SelectField
                 options={[
@@ -67,85 +89,9 @@ const AccountInfoForm = (props: Props) => {
                 name="status"
               />
             </Grid>
-          </Grid>
-        </Box>
-      )}
-      {user?.role.includes(Role.StoreManager) && (
-        <Box>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <InputField fullWidth name="name" label="Tên người dùng" required size="small" />
-            </Grid>
-            <Grid item xs={6}>
-              <InputField fullWidth name="username" label="Tên đăng nhập" required size="small" />
-            </Grid>
-            <Grid item xs={6}>
-              <InputField
-                fullWidth
-                type={'password'}
-                name="password"
-                label="Mật khẩu"
-                required
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="Quyền"
-                placeholder="Store Staff"
-                defaultValue="Staff"
-                disabled={true}
-                size="small"
-              />
-            </Grid>
-          </Grid>
-        </Box>
-      )}
-      {/* <Box>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <InputField fullWidth name="code" label="Tên tài khoản" required size="small" />
-          </Grid>
-          <Grid item xs={6}>
-            <InputField fullWidth name="product_name" label="Mật khẩu" required size="small" />
-          </Grid>
-          <Grid item xs={6}>
-            <InputField
-              fullWidth
-              type="number"
-              name="price"
-              label="Tên chủ tài khoản"
-              required
-              size="small"
-              // helperText="Giá áp dụng khi không được cấu hình trong menu"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <SelectField
-              options={[
-                {
-                  label: 'Brand Admin',
-                  value: 'single-choice'
-                },
-                {
-                  label: 'Store Manager',
-                  value: 'multiple'
-                },
-                {
-                  label: 'Store Staff',
-                  value: 'multiple'
-                }
-              ]}
-              // name={`modifiers.${optIndex}.selectType`}
-              size="small"
-              label="Quyền"
-              sx={{ width: '150px' }}
-              name="Phân quyền"
-            />
-          </Grid>
+          )} */}
         </Grid>
-      </Box> */}
+      </Box>
     </>
   );
 };

@@ -4,22 +4,23 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Stack } from '@mui/material';
 import storeApi from 'api/store';
+import { SHA256 } from 'crypto-js';
 import useAuth from 'hooks/useAuth';
 import { useSnackbar } from 'notistack';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { TEmployeeCreate } from 'types/employee';
 import * as yup from 'yup';
-import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from '../../components/Page';
 import { Card } from './components/Card';
 import MiddleForm from './components/MiddleForm';
-import { transformDraftToStr } from './utils';
 
 const CreateAccount = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const storeId = searchParams.get('storeId');
 
   const validationSchema = yup.object({
     name: yup.string().required('Vui lòng nhập tên người dùng'),
@@ -35,13 +36,14 @@ const CreateAccount = () => {
       password: ''
     }
   });
-  const { handleSubmit } = methods;
 
   const onCreateNewAccountSubmit = (values: TEmployeeCreate) => {
-    const data = transformDraftToStr(values);
-    console.log('data new account ne: ', data);
+    // const data = transformDraftToStr(values);
+    const createNewUserRequest = { ...values };
+    createNewUserRequest.password = SHA256(createNewUserRequest.password).toString();
+
     return storeApi
-      .createStoreEmployees(user?.storeId, data)
+      .createStoreEmployees(storeId ?? user?.storeId, createNewUserRequest)
       .then((res) => {
         enqueueSnackbar(`Tạo mới thành công`, {
           variant: 'success'
@@ -76,27 +78,27 @@ const CreateAccount = () => {
   // }
 
   return (
-    <FormProvider {...methods}>
-      <Page title="Tạo tài khoản">
-        <Card>
-          <Box>
+    <Page title="Tạo tài khoản">
+      <Card>
+        <Box>
+          <FormProvider {...methods}>
             <MiddleForm />
             <Stack direction="row" justifyContent={'end'} marginTop={2} spacing={2}>
               <Button onClick={() => navigate(-1)} variant="outlined">
                 Hủy
               </Button>
-              <LoadingAsyncButton
-                onClick={handleSubmit(onCreateNewAccountSubmit)}
+              <Button
+                onClick={methods.handleSubmit(onCreateNewAccountSubmit)}
                 type="submit"
                 variant="contained"
               >
                 Tạo mới
-              </LoadingAsyncButton>
+              </Button>
             </Stack>
-          </Box>
-        </Card>
-      </Page>
-    </FormProvider>
+          </FormProvider>
+        </Box>
+      </Card>
+    </Page>
   );
 };
 

@@ -1,6 +1,15 @@
 /* eslint-disable camelcase */
 // material
-import { Card, DialogContent, IconButton, Stack, Tooltip, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  DialogContent,
+  IconButton,
+  Stack,
+  Tooltip,
+  Typography
+} from '@mui/material';
 import storeApi from 'api/store';
 import Page from 'components/Page';
 import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
@@ -233,7 +242,20 @@ const StoreDetailPage = () => {
 
       <Card sx={{ my: 2 }}>
         <Stack spacing={2}>
-          <Typography variant="h5">Danh sách nhân viên</Typography>
+          <Box sx={{ mb: 2 }} display={'flex'} justifyContent={'space-between'}>
+            <Typography variant="h5">Danh sách nhân viên</Typography>
+            <Button
+              onClick={() =>
+                navigate(
+                  { pathname: PATH_DASHBOARD.accounts.new, search: `?storeId=${storeId}` },
+                  { replace: true }
+                )
+              }
+              variant="contained"
+            >
+              Tạo tài khoản mới
+            </Button>
+          </Box>
           <AccountsList />
           {/* <ResoTable
             showAction={false}

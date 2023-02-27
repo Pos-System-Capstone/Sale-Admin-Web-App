@@ -37,8 +37,6 @@ export default function AccountsList() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  console.log('path name ne: ', location.pathname.includes('brands'));
-
   const accountColumns: TTableColumn<TUser>[] = [
     {
       title: 'STT',
@@ -109,18 +107,33 @@ export default function AccountsList() {
   };
 
   const handleCallListDataBaseOnRole = (params: any) => {
-    if (user?.storeId && user?.role.includes(Role.StoreManager)) {
-      return storeApi.getStoreEmployees(user.storeId, params);
-    } else if (
-      user?.brandId &&
-      (user?.role.includes(Role.BrandManager) || user?.role.includes(Role.BrandAdmin))
-    ) {
-      return brandApi.getListUserOfBrand(user.brandId, params);
-    } else if (storeId) {
-      return storeApi.getStoreEmployees(storeId, params);
-    } else if (brandId) {
-      return brandApi.getListUserOfBrand(brandId, params);
-    } else return;
+    let newParam = { ...params };
+    // System Admin get list user of brand by brandId
+    if (brandId && user?.role.includes(Role.SystemAdmin)) {
+      return brandApi.getListUserOfBrand(brandId, newParam);
+    }
+    // Brand Manager get list store manager of store detail
+    else if (storeId && user?.role.includes(Role.BrandManager)) {
+      return storeApi.getStoreEmployees(storeId, newParam);
+    }
+    // Brand Manager get list user of all stores in brand
+    else if (user?.brandId && user?.role.includes(Role.BrandManager)) {
+      newParam = {
+        role: Role.StoreManager,
+        ...newParam
+      };
+      return brandApi.getListUserOfBrand(user.brandId, newParam);
+    }
+    // Store Manager get list staff of store
+    else if (user?.storeId && user?.role.includes(Role.StoreManager)) {
+      return storeApi.getStoreEmployees(user?.storeId, newParam);
+    }
+    // else if (storeId) {
+    //   return storeApi.getStoreEmployees(storeId, params);
+    // } else if (brandId) {
+    //   return brandApi.getListUserOfBrand(brandId, params);
+    // }
+    else return;
   };
 
   // confirm({
@@ -164,6 +177,7 @@ export default function AccountsList() {
           onDelete={(user: TUser) => (setIsOpenDeleteConfirmDialog(true), setDeleteUser(user))}
           columns={accountColumns}
           rowKey="id"
+          key={'accountList'}
         />
 
         <UpdateConfirmDialog

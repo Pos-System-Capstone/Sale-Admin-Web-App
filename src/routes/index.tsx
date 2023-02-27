@@ -99,6 +99,7 @@ export default function Router() {
           path: 'brands',
           children: [
             { path: '', element: <BrandListPage /> },
+            { path: ':brandId', element: <BrandDetail /> },
             {
               path: 'detail',
               children: [

@@ -58,7 +58,7 @@ const ModalProductForm = ({ trigger, onSubmit, selected = [], type = 'checkbox' 
                 }}
                 showAction={false}
                 scroll={{ y: '50%', x: '100%' }}
-                rowKey="product_id"
+                rowKey="id"
                 getData={getAllProduct}
                 onChangeSelection={handleChangeSelection}
                 columns={productColumns}

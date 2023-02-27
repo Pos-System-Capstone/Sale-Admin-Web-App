@@ -13,37 +13,23 @@ const getProductsInCategory = (catId: string, params?: any) => {
   return request.get<BaseReponse<TProductBase>>(`/categories/${catId}/products`, { params });
 };
 
-const getChildByCategoryId = (catId: string) => {
-  return request.get<TCategory[]>(`/categories/${catId}/childs`);
+const getExtraCategoriesInProductCategory = (catId: string, params?: any) => {
+  return request.get<BaseReponse<TCategory>>(`/categories/${catId}/extra-categories`, { params });
 };
 
 const getModifiersOfCategory = (catId: string) =>
   request.get<TModifier[]>(`/categories/${catId}/modifiers`);
 
-const addModifiersOfCategory = (catId: string, values: Omit<TModifier, 'id'>) =>
-  request.post<number>(`/categories/${catId}/modifiers`, values);
-
-const updateModifiersOfCategory = (
-  catId: string,
-  modifierId: number,
-  values: Omit<TModifier, 'id'>
-) => request.put<number>(`/categories/${catId}/modifiers/${modifierId}`, values);
-
-const deleteModifiersOfCategory = (catId: string, modifierId: number) =>
-  request.delete<number>(`/categories/${catId}/modifiers/${modifierId}`);
-
-const getCategoryDetails = (catId: string) => request.get<TCategory>(`/categories/${catId}`);
+const addExtraCategoriesToProductCategory = (catId: string, values: string[]) =>
+  request.post<string[]>(`/categories/${catId}/extra-categories`, values);
 
 const categoryApi = {
   ...generateAPIWithPaging<TCategory>('categories'),
   getExtraCategoriesFromCateId,
   getModifiersOfCategory,
-  addModifiersOfCategory,
-  getChildByCategoryId,
-  updateModifiersOfCategory,
-  deleteModifiersOfCategory,
-  getProductsInCategory,
-  getCategoryDetails
+  addExtraCategoriesToProductCategory,
+  getExtraCategoriesInProductCategory,
+  getProductsInCategory
 };
 
 export default categoryApi;

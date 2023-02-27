@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { TProductCreate } from 'types/product';
+import { ProductTypeEnum, TProductCreate } from 'types/product';
 import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from '../../components/Page';
 import useDashboard from '../../hooks/useDashboard';
@@ -33,25 +33,23 @@ const CreateProduct = () => {
   });
   const { handleSubmit, reset, watch } = methods;
 
-  // const { data, isLoading } = useQuery(
-  //   ['products', Number(cloneProductId)],
-  //   () => productApi.getById(cloneProductId).then((res) => res.data),
-  //   {
-  //     enabled: Boolean(cloneProductId),
-  //     staleTime: Infinity
-  //   }
-  // );
-
-  // useEffect(() => {
-  //   // if (data) {
-  //   //   reset({ ...normalizeProductData(data) });
-  //   // }
-  // }, [data, reset]);
-
-  const onSubmit = (values: TProductCreate) => {
-    console.log('productvalue', values);
+  const onSubmit = async (values: TProductCreate) => {
+    const data = { ...values };
+    if (data.type === ProductTypeEnum.CHILD) {
+      await productApi
+        .getById(data.parentProductId)
+        .then((res) => {
+          data.categoryId = res.data.categoryId !== undefined ? res.data.categoryId : '';
+        })
+        .catch(() => {
+          enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
+            variant: 'error'
+          });
+        });
+    }
+    console.log('productvalue', data);
     return productApi
-      .create(values)
+      .create(data)
       .then((res) => {
         enqueueSnackbar(`Tạo thành công ${values.name}`, {
           variant: 'success'
@@ -64,8 +62,6 @@ const CreateProduct = () => {
         });
       });
   };
-
-  console.log(`watch()`, watch());
 
   // if (isLoading) {
   //   return (

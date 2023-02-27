@@ -8,6 +8,15 @@ export const useProduct = (productId: number, config: UseQueryOptions = {}) => {
     ...(config as any)
   });
 };
+export const useProducts = (params?: any) => {
+  return useQuery(
+    ['products', params],
+    () => productApi.get(params).then((res) => res.data.items),
+    {
+      refetchOnWindowFocus: false
+    }
+  );
+};
 export const useProductDetail = (productId: string) => {
   return useQuery(
     ['products', productId],

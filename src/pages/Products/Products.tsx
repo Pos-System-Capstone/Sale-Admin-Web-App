@@ -74,7 +74,7 @@ export default function EcommerceShop() {
         <Button
           key="add-product-extra"
           onClick={() => {
-            navigate(`${PATH_DASHBOARD.products.newProduct}?productType=${ProductTypeEnum.Extra}`);
+            navigate(`${PATH_DASHBOARD.products.newProduct}?productType=${ProductTypeEnum.EXTRA}`);
           }}
           variant="outlined"
           startIcon={<Icon icon={plusFill} />}

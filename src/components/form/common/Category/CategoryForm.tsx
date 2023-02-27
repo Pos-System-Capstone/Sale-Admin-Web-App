@@ -39,7 +39,7 @@ const CategoryForm = ({ updateMode }: Props) => {
         </Stack>
       </Grid>
       <Grid item xs={12}>
-        <InputField fullWidth name="discription" label="Mô tả" />
+        <InputField fullWidth name="description" label="Mô tả" />
       </Grid>
       {/* {!isExtra && (
         <Grid item xs={12}>

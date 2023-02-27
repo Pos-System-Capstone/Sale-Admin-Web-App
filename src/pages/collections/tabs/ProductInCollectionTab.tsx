@@ -8,11 +8,11 @@ import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import React, { useRef } from 'react';
 import { productCollectionApi } from 'redux/collections/api';
-import { TProductBase, TProductInCollection } from 'types/product';
+import { TProduct, TProductBase, TProductInCollection } from 'types/product';
 import { TTableColumn } from 'types/table';
 
 // eslint-disable-next-line react/prop-types
-const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
+const ProductInCollectionTab = ({ id, onAddProduct }: any, productList: TProduct[]) => {
   const api = productCollectionApi(id);
   const { translate } = useLocales();
   const tableRef = useRef<any>();
@@ -39,7 +39,7 @@ const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
       onCancle: () => {}
     });
 
-  const addProductToCollection = async (ids: number[], data: any) => {
+  const addProductToCollection = async (ids: string[], data: any) => {
     try {
       await api.create(data);
       enqueueSnackbar('common.201', {
@@ -63,7 +63,7 @@ const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
     },
     {
       title: 'Hình ảnh',
-      dataIndex: 'pic_url',
+      dataIndex: 'picUrl',
       hideInSearch: true,
       render: (src, { product_name }: any) => (
         <Avatar
@@ -76,16 +76,16 @@ const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
     },
     {
       title: 'Tên sản phẩm',
-      dataIndex: 'product_name'
+      dataIndex: 'productName'
     },
     {
-      title: 'Giá mặc định',
-      dataIndex: 'price',
+      title: 'Giá bán',
+      dataIndex: 'sellingPrice',
       hideInSearch: true
     },
     {
-      title: 'Thứ tự',
-      dataIndex: 'position',
+      title: 'Mã sản phẩm',
+      dataIndex: 'productCode',
       hideInSearch: true
     }
   ];
@@ -103,7 +103,7 @@ const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
           ref={tableRef}
           showSettings={false}
           columns={categoryExtraColumns}
-          rowKey="product_id"
+          rowKey="id"
           onDelete={onDelete}
           // onEdit={(values: TModifier) => updateForm.reset(normalizeModifier(values))}
           // renderEdit={(dom: ReactNode, modifier: TModifier) => (
@@ -124,6 +124,7 @@ const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
           //   </ModalForm>
           // )}
           getData={(params: any) => api.get(params)}
+          // dataSource={productList}
         />
       </Box>
     </Box>

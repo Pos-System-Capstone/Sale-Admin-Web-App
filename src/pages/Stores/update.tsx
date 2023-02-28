@@ -78,7 +78,7 @@ const UpdateStorePage = () => {
       });
     }
   };
-  const onDeleteMenu = async (menuId: number) => {
+  const onDeleteMenu = async (menuId: string) => {
     try {
       await menuApi.delete(menuId);
       enqueueSnackbar('Xoá thành công', {
@@ -96,9 +96,9 @@ const UpdateStorePage = () => {
   const onConfirmDeleteMenu = async (menu: Menu) => {
     confirm({
       title: 'Xác nhận xoá',
-      content: `Bạn đồng ý xóa menu "${menu.menu_name}"?`,
+      content: `Bạn đồng ý xóa menu "${menu.code}"?`,
       onOk: async () => {
-        await onDeleteMenu(menu.menu_id);
+        await onDeleteMenu(menu.id);
       },
       onCancle: () => {}
     });

@@ -1,43 +1,75 @@
 import closeFill from '@iconify/icons-eva/close-fill';
 import { Icon } from '@iconify/react';
-import { Box, Button, Drawer, IconButton, Paper, Stack, Typography } from '@mui/material';
-import React from 'react';
+import { Box, Button, Dialog, IconButton, Paper, Stack, Typography } from '@mui/material';
+import collectionApi from 'api/collection';
+import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+import ResoTable from 'components/ResoTable/ResoTable';
+import { useProductsInCollection } from 'hooks/useCollections';
+import { useSnackbar } from 'notistack';
 import { productColumns } from 'pages/Products/config';
+import React, { useEffect, useState } from 'react';
 import { getAllProduct } from 'redux/product/api';
-import LoadingAsyncButton from '../LoadingAsyncButton/LoadingAsyncButton';
-import ResoTable from '../ResoTable/ResoTable';
+interface Props {
+  collectionId?: string;
+  trigger?: any;
+  onReload: Function;
+  selected?: string[] | undefined;
+  type?: string | undefined;
+}
+const ModalProductsInCollection = ({
+  collectionId,
+  trigger,
+  onReload,
+  selected = [],
+  type = 'checkbox'
+}: Props) => {
+  const [open, setOpen] = useState(false);
 
-const DrawerProductForm = ({ trigger, onSubmit, disabledSelections = [] }) => {
-  const [open, setOpen] = React.useState(false);
-
-  const [selectedProductIds, setSelectedProductIds] = React.useState([]);
-  const [selectedProducts, setSelectedProduct] = React.useState([]);
-
+  const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
+  const { data: products } = useProductsInCollection(collectionId!, { page: 1, size: 1000 });
   const handleClick = () => {
     setOpen((o) => !o);
   };
+  const { enqueueSnackbar } = useSnackbar();
+  useEffect(() => {
+    if (products !== undefined) {
+      const selectedIds: string[] = products?.map((e) => e.id);
+      setSelectedProductIds(selectedIds);
+    }
+  }, [products]);
+  console.log('selectedExtraCategoryIds', selectedProductIds);
 
   const handleSubmit = () =>
-    Promise.resolve(onSubmit && onSubmit(selectedProductIds, selectedProducts)).then(() =>
-      setOpen(false)
-    );
+    Promise.resolve(collectionApi.addProductsToCollection(collectionId!, selectedProductIds))
+      .then((res) => {
+        enqueueSnackbar('Them thanh cong', {
+          variant: 'success'
+        });
+        setOpen(false);
+        onReload();
+      })
+      .catch((err) => {
+        enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
+          variant: 'error'
+        });
+      });
 
-  const handleChangeSelection = React.useCallback((ids, data) => {
+  const handleChangeSelection = React.useCallback((ids) => {
     setSelectedProductIds(ids);
-    setSelectedProduct(data);
   }, []);
 
   return (
     <>
       {React.cloneElement(trigger, { onClick: handleClick })}
-      <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
-        <Box display="flex" flexDirection="column" height="100vh" maxHeight="100vh">
+      <Dialog maxWidth="md" open={open} onClose={() => setOpen(false)}>
+        <Box display="flex" flexDirection="column" maxHeight="80vh">
           <Paper>
             <Box
               display="flex"
               justifyContent="space-between"
               alignItems="center"
               p={2}
+              pt={0}
               borderBottom={1}
               borderColor="grey.300"
               textAlign="right"
@@ -48,16 +80,16 @@ const DrawerProductForm = ({ trigger, onSubmit, disabledSelections = [] }) => {
               </IconButton>
             </Box>
           </Paper>
-          <Box sx={{ padding: '1em', width: '740px', flex: 1, overflowY: 'auto' }}>
+          <Box p={1} sx={{ flex: 1, overflowY: 'auto' }}>
             <Stack spacing={2}>
               <ResoTable
                 checkboxSelection={{
-                  type: 'radio'
+                  selection: selectedProductIds,
+                  type: type
                 }}
-                disabledSelections={disabledSelections}
                 showAction={false}
-                scroll={{ y: '100%' }}
-                rowKey="product_id"
+                scroll={{ y: '50%', x: '100%' }}
+                rowKey="id"
                 getData={getAllProduct}
                 onChangeSelection={handleChangeSelection}
                 columns={productColumns}
@@ -86,9 +118,9 @@ const DrawerProductForm = ({ trigger, onSubmit, disabledSelections = [] }) => {
             </Stack>
           </Box>
         </Box>
-      </Drawer>
+      </Dialog>
     </>
   );
 };
 
-export default DrawerProductForm;
+export default ModalProductsInCollection;

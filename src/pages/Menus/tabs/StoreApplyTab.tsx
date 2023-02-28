@@ -63,7 +63,7 @@ export const menuInStoreColumns: TTableColumn<Menu>[] = [
     dataIndex: 'day_filters',
     valueType: 'select',
     valueEnum: DAY_OF_WEEK,
-    render: (_: any, { day_filters: dayFilters, menu_id }: Menu) =>
+    render: (_: any, { day_filters: dayFilters, id }: Menu) =>
       dayFilters.length === 7 ? (
         <Chip label="Cả tuần" color="info" />
       ) : (
@@ -71,7 +71,7 @@ export const menuInStoreColumns: TTableColumn<Menu>[] = [
           {dayFilters?.map((day) => (
             <Chip
               size="small"
-              key={`${menu_id}-${day}`}
+              key={`${id}-${day}`}
               label={DAY_OF_WEEK.find(({ value }) => value === day)?.label}
             />
           ))}

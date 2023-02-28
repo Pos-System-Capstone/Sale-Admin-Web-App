@@ -127,7 +127,7 @@ const MenusPage = () => {
     }
   });
 
-  const onDeleteMenu = async (menuId: number) => {
+  const onDeleteMenu = async (menuId: string) => {
     try {
       await menuApi.delete(menuId);
       enqueueSnackbar('Xoá thành công', {
@@ -146,9 +146,9 @@ const MenusPage = () => {
   const onConfirmDelete = async (menu: Menu) => {
     confirm({
       title: 'Xác nhận xoá',
-      content: `Bạn đồng ý xóa menu "${menu.menu_name}"?`,
+      content: `Bạn đồng ý xóa menu "${menu.code}"?`,
       onOk: async () => {
-        await onDeleteMenu(menu.menu_id);
+        await onDeleteMenu(menu.id);
       },
       onCancle: () => {}
     });
@@ -253,9 +253,7 @@ const MenusPage = () => {
             ref={tableRef}
             onDelete={onConfirmDelete}
             rowKey="menu_id"
-            onEdit={(menu: Menu) =>
-              navigate(`${PATH_DASHBOARD.tradingReport.root}/${menu.menu_id}`, { state: menu })
-            }
+            onEdit={(menu: PosMenu) => navigate(`${PATH_DASHBOARD.menus.root}/${menu.id}`)}
             getData={(params: any) => getMenusOfBrand(user?.brandId, params)}
             columns={menuColumns}
           />

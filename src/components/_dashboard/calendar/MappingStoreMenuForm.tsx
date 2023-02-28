@@ -229,9 +229,9 @@ export default function StoreInMenuForm({
                       defaultValue=""
                       size="small"
                     >
-                      {menus?.map(({ menu_id, menu_name }: Menu) => (
-                        <MenuItem value={Number(menu_id)} key={`menu_select_${menu_id}`}>
-                          {menu_name ?? `Thực đơn ${menu_id}`}
+                      {menus?.map(({ id, code }: Menu) => (
+                        <MenuItem value={id} key={`menu_select_${id}`}>
+                          {code ?? `Thực đơn ${id}`}
                         </MenuItem>
                       ))}
                     </SelectField>

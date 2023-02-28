@@ -1,9 +1,9 @@
 import { Role } from 'utils/role';
 
 export type Menu = {
-  menu_id: number;
+  id: string;
   store_id?: number;
-  menu_name?: any;
+  code: string;
   store_name: string;
   day_filters: number[];
   is_brand_mode: boolean;

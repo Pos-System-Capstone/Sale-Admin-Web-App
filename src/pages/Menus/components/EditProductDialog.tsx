@@ -5,7 +5,14 @@ import useLocales from 'hooks/useLocales';
 import { useMemo, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-const ProductInMenuDialog = ({ open, onClose, onSubmit, data = {}, updateMode = false }) => {
+type Props = {
+  open: boolean;
+  onClose: VoidFunction;
+  onSubmit: VoidFunction;
+  data: any;
+  updateMode: boolean;
+};
+const ProductInMenuDialog = ({ open, onClose, onSubmit, data = {}, updateMode = false }: Props) => {
   const { translate } = useLocales();
 
   const form = useForm({

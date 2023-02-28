@@ -7,4 +7,14 @@ export const useCollectionDetails = (id: string, params?: any) => {
         enabled: Boolean(id)
     });
 };
-
+export const useProductsInCollection = (collectionId: string, params?: any) => {
+    return useQuery(
+        ['products', collectionId],
+        () =>
+            collectionApi.getProductsInCollection(collectionId, params)
+                .then((res) => res.data.items),
+        {
+            enabled: Boolean(collectionId)
+        }
+    );
+};

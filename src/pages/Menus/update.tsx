@@ -1,10 +1,10 @@
 import roundAccountBox from '@iconify/icons-ic/round-account-box';
-import roundStore from '@iconify/icons-ic/round-store';
 import { Icon } from '@iconify/react';
-import { Box, Button, CircularProgress, Stack, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Button, Stack, Tab, Tabs } from '@mui/material';
 import menuApi from 'api/menu';
 import { normalizeMenuData, transformMenuForm } from 'components/form/Menu/helper';
 import Page from 'components/Page';
+import roundStore from '@iconify/icons-ic/round-store';
 import { get } from 'lodash-es';
 import confirm from 'components/Modal/confirm';
 import { useSnackbar } from 'notistack';
@@ -14,9 +14,9 @@ import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import MenuInfoTab from './tabs/MenuInfoTab';
 import ProductInMenuTab from './tabs/ProductInMenuTab';
-import StoreApplyTab from './tabs/StoreApplyTab';
 import { Menu } from 'types/menu';
 import { PATH_DASHBOARD } from 'routes/paths';
+import StoreApplyTab from './tabs/StoreApplyTab';
 
 enum TabType {
   MENU_INFO = 'MENUINFO',
@@ -74,7 +74,7 @@ const UpdateMenuPage = () => {
         });
       });
 
-  const onDeleteMenu = async (menuId: number) => {
+  const onDeleteMenu = async (menuId: string) => {
     try {
       await menuApi.delete(menuId);
       enqueueSnackbar('Xoá thành công', {
@@ -94,9 +94,9 @@ const UpdateMenuPage = () => {
   const onConfirmDelete = async (menu: Menu) => {
     confirm({
       title: 'Xác nhận xoá',
-      content: `Bạn đồng ý xóa menu "${menu.menu_name}"?`,
+      content: `Bạn đồng ý xóa menu "${menu.code}"?`,
       onOk: async () => {
-        await onDeleteMenu(menu.menu_id);
+        await onDeleteMenu(menu.id);
       },
       onCancle: () => {}
     });
@@ -136,18 +136,18 @@ const UpdateMenuPage = () => {
     }
   ];
 
-  if (isLoading) {
-    return <CircularProgress />;
-  }
+  // if (isLoading) {
+  //   return <CircularProgress />;
+  // }
 
-  if (error) {
-    return <Typography>{get(error, 'message', 'Có lỗi vui lòng thử lại')}</Typography>;
-  }
+  // if (error) {
+  //   return <Typography>{get(error, 'message', 'Có lỗi vui lòng thử lại')}</Typography>;
+  // }
 
   return (
     <FormProvider {...form}>
       <Page
-        title={`Chi tiết bảng giá ${menu?.menu_name}`}
+        title={`Chi tiết bảng giá ${menu?.code}`}
         actions={() => [
           <Button
             onClick={() => onConfirmDelete(menu!)}
@@ -168,7 +168,7 @@ const UpdateMenuPage = () => {
           onChange={(e, value) => setCurrentTab(value)}
         >
           {MENU_TABS.map((tab) =>
-            menu?.is_brand_mode ? (
+            false ? (
               <Tab disabled key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} />
             ) : (
               <Tab key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} />

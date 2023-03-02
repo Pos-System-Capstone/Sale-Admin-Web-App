@@ -5,7 +5,6 @@ import { Avatar, Box, Button, Card, Typography } from '@mui/material';
 import { useDebounceFn } from 'ahooks';
 import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
-import Label from 'components/Label';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash-es';
@@ -152,7 +151,7 @@ const ProductInMenuTab = ({ id }) => {
             },
             {
               title: 'Hình ảnh',
-              dataIndex: 'pic_url',
+              dataIndex: 'picUrl',
               render: (src, { product_name }) => (
                 <Avatar
                   alt={product_name}
@@ -165,24 +164,36 @@ const ProductInMenuTab = ({ id }) => {
             },
             {
               title: 'Tên sản phẩm',
-              dataIndex: 'product_name'
+              dataIndex: 'name'
             },
             {
-              title: 'Giá',
-              dataIndex: 'price1',
+              title: 'Giá gốc',
+              dataIndex: 'historicalPrice',
               render: (value) => <Typography>{formatCurrency(value)}</Typography>,
               hideInSearch: true
             },
             {
-              title: 'Cố định giá',
-              dataIndex: 'is_fixed_price',
-              render: (isFixed) => (
-                <Label color={isFixed ? 'success' : 'default'}>
-                  {isFixed ? 'Cố định' : 'Không'}
-                </Label>
-              ),
+              title: 'Giá khuyến mãi',
+              dataIndex: 'discountPrice',
+              render: (value) => <Typography>{formatCurrency(value)}</Typography>,
+              hideInSearch: true
+            },
+            {
+              title: 'Giá bán',
+              dataIndex: 'sellingPrice',
+              render: (value) => <Typography>{formatCurrency(value)}</Typography>,
               hideInSearch: true
             }
+            // {
+            //   title: 'Cố định giá',
+            //   dataIndex: 'is_fixed_price',
+            //   render: (isFixed) => (
+            //     <Label color={isFixed ? 'success' : 'default'}>
+            //       {isFixed ? 'Cố định' : 'Không'}
+            //     </Label>
+            //   ),
+            //   hideInSearch: true
+            // }
           ]}
         />
       </Box>

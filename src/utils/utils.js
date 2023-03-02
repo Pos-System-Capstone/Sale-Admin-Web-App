@@ -433,3 +433,16 @@ export const setGoogleRefreshToken = (refreshToken) => {
 export const getGoogleRefreshToken = () => {
   return localStorage.getItem('GOOGLE_REFRESH_TOKEN');
 };
+
+export const convertTimeToInteger = (time) => {
+  const array = time.split(':');
+  return parseInt(array[0], 10) * 60 + parseInt(array[1], 10);
+};
+
+export const processDayFiter = (dayOfWeek) => {
+  let totalDay = 0;
+  dayOfWeek.map((number) => {
+    totalDay += number;
+  });
+  return totalDay;
+};

@@ -74,3 +74,10 @@ export type TCreateMenuInformation = {
   startTime: number;
   endTime: number;
 };
+
+export type TUpdateMenuInformation = {
+  priority?: number;
+  dateFilter?: number;
+  startTime?: number;
+  endTime?: number;
+}

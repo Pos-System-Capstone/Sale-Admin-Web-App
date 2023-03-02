@@ -6,14 +6,15 @@ import menuApi from 'api/menu';
 import { transformMenuForm } from 'components/form/Menu/helper';
 import confirm from 'components/Modal/confirm';
 import Page from 'components/Page';
-import { get } from 'lodash-es';
+import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import React, { useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { Menu } from 'types/menu';
+import { Menu, TUpdateMenuInformation } from 'types/menu';
+import { convertTimeToInteger, processDayFiter } from 'utils/utils';
 import MenuInfoTab from './tabs/MenuInfoTab';
 import ProductInMenuTab from './tabs/ProductInMenuTab';
 import StoreApplyTab from './tabs/StoreApplyTab';
@@ -64,16 +65,16 @@ const UpdateMenuPage = () => {
 
   const onUpdateMenu = (updateMenu: any) =>
     menuApi
-      .update(+id!, transformMenuForm(updateMenu))
-      .then(() =>
+      .update(id, transformMenuForm(updateMenu))
+      .then(() => {
         enqueueSnackbar(`Cập nhật thành công`, {
           variant: 'success'
-        })
-      )
-      .then(() => refetch())
+        });
+        refetch();
+      })
       .catch((err) => {
-        const errMsg = get(err, ['message'], `Có lỗi xảy ra. Vui lòng thử lại`);
-        enqueueSnackbar(errMsg, {
+        // const errMsg = get(err, ['message'], `Có lỗi xảy ra. Vui lòng thử lại`);
+        enqueueSnackbar(err.Error, {
           variant: 'error'
         });
       });
@@ -105,6 +106,18 @@ const UpdateMenuPage = () => {
       onCancle: () => {}
     });
   };
+
+  const handleMenuInformationToUpdate = (data: any) => {
+    const { dayFilter, endTime, startTime, priority } = data;
+
+    const processedDataToUpdate: TUpdateMenuInformation = {
+      priority: priority,
+      dateFilter: dayFilter.length > 0 ? processDayFiter(dayFilter) : undefined,
+      startTime: startTime ? convertTimeToInteger(moment(startTime).format('HH:mm')) : undefined,
+      endTime: endTime ? convertTimeToInteger(moment(endTime).format('HH:mm')) : undefined
+    };
+    return processedDataToUpdate;
+  };
   const MENU_TABS = [
     {
       value: TabType.MENU_INFO,
@@ -115,12 +128,11 @@ const UpdateMenuPage = () => {
           <MenuInfoTab
             menu={menu!}
             onSubmit={async () => {
-              console.log(`SUBMIT`);
               try {
                 // TODO: Check this
                 await form.handleSubmit(async (values) => {
-                  console.log(`values`, values);
-                  return onUpdateMenu(values);
+                  const dataToUpdate = handleMenuInformationToUpdate(values);
+                  return onUpdateMenu(dataToUpdate);
                 }, console.log)();
                 return true;
               } catch (error) {

@@ -165,11 +165,11 @@ const MenuInfoTab = ({ onSubmit, menu }: { onSubmit: any; menu: Menu }) => {
               onOk={onSubmit}
               trigger={
                 <LoadingAsyncButton startIcon={<Edit />} size="small" variant="contained">
-                  Điều chỉnh
+                  Cập nhật
                 </LoadingAsyncButton>
               }
             >
-              <MenuForm />
+              <MenuForm isUpdateMenu={true} />
             </ModalForm>
           </Box>
         </Stack>

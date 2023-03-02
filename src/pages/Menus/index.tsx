@@ -22,6 +22,7 @@ import { getMenusOfBrand } from 'redux/menu/api';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { Menu, PosMenu, TCreateMenuInformation } from 'types/menu';
 import { TTableColumn } from 'types/table';
+import { convertTimeToInteger, processDayFiter } from 'utils/utils';
 
 export const menuColumns: TTableColumn<PosMenu>[] = [
   {
@@ -154,18 +155,18 @@ const MenusPage = () => {
     });
   };
 
-  const convertTimeToInteger = (time: string) => {
-    const array = time.split(':');
-    return parseInt(array[0], 10) * 60 + parseInt(array[1], 10);
-  };
+  // const convertTimeToInteger = (time: string) => {
+  //   const array = time.split(':');
+  //   return parseInt(array[0], 10) * 60 + parseInt(array[1], 10);
+  // };
 
-  const processDayFiter = (dayOfWeek: number[]) => {
-    let totalDay = 0;
-    dayOfWeek.map((number) => {
-      totalDay += number;
-    });
-    return totalDay;
-  };
+  // const processDayFiter = (dayOfWeek: number[]) => {
+  //   let totalDay = 0;
+  //   dayOfWeek.map((number) => {
+  //     totalDay += number;
+  //   });
+  //   return totalDay;
+  // };
 
   const handleProcessCreateNewMenuRequest = (data: any) => {
     const { code, startTime, endTime, dayFilter, priority, allDay, isBaseMenu } = data;

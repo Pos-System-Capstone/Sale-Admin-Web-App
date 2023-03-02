@@ -9,9 +9,11 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { CheckBoxField, InputField, SelectField, SwitchField } from '..';
 
-interface Props {}
+interface Props {
+  isUpdateMenu?: boolean;
+}
 
-const MenuForm = (props: Props) => {
+const MenuForm = ({ isUpdateMenu }: Props) => {
   const { user } = useAuth();
   const {
     control,
@@ -203,19 +205,21 @@ const MenuForm = (props: Props) => {
             />
           </Grid>
         )}
-        <Grid item xs={12} md={6}>
-          <InputField size="small" fullWidth name="code" label="Mã menu" />
-          <ErrorMessage
-            errors={errors}
-            name="code"
-            render={({ message }) => (
-              <Typography color="red" variant="caption">
-                {message}
-              </Typography>
-            )}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
+        {!isUpdateMenu && (
+          <Grid item xs={12} md={6}>
+            <InputField size="small" fullWidth name="code" label="Mã menu" />
+            <ErrorMessage
+              errors={errors}
+              name="code"
+              render={({ message }) => (
+                <Typography color="red" variant="caption">
+                  {message}
+                </Typography>
+              )}
+            />
+          </Grid>
+        )}
+        <Grid item xs={12} md={isUpdateMenu ? 12 : 6}>
           <InputField
             size="small"
             fullWidth

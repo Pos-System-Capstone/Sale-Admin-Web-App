@@ -1,21 +1,21 @@
 import roundAccountBox from '@iconify/icons-ic/round-account-box';
+import roundStore from '@iconify/icons-ic/round-store';
 import { Icon } from '@iconify/react';
 import { Box, Button, Stack, Tab, Tabs } from '@mui/material';
 import menuApi from 'api/menu';
-import { normalizeMenuData, transformMenuForm } from 'components/form/Menu/helper';
-import Page from 'components/Page';
-import roundStore from '@iconify/icons-ic/round-store';
-import { get } from 'lodash-es';
+import { transformMenuForm } from 'components/form/Menu/helper';
 import confirm from 'components/Modal/confirm';
+import Page from 'components/Page';
+import { get } from 'lodash-es';
 import { useSnackbar } from 'notistack';
 import React, { useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
+import { PATH_DASHBOARD } from 'routes/paths';
+import { Menu } from 'types/menu';
 import MenuInfoTab from './tabs/MenuInfoTab';
 import ProductInMenuTab from './tabs/ProductInMenuTab';
-import { Menu } from 'types/menu';
-import { PATH_DASHBOARD } from 'routes/paths';
 import StoreApplyTab from './tabs/StoreApplyTab';
 
 enum TabType {
@@ -54,9 +54,13 @@ const UpdateMenuPage = () => {
     isLoading,
     refetch,
     error
-  } = useQuery(['products', Number(id)], () => menuApi.getById(id).then((res) => res.data), {
-    onSuccess: (res) => form.reset(normalizeMenuData(res))
-  });
+  } = useQuery(
+    ['products', Number(id)],
+    () => menuApi.getById(id).then((res) => res.data)
+    // {
+    //   onSuccess: (res) => form.reset(normalizeMenuData(res))
+    // }
+  );
 
   const onUpdateMenu = (updateMenu: any) =>
     menuApi

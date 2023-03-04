@@ -207,7 +207,7 @@ const MenusPage = () => {
                 (data: any) => {
                   const requestOfCreateNewMenu = handleProcessCreateNewMenuRequest(data);
                   return menuApi
-                    .create(requestOfCreateNewMenu)
+                    .createNewMenu(requestOfCreateNewMenu)
                     .then((res) => {
                       enqueueSnackbar('Tạo menu thành công', {
                         variant: 'success'

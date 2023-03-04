@@ -5,7 +5,7 @@ import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton
 import ModalForm from 'components/ModalForm/ModalForm';
 import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 import moment from 'moment';
-import { Menu, PosMenu } from 'types/menu';
+import { PosMenu } from 'types/menu';
 import { Card, CardTitle } from '../../Products/components/Card';
 
 const columns: ResoDescriptionColumnType<PosMenu>[] = [
@@ -153,7 +153,7 @@ const columns: ResoDescriptionColumnType<PosMenu>[] = [
   // // }
 ];
 
-const MenuInfoTab = ({ onSubmit, menu }: { onSubmit: any; menu: Menu }) => {
+const MenuInfoTab = ({ onSubmit, menu }: { onSubmit: any; menu: PosMenu }) => {
   return (
     <Box>
       <Card>

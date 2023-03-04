@@ -115,6 +115,19 @@ export type TProductMaster = TProductBase & {
   child_products: TProductBase[];
 };
 
+export type TProductInMenuDetail = {
+  id: string;
+  sellingPrice: number;
+  discountPrice: number;
+  historicalPrice: number;
+  type: TProductType;
+  categoryName: string;
+  createdBy: string;
+  createdAt: string;
+  updatedBy: string;
+  updatedAt: string;
+};
+
 export type TProductCombo = TProductBase & {
   groups: {
     id: number;

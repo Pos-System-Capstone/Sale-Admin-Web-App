@@ -36,9 +36,7 @@ const DrawerProductForm = ({
   };
 
   const handleSubmit = () =>
-    Promise.resolve(onSubmit && onSubmit(selectedProductIds, selectedProducts)).then(() =>
-      setOpen(false)
-    );
+    Promise.resolve(onSubmit && onSubmit(selectedProducts)).then(() => setOpen(false));
 
   const handleChangeSelection = React.useCallback((ids, data) => {
     setSelectedProductIds(ids);
@@ -70,8 +68,8 @@ const DrawerProductForm = ({
             <Stack spacing={2}>
               <ResoTable
                 checkboxSelection={{
-                  type: 'radio',
-                  selection: selectedProductIds
+                  type: 'checkbox',
+                  selection: selected
                 }}
                 disabledSelections={disabledSelections}
                 showAction={false}
@@ -100,7 +98,7 @@ const DrawerProductForm = ({
                 Hủy
               </Button>
               <LoadingAsyncButton onClick={handleSubmit} variant="contained">
-                Thêm
+                Điều chỉnh
               </LoadingAsyncButton>
             </Stack>
           </Box>

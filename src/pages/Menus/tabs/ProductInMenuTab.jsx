@@ -49,79 +49,70 @@ const ProductInMenuTab = (props) => {
     let selectedProductIdList = [];
     if (selectedProductToAddOrRemoveFromMenu.length > 0) {
       selectedProductToAddOrRemoveFromMenu.map((product) => {
-        selectedProductIdList.push(product.id);
+        selectedProductIdList.push(product.productId);
       });
       setSelectedProductIds(selectedProductIdList);
     } else {
       productListInMenuDetail.map((product) => {
-        selectedProductIdList.push(product.id);
+        selectedProductIdList.push(product.productId);
       });
       setSelectedProductIds(selectedProductIdList);
     }
-  }, [productListInMenuDetail, selectedProductToAddOrRemoveFromMenu]);
+  }, [productListInMenuDetail, selectedProductToAddOrRemoveFromMenu, selectedProductToEdit]);
 
-  const handleCallApiToUpdateProductInMenu = (newProductListInMenuDetail) => {
+  const handleCallApiToUpdateProductInMenu = async (newProductListInMenuDetail) => {
     // Call api to update product list
-    menuApi
+    await menuApi
       .updateMenuInProduct(menuId, newProductListInMenuDetail)
-      .then(() =>
+      .then(() => {
         enqueueSnackbar(`Thêm thành công`, {
           variant: 'success'
-        })
-      )
+        });
+        return true;
+      })
       .then(run)
       .catch((err) => {
         const errMsg = get(err.error, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
         enqueueSnackbar(errMsg, {
           variant: 'error'
         });
+        return false;
       });
   };
 
   // const addAndRemoveProductToMenuHandler = (datas) =>
   const addAndRemoveProductToMenuHandler = (data) => {
-    const newProductListInMenuDetail = [...productListInMenuDetail];
+    let newProductListInMenuDetail = [];
     if (data.length > 0) {
       data.map((product) => {
         //Only add products which do not have in current menu's product list
-        if (productListInMenuDetail.length > 0) {
-          productListInMenuDetail.map((productInCurrentMenu) => {
-            if (productInCurrentMenu.id !== product.id) {
-              const newProductAddToCurrentProductList = {
-                id: product.id,
-                sellingPrice: product.sellingPrice,
-                discountPrice: product.discountPrice
-              };
-              newProductListInMenuDetail.push(newProductAddToCurrentProductList);
-            }
-          });
-        }
-        //Add product for new menu which does not have any product
-        else {
-          const newProductAddToCurrentProductList = {
-            id: product.id,
-            sellingPrice: product.sellingPrice,
-            discountPrice: product.discountPrice
-          };
-          newProductListInMenuDetail.push(newProductAddToCurrentProductList);
-        }
-        setSelectedProductToAddOrRemoveFromMenu(newProductListInMenuDetail);
+        const newProductAddToCurrentProductList = {
+          productId: product.id,
+          sellingPrice: product.sellingPrice,
+          discountPrice: product.discountPrice
+        };
+        newProductListInMenuDetail.push(newProductAddToCurrentProductList);
       });
     }
     handleCallApiToUpdateProductInMenu(newProductListInMenuDetail);
+    setSelectedProductToAddOrRemoveFromMenu(newProductListInMenuDetail);
   };
 
   const updateProdInMenu = (value) => {
     const newProductListInMenuDetail = [...productListInMenuDetail];
     newProductListInMenuDetail[
-      newProductListInMenuDetail.findIndex((product) => product.id === selectedProductToEdit.id)
+      newProductListInMenuDetail.findIndex(
+        (product) => product.productId === selectedProductToEdit.id
+      )
     ] = {
-      id: selectedProductToEdit.id,
+      productId: selectedProductToEdit.id,
       sellingPrice: value.sellingPrice ? value.sellingPrice : selectedProductToEdit.sellingPrice,
       discountPrice: value.discountPrice ? value.discountPrice : selectedProductToEdit.discountPrice
     };
     // Call api to update product list
-    handleCallApiToUpdateProductInMenu(newProductListInMenuDetail);
+    handleCallApiToUpdateProductInMenu(newProductListInMenuDetail).then(() =>
+      setIsUpdateProduct(false)
+    );
   };
 
   return (

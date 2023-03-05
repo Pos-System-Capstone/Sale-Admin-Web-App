@@ -61,7 +61,7 @@ export type TCreateMenu = {
 };
 
 export type ProductFormatTypeToUpdate = {
-  id: string;
+  productId: string;
   sellingPrice: number;
   discountPrice: number;
 };

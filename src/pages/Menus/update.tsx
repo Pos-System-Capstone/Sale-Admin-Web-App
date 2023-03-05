@@ -71,7 +71,7 @@ const UpdateMenuPage = () => {
       const newProductListWithNewField: ProductFormatTypeToUpdate[] = [];
       menu.products.map((product) => {
         newProductListWithNewField.push({
-          id: product?.id,
+          productId: product?.id,
           sellingPrice: product?.sellingPrice,
           discountPrice: product?.discountPrice
         });

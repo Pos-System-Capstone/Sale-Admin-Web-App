@@ -153,12 +153,12 @@ function AuthProvider({ children }: { children: ReactNode }) {
       password
     });
     const { accessToken, id, name, role, status, brandId, storeId } = response.data;
-    console.log('response', response.data);
-    console.log('id', id);
-    console.log('role', role);
-    console.log('accessToken', accessToken);
-    console.log('name', name);
-    console.log('status', status);
+    // console.log('response', response.data);
+    // console.log('id', id);
+    // console.log('role', role);
+    // console.log('accessToken', accessToken);
+    // console.log('name', name);
+    // console.log('status', status);
     const user = {
       id: id,
       name: name,
@@ -170,7 +170,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
       //   ({ name }: { name: string }) => name === process.env.REACT_APP_IDENTITY_API_NAME
       // ).role
     };
-    console.log('user', user);
+    // console.log('user', user);
     setSession(accessToken);
     setUserInfo(user);
     dispatch({

@@ -29,18 +29,16 @@ const DrawerProductForm = ({
   const [open, setOpen] = useState(false);
 
   const [selectedProductIds, setSelectedProductIds] = useState<string>();
-  const [selectedProducts, setSelectedProduct] = useState([]);
 
   const handleClick = () => {
     setOpen((o) => !o);
   };
 
   const handleSubmit = () =>
-    Promise.resolve(onSubmit && onSubmit(selectedProducts)).then(() => setOpen(false));
+    Promise.resolve(onSubmit && onSubmit(selectedProductIds)).then(() => setOpen(false));
 
   const handleChangeSelection = React.useCallback((ids, data) => {
     setSelectedProductIds(ids);
-    setSelectedProduct(data);
   }, []);
 
   return (

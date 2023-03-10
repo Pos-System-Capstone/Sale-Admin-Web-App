@@ -23,10 +23,10 @@ const ProductInMenuTab = (props) => {
 
   const { enqueueSnackbar } = useSnackbar();
   const [selectedProductToEdit, setSelectedProductToEdit] = useState();
-  const [currentProduct, setCurrentProduct] = React.useState([]);
   const [selectedProductToAddOrRemoveFromMenu, setSelectedProductToAddOrRemoveFromMenu] =
     React.useState([]);
   const [selectedProductIds, setSelectedProductIds] = React.useState([]);
+  const [oldIds, setOldIds] = React.useState([]);
 
   // const [currentCate, setCurrentCate] = React.useState(null);
   // const { translate } = useLocales();
@@ -65,9 +65,10 @@ const ProductInMenuTab = (props) => {
     await menuApi
       .updateMenuInProduct(menuId, newProductListInMenuDetail)
       .then(() => {
-        enqueueSnackbar(`Thêm thành công`, {
+        enqueueSnackbar(`Điều chỉnh thành công`, {
           variant: 'success'
         });
+        setSelectedProductIds(newProductListInMenuDetail);
         return true;
       })
       .then(run)
@@ -82,20 +83,14 @@ const ProductInMenuTab = (props) => {
 
   // const addAndRemoveProductToMenuHandler = (datas) =>
   const addAndRemoveProductToMenuHandler = (data) => {
-    let newProductListInMenuDetail = [];
-    if (data.length > 0) {
-      data.map((product) => {
-        //Only add products which do not have in current menu's product list
-        const newProductAddToCurrentProductList = {
-          productId: product.id,
-          sellingPrice: product.sellingPrice,
-          discountPrice: product.discountPrice
-        };
-        newProductListInMenuDetail.push(newProductAddToCurrentProductList);
+    const newProductIdsToAddOrRemove = [];
+    data.map((id) => {
+      newProductIdsToAddOrRemove.push({
+        productId: id
       });
-    }
-    handleCallApiToUpdateProductInMenu(newProductListInMenuDetail);
-    setSelectedProductToAddOrRemoveFromMenu(newProductListInMenuDetail);
+    });
+    handleCallApiToUpdateProductInMenu(newProductIdsToAddOrRemove);
+    setSelectedProductToAddOrRemoveFromMenu(newProductIdsToAddOrRemove);
   };
 
   const updateProdInMenu = (value) => {
@@ -130,7 +125,6 @@ const ProductInMenuTab = (props) => {
           <DrawerProductForm
             selected={selectedProductIds}
             onSubmit={(data) => {
-              setCurrentProduct(data);
               addAndRemoveProductToMenuHandler(data);
             }}
             trigger={

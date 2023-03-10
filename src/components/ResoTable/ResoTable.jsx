@@ -480,7 +480,8 @@ const ResoTable = (
         const ActionCell = mdUp ? (
           <StickyRightTableCell>
             <Stack direction="row" justifyContent="flex-end">
-              {deleteComp}
+              {/* prettier-ignore */}
+              {onDelete && deleteComp}
               <Divider orientation="vertical" flexItem />
               {editComp}
             </Stack>

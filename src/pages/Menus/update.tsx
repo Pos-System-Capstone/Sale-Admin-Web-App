@@ -8,12 +8,12 @@ import confirm from 'components/Modal/confirm';
 import Page from 'components/Page';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { Menu, TUpdateMenuInformation } from 'types/menu';
+import { PosMenu, ProductFormatTypeToUpdate, TUpdateMenuInformation } from 'types/menu';
 import { convertTimeToInteger, processDayFiter } from 'utils/utils';
 import MenuInfoTab from './tabs/MenuInfoTab';
 import ProductInMenuTab from './tabs/ProductInMenuTab';
@@ -49,6 +49,9 @@ const UpdateMenuPage = () => {
   const tableRef = useRef<any>();
   const navigate = useNavigate();
   const form = useForm({});
+  const [currentProductListInMenu, setCurrentProductListInMenu] = useState<
+    ProductFormatTypeToUpdate[]
+  >([]);
 
   const {
     data: menu,
@@ -62,6 +65,20 @@ const UpdateMenuPage = () => {
     //   onSuccess: (res) => form.reset(normalizeMenuData(res))
     // }
   );
+
+  React.useEffect(() => {
+    if (menu && menu?.products.length > 0) {
+      const newProductListWithNewField: ProductFormatTypeToUpdate[] = [];
+      menu.products.map((product) => {
+        newProductListWithNewField.push({
+          productId: product?.id,
+          sellingPrice: product?.sellingPrice,
+          discountPrice: product?.discountPrice
+        });
+      });
+      setCurrentProductListInMenu(newProductListWithNewField);
+    }
+  }, [menu]);
 
   const onUpdateMenu = (updateMenu: any) =>
     menuApi
@@ -96,7 +113,7 @@ const UpdateMenuPage = () => {
     }
   };
 
-  const onConfirmDelete = async (menu: Menu) => {
+  const onConfirmDelete = async (menu: PosMenu) => {
     confirm({
       title: 'Xác nhận xoá',
       content: `Bạn đồng ý xóa menu "${menu.code}"?`,
@@ -140,7 +157,7 @@ const UpdateMenuPage = () => {
               }
             }}
           />
-          <ProductInMenuTab id={id} />
+          <ProductInMenuTab menuId={id} productListInMenuDetail={currentProductListInMenu} />
         </Stack>
       )
     },

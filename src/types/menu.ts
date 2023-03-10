@@ -1,4 +1,5 @@
 import { Role } from 'utils/role';
+import { TProductInMenuDetail } from './product';
 
 export type Menu = {
   id: string;
@@ -42,7 +43,7 @@ export type PosMenu = {
   createdAt: string;
   updatedBy: string;
   updatedAt: string;
-  products: [];
+  products: TProductInMenuDetail[];
   stores: [];
 };
 
@@ -57,6 +58,12 @@ export type TCreateMenu = {
   priority: number;
   create_at?: any;
   store_names: any[];
+};
+
+export type ProductFormatTypeToUpdate = {
+  productId: string;
+  sellingPrice: number;
+  discountPrice: number;
 };
 
 export type TStoreApplyMenuRequest = {

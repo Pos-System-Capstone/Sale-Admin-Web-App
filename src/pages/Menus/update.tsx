@@ -14,6 +14,7 @@ import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { PosMenu, ProductFormatTypeToUpdate, TUpdateMenuInformation } from 'types/menu';
+import { TStoreInMenuDetail } from 'types/store';
 import { convertTimeToInteger, processDayFiter } from 'utils/utils';
 import MenuInfoTab from './tabs/MenuInfoTab';
 import ProductInMenuTab from './tabs/ProductInMenuTab';
@@ -52,6 +53,7 @@ const UpdateMenuPage = () => {
   const [currentProductListInMenu, setCurrentProductListInMenu] = useState<
     ProductFormatTypeToUpdate[]
   >([]);
+  const [currentStoreListInMenu, setCurrentStoreListInMenu] = useState<TStoreInMenuDetail[]>([]);
 
   const {
     data: menu,
@@ -77,6 +79,13 @@ const UpdateMenuPage = () => {
         });
       });
       setCurrentProductListInMenu(newProductListWithNewField);
+    }
+
+    if (menu && menu?.stores.length > 0) {
+      const newStoreListInMenu: TStoreInMenuDetail[] = [];
+      menu.stores.map((store) => {
+        newStoreListInMenu.push(store);
+      });
     }
   }, [menu]);
 

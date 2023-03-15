@@ -1,5 +1,5 @@
 import { generateAPI } from 'redux/utils';
-import { StoreInMenu } from 'types/store';
+import { StoreInMenu, TStoreDetail } from 'types/store';
 import request from '../../utils/axios';
 
 export interface Menu {
@@ -19,13 +19,13 @@ export const getMenusOfBrand = (brandId: string, params: any) =>
     params
   });
 
-export const getStoreApplyMenus = (menuId: number, params?: any): any =>
-  request.get<StoreInMenu>(`/menus/${menuId}/stores`, {
+export const getStoreApplyMenus = (menuId: string, params?: any): any =>
+  request.get<TStoreDetail>(`/menus/${menuId}/stores`, {
     params
   });
 
-export const addStoreApplyMenus = (menuId: number, data: any): any =>
-  request.post(`/menus/${menuId}/stores`, data);
+export const addOrRemoveStoresApplyMenu = (menuId: string, data: any): any =>
+  request.post(`/menus/${menuId}/stores`, { storeIds: data });
 
 export const updateStoreApplyMenus = (menuId: number, storeId: number, data: any): any =>
   request.put(`/menus/${menuId}/stores/${storeId}`, data);

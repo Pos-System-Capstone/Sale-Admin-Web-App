@@ -45,6 +45,13 @@ export type TStoreInMenu = {
   endTime: number;
 };
 
+export type TStoreInMenuDetail = {
+  id: string;
+  name: string;
+  shortName: string;
+  address: string;
+};
+
 export type StoreInMenu = {
   menu_in_store_id: number;
   menu_id?: number;

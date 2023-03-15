@@ -60,8 +60,7 @@ export default function AccountsList() {
       hideInSearch:
         location.pathname.includes('brands') &&
         (user?.role.includes(Role.SystemAdmin) ||
-          user?.role.includes(Role.BrandAdmin) ||
-          user?.role.includes(Role.BrandAdmin))
+          user?.role.includes(Role.BrandManager))
           ? false
           : true
     },

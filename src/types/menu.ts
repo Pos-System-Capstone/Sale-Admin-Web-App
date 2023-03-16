@@ -62,8 +62,8 @@ export type TCreateMenu = {
 
 export type ProductFormatTypeToUpdate = {
   productId: string;
-  sellingPrice: number;
-  discountPrice: number;
+  sellingPrice?: number;
+  discountPrice?: number;
 };
 
 export type TStoreApplyMenuRequest = {

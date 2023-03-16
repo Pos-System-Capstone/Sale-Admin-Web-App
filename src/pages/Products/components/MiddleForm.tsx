@@ -1,9 +1,8 @@
-import { Box, Grid, Stack, Typography } from '@mui/material';
+import { Box, Grid, Stack } from '@mui/material';
 
-import { SelectField } from 'components/form';
+import { InputField, SelectField, UploadImageField } from 'components/form';
 
 // import useExtraCategory from 'hooks/extra-categories/useExtraCategoy';
-import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import {
   PRODUCT_SIZE_OPTIONS,
@@ -12,7 +11,6 @@ import {
   TProduct
 } from 'types/product';
 import { Card, CardTitle } from './Card';
-import BasicProductInfoForm from './form/BasicProductInfoForm';
 import AutocompleteCategory from 'components/form/common/Category/AutocompleteCategory';
 import AutocompleteProduct from './form/AutocompleteProduct';
 
@@ -23,9 +21,7 @@ type Props = {
 // eslint-disable-next-line arrow-body-style
 const MiddleForm: React.FC<Props> = ({ updateMode }) => {
   const { watch } = useFormContext<TProduct>();
-
   const productType = watch('type');
-
   return (
     <Box>
       <Stack spacing={3}>
@@ -34,94 +30,144 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
             <CardTitle mb={2} variant="subtitle1">
               Thông tin sản phẩm
             </CardTitle>
-            <BasicProductInfoForm updateMode={updateMode} />
             <Box>
-              <Stack>
-                <Typography my={2} variant="subtitle1">
-                  Loại sản phẩm
-                </Typography>
+              <SelectField
+                fullWidth
+                disabled={updateMode}
+                options={PRODUCT_TYPE_OPTIONS}
+                name="type"
+                label="Loại sản phẩm"
+              ></SelectField>
+              <Box>
                 <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <SelectField
+                  {' '}
+                  <Grid alignItems={'center'} item xs={12} sm={12}>
+                    <UploadImageField.Avatar
+                      label="Hình ảnh"
+                      name="picUrl"
+                      // style={{ margin: '0 auto 40px' }}
+                    />
+                  </Grid>
+                  <Grid item xs={8}>
+                    <InputField
+                      disabled={productType === ProductTypeEnum.CHILD}
                       fullWidth
+                      name="name"
+                      label="Tên sản phẩm"
+                      required
+                      size="small"
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <InputField
                       disabled={updateMode}
-                      options={PRODUCT_TYPE_OPTIONS}
-                      name="type"
-                      label="Loại sản phẩm"
-                    ></SelectField>
+                      fullWidth
+                      name="code"
+                      label="Mã sản phẩm"
+                      required
+                      size="small"
+                    />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <InputField
+                      fullWidth
+                      type="number"
+                      name="sellingPrice"
+                      label="Giá bán"
+                      required
+                      size="small"
+                      helperText="Giá áp dụng khi không được cấu hình trong menu"
+                    />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <InputField
+                      fullWidth
+                      type="number"
+                      name="discountPrice"
+                      label="Giá giảm"
+                      required
+                      size="small"
+                      helperText="Giá áp dụng khi không được cấu hình trong menu"
+                    />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <InputField
+                      fullWidth
+                      type="number"
+                      name="historicalPrice"
+                      label="Giá gốc"
+                      required
+                      size="small"
+                      helperText="Giá áp dụng khi không được cấu hình trong menu"
+                    />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <InputField
+                      max={100}
+                      min={0}
+                      fullWidth
+                      type="number"
+                      name="displayOrder"
+                      label="Thứ tự hiển thị"
+                      required
+                      size="small"
+                    />
+                  </Grid>
+                  {productType === ProductTypeEnum.SINGLE && (
+                    <Grid item xs={6}>
+                      <AutocompleteCategory
+                        isExtra={false}
+                        name="categoryId"
+                        label="Danh mục chứa sản phẩm"
+                      />
+                    </Grid>
+                  )}
+                  {productType === ProductTypeEnum.PARENT && (
+                    <Grid item xs={6}>
+                      <AutocompleteCategory
+                        isExtra={false}
+                        name="categoryId"
+                        label="Danh mục chứa sản phẩm"
+                      />
+                    </Grid>
+                  )}
+                  {productType === ProductTypeEnum.CHILD && (
+                    <Grid item xs={6}>
+                      <AutocompleteProduct
+                        type={ProductTypeEnum.PARENT}
+                        name="parentProductId"
+                        label="Sản phẩm cha"
+                      />
+                    </Grid>
+                  )}
+                  {productType === ProductTypeEnum.CHILD && (
+                    <Grid item xs={6}>
+                      <SelectField
+                        fullWidth
+                        disabled={updateMode}
+                        options={PRODUCT_SIZE_OPTIONS}
+                        name="size"
+                        label="Kích cở sản phẩm"
+                      ></SelectField>
+                    </Grid>
+                  )}
+                  {productType === ProductTypeEnum.EXTRA && (
+                    <Grid item xs={6}>
+                      <AutocompleteCategory
+                        isExtra={true}
+                        name="categoryId"
+                        label="Danh mục chứa sản phẩm extra"
+                      />
+                    </Grid>
+                  )}
+                  <Grid item xs={12}>
+                    <InputField fullWidth name="description" label="Mô tả" required size="small" />
                   </Grid>
                 </Grid>
-              </Stack>
+              </Box>
             </Box>
           </Stack>
         </Card>
-        {productType === ProductTypeEnum.SINGLE && (
-          <Card id="variants">
-            <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại</CardTitle>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <AutocompleteCategory
-                  isExtra={false}
-                  name="categoryId"
-                  label="Danh mục chứa sản phẩm"
-                />
-              </Grid>
-            </Grid>
-          </Card>
-        )}
-        {productType === ProductTypeEnum.PARENT && (
-          <Card id="variants">
-            <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại</CardTitle>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <AutocompleteCategory
-                  isExtra={false}
-                  name="categoryId"
-                  label="Danh mục chứa sản phẩm"
-                />
-              </Grid>
-            </Grid>
-          </Card>
-        )}
-        {productType === ProductTypeEnum.CHILD && (
-          <Card id="variants">
-            <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại</CardTitle>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <AutocompleteProduct
-                  type={ProductTypeEnum.PARENT}
-                  name="parentProductId"
-                  label="Sản phẩm cha"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <SelectField
-                  fullWidth
-                  disabled={updateMode}
-                  options={PRODUCT_SIZE_OPTIONS}
-                  name="size"
-                  label="Kích cở sản phẩm"
-                ></SelectField>
-              </Grid>
-            </Grid>
-          </Card>
-        )}
-
-        {productType === ProductTypeEnum.EXTRA && (
-          <Card id="variants">
-            <CardTitle variant="subtitle1">Tuỳ chỉnh theo thể loại extra</CardTitle>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <AutocompleteCategory
-                  isExtra={true}
-                  name="categoryId"
-                  label="Danh mục chứa sản phẩm extra"
-                />
-              </Grid>
-              <Grid item xs={6}></Grid>
-            </Grid>
-          </Card>
-        )}
       </Stack>
     </Box>
   );

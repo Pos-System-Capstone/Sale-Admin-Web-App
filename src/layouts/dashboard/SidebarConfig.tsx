@@ -178,9 +178,14 @@ export const brandAdminSidebarConfig = [
     items: [
       // MANAGEMENT : PRODUCT
       {
-        title: 'Danh sách sản phẩm',
+        title: 'Sản phẩm',
         path: PATH_DASHBOARD.products.list,
         icon: ICONS.product
+      },
+      {
+        title: 'Sản phẩm combo',
+        path: PATH_DASHBOARD.combos.list,
+        icon: ICONS.combo
       }
     ]
   },

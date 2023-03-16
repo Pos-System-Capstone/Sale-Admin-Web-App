@@ -40,6 +40,7 @@ const CreateProduct = () => {
         .getById(data.parentProductId)
         .then((res) => {
           data.categoryId = res.data.categoryId !== undefined ? res.data.categoryId : '';
+          res.data.name !== undefined && (data.name = res.data.name + ' size ' + data.size);
         })
         .catch(() => {
           enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {

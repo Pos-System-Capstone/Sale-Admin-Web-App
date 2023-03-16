@@ -59,8 +59,7 @@ export default function AccountsList() {
       valueEnum: roleEnumArray,
       hideInSearch:
         location.pathname.includes('brands') &&
-        (user?.role.includes(Role.SystemAdmin) ||
-          user?.role.includes(Role.BrandManager))
+        (user?.role.includes(Role.SystemAdmin) || user?.role.includes(Role.BrandManager))
           ? false
           : true
     },

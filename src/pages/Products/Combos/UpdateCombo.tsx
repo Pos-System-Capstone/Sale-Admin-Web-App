@@ -32,7 +32,7 @@ import { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router';
-import { addProductInMenus, getMenus } from 'redux/menu/api';
+import { addOrRemoveProductsInMenu, getMenus } from 'redux/menu/api';
 import { getComboById, updateProdById } from 'redux/product/api';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { CombinationModeEnum, CreateComboForm } from 'types/product';
@@ -117,7 +117,7 @@ const UpdateCombo = (props: Props) => {
   }, []);
 
   const addProductToMenuHandler = (datas: any) => {
-    addProductInMenus(+datas.id!, datas)
+    addOrRemoveProductsInMenu(datas.id, datas)
       .then(() => {
         enqueueSnackbar(`Thêm thành công`, {
           variant: 'success'

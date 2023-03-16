@@ -3,7 +3,6 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 import { Avatar, Box, Button, Card, Typography } from '@mui/material';
 import menuApi from 'api/menu';
-import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { get } from 'lodash-es';
 import { useSnackbar } from 'notistack';
@@ -11,22 +10,16 @@ import { CardTitle } from 'pages/Products/components/Card';
 import React, { useState } from 'react';
 import { getProductInMenus } from 'redux/menu/api';
 import { formatCurrency } from 'utils/utils';
+import ModalAddOrRemoveProductInMenu from '../components/CreateNewMenu/ShowAndEditProductForm/ModalAddAndRemoveProductInMenu';
 import ProductInMenuDialog from '../components/EditProductDialog';
 
 const ProductInMenuTab = (props) => {
-  const { menuId, productListInMenuDetail } = props;
-  const [filters, setFilters] = React.useState(null);
+  const { menuId, productListInMenuDetail, refetch } = props;
   const ref = React.useRef();
   const [isUpdateProduct, setIsUpdateProduct] = React.useState(false);
-
   const run = ref.current?.reload;
-
   const { enqueueSnackbar } = useSnackbar();
   const [selectedProductToEdit, setSelectedProductToEdit] = useState();
-  const [selectedProductToAddOrRemoveFromMenu, setSelectedProductToAddOrRemoveFromMenu] =
-    React.useState([]);
-  const [selectedProductIds, setSelectedProductIds] = React.useState([]);
-  const [oldIds, setOldIds] = React.useState([]);
 
   // const [currentCate, setCurrentCate] = React.useState(null);
   // const { translate } = useLocales();
@@ -45,30 +38,15 @@ const ProductInMenuTab = (props) => {
   //   setFilters((prev) => ({ ...prev, 'cat-id': currentCate }));
   // }, [currentCate]);
 
-  React.useEffect(() => {
-    let selectedProductIdList = [];
-    if (selectedProductToAddOrRemoveFromMenu.length > 0) {
-      selectedProductToAddOrRemoveFromMenu.map((product) => {
-        selectedProductIdList.push(product.productId);
-      });
-      setSelectedProductIds(selectedProductIdList);
-    } else {
-      productListInMenuDetail.map((product) => {
-        selectedProductIdList.push(product.productId);
-      });
-      setSelectedProductIds(selectedProductIdList);
-    }
-  }, [productListInMenuDetail, selectedProductToAddOrRemoveFromMenu, selectedProductToEdit]);
-
   const handleCallApiToUpdateProductInMenu = async (newProductListInMenuDetail) => {
     // Call api to update product list
     await menuApi
       .updateMenuInProduct(menuId, newProductListInMenuDetail)
       .then(() => {
+        refetch();
         enqueueSnackbar(`Điều chỉnh thành công`, {
           variant: 'success'
         });
-        setSelectedProductIds(newProductListInMenuDetail);
         return true;
       })
       .then(run)
@@ -79,18 +57,6 @@ const ProductInMenuTab = (props) => {
         });
         return false;
       });
-  };
-
-  // const addAndRemoveProductToMenuHandler = (datas) =>
-  const addAndRemoveProductToMenuHandler = (data) => {
-    const newProductIdsToAddOrRemove = [];
-    data.map((id) => {
-      newProductIdsToAddOrRemove.push({
-        productId: id
-      });
-    });
-    handleCallApiToUpdateProductInMenu(newProductIdsToAddOrRemove);
-    setSelectedProductToAddOrRemoveFromMenu(newProductIdsToAddOrRemove);
   };
 
   const updateProdInMenu = (value) => {
@@ -122,21 +88,20 @@ const ProductInMenuTab = (props) => {
       <Box as={Card} p={2}>
         <Box display="flex" justifyContent="space-between">
           <CardTitle>Danh sách sản phẩm</CardTitle>
-          <DrawerProductForm
-            selected={selectedProductIds}
-            onSubmit={(data) => {
-              addAndRemoveProductToMenuHandler(data);
-            }}
+          <ModalAddOrRemoveProductInMenu
             trigger={
               <Button size="small" startIcon={<Icon icon={plusFill} />}>
                 Thêm/Xoá sản phẩm
               </Button>
             }
+            onReload={() => {
+              ref.current?.reload();
+              refetch();
+            }}
           />
         </Box>
         <ResoTable
           ref={ref}
-          filters={filters}
           getData={(params) => getProductInMenus(menuId, params)}
           rowKey="product_id"
           onEdit={(data) => {

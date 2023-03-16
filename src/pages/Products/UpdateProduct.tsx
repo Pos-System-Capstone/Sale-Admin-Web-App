@@ -15,7 +15,7 @@ import { DashboardNavLayout } from '../../layouts/dashboard/DashboardNavbar';
 import MiddleForm from './components/MiddleForm';
 import { InputField } from 'components/form';
 // import ProductInMenuDialog from '../Menus/components/EditProductDialog';
-import { addProductInMenus, updateProdInMenuInfo } from 'redux/menu/api';
+import { addOrRemoveProductsInMenu, updateProdInMenuInfo } from 'redux/menu/api';
 import { get } from 'lodash';
 import { TProduct, TProductBase } from 'types/product';
 import useLocales from 'hooks/useLocales';
@@ -30,7 +30,7 @@ const UpdateProduct = () => {
   const run = ref.current?.reload;
 
   const addProductToMenuHandler = (datas: any) => {
-    addProductInMenus(+datas.id!, datas)
+    addOrRemoveProductsInMenu(datas.id!, datas)
       .then(() =>
         enqueueSnackbar(`Thêm thành công`, {
           variant: 'success'

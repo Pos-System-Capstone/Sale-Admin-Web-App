@@ -166,7 +166,11 @@ const UpdateMenuPage = () => {
               }
             }}
           />
-          <ProductInMenuTab menuId={id} productListInMenuDetail={currentProductListInMenu} />
+          <ProductInMenuTab
+            menuId={id}
+            productListInMenuDetail={currentProductListInMenu}
+            refetch={() => refetch()}
+          />
         </Stack>
       )
     },

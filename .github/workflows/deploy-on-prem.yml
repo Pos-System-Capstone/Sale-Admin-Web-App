@@ -45,6 +45,7 @@ jobs:
           path: build.zip
   Deploy:
     runs-on: self-hosted
+    needs: Build
     steps:
       - name: Clone source zip
         uses: actions/download-artifact@v2

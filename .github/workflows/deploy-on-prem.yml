@@ -4,7 +4,7 @@ name: Upload Website
 on:
   push:
     branches:
-      - chore/cd-on-prem
+      - main
   workflow_dispatch:
     inputs:
       envFile:

@@ -57,6 +57,29 @@ export enum ProductStatusEnum {
   Deactive = 'Deactive'
 }
 
+export type TExtraProductInOrderDetail = {
+  productInMenuId: string;
+  sellingPrice: number;
+  quantity: number;
+  totalAmount: number;
+  finalAmount: number;
+  discount: number;
+  name: string;
+};
+
+export type TProductInOrderDetail = {
+  productInMenuId: string;
+  orderDetailId: string;
+  sellingPrice: number;
+  quantity: number;
+  name: string;
+  totalAmount: number;
+  finalAmount: number;
+  discount: number;
+  note: number;
+  extras: TExtraProductInOrderDetail[];
+};
+
 export enum CombinationModeEnum {
   FixedCombo = 0,
   ChoiceCombo = 1

@@ -92,21 +92,6 @@ export const brandManagerSidebarConfig = [
     ]
   }
   // {
-  //   subheader: 'menu-subheader',
-  //   items: [
-  //     {
-  //       title: 'menu-list',
-  //       path: PATH_DASHBOARD.menus.root,
-  //       icon: ICONS.menu
-  //     },
-  //     {
-  //       title: 'store-menu-apply',
-  //       path: PATH_DASHBOARD.menus.storeMenu,
-  //       icon: ICONS.storeApply
-  //     }
-  //   ]
-  // },
-  // {
   //   subheader: 'product-subheader',
   //   items: [
   //     // MANAGEMENT : PRODUCT
@@ -194,12 +179,12 @@ export const brandAdminSidebarConfig = [
     path: PATH_DASHBOARD.group.root,
     items: [
       {
-        title: 'Danh mục sản phẩm thường',
+        title: 'Sản phẩm thường',
         path: PATH_DASHBOARD.categories.list,
         icon: ICONS.category
       },
       {
-        title: 'Danh mục sản phẩm extra',
+        title: 'Sản phẩm extra',
         path: PATH_DASHBOARD.categories.extra,
         icon: ICONS.extraCategory
       },
@@ -233,7 +218,7 @@ export const storeManagerSidebarConfig = [
         icon: ICONS.user
       },
       {
-        title: 'Danh sách hoá đơn',
+        title: 'Danh sách đơn hàng ',
         path: PATH_DASHBOARD.orders.root,
         icon: ICONS.order
       }

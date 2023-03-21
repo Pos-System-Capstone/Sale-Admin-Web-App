@@ -1,42 +1,11 @@
+import { TProductInOrderDetail } from './product';
+
 export enum PaymentType {
   AT_RESTAURANT = 'Tại quán',
   DELIVERY = 'Giao hàng',
   TAKE_AWAY = 'Mang đi',
   CREDIT = 'Nạp thẻ'
 }
-
-// export type TOrder = {
-//   status: OrderStatus;
-//   paymentType: PaymentType;
-//   order_id: number;
-//   invoice_id: string;
-//   check_in_date: Date;
-//   check_out_date: Date;
-//   approve_date: Date;
-//   total_amount: number;
-//   discount: number;
-//   final_amount: number;
-//   order_status: number;
-//   order_type: number;
-//   notes: string;
-//   fee_description: string;
-//   booking_date: Date;
-//   customer_id: number;
-//   store_id: number;
-//   delivery_address: string;
-//   delivery_status: number;
-//   vat: number;
-//   delivery_receiver: string;
-//   delivery_phone: string;
-//   delivery_type: number;
-//   customer_address: string;
-//   customer_email: string;
-//   customer_gender: number;
-//   customer_name: string;
-//   customer_phone: string;
-//   customer_phone_receiver: string;
-//   store: TStore;
-// };
 
 export enum OrderType {
   EATIN = 'EAT_IN',
@@ -81,16 +50,34 @@ export type TOrderDetailItem = {
   pic_url: string;
 };
 
+export enum TOrderPaymentType {
+  CASH = 'CASH',
+  MOMO = 'MOMO',
+  VNPAY = 'VNPAY',
+  ZALOPAY = 'ZALOPAY'
+}
+
 export type TOrderPayment = {
-  amount: number;
-  type: number;
-  status: number;
-  transaction_id?: string;
+  id: string;
+  paymentTypeId: string;
+  paymentType: TOrderPaymentType;
+  picUrl: string;
+  paidAmount: number;
 };
 
-export type TOrderDetail = TOrder & {
-  order_detail: TOrderDetailItem[];
-  payments: TOrderPayment[];
+export type TOrderDetail = {
+  orderId: string;
+  invoiceId: string;
+  totalAmount: number;
+  finalAmount: number;
+  vat: number;
+  vatAmount: number;
+  discount: number;
+  orderStatus: OrderStatus;
+  orderType: OrderType;
+  checkInDate: string;
+  payment: TOrderPayment;
+  productList: TProductInOrderDetail[];
 };
 
 export const ORDER_STATUS_OPTONS = [

@@ -15,12 +15,14 @@ import {
 } from '@mui/material';
 import orderApi from 'api/order';
 import EmptyContent from 'components/EmptyContent';
+import Label from 'components/Label';
 import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 import ResoTable from 'components/ResoTable/ResoTable';
-import useLocales from 'hooks/useLocales';
+import useAuth from 'hooks/useAuth';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { TOrderDetail, TOrderDetailItem } from 'types/order';
+import { ORDER_STATUS_OPTONS, ORDER_TYPE_OPTONS, TOrderDetail } from 'types/order';
+import { TProductInOrderDetail } from 'types/product';
 import { TTableColumn } from 'types/table';
 
 type Props = {
@@ -44,118 +46,131 @@ const OrderSummaryItem = styled(Grid)({
 });
 
 const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
-  const { translate } = useLocales();
-
+  const { user } = useAuth();
   const { data: order, isLoading } = useQuery(
     ['orders', orderId],
-    () => orderApi.getOrderDetail(orderId!).then((res) => res.data),
+    () => orderApi.getOrderDetail(user?.storeId, orderId!).then((res) => res.data),
     {
       enabled: Boolean(orderId)
     }
   );
 
-  const custColumns: ResoDescriptionColumnType<TOrderDetail>[] = [
-    // {
-    //   title: translate('pages.orders.table.customerName'),
-    //   dataIndex: 'delivery_receiver'
-    // },
-    // {
-    //   title: translate('pages.orders.table.customerPhone'),
-    //   dataIndex: 'delivery_phone'
-    // },
-    // {
-    //   title: translate('pages.orders.table.address'),
-    //   dataIndex: 'delivery_address'
-    // }
-  ];
-
   const orderColumns: ResoDescriptionColumnType<TOrderDetail>[] = [
-    // {
-    //   title: translate('pages.orders.table.invoice'),
-    //   dataIndex: 'invoice_id'
-    // },
-    // {
-    //   title: translate('pages.orders.table.status'),
-    //   dataIndex: 'order_status',
-    //   valueType: 'select',
-    //   valueEnum: ORDER_STATUS_OPTONS
-    // },
-
-    // {
-    //   title: translate('pages.orders.table.totalAmount'),
-    //   dataIndex: 'total_amount',
-    //   valueType: 'money'
-    // },
-    // {
-    //   title: translate('pages.orders.table.discount'),
-    //   dataIndex: 'discount'
-    // },
-    // {
-    //   title: translate('pages.orders.table.finalAmount'),
-    //   dataIndex: 'final_amount',
-    //   hideInSearch: true,
-    //   valueType: 'money'
-    // },
     {
-      title: translate('pages.orders.table.paymentType'),
-      dataIndex: 'payments',
-      render: (payments) => {
-        if (!payments) return '-';
+      title: 'Mã hoá đơn',
+      dataIndex: 'invoiceId',
+      hideInSearch: true
+    },
+    {
+      title: 'Ngày tạo',
+      dataIndex: 'checkInDate',
+      valueType: 'datetime',
+      hideInSearch: true
+    },
+    {
+      title: 'Thuế áp dụng',
+      dataIndex: 'vat',
+      render: (vatAmount) => {
         return (
           <Stack spacing={2}>
-            {(payments as TOrderDetail['payments'])?.map((payment) => (
-              <Typography key={`${payment.type}`}>
-                {payment.type}: {payment.amount}
-              </Typography>
-            ))}
+            <Typography>{vatAmount != null && `${vatAmount * 100} %`}</Typography>
+          </Stack>
+        );
+      },
+      hideInSearch: true
+    },
+    {
+      title: 'Giá trị thuế',
+      dataIndex: 'vatAmount',
+      valueType: 'money',
+      hideInSearch: true
+    },
+    {
+      title: 'Giá giảm',
+      dataIndex: 'discount',
+      valueType: 'money',
+      hideInSearch: true
+    },
+    {
+      title: 'Tổng tiền',
+      dataIndex: 'totalAmount',
+      valueType: 'money',
+      hideInSearch: true
+    },
+    {
+      title: 'Giá tiền',
+      dataIndex: 'finalAmount',
+      valueType: 'money',
+      hideInSearch: true
+    },
+    {
+      title: 'Loại đơn hàng',
+      dataIndex: 'orderType',
+      valueEnum: ORDER_TYPE_OPTONS,
+      hideInSearch: true
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'orderStatus',
+      valueEnum: ORDER_STATUS_OPTONS,
+      hideInSearch: true
+    },
+    {
+      title: 'Phương thức thanh toán',
+      dataIndex: 'payment',
+      hideInSearch: true,
+      render: (payment) => {
+        return (
+          <Stack spacing={2}>
+            {payment != null ? (
+              <Label color="primary">
+                {payment.paymentType === 'CASH' ? 'Tiền mặt' : payment.paymentType}
+              </Label>
+            ) : (
+              <Label color="info">Chưa thực hiện thanh toán</Label>
+            )}
           </Stack>
         );
       }
-    },
-    {
-      title: translate('pages.orders.table.store'),
-      dataIndex: ['store', 'name']
     }
-
-    // {
-    //   title: translate('pages.orders.table.note'),
-    //   dataIndex: 'notes'
-    // },
-    // {
-    //   title: translate('pages.orders.table.orderTime'),
-    //   dataIndex: 'check_in_date',
-    //   valueType: 'datetime'
-    // }
   ];
 
-  const orderItemColumns: TTableColumn<TOrderDetailItem>[] = [
+  const orderItemColumns: TTableColumn<TProductInOrderDetail>[] = [
     {
       title: 'STT',
       dataIndex: 'index'
     },
     {
       title: 'Tên sản phẩm',
-      dataIndex: 'product_name'
+      dataIndex: 'name',
+      hideInSearch: true
     },
     {
-      title: 'Giá',
-      dataIndex: 'unit_price',
-      valueType: 'money'
+      title: 'Giá bán',
+      dataIndex: 'sellingPrice',
+      valueType: 'money',
+      hideInSearch: true
     },
     {
       title: 'Số lượng',
       dataIndex: 'quantity',
-      valueType: 'digit'
+      valueType: 'digit',
+      fixed: 'right',
+      hideInSearch: true
     },
     {
       title: 'Giảm giá',
       dataIndex: 'discount',
-      valueType: 'money'
+      valueType: 'money',
+      fixed: 'right',
+      hideInSearch: true
     },
     {
       title: 'Thanh toán',
-      dataIndex: 'final_amount',
-      valueType: 'money'
+      dataIndex: 'finalAmount',
+      valueType: 'money',
+      fixed: 'right',
+      hideInSearch: true
     }
   ];
 
@@ -184,13 +199,6 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
                 datasource={order}
                 column={3}
               />
-              <ResoDescriptions
-                title="Thông tin khách hàng"
-                labelProps={{ fontWeight: 'bold' }}
-                columns={custColumns as any}
-                datasource={order}
-                column={3}
-              />
 
               <ResoTable
                 showFilter={false}
@@ -198,7 +206,7 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
                 showAction={false}
                 pagination={false}
                 columns={orderItemColumns}
-                dataSource={order.order_detail}
+                dataSource={order?.productList}
               />
             </Stack>
           </DialogContent>

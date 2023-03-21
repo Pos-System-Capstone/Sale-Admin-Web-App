@@ -3,7 +3,8 @@ import { TOrder, TOrderDetail } from 'types/order';
 import request from 'utils/axios';
 import { generateAPIWithPaging } from './utils';
 
-const getOrderDetail = (orderId: string) => request.get<TOrderDetail>(`admin/orders/${orderId}`);
+const getOrderDetail = (storeId: string, orderId: string) =>
+  request.get<TOrderDetail>(`stores/${storeId}/orders/${orderId}`);
 
 const getOrderList = (storeId: string, params: any) => {
   const { size, page, startDate, endDate } = params;

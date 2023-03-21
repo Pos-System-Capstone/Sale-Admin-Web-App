@@ -27,7 +27,6 @@ export const transformParamToHyphen = (params: any) => {
       transformParams[transformKey] = value;
     }
   }
-
   return removeEmptyField(transformParams);
 };
 

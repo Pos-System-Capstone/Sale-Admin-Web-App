@@ -231,6 +231,11 @@ export const storeManagerSidebarConfig = [
         title: 'Danh sách nhân viên',
         path: PATH_DASHBOARD.stores.accountInStore,
         icon: ICONS.user
+      },
+      {
+        title: 'Danh sách hoá đơn',
+        path: PATH_DASHBOARD.orders.root,
+        icon: ICONS.order
       }
     ]
   }

@@ -52,9 +52,12 @@ const CreateProduct = () => {
     return productApi
       .create(data)
       .then((res) => {
-        enqueueSnackbar(`Tạo thành công ${values.name}`, {
-          variant: 'success'
-        });
+        enqueueSnackbar(
+          `Tạo thành công ${values.name} ${values.size ? `size ${values.size}` : ''}`,
+          {
+            variant: 'success'
+          }
+        );
         navigate(PATH_DASHBOARD.products.editById(res.data.id));
       })
       .catch((err) => {

@@ -41,14 +41,21 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
               <Box>
                 <Grid container spacing={2}>
                   {' '}
-                  <Grid alignItems={'center'} item xs={12} sm={12}>
+                  <Grid
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    item
+                    xs={12}
+                    sm={12}
+                  >
                     <UploadImageField.Avatar
                       label="Hình ảnh"
                       name="picUrl"
                       // style={{ margin: '0 auto 40px' }}
                     />
                   </Grid>
-                  <Grid item xs={8}>
+                  <Grid item xs={6}>
                     <InputField
                       disabled={productType === ProductTypeEnum.CHILD}
                       fullWidth
@@ -56,9 +63,13 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
                       label="Tên sản phẩm"
                       required
                       size="small"
+                      helperText={
+                        productType === ProductTypeEnum.CHILD &&
+                        'Tên của sản phẩm con: tên sản phẩm cha + size được chọn'
+                      }
                     />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={3}>
                     <InputField
                       disabled={updateMode}
                       fullWidth
@@ -66,39 +77,6 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
                       label="Mã sản phẩm"
                       required
                       size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={3}>
-                    <InputField
-                      fullWidth
-                      type="number"
-                      name="sellingPrice"
-                      label="Giá bán"
-                      required
-                      size="small"
-                      helperText="Giá áp dụng khi không được cấu hình trong menu"
-                    />
-                  </Grid>
-                  <Grid item xs={3}>
-                    <InputField
-                      fullWidth
-                      type="number"
-                      name="discountPrice"
-                      label="Giá giảm"
-                      required
-                      size="small"
-                      helperText="Giá áp dụng khi không được cấu hình trong menu"
-                    />
-                  </Grid>
-                  <Grid item xs={3}>
-                    <InputField
-                      fullWidth
-                      type="number"
-                      name="historicalPrice"
-                      label="Giá gốc"
-                      required
-                      size="small"
-                      helperText="Giá áp dụng khi không được cấu hình trong menu"
                     />
                   </Grid>
                   <Grid item xs={3}>
@@ -113,16 +91,41 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
                       size="small"
                     />
                   </Grid>
-                  {productType === ProductTypeEnum.SINGLE && (
-                    <Grid item xs={6}>
-                      <AutocompleteCategory
-                        isExtra={false}
-                        name="categoryId"
-                        label="Danh mục chứa sản phẩm"
-                      />
-                    </Grid>
-                  )}
-                  {productType === ProductTypeEnum.PARENT && (
+                  <Grid item xs={4}>
+                    <InputField
+                      fullWidth
+                      type="number"
+                      name="sellingPrice"
+                      label="Giá bán"
+                      required
+                      size="small"
+                      helperText="Giá áp dụng khi không được cấu hình trong menu"
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <InputField
+                      fullWidth
+                      type="number"
+                      name="discountPrice"
+                      label="Giá giảm"
+                      required
+                      size="small"
+                      helperText="Giá áp dụng khi không được cấu hình trong menu"
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <InputField
+                      fullWidth
+                      type="number"
+                      name="historicalPrice"
+                      label="Giá gốc"
+                      required
+                      size="small"
+                      helperText="Giá áp dụng khi không được cấu hình trong menu"
+                    />
+                  </Grid>
+                  {(productType === ProductTypeEnum.SINGLE ||
+                    productType === ProductTypeEnum.PARENT) && (
                     <Grid item xs={6}>
                       <AutocompleteCategory
                         isExtra={false}

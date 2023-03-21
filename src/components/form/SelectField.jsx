@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
-import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 const SelectField = ({
@@ -43,6 +42,9 @@ const SelectField = ({
             error={Boolean(fieldState.error)}
             value={field.value || []}
           >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
             {children ??
               options?.map(({ label, value, id }) => (
                 <MenuItem value={value} key={`${id}`}>

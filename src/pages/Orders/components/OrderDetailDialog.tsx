@@ -20,13 +20,13 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { ORDER_STATUS_OPTONS, TOrderDetail, TOrderDetailItem } from 'types/order';
+import { TOrderDetail, TOrderDetailItem } from 'types/order';
 import { TTableColumn } from 'types/table';
 
 type Props = {
   open: boolean;
   onClose: VoidFunction;
-  orderId?: number | null;
+  orderId?: string | null;
 };
 
 const OrderSummaryItem = styled(Grid)({
@@ -55,47 +55,47 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
   );
 
   const custColumns: ResoDescriptionColumnType<TOrderDetail>[] = [
-    {
-      title: translate('pages.orders.table.customerName'),
-      dataIndex: 'delivery_receiver'
-    },
-    {
-      title: translate('pages.orders.table.customerPhone'),
-      dataIndex: 'delivery_phone'
-    },
-    {
-      title: translate('pages.orders.table.address'),
-      dataIndex: 'delivery_address'
-    }
+    // {
+    //   title: translate('pages.orders.table.customerName'),
+    //   dataIndex: 'delivery_receiver'
+    // },
+    // {
+    //   title: translate('pages.orders.table.customerPhone'),
+    //   dataIndex: 'delivery_phone'
+    // },
+    // {
+    //   title: translate('pages.orders.table.address'),
+    //   dataIndex: 'delivery_address'
+    // }
   ];
 
   const orderColumns: ResoDescriptionColumnType<TOrderDetail>[] = [
-    {
-      title: translate('pages.orders.table.invoice'),
-      dataIndex: 'invoice_id'
-    },
-    {
-      title: translate('pages.orders.table.status'),
-      dataIndex: 'order_status',
-      valueType: 'select',
-      valueEnum: ORDER_STATUS_OPTONS
-    },
+    // {
+    //   title: translate('pages.orders.table.invoice'),
+    //   dataIndex: 'invoice_id'
+    // },
+    // {
+    //   title: translate('pages.orders.table.status'),
+    //   dataIndex: 'order_status',
+    //   valueType: 'select',
+    //   valueEnum: ORDER_STATUS_OPTONS
+    // },
 
-    {
-      title: translate('pages.orders.table.totalAmount'),
-      dataIndex: 'total_amount',
-      valueType: 'money'
-    },
-    {
-      title: translate('pages.orders.table.discount'),
-      dataIndex: 'discount'
-    },
-    {
-      title: translate('pages.orders.table.finalAmount'),
-      dataIndex: 'final_amount',
-      hideInSearch: true,
-      valueType: 'money'
-    },
+    // {
+    //   title: translate('pages.orders.table.totalAmount'),
+    //   dataIndex: 'total_amount',
+    //   valueType: 'money'
+    // },
+    // {
+    //   title: translate('pages.orders.table.discount'),
+    //   dataIndex: 'discount'
+    // },
+    // {
+    //   title: translate('pages.orders.table.finalAmount'),
+    //   dataIndex: 'final_amount',
+    //   hideInSearch: true,
+    //   valueType: 'money'
+    // },
     {
       title: translate('pages.orders.table.paymentType'),
       dataIndex: 'payments',
@@ -115,17 +115,17 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
     {
       title: translate('pages.orders.table.store'),
       dataIndex: ['store', 'name']
-    },
-
-    {
-      title: translate('pages.orders.table.note'),
-      dataIndex: 'notes'
-    },
-    {
-      title: translate('pages.orders.table.orderTime'),
-      dataIndex: 'check_in_date',
-      valueType: 'datetime'
     }
+
+    // {
+    //   title: translate('pages.orders.table.note'),
+    //   dataIndex: 'notes'
+    // },
+    // {
+    //   title: translate('pages.orders.table.orderTime'),
+    //   dataIndex: 'check_in_date',
+    //   valueType: 'datetime'
+    // }
   ];
 
   const orderItemColumns: TTableColumn<TOrderDetailItem>[] = [

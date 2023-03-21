@@ -1,12 +1,49 @@
+import moment from 'moment';
 import { TOrder, TOrderDetail } from 'types/order';
 import request from 'utils/axios';
 import { generateAPIWithPaging } from './utils';
 
-const getOrderDetail = (orderId: number) => request.get<TOrderDetail>(`admin/orders/${orderId}`);
+const getOrderDetail = (orderId: string) => request.get<TOrderDetail>(`admin/orders/${orderId}`);
+
+const getOrderList = (storeId: string, params: any) => {
+  const { size, page, startDate, endDate } = params;
+  if (startDate != undefined && endDate != undefined) {
+    return request.get<TOrder>(
+      `stores/${storeId}/orders?page=${page}&size=${size}&startDate=${moment(
+        startDate,
+        'YYYY-MM-DD'
+      ).format('YYYY-MM-DD')}&endDate=${moment(endDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}`,
+      { params }
+    );
+  }
+  if (startDate != undefined) {
+    return request.get<TOrder>(
+      `stores/${storeId}/orders?page=${page}&size=${size}&startDate=${moment(
+        startDate,
+        'YYYY-MM-DD'
+      ).format('YYYY-MM-DD')}`,
+      {
+        params
+      }
+    );
+  }
+  if (endDate != undefined) {
+    return request.get<TOrder>(
+      `stores/${storeId}/orders?page=${page}&size=${size}&endDate=${moment(
+        endDate,
+        'YYYY-MM-DD'
+      ).format('YYYY-MM-DD')}`,
+      {
+        params
+      }
+    );
+  } else return request.get<TOrder>(`stores/${storeId}/orders`, { params });
+};
 
 const orderApi = {
   getOrderDetail,
-  ...generateAPIWithPaging<TOrder>('admin/orders')
+  getOrderList,
+  ...generateAPIWithPaging<TOrder>('orders')
 };
 
 export default orderApi;

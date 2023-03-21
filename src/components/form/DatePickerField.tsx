@@ -12,9 +12,7 @@ const DatePickerField = ({ name, label, defaultValue = '', transform, ...props }
       render={({ field, fieldState }) => (
         <DatePicker
           label={label}
-          renderInput={(params) => (
-            <TextField error={Boolean(fieldState.error)} {...params} {...props} />
-          )}
+          renderInput={(params) => <TextField {...params} {...props} error={false} />}
           {...field}
           onChange={(e) => field.onChange(transform ? transform.output(e) : e)}
         />

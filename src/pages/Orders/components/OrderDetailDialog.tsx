@@ -123,9 +123,7 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
         return (
           <Stack spacing={2}>
             {payment != null ? (
-              <Label color="primary">
-                {payment.paymentType === 'CASH' ? 'Tiền mặt' : payment.paymentType}
-              </Label>
+              <Label color="primary">{payment.name}</Label>
             ) : (
               <Label color="info">Chưa thực hiện thanh toán</Label>
             )}

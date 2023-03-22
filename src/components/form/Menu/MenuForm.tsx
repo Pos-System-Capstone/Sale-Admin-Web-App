@@ -205,6 +205,17 @@ const MenuForm = ({ isUpdateMenu }: Props) => {
             />
           </Grid>
         )}
+        {hasBaseMenu?.hasBaseMenu && (
+          <Grid item xs={12}>
+            <CheckBoxField
+              size="small"
+              fullWidth
+              name="useBaseMenu"
+              label="Sử dụng các phẩm có sẵn trong menu của nhãn hàng"
+              value="true"
+            />
+          </Grid>
+        )}
         {!isUpdateMenu && (
           <Grid item xs={12} md={6}>
             <InputField size="small" fullWidth name="code" label="Mã menu" />

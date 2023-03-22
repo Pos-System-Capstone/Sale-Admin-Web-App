@@ -59,10 +59,8 @@ export enum TOrderPaymentType {
 
 export type TOrderPayment = {
   id: string;
-  paymentTypeId: string;
-  paymentType: TOrderPaymentType;
+  name: string;
   picUrl: string;
-  paidAmount: number;
 };
 
 export type TOrderDetail = {

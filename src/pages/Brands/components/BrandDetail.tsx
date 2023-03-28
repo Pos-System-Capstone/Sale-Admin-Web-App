@@ -14,7 +14,6 @@ import brandApi from 'api/brand';
 import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
-import { SHA256 } from 'crypto-js';
 import useAuth from 'hooks/useAuth';
 import { useSnackbar } from 'notistack';
 import AccountsList from 'pages/accounts/components/AccountsList';
@@ -98,7 +97,6 @@ const BrandDetailPage = () => {
 
   const onSubmitCreateUser = (values: TUserCreate) => {
     const createUserData = { ...values };
-    createUserData.password = SHA256(createUserData.password).toString();
     return brandApi
       .createUserOfBrand(brandId ?? '', createUserData)
       .then((res) => {

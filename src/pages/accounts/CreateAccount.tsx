@@ -4,7 +4,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Stack } from '@mui/material';
 import storeApi from 'api/store';
-import { SHA256 } from 'crypto-js';
 import useAuth from 'hooks/useAuth';
 import { useSnackbar } from 'notistack';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -38,9 +37,7 @@ const CreateAccount = () => {
   });
 
   const onCreateNewAccountSubmit = (values: TEmployeeCreate) => {
-    // const data = transformDraftToStr(values);
     const createNewUserRequest = { ...values };
-    createNewUserRequest.password = SHA256(createNewUserRequest.password).toString();
 
     return storeApi
       .createStoreEmployees(storeId ?? user?.storeId, createNewUserRequest)

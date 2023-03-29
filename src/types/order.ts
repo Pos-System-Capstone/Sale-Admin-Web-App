@@ -80,6 +80,10 @@ export type TOrderDetail = {
 
 export const ORDER_STATUS_OPTONS = [
   {
+    label: 'Tất cả',
+    value: ``
+  },
+  {
     label: 'Đang xử lý',
     value: `${OrderStatus.PENDING}`,
     color: 'warning'
@@ -97,6 +101,10 @@ export const ORDER_STATUS_OPTONS = [
 ];
 
 export const ORDER_TYPE_OPTONS = [
+  {
+    label: 'Tất cả',
+    value: ``
+  },
   {
     label: 'Dùng ngay',
     value: OrderType.EATIN,

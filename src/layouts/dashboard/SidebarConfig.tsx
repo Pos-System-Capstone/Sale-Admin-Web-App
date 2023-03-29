@@ -147,12 +147,12 @@ export const brandAdminSidebarConfig = [
     subheader: 'Quản lý thực đơn',
     items: [
       {
-        title: 'Danh sách thực đơn',
+        title: 'Thực đơn',
         path: PATH_DASHBOARD.menus.root,
         icon: ICONS.menu
       },
       {
-        title: 'Danh sách cửa hàng áp dụng thực đơn',
+        title: 'Cửa hàng áp dụng thực đơn',
         path: PATH_DASHBOARD.menus.storeMenu,
         icon: ICONS.storeApply
       }

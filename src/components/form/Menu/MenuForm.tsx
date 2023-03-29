@@ -1,6 +1,8 @@
 import { ErrorMessage } from '@hookform/error-message';
+import { HelpOutline } from '@mui/icons-material';
 import { MobileTimePicker } from '@mui/lab';
-import { Box, FormLabel, Grid, Stack, TextField, Typography } from '@mui/material';
+import { IconButton } from '@mui/material';
+import { Box, FormLabel, Grid, Stack, TextField, Tooltip, Typography } from '@mui/material';
 import brandApi from 'api/brand';
 import { DAY_OF_WEEK_CONFIG_VALUE_BY_BIT } from 'constraints';
 import useAuth from 'hooks/useAuth';
@@ -42,88 +44,6 @@ const MenuForm = ({ isUpdateMenu }: Props) => {
   //   name: 'time_ranges',
   //   control
   // });
-
-  // const renderTimeRangeForm = () => (
-  //   <Grid item xs={12}>
-  //     <FormLabel component="p" title="Khung giờ" />
-  //     {fields.map(({ id }, optIndex) => (
-  //       <>
-  //         <Box key={`variant-${id}`}>
-  //           <Stack direction="row" spacing={1} alignItems="center">
-  //             <Controller
-  //               control={control}
-  //               name={`time_ranges[${optIndex}].from`}
-  //               render={({
-  //                 field: { onChange, onBlur, value, name, ref },
-  //                 fieldState,
-  //                 formState
-  //               }) => (
-  //                 <MobileTimePicker
-  //                   label="Bắt đầu"
-  //                   ampm={false}
-  //                   inputFormat="HH:mm"
-  //                   minutesStep={30}
-  //                   renderInput={(params) => (
-  //                     <TextField
-  //                       size="small"
-  //                       {...params}
-  //                       error={Boolean(fieldState.error)}
-  //                       helperText={fieldState.error && fieldState.error.message}
-  //                       fullWidth
-  //                     />
-  //                   )}
-  //                   onChange={onChange}
-  //                   value={value}
-  //                 />
-  //               )}
-  //             />
-  //             <Controller
-  //               control={control}
-  //               name={`time_ranges[${optIndex}].to`}
-  //               render={({
-  //                 field: { onChange, onBlur, value, name, ref },
-  //                 fieldState,
-  //                 formState
-  //               }) => (
-  //                 <MobileTimePicker
-  //                   label="Kết thúc"
-  //                   ampm={false}
-  //                   inputFormat="HH:mm"
-  //                   minutesStep={30}
-  //                   renderInput={(params) => (
-  //                     <TextField
-  //                       error={Boolean(fieldState.error)}
-  //                       helperText={fieldState.error && fieldState.error.message}
-  //                       size="small"
-  //                       {...params}
-  //                       fullWidth
-  //                     />
-  //                   )}
-  //                   onChange={onChange}
-  //                   value={value}
-  //                 />
-  //               )}
-  //             />
-  //             <IconButton
-  //               onClick={() => remove(optIndex)}
-  //               size="small"
-  //               aria-label="delete"
-  //               color="error"
-  //             >
-  //               <DeleteIcon />
-  //             </IconButton>
-  //           </Stack>
-  //         </Box>
-  //         <Divider sx={{ my: 1 }} />
-  //       </>
-  //     ))}
-  //     <span>
-  //       <Button onClick={() => append({ from: null, to: null })} variant="outlined">
-  //         Thêm khung giờ
-  //       </Button>
-  //     </span>
-  //   </Grid>
-  // );
 
   const renderTimeRangeForm = () => (
     <Grid item xs={12}>
@@ -214,20 +134,16 @@ const MenuForm = ({ isUpdateMenu }: Props) => {
               label="Sử dụng các phẩm có sẵn trong menu của nhãn hàng"
               value="true"
             />
+            <Tooltip title="Áp dụng danh sách những sản phẩm trong menu của toàn hệ thống khi tạo mới menu">
+              <IconButton size="small" color="inherit">
+                <HelpOutline fontSize="small" />
+              </IconButton>
+            </Tooltip>
           </Grid>
         )}
         {!isUpdateMenu && (
           <Grid item xs={12} md={6}>
             <InputField size="small" fullWidth name="code" label="Mã menu" />
-            <ErrorMessage
-              errors={errors}
-              name="code"
-              render={({ message }) => (
-                <Typography color="red" variant="caption">
-                  {message}
-                </Typography>
-              )}
-            />
           </Grid>
         )}
         <Grid item xs={12} md={isUpdateMenu ? 12 : 6}>
@@ -244,16 +160,6 @@ const MenuForm = ({ isUpdateMenu }: Props) => {
               ? 'Menu toàn hệ thống có ưu tiên là 0'
               : 'Ưu tiên rất quan trọng, chú ý nhập đúng!'}
           </Typography>
-          <br />
-          <ErrorMessage
-            errors={errors}
-            name="priority"
-            render={({ message }) => (
-              <Typography color="red" variant="caption">
-                {message}
-              </Typography>
-            )}
-          />
         </Grid>
 
         <Grid item xs={12}>

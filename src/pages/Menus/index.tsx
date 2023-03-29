@@ -7,6 +7,7 @@ import { Button, Card, Chip, Stack, Typography } from '@mui/material';
 import menuApi from 'api/menu';
 import { menuSchema } from 'components/form/Menu/helper';
 import MenuForm from 'components/form/Menu/MenuForm';
+import Label from 'components/Label';
 import confirm from 'components/Modal/confirm';
 import ModalForm from 'components/ModalForm/ModalForm';
 import Page from 'components/Page';
@@ -35,17 +36,13 @@ export const menuColumns: TTableColumn<PosMenu>[] = [
     render: (_, data: PosMenu) =>
       data.startTime && data.endTime ? (
         <Typography>
-          <Chip
-            size="small"
-            key={data.code}
-            label={moment(data.startTime, 'HH:mm:ss').format('HH:mm')}
-          />{' '}
+          <Label key={data.code} color="primary">
+            {moment(data.startTime, 'HH:mm:ss').format('HH:mm')}
+          </Label>{' '}
           -{' '}
-          <Chip
-            size="small"
-            key={data.code}
-            label={moment(data.endTime, 'HH:mm:ss').format('HH:mm')}
-          />
+          <Label key={data.code} color="primary">
+            {moment(data.endTime, 'HH:mm:ss').format('HH:mm')}
+          </Label>
         </Typography>
       ) : (
         '-'
@@ -74,42 +71,12 @@ export const menuColumns: TTableColumn<PosMenu>[] = [
     hideInSearch: true,
     render: (_: any, { createdAt }: PosMenu) => (
       <Stack direction="row" spacing={1}>
-        <Chip size="small" key={createdAt} label={moment(createdAt).format('DD/MM/YYYY')} />
+        <Label key={createdAt} color="warning">
+          {moment(createdAt).format('DD/MM/YYYY')}
+        </Label>
       </Stack>
     )
   }
-  // {
-  //   title: 'Áp dụng',
-  //   dataIndex: 'is_brand_mode',
-  //   valueType: 'select',
-  //   valueEnum: [
-  //     {
-  //       label: 'Toàn hệ thống',
-  //       value: true
-  //     },
-  //     {
-  //       label: 'Theo cửa hàng',
-  //       value: false
-  //     }
-  //   ]
-  // },
-  // {
-  //   title: 'Ngày hoạt động',
-  //   dataIndex: 'day_filters',
-  //   valueType: 'select',
-  //   valueEnum: DAY_OF_WEEK_CONFIG_VALUE_BY_BIT,
-  //   render: (_: any, { day_filters: dayFilters, menu_id }: Menu) => (
-  //     <Stack direction="row" spacing={1}>
-  //       {dayFilters?.map((day) => (
-  //         <Chip
-  //           size="small"
-  //           key={`${menu_id}-${day}`}
-  //           label={DAY_OF_WEEK_CONFIG_VALUE_BY_BIT.find(({ value }) => value === day)?.label}
-  //         />
-  //       ))}
-  //     </Stack>
-  //   )
-  // },
 ];
 
 const MenusPage = () => {
@@ -124,7 +91,8 @@ const MenusPage = () => {
     defaultValues: {
       time_ranges: [{ from: null, to: null }],
       allDay: false,
-      isBaseMenu: false
+      isBaseMenu: false,
+      useBaseMenu: false
     }
   });
 
@@ -155,21 +123,8 @@ const MenusPage = () => {
     });
   };
 
-  // const convertTimeToInteger = (time: string) => {
-  //   const array = time.split(':');
-  //   return parseInt(array[0], 10) * 60 + parseInt(array[1], 10);
-  // };
-
-  // const processDayFiter = (dayOfWeek: number[]) => {
-  //   let totalDay = 0;
-  //   dayOfWeek.map((number) => {
-  //     totalDay += number;
-  //   });
-  //   return totalDay;
-  // };
-
   const handleProcessCreateNewMenuRequest = (data: any) => {
-    const { code, startTime, endTime, dayFilter, priority, allDay, isBaseMenu } = data;
+    const { code, startTime, endTime, dayFilter, priority, allDay, isBaseMenu, useBaseMenu } = data;
     let startTimeToInt = 0;
     let endTimeToInt = 0;
 
@@ -184,7 +139,8 @@ const MenusPage = () => {
 
     const dayFilterTotal = processDayFiter(dayFilter);
     const processedData: TCreateMenuInformation = {
-      isBaseMenu: isBaseMenu,
+      isBaseMenu: isBaseMenu ?? false,
+      useBaseMenu: useBaseMenu ?? false,
       code: code,
       priority: parseInt(priority),
       dateFilter: dayFilterTotal,
@@ -216,7 +172,7 @@ const MenusPage = () => {
                       return true;
                     })
                     .catch((err) => {
-                      enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
+                      enqueueSnackbar(err.errors.Code[0], {
                         variant: 'error'
                       });
                       return false;

@@ -42,9 +42,6 @@ const SelectField = ({
             error={Boolean(fieldState.error)}
             value={field.value || []}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
             {children ??
               options?.map(({ label, value, id }) => (
                 <MenuItem value={value} key={`${id}`}>

@@ -1,6 +1,5 @@
 import { Grid, Stack } from '@mui/material';
 import { InputField, SelectField, UploadImageField } from 'components/form';
-import useLocales from 'hooks/useLocales';
 import { useFormContext } from 'react-hook-form';
 import { CREATE_CATEGORY_TYPE_OPTIONS } from 'types/category';
 
@@ -9,26 +8,19 @@ interface Props {
 }
 
 const CategoryForm = ({ updateMode }: Props) => {
-  const { translate } = useLocales();
+  // const { translate } = useLocales();
+  // const type = watch('categoryType');
   const { watch } = useFormContext();
-  const type = watch('categoryType');
   return (
     <Grid container spacing={2}>
       <Grid alignItems={'center'} item xs={12} sm={4}>
         <UploadImageField.Avatar label="Hình ảnh" name="picUrl" style={{ margin: '0 auto 40px' }} />
       </Grid>
       <Grid spacing={2} xs={12} sm={8}>
-        <Grid item xs={12} sm={6}></Grid>
         <Stack ml={2} my={2} direction="column" spacing={2}>
           <InputField fullWidth name="name" label="Tên danh mục" />
           <InputField disabled={updateMode} fullWidth name="code" label="Mã danh mục" />
-          <InputField
-            // InputLabelProps={{ shrink: true }}
-            type="number"
-            fullWidth
-            name="displayOrder"
-            label="Thứ tự hiển thị"
-          />
+          <InputField type="number" fullWidth name="displayOrder" label="Thứ tự hiển thị" />
           <SelectField
             fullWidth
             disabled={updateMode}

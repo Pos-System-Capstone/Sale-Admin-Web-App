@@ -75,7 +75,7 @@ export type TStoreApplyMenuRequest = {
 
 export type TCreateMenuInformation = {
   isBaseMenu: boolean;
-  useBaseMenu?: boolean;
+  useBaseMenu: boolean;
   code: string;
   priority: number;
   dateFilter: number;

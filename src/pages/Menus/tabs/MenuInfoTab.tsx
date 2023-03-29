@@ -1,6 +1,7 @@
 import { Edit } from '@mui/icons-material';
 import { Box, Chip, Stack, Typography } from '@mui/material';
 import MenuForm from 'components/form/Menu/MenuForm';
+import Label from 'components/Label';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import ModalForm from 'components/ModalForm/ModalForm';
 import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
@@ -19,33 +20,17 @@ const columns: ResoDescriptionColumnType<PosMenu>[] = [
     render: (_, data: PosMenu) =>
       data.startTime && data.endTime ? (
         <Typography>
-          <Chip
-            size="small"
-            key={data.code}
-            label={moment(data.startTime, 'HH:mm:ss').format('HH:mm')}
-          />{' '}
+          <Label key={data.code} color="primary">
+            {moment(data.startTime, 'HH:mm:ss').format('HH:mm')}
+          </Label>{' '}
           -{' '}
-          <Chip
-            size="small"
-            key={data.code}
-            label={moment(data.endTime, 'HH:mm:ss').format('HH:mm')}
-          />
+          <Label key={data.code} color="primary">
+            {moment(data.endTime, 'HH:mm:ss').format('HH:mm')}
+          </Label>
         </Typography>
       ) : (
         '-'
       )
-  },
-  {
-    title: 'Ngày áp dụng',
-    dataIndex: 'dateFilter',
-    hideInSearch: true,
-    render: (_: any, { dateFilter }: PosMenu) => (
-      <Stack direction="row" spacing={1}>
-        {dateFilter?.map((date) => (
-          <Chip size="small" key={date} label={date} />
-        ))}
-      </Stack>
-    )
   },
   {
     title: 'Độ ưu tiên',
@@ -58,7 +43,21 @@ const columns: ResoDescriptionColumnType<PosMenu>[] = [
     hideInSearch: true,
     render: (_: any, { createdAt }: PosMenu) => (
       <Stack direction="row" spacing={1}>
-        <Chip size="small" key={createdAt} label={moment(createdAt).format('DD/MM/YYYY')} />
+        <Label key={createdAt} color="warning">
+          {moment(createdAt).format('DD/MM/YYYY')}
+        </Label>
+      </Stack>
+    )
+  },
+  {
+    title: 'Ngày áp dụng',
+    dataIndex: 'dateFilter',
+    hideInSearch: true,
+    render: (_: any, { dateFilter }: PosMenu) => (
+      <Stack direction="row" spacing={1}>
+        {dateFilter?.map((date) => (
+          <Chip size="small" key={date} label={date} />
+        ))}
       </Stack>
     )
   }

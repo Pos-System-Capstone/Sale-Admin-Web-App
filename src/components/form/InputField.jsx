@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { TextField } from '@mui/material';
+import { FormControl, FormHelperText, TextField } from '@mui/material';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
@@ -10,6 +10,9 @@ const FormInput = ({
   defaultValue = '',
   disabled = false,
   placeholder = '',
+  fullWidth = false,
+  className = null,
+  size = 'small',
   ...props
 }) => {
   const { control } = useFormContext();
@@ -17,16 +20,29 @@ const FormInput = ({
   return (
     <Controller
       render={({ field, fieldState }) => (
-        <TextField
-          {...field}
-          {...props}
-          disabled={disabled}
+        <FormControl
           error={Boolean(fieldState.error)}
-          helpertext={fieldState.error ? fieldState.error.message : props.helperText}
-          label={label}
-          placeholder={placeholder}
-          defaultValue={defaultValue}
-        />
+          className={className}
+          fullWidth={fullWidth}
+          size={size}
+          disabled={disabled}
+          required={props.required}
+        >
+          <TextField
+            {...field}
+            {...props}
+            id={name}
+            disabled={disabled}
+            error={Boolean(fieldState.error)}
+            helpertext={fieldState.invalid ? fieldState.error.message : props.helperText}
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+          />
+          <FormHelperText variant="filled">
+            {fieldState.error && fieldState.error.message}
+          </FormHelperText>
+        </FormControl>
       )}
       name={name}
       control={control}

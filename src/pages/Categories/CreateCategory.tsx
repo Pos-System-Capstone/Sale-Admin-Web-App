@@ -12,11 +12,16 @@ import { useNavigate } from 'react-router';
 import { TCategoryCreate } from 'types/category';
 import * as yup from 'yup';
 import { PATH_DASHBOARD } from 'routes/paths';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 interface Props {}
 
 const schema = yup.object({
-  cate_name: yup.string().required('Vui lòng nhập tên Danh mục')
+  code: yup.string().required('Vui lòng nhập Mã danh mục'),
+  name: yup.string().required('Vui lòng nhập Tên danh mục'),
+  categoryType: yup.string().required('Vui lòng chọn Loại danh mục'),
+  displayOrder: yup.number().required('Vui lòng nhập thứ tự hiển thị danh mục'),
+  description: yup.string().required('Vui lòng chọn Mô tả danh mục')
 });
 
 const CreateCategory = (props: Props) => {
@@ -26,15 +31,12 @@ const CreateCategory = (props: Props) => {
   // const [searchParams] = useSearchParams();
   // const isExtra: boolean = searchParams.get('isExtra') === 'true';
   const createCategoryForm = useForm<TCategoryCreate>({
-    // resolver: yupResolver(schema),
-    defaultValues: {
-      // categoryType: isExtra ? CategoryType.EXTRA : CategoryType.NORMAL
-    }
+    resolver: yupResolver(schema),
+    defaultValues: {}
     // shouldUnregister: false
   });
 
   const onSubmit = (values: TCategoryCreate) => {
-    console.log(`data`, values);
     return categoryApi
       .create(values)
       .then((res) => {

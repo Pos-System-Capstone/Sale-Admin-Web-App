@@ -4,7 +4,6 @@ import { Icon } from '@iconify/react';
 // import { TabContext, TabList } from '@mui/lab';
 // material
 import { Button, Card } from '@mui/material';
-import confirm from 'components/Modal/confirm';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
@@ -14,10 +13,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { ProductTypeEnum, TProduct, TProductBase } from 'types/product';
-import { deleteProdById } from '../../redux/product/api';
+// import confirm from 'components/Modal/confirm';
+// import { deleteProdById } from '../../redux/product/api';
 //
-import { productColumns } from './config';
 import productApi from 'api/product';
+import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
+import { productColumns } from './config';
 
 // ----------------------------------------------------------------------
 
@@ -31,34 +32,37 @@ export default function EcommerceShop() {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { t } = useLocales();
+  const [isShowConfirmDeleteProductDialog, setIsShowConfirmDeleteProductDialog] = useState(false);
+  const [removeProductData, setRemoveProductData] = useState<TProductBase>();
 
   const editProduct = (data: TProduct) => {
     navigate(`${PATH_DASHBOARD.products.root}/${data.id}`);
   };
 
-  const onDelete = (currentDeleteItem: TProductBase) => {
-    confirm({
-      title: (
-        <>
-          Xác nhận xóa <strong>{currentDeleteItem?.product_name}</strong>
-        </>
-      ),
-      content: 'Sản phẩm này sẽ bị xoá khỏi hệ thống',
-      onOk: () => {
-        return deleteProdById(currentDeleteItem.product_id!)
-          .then((res) => {
-            enqueueSnackbar(t('common.deleteSuccess'), {
-              variant: 'success'
-            });
-          })
-          .then(() => ref.current?.reload())
-          .catch((err) => {
-            enqueueSnackbar(t('common.error'), {
-              variant: 'error'
-            });
-          });
-      }
-    });
+  const handleRemoveProductInBrand = () => {
+    console.log('product data ne để handle: ', removeProductData);
+    // confirm({
+    //   title: (
+    //     <>
+    //       Xác nhận xóa <strong>{removeProductData?.product_name}</strong>
+    //     </>
+    //   ),
+    //   content: 'Sản phẩm này sẽ bị xoá khỏi hệ thống',
+    //   onOk: () => {
+    //     return deleteProdById(0)
+    //       .then((res) => {
+    //         enqueueSnackbar(t('common.deleteSuccess'), {
+    //           variant: 'success'
+    //         });
+    //       })
+    //       .then(() => ref.current?.reload())
+    //       .catch((err) => {
+    //         enqueueSnackbar(t('common.error'), {
+    //           variant: 'error'
+    //         });
+    //       });
+    //   }
+    // });
   };
 
   useEffect(() => {
@@ -106,11 +110,20 @@ export default function EcommerceShop() {
           pagination
           getData={productApi.get}
           onEdit={editProduct}
-          onDelete={onDelete}
+          onDelete={(data: TProductBase) => {
+            setIsShowConfirmDeleteProductDialog(true);
+            setRemoveProductData(data);
+          }}
           columns={productColumns}
           rowKey="product_id"
         />
-        {/* </TabContext> */}
+        <DeleteConfirmDialog
+          title={'Xác nhận xoá sản phẩm'}
+          description={'Bạn chắc chắn muốn xoá sản phẩm ?'}
+          open={isShowConfirmDeleteProductDialog}
+          onClose={() => setIsShowConfirmDeleteProductDialog(false)}
+          onDelete={() => handleRemoveProductInBrand()}
+        />
       </Card>
     </Page>
   );

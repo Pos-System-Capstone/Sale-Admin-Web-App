@@ -8,7 +8,7 @@ import Page from 'components/Page';
 import useAuth from 'hooks/useAuth';
 import { useSnackbar } from 'notistack';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { TStoreCreate } from 'types/store';
 import * as yup from 'yup';
 import CreateNewStoreOfBrandForm from './CreateNewStoreForm';

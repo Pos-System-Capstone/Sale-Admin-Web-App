@@ -16,7 +16,6 @@ export type TStore = {
 };
 
 export type TStoreCreate = {
-  brandId: string;
   name: string;
   shortName: string;
   email: string;

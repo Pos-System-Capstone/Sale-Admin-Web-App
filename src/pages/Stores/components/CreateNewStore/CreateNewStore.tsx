@@ -5,7 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Card } from '@mui/material';
 import brandApi from 'api/brand';
 import Page from 'components/Page';
-import useAuth from 'hooks/useAuth';
 import { useSnackbar } from 'notistack';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +15,6 @@ import CreateNewStoreOfBrandForm from './CreateNewStoreForm';
 const CreateStorePage = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const { user } = useAuth();
 
   const schema = yup.object({
     name: yup.string().required('Vui lòng nhập tên cửa hàng'),
@@ -29,7 +27,6 @@ const CreateStorePage = () => {
   const createNewBrandForm = useForm<TStoreCreate>({
     resolver: yupResolver(schema),
     defaultValues: {
-      brandId: '',
       name: '',
       shortName: '',
       email: '',
@@ -40,11 +37,10 @@ const CreateStorePage = () => {
   });
   const onSubmitCreateNewStoreOfBrand = (values: TStoreCreate) => {
     const dataToUpdate = { ...values };
-    dataToUpdate.brandId = user!.brandId!;
     brandApi
       .createNewBrandStore(dataToUpdate)
       .then((res) => {
-        enqueueSnackbar(`Tạo thành công ${values.name}`, {
+        enqueueSnackbar(`Tạo thành công cửa hàng ${values.name}`, {
           variant: 'success'
         });
         navigate(-1);

@@ -83,11 +83,6 @@ export const brandManagerSidebarConfig = [
         title: 'Danh sách tài khoản',
         path: PATH_DASHBOARD.accounts.root,
         icon: ICONS.user
-      },
-      {
-        title: 'Đơn hàng',
-        path: PATH_DASHBOARD.orders.list,
-        icon: ICONS.order
       }
     ]
   }
@@ -132,17 +127,6 @@ export const brandManagerSidebarConfig = [
 
 // BRAND ADMIN SIDEBAR CONFIG
 export const brandAdminSidebarConfig = [
-  {
-    subheader: 'Quản lý đơn hàng',
-    items: [
-      {
-        title: 'Đơn hàng',
-        path: PATH_DASHBOARD.orders.list,
-        icon: ICONS.order
-      }
-    ]
-  },
-
   {
     subheader: 'Quản lý thực đơn',
     items: [

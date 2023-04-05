@@ -31,6 +31,7 @@ const FormInput = ({
           <TextField
             {...field}
             {...props}
+            size="small"
             id={name}
             disabled={disabled}
             error={Boolean(fieldState.error)}

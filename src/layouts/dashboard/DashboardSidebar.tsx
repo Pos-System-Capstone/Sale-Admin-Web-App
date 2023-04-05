@@ -208,15 +208,22 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
         {isCollapse ? (
           <MyAvatar sx={{ mx: 'auto', mb: 2 }} />
         ) : (
-          <Link underline="none" component={RouterLink} to={PATH_DASHBOARD.user.account}>
+          <Link
+            underline="none"
+            component={RouterLink}
+            to={PATH_DASHBOARD.user.profileById(user?.id)}
+          >
             <AccountStyle>
               <MyAvatar />
               <Box sx={{ ml: 2 }}>
-                <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                  {/* {user?.displayName} */} Passio
+                <Typography variant="subtitle2" sx={{ color: 'text.primary', fontSize: '11px' }}>
+                  {user?.displayName}
                 </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {/* {user?.roles[0]} */} {storeId === '0' ? 'System' : 'Store'}
+                <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '10px' }}>
+                  {user?.role.includes(Role.SystemAdmin) && 'Admin'}
+                  {user?.role.includes(Role.BrandManager) && 'Quản lí nhãn hàng'}
+                  {user?.role.includes(Role.BrandAdmin) && 'Admin nhãn hàng'}
+                  {user?.role.includes(Role.StoreManager) && 'Quản lí cửa hàng'}
                 </Typography>
               </Box>
             </AccountStyle>

@@ -133,22 +133,6 @@ const BrandDetailPage = () => {
       </Box>
       {/* Pic of brand */}
       <Card>
-        {brand?.picUrl ? (
-          <>
-            <DialogTitle
-              sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-            >
-              <Typography variant="h5">Hình ảnh Logo</Typography>
-            </DialogTitle>
-
-            <DialogContent sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Avatar alt="brand" src={brand.picUrl} sx={{ width: 100, height: 100 }} />
-            </DialogContent>
-          </>
-        ) : (
-          <></>
-        )}
-
         {/* Brand information */}
         <DialogContent dividers>
           <Stack spacing={2} direction="row" justifyContent="space-between" alignItems="center">

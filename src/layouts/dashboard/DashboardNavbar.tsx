@@ -133,25 +133,25 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           )}
           <Button
             onClick={() => {
-              navigate('/dashboard');
-            }}
-          >
-            Sale
-          </Button>
-          <Button
-            onClick={() => {
               navigate('/report');
             }}
           >
             Report
           </Button>
-          <Button
+          {/* <Button
+            onClick={() => {
+              navigate('/dashboard');
+            }}
+          >
+            Sale
+          </Button> */}
+          {/* <Button
             onClick={() => {
               navigate('/promotion-system');
             }}
           >
             Promotion
-          </Button>
+          </Button> */}
 
           <LanguagePopover />
           <AccountPopover />

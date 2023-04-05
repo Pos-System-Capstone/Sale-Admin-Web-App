@@ -240,35 +240,34 @@ const StoreDetailPage = () => {
         </DialogContent>
       </Card>
 
-      {user?.role.includes(Role.StoreManager) ||
-        (user?.role.includes(Role.BrandManager) && (
-          <Card sx={{ my: 2 }}>
-            <Stack spacing={2}>
-              <Box sx={{ mb: 2 }} display={'flex'} justifyContent={'space-between'}>
-                <Typography variant="h5">Danh sách nhân viên</Typography>
-                <Button
-                  onClick={() =>
-                    navigate(
-                      { pathname: PATH_DASHBOARD.accounts.new, search: `?storeId=${storeId}` },
-                      { replace: true }
-                    )
-                  }
-                  variant="contained"
-                >
-                  Tạo tài khoản mới
-                </Button>
-              </Box>
-              <AccountsList />
-              {/* <ResoTable
+      {(user?.role.includes(Role.StoreManager) || user?.role.includes(Role.BrandManager)) && (
+        <Card sx={{ my: 2 }}>
+          <Stack spacing={2}>
+            <Box sx={{ mb: 2 }} display={'flex'} justifyContent={'space-between'}>
+              <Typography variant="h5">Danh sách nhân viên</Typography>
+              <Button
+                onClick={() =>
+                  navigate(
+                    { pathname: PATH_DASHBOARD.accounts.new, search: `?storeId=${storeId}` },
+                    { replace: true }
+                  )
+                }
+                variant="contained"
+              >
+                Tạo tài khoản mới
+              </Button>
+            </Box>
+            <AccountsList />
+            {/* <ResoTable
             showAction={false}
             ref={tableRef}
             rowKey="store_id"
             getData={(params: any) => handleCallListDataBaseOnRole(params)}
             columns={employeeDetailColumns}
           /> */}
-            </Stack>
-          </Card>
-        ))}
+          </Stack>
+        </Card>
+      )}
     </Page>
   );
 };

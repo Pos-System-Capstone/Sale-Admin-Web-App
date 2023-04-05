@@ -1,25 +1,24 @@
+import homeFill from '@iconify/icons-eva/home-fill';
+import personFill from '@iconify/icons-eva/person-fill';
 import { Icon } from '@iconify/react';
 import { useSnackbar } from 'notistack';
 import { useEffect, useRef, useState } from 'react';
-import homeFill from '@iconify/icons-eva/home-fill';
-import personFill from '@iconify/icons-eva/person-fill';
-import settings2Fill from '@iconify/icons-eva/settings-2-fill';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // material
-import { alpha } from '@mui/material/styles';
 import { Box, Divider, MenuItem, Typography } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
 import useAuth from '../../hooks/useAuth';
 import useIsMountedRef from '../../hooks/useIsMountedRef';
 // components
-import { MIconButton } from '../../components/@material-extend';
-import MyAvatar from '../../components/MyAvatar';
-import MenuPopover from '../../components/MenuPopover';
-import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
-import { getUserInfo, removeLocalStorage } from 'utils/utils';
 import { TUser, UserRole, UserStatus } from 'types/user';
+import { getUserInfo, removeLocalStorage } from 'utils/utils';
+import { MIconButton } from '../../components/@material-extend';
+import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
+import MenuPopover from '../../components/MenuPopover';
+import MyAvatar from '../../components/MyAvatar';
 
 export default function AccountPopover() {
   const [userInfoFromLocalStorage, setUserInfoFromLocalStorage] = useState<TUser>({
@@ -40,11 +39,6 @@ export default function AccountPopover() {
       label: 'Profile',
       icon: personFill,
       linkTo: PATH_DASHBOARD.user.profileById(userInfoFromLocalStorage.id.toString())
-    },
-    {
-      label: 'Settings',
-      icon: settings2Fill,
-      linkTo: PATH_DASHBOARD.user.account
     }
   ];
 

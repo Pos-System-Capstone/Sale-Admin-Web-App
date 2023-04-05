@@ -35,18 +35,27 @@ export default function ProfileAbout({ updateMode, userInfo }: Props) {
           <TextField
             disabled
             fullWidth
+            size="small"
             name="username"
             label="Tên đăng nhập"
             defaultValue={userInfo?.username}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <TextField disabled fullWidth name="role" label="Vị trí" defaultValue={userInfo?.role} />
+          <TextField
+            disabled
+            size="small"
+            fullWidth
+            name="role"
+            label="Vị trí"
+            defaultValue={userInfo?.role}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             disabled
             fullWidth
+            size="small"
             name="status"
             label="Trạng thái"
             defaultValue={userInfo?.status}

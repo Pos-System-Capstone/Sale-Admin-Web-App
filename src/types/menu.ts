@@ -28,7 +28,7 @@ export enum DateFilter {
 
 export enum MenuStatus {
   ACTIVE = 'Active',
-  DEACTIVE = 'Deactive'
+  DEACTIVATE = 'Deactivate'
 }
 
 export type PosMenu = {
@@ -88,4 +88,4 @@ export type TUpdateMenuInformation = {
   dateFilter?: number;
   startTime?: number;
   endTime?: number;
-}
+};

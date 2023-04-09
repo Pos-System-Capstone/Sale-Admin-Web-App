@@ -27,6 +27,7 @@ export type AuthUser =
     zipCode?: number;
     about?: string;
     isPublic?: boolean;
+    brandPicUrl?: string
     [key: string]: any;
   }
   | null

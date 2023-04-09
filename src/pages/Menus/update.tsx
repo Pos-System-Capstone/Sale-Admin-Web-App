@@ -3,17 +3,16 @@ import roundStore from '@iconify/icons-ic/round-store';
 import { Icon } from '@iconify/react';
 import { Box, Button, Stack, Tab, Tabs } from '@mui/material';
 import menuApi from 'api/menu';
-import { transformMenuForm } from 'components/form/Menu/helper';
-import confirm from 'components/Modal/confirm';
+import { UpdateConfirmDialog } from 'components/DeleteConfirmDialog';
 import Page from 'components/Page';
+import { transformMenuForm } from 'components/form/Menu/helper';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import React, { useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { PATH_DASHBOARD } from 'routes/paths';
-import { PosMenu, ProductFormatTypeToUpdate, TUpdateMenuInformation } from 'types/menu';
+import { MenuStatus, ProductFormatTypeToUpdate, TUpdateMenuInformation } from 'types/menu';
 import { TStoreInMenuDetail } from 'types/store';
 import { convertTimeToInteger, processDayFiter } from 'utils/utils';
 import MenuInfoTab from './tabs/MenuInfoTab';
@@ -53,6 +52,7 @@ const UpdateMenuPage = () => {
   const [currentProductListInMenu, setCurrentProductListInMenu] = useState<
     ProductFormatTypeToUpdate[]
   >([]);
+  const [isShowConfirmUpdateDialog, setIsShowConfirmUpdateDialog] = useState(false);
   const [currentStoreListInMenu, setCurrentStoreListInMenu] = useState<TStoreInMenuDetail[]>([]);
 
   const {
@@ -105,32 +105,22 @@ const UpdateMenuPage = () => {
         });
       });
 
-  const onDeleteMenu = async (menuId: string) => {
+  const onConfirmUpdateMenuStatus = async () => {
     try {
-      await menuApi.delete(menuId);
-      enqueueSnackbar('Xoá thành công', {
-        variant: 'success'
+      await menuApi.updateMenuStatus(menu!.id, MenuStatus.ACTIVE).then(() => {
+        enqueueSnackbar('Thay đổi trạng thái thành công', {
+          variant: 'success'
+        });
+        refetch();
+        setIsShowConfirmUpdateDialog(!isShowConfirmUpdateDialog);
+        // console.log(`tableRef.current`, tableRef.current);
+        tableRef.current?.reload();
       });
-      console.log(`tableRef.current`, tableRef.current);
-      tableRef.current?.reload();
-      navigate(`${PATH_DASHBOARD.tradingReport.root}`);
     } catch (error) {
-      console.log(`error`, error);
-      enqueueSnackbar((error as any).message, {
+      enqueueSnackbar((error as any).Error, {
         variant: 'error'
       });
     }
-  };
-
-  const onConfirmDelete = async (menu: PosMenu) => {
-    confirm({
-      title: 'Xác nhận xoá',
-      content: `Bạn đồng ý xóa menu "${menu.code}"?`,
-      onOk: async () => {
-        await onDeleteMenu(menu.id);
-      },
-      onCancle: () => {}
-    });
   };
 
   const handleMenuInformationToUpdate = (data: any) => {
@@ -196,13 +186,13 @@ const UpdateMenuPage = () => {
         title={`Chi tiết bảng giá ${menu?.code}`}
         actions={() => [
           <Button
-            onClick={() => onConfirmDelete(menu!)}
+            onClick={() => setIsShowConfirmUpdateDialog(!isShowConfirmUpdateDialog)}
             key="delete-menu"
-            size="small"
-            color="error"
-            variant="outlined"
+            size="medium"
+            color="primary"
+            variant="contained"
           >
-            Xóa
+            Đưa menu vào hoạt động
           </Button>
         ]}
       >
@@ -231,6 +221,13 @@ const UpdateMenuPage = () => {
             );
           })}
         </Box>
+        <UpdateConfirmDialog
+          open={isShowConfirmUpdateDialog}
+          onClose={() => setIsShowConfirmUpdateDialog(!isShowConfirmUpdateDialog)}
+          onUpdate={() => onConfirmUpdateMenuStatus()}
+          title={'Bạn muốn đưa menu này vào hoạt động'}
+          description={'Menu này chuyển trạng thái từ "tạm ẩn" thành "hoạt động"'}
+        />
       </Page>
     </FormProvider>
   );

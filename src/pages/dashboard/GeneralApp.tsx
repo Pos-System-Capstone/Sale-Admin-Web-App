@@ -6,6 +6,7 @@ import useSettings from '../../hooks/useSettings';
 // components
 import { AppNewInvoice, AppWelcome } from 'components/_dashboard/general-app';
 import Page from '../../components/Page';
+import { Role } from 'utils/role';
 
 // ----------------------------------------------------------------------
 
@@ -20,9 +21,11 @@ export default function GeneralApp() {
           <AppWelcome displayName={user?.displayName} />
         </Grid>
 
-        <Grid item xs={12} lg={12}>
-          <AppNewInvoice />
-        </Grid>
+        {user?.role.includes(Role.StoreManager) && (
+          <Grid item xs={12} lg={12}>
+            <AppNewInvoice />
+          </Grid>
+        )}
 
         {/* <Grid item xs={12} md={4}>
           <AppTotalActiveUsers />
@@ -58,24 +61,8 @@ export default function GeneralApp() {
 
         <Grid item xs={12} md={6} lg={4}>
           <AppTopAuthors />
-        </Grid>
-
-        <Grid item xs={12}>
-          <Grid container spacing={2} columns={16}>
-            <Grid item xs={4}>
-              <AppWidgets1 />
-            </Grid>
-            <Grid item xs={4}>
-              <AppWidgets2 />
-            </Grid>
-            <Grid item xs={4}>
-              <AppWidgets3 />
-            </Grid>
-            <Grid item xs={4}>
-              <AppWidgets4 />
-            </Grid>
-          </Grid>
-        </Grid> */}
+        </Grid> 
+        */}
       </Grid>
     </Page>
   );

@@ -1,73 +1,118 @@
-import faker from 'faker';
-import { Icon } from '@iconify/react';
-import { sentenceCase } from 'change-case';
-import { Link as RouterLink } from 'react-router-dom';
 // material
+import { Card, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
-import {
-  Box,
-  Card,
-  Table,
-  Button,
-  Divider,
-  TableRow,
-  TableBody,
-  TableCell,
-  TableHead,
-  CardHeader,
-  TableContainer
-} from '@mui/material';
 // utils
-import { fCurrency } from '../../../utils/formatNumber';
 //
-import Label from '../../Label';
-import Scrollbar from '../../Scrollbar';
-import MoreMenuButton from '../../MoreMenuButton';
+import { Visibility } from '@mui/icons-material';
+import { IconButton, Stack, Tooltip } from '@mui/material';
+import useAuth from 'hooks/useAuth';
+import { useState } from 'react';
+import { ORDER_STATUS_OPTONS, TOrder } from 'types/order';
+import { TTableColumn } from 'types/table';
+import ResoTable from 'components/ResoTable/ResoTable';
+import orderApi from 'api/order';
+import OrderDetailDialog from 'pages/Orders/components/OrderDetailDialog';
 
 // ----------------------------------------------------------------------
 
-const INVOICES = [
-  {
-    id: faker.datatype.uuid(),
-    category: 'Android',
-    price: faker.finance.amount(),
-    status: 'in_progress'
-  },
-  {
-    id: faker.datatype.uuid(),
-    category: 'Windows',
-    price: faker.finance.amount(),
-    status: 'paid'
-  },
-  {
-    id: faker.datatype.uuid(),
-    category: 'Mac',
-    price: faker.finance.amount(),
-    status: 'out_of_date'
-  },
-  {
-    id: faker.datatype.uuid(),
-    category: 'Windows',
-    price: faker.finance.amount(),
-    status: 'paid'
-  },
-  {
-    id: faker.datatype.uuid(),
-    category: 'Windows',
-    price: faker.finance.amount(),
-    status: 'in_progress'
-  }
-];
+// const INVOICES = [
+//   {
+//     id: faker.datatype.uuid(),
+//     category: 'Android',
+//     price: faker.finance.amount(),
+//     status: 'in_progress'
+//   },
+//   {
+//     id: faker.datatype.uuid(),
+//     category: 'Windows',
+//     price: faker.finance.amount(),
+//     status: 'paid'
+//   },
+//   {
+//     id: faker.datatype.uuid(),
+//     category: 'Mac',
+//     price: faker.finance.amount(),
+//     status: 'out_of_date'
+//   },
+//   {
+//     id: faker.datatype.uuid(),
+//     category: 'Windows',
+//     price: faker.finance.amount(),
+//     status: 'paid'
+//   },
+//   {
+//     id: faker.datatype.uuid(),
+//     category: 'Windows',
+//     price: faker.finance.amount(),
+//     status: 'in_progress'
+//   }
+// ];
 
 // ----------------------------------------------------------------------
 
 export default function AppNewInvoice() {
+  const [detailOrder, setDetailOrder] = useState<string | null>(null);
+  const { user } = useAuth();
   const theme = useTheme();
+  const orderColumns: TTableColumn<TOrder>[] = [
+    {
+      title: 'STT',
+      dataIndex: 'index',
+      hideInSearch: true
+    },
+    {
+      title: 'Mã hoá đơn',
+      dataIndex: 'invoiceId',
+      hideInSearch: true
+    },
+    {
+      title: 'Người tạo',
+      dataIndex: 'staffName',
+      hideInSearch: true
+    },
+    {
+      title: 'Thời gian tạo',
+      dataIndex: 'startDate',
+      valueType: 'date',
+      hideInSearch: true
+    },
+    {
+      title: 'Thời gian hoàn thành',
+      dataIndex: 'endDate',
+      valueType: 'date',
+      hideInSearch: true
+    },
+    {
+      title: 'Tổng tiền',
+      dataIndex: 'finalAmount',
+      hideInSearch: true,
+      valueType: 'money'
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'status',
+      valueEnum: ORDER_STATUS_OPTONS,
+      valueType: 'select',
+      fixed: 'right',
+      hideInSearch: true
+    },
+    {
+      title: 'Chi tiết',
+      fixed: 'right',
+      hideInSearch: true,
+      render: (_: any, order: TOrder) => (
+        <Tooltip title="Chi tiết">
+          <IconButton onClick={() => setDetailOrder(order.id)} size="large">
+            <Visibility />
+          </IconButton>
+        </Tooltip>
+      )
+    }
+  ];
 
   return (
     <Card>
-      <CardHeader title="New Invoice" sx={{ mb: 3 }} />
+      {/* <CardHeader title="New Invoice" sx={{ mb: 3 }} />
       <Scrollbar>
         <TableContainer sx={{ minWidth: 720 }}>
           <Table>
@@ -120,7 +165,23 @@ export default function AppNewInvoice() {
         >
           View All
         </Button>
-      </Box>
+      </Box> */}
+      <OrderDetailDialog
+        orderId={detailOrder}
+        open={Boolean(detailOrder)}
+        onClose={() => setDetailOrder(null)}
+      />
+      <Stack spacing={2}>
+        <Typography variant="h3">Hoá đơn cửa hàng</Typography>
+        <ResoTable
+          showAction={false}
+          rowKey="menu_id"
+          getData={(params: any) => {
+            return orderApi.getOrderList(user?.storeId ?? '', params);
+          }}
+          columns={orderColumns}
+        />
+      </Stack>
     </Card>
   );
 }

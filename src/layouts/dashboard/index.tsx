@@ -12,6 +12,8 @@ import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 //
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
+import useAuth from 'hooks/useAuth';
+import { Role } from 'utils/role';
 
 // ----------------------------------------------------------------------
 
@@ -43,6 +45,7 @@ function DashboardLayout() {
   const theme = useTheme();
   const { collapseClick } = useCollapseDrawer();
   const { open, setNavOpen: setOpen } = useDashboard();
+  const { user } = useAuth();
 
   const [isLoadingState, setIsLoadingState] = useState(true);
 
@@ -61,7 +64,9 @@ function DashboardLayout() {
   return (
     <RootStyle>
       <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
-      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+      {!user?.role.includes(Role.SystemAdmin) && (
+        <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+      )}
       <MainStyle
         sx={{
           transition: theme.transitions.create('margin', {

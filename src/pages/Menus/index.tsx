@@ -5,23 +5,23 @@ import { Icon } from '@iconify/react';
 // material
 import { Button, Card, Chip, Stack, Typography } from '@mui/material';
 import menuApi from 'api/menu';
+import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 import { menuSchema } from 'components/form/Menu/helper';
 import MenuForm from 'components/form/Menu/MenuForm';
 import Label from 'components/Label';
-import confirm from 'components/Modal/confirm';
 import ModalForm from 'components/ModalForm/ModalForm';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useAuth from 'hooks/useAuth';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 // components
 import { useNavigate } from 'react-router-dom';
 import { getMenusOfBrand } from 'redux/menu/api';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { Menu, PosMenu, TCreateMenuInformation } from 'types/menu';
+import { MenuStatus, PosMenu, TCreateMenuInformation } from 'types/menu';
 import { TTableColumn } from 'types/table';
 import { convertTimeToInteger, processDayFiter } from 'utils/utils';
 
@@ -61,6 +61,17 @@ export const menuColumns: TTableColumn<PosMenu>[] = [
     )
   },
   {
+    title: 'Trạng thái',
+    dataIndex: 'status',
+    hideInSearch: true,
+    render: (status) =>
+      status == MenuStatus.ACTIVE ? (
+        <Label color="primary">Hoạt Động</Label>
+      ) : (
+        <Label color="error">Tạm ẩn</Label>
+      )
+  },
+  {
     title: 'Độ ưu tiên',
     dataIndex: 'priority',
     hideInSearch: true
@@ -84,6 +95,8 @@ const MenusPage = () => {
   const tableRef = useRef<any>();
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useAuth();
+  const [isShowConfirmDeleteDialog, setIsShowConfirmDeleteDialog] = useState(false);
+  const [deleteMenu, setDeleteMenu] = useState<PosMenu>();
 
   const createMenuForm = useForm({
     resolver: yupResolver(menuSchema),
@@ -112,15 +125,21 @@ const MenusPage = () => {
     }
   };
 
-  const onConfirmDelete = async (menu: Menu) => {
-    confirm({
-      title: 'Xác nhận xoá',
-      content: `Bạn đồng ý xóa menu "${menu.code}"?`,
-      onOk: async () => {
-        await onDeleteMenu(menu.id);
-      },
-      onCancle: () => {}
-    });
+  const onConfirmDelete = async () => {
+    console.log('delete menu: ', deleteMenu);
+    try {
+      await menuApi.updateMenuStatus(deleteMenu?.id ?? '', MenuStatus.DEACTIVATE);
+      enqueueSnackbar('Xoá thành công', {
+        variant: 'success'
+      });
+      console.log(`tableRef.current`, tableRef.current);
+      tableRef.current?.reload();
+    } catch (error) {
+      console.log(`error`, error);
+      enqueueSnackbar((error as any).Error, {
+        variant: 'error'
+      });
+    }
   };
 
   const handleProcessCreateNewMenuRequest = (data: any) => {
@@ -208,7 +227,9 @@ const MenusPage = () => {
         <Stack spacing={2}>
           <ResoTable
             ref={tableRef}
-            onDelete={onConfirmDelete}
+            onDelete={(data: PosMenu) => (
+              setDeleteMenu(data), setIsShowConfirmDeleteDialog(!isShowConfirmDeleteDialog)
+            )}
             rowKey="menu_id"
             onEdit={(menu: PosMenu) => navigate(`${PATH_DASHBOARD.menus.root}/${menu.id}`)}
             getData={(params: any) => getMenusOfBrand(user?.brandId, params)}
@@ -216,6 +237,14 @@ const MenusPage = () => {
           />
         </Stack>
       </Card>
+
+      <DeleteConfirmDialog
+        open={isShowConfirmDeleteDialog}
+        onClose={() => setIsShowConfirmDeleteDialog(!isShowConfirmDeleteDialog)}
+        onDelete={() => onConfirmDelete()}
+        title={'Bạn có muốn xoá menu này'}
+        description={'Menu này sẽ bị xoá khỏi hệ thống'}
+      />
     </Page>
   );
 };

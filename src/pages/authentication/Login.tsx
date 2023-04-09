@@ -1,7 +1,7 @@
 import { capitalCase } from 'change-case';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Card, Stack, Alert, Tooltip, Container, Typography } from '@mui/material';
+import { Box, Card, Stack, Tooltip, Container, Typography } from '@mui/material';
 // routes
 // hooks
 import useAuth from '../../hooks/useAuth';
@@ -74,7 +74,7 @@ export default function Login() {
             </Tooltip>
           </Stack>
 
-          <Alert severity="info" sx={{ mb: 3 }}>
+          {/* <Alert severity="info" sx={{ mb: 3 }}>
             Test System Admin : <strong>admin</strong> / password :<strong>&nbsp;123456</strong>
           </Alert>
           <Alert severity="info" sx={{ mb: 3 }}>
@@ -88,7 +88,7 @@ export default function Login() {
           <Alert severity="info" sx={{ mb: 3 }}>
             Test Brand Admin : <strong>KatinatAdmin</strong> / password :
             <strong>&nbsp;1234567</strong>
-          </Alert>
+          </Alert> */}
 
           <LoginForm />
         </ContentStyle>

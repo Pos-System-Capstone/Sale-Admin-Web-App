@@ -18,6 +18,8 @@ import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // path
 import BrandListPage from 'pages/Brands/BrandList';
 import Insights from 'pages/report/Insights';
+import useAuth from 'hooks/useAuth';
+import { Role } from 'utils/role';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -50,6 +52,8 @@ const Loadable = (Component: any) => (props: any) => {
 };
 
 export default function Router() {
+  const { user } = useAuth();
+
   return useRoutes([
     {
       path: 'auth',
@@ -88,7 +92,14 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: '', element: <Navigate to="/dashboard/app" replace /> },
+        {
+          path: '',
+          element: user?.role.includes(Role.SystemAdmin) ? (
+            <Navigate to="/dashboard/brands" replace />
+          ) : (
+            <Navigate to="/dashboard/app" replace />
+          )
+        },
         { path: 'app', element: <GeneralApp /> },
         { path: 'ecommerce', element: <GeneralEcommerce /> },
         {

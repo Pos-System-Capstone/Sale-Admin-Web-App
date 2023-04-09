@@ -2,7 +2,7 @@
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
-import { Avatar, Button, Card, Stack } from '@mui/material';
+import { Button, Card, Stack } from '@mui/material';
 import categoryApi from 'api/category';
 import CategoryModal from 'components/CategoryModal';
 import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
@@ -25,7 +25,6 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
   const navigate = useNavigate();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
-  console.log(`isExtra`, isExtra);
 
   const tableRef = useRef<any>();
   const [formModal, setFormModal] = useState(false);
@@ -37,19 +36,6 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
       title: 'STT',
       dataIndex: 'index',
       hideInSearch: true
-    },
-    {
-      title: 'Hình ảnh',
-      dataIndex: 'picUrl',
-      hideInSearch: true,
-      render: (src, { product_name }: any) => (
-        <Avatar
-          alt={product_name}
-          src={src}
-          variant="square"
-          style={{ width: '54px', height: '54px' }}
-        />
-      )
     },
     {
       title: 'Tên danh mục',
@@ -72,6 +58,19 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
         );
       }
     }
+    // {
+    //   title: 'Hình ảnh',
+    //   dataIndex: 'picUrl',
+    //   hideInSearch: true,
+    //   render: (src, { product_name }: any) => (
+    //     <Avatar
+    //       alt={product_name}
+    //       src={src}
+    //       variant="square"
+    //       style={{ width: '54px', height: '54px' }}
+    //     />
+    //   )
+    // },
   ];
 
   useEffect(() => {
@@ -112,7 +111,6 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
         });
       });
   const deactiveCategoryHandler = () => {
-    console.log(`data`, currentDeleteItem);
     const category = currentDeleteItem;
     category!.status = CategoryStatus.DEACTIVE;
     return categoryApi

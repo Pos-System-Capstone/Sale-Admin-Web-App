@@ -126,16 +126,16 @@ const MenusPage = () => {
   };
 
   const onConfirmDelete = async () => {
-    console.log('delete menu: ', deleteMenu);
     try {
-      await menuApi.updateMenuStatus(deleteMenu?.id ?? '', MenuStatus.DEACTIVATE);
-      enqueueSnackbar('Xoá thành công', {
-        variant: 'success'
+      await menuApi.updateMenuStatus(deleteMenu?.id ?? '', MenuStatus.DEACTIVATE).then(() => {
+        enqueueSnackbar('Xoá thành công', {
+          variant: 'success'
+        });
+        setIsShowConfirmDeleteDialog(!isShowConfirmDeleteDialog);
+        console.log(`tableRef.current`, tableRef.current);
+        tableRef.current?.reload();
       });
-      console.log(`tableRef.current`, tableRef.current);
-      tableRef.current?.reload();
     } catch (error) {
-      console.log(`error`, error);
       enqueueSnackbar((error as any).Error, {
         variant: 'error'
       });

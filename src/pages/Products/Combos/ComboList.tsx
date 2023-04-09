@@ -8,7 +8,7 @@ import useLocales from 'hooks/useLocales';
 import { useSnackbar } from 'notistack';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router';
-import { deleteProdById, getAllProduct } from 'redux/product/api';
+import { deleteProdById, getComboById } from 'redux/product/api';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { CollectionTypeEnum } from 'types/collection';
 import { TProductBase } from 'types/product';
@@ -85,7 +85,7 @@ const ComboList = (props: Props) => {
             // defaultFilters={{
             //   'product-type': ProductTypeEnum.Combo
             // }}
-            getData={getAllProduct}
+            getData={() => getComboById(0)}
             onEdit={(data: TProductBase) =>
               navigate(`${PATH_DASHBOARD.combos.editById(data.product_id)}`)
             }

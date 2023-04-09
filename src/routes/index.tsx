@@ -132,6 +132,16 @@ export default function Router() {
           ]
         },
         {
+          path: 'sessions',
+          children: [
+            {
+              path: 'new',
+              element: <CreateAccount />
+            },
+            { path: '', element: <SessionListPage /> }
+          ]
+        },
+        {
           path: 'accounts',
           children: [
             {
@@ -386,3 +396,6 @@ const HomePage = Loadable(lazy(() => import('../pages/report/Home')));
 
 // user
 const UserProfile = Loadable(lazy(() => import('../components/_dashboard/user/profile/Profile')));
+
+//sessions
+const SessionListPage = Loadable(lazy(() => import('../pages/Sessions')));

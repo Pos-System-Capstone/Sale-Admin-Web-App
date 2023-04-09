@@ -157,6 +157,11 @@ export const PATH_DASHBOARD = {
     accountInStore: path(ROOTS_DASHBOARD, `/stores/detail/accounts`),
     storeById: (storeId: string) => path(ROOTS_DASHBOARD, `/stores/${storeId}`)
   },
+  sessions: {
+    root: path(ROOTS_DASHBOARD, '/sessions'),
+    new: path(ROOTS_DASHBOARD, '/sessions/new'),
+    editById: (id: any) => path(ROOTS_DASHBOARD, `/sessions/${id}`)
+  },
   accounts: {
     root: path(ROOTS_DASHBOARD, '/accounts'),
     new: path(ROOTS_DASHBOARD, '/accounts/new'),

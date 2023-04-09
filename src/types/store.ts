@@ -74,3 +74,18 @@ export type MenuInStoreAdmin = {
   name: string;
   menus: Menu[];
 };
+
+export type TSession = {
+  id: string;
+  startDateTime: string;
+  endDateTime: string;
+  name: string;
+  numberOfOrders: number;
+  currentCashInVault: number;
+  totalFinalAmount: number;
+};
+export type TSessionCreate = {
+  name: string;
+  startTime: string;
+  endTime: string;
+};

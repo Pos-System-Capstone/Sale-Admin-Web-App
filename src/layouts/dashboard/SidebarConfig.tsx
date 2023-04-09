@@ -197,14 +197,19 @@ export const storeManagerSidebarConfig = [
     subheader: 'Quản lý hệ thống',
     items: [
       {
-        title: 'Danh sách nhân viên',
+        title: 'Nhân viên',
         path: PATH_DASHBOARD.stores.accountInStore,
         icon: ICONS.user
       },
       {
-        title: 'Danh sách đơn hàng ',
+        title: 'Đơn hàng ',
         path: PATH_DASHBOARD.orders.root,
         icon: ICONS.order
+      },
+      {
+        title: 'Ca làm việc ',
+        path: PATH_DASHBOARD.sessions.root,
+        icon: ICONS.calendar
       }
     ]
   }

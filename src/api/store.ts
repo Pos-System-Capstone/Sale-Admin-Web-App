@@ -1,4 +1,11 @@
-import { TSession, TSessionCreate, TStore, TStoreDetail } from 'types/store';
+import {
+  TSession,
+  TSessionCreate,
+  TSessionDetail,
+  TSessionDetailUpdate,
+  TStore,
+  TStoreDetail
+} from 'types/store';
 import { generateAPIWithPaging } from './utils';
 import requestWebAdmin from 'utils/axios';
 import { BaseReponse } from 'types/response';
@@ -16,7 +23,9 @@ const createStoreSessions = (storeId: string, data: TSessionCreate[]) =>
 const getStoreSessions = (storeId: string, params?: any) =>
   requestWebAdmin.get<BaseReponse<TSession>>(`stores/${storeId}/sessions`, { params });
 const getStoreSessionDetail = (storeId: string, sessionId: string) =>
-  requestWebAdmin.get(`stores/${storeId}/sessions/${sessionId}`);
+  requestWebAdmin.get<TSessionDetail>(`stores/${storeId}/sessions/${sessionId}`);
+const updateStoreSessionDetail = (storeId: string, sessionId: string, data: TSessionDetailUpdate) =>
+  requestWebAdmin.put<TSessionDetail>(`stores/${storeId}/sessions/${sessionId}`, data);
 const storeApi = {
   getStoreDetail,
   getStoreEmployees,
@@ -24,6 +33,7 @@ const storeApi = {
   createStoreSessions,
   getStoreSessions,
   getStoreSessionDetail,
+  updateStoreSessionDetail,
   ...generateAPIWithPaging<TStore>('stores')
 };
 

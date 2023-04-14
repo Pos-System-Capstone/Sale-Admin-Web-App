@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import plusFill from '@iconify/icons-eva/plus-fill';
 // material
-import { Button, Card, Stack, Typography } from '@mui/material';
+import { Button, Card, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import storeApi from 'api/store';
 import ModalForm from 'components/ModalForm/ModalForm';
 import Page from 'components/Page';
@@ -18,6 +18,8 @@ import SessionForm from './CreateNewSessions';
 import { Icon } from '@iconify/react';
 import { useSnackbar } from 'notistack';
 import moment from 'moment';
+import { Visibility } from '@mui/icons-material';
+import SessionDetailDialog from './SessionDetailsDialog';
 
 const SessionListPage = () => {
   const navigate = useNavigate();
@@ -66,19 +68,19 @@ const SessionListPage = () => {
       dataIndex: 'currentCashInVault',
       valueType: 'money',
       hideInSearch: true
+    },
+    {
+      title: 'Chi tiết',
+      fixed: 'right',
+      hideInSearch: true,
+      render: (_: any, session: TSession) => (
+        <Tooltip title="Chi tiết">
+          <IconButton onClick={() => setSelectSession(session.id)} size="large">
+            <Visibility />
+          </IconButton>
+        </Tooltip>
+      )
     }
-    // {
-    //   title: translate('pages.orders.table.detail'),
-    //   fixed: 'right',
-    //   hideInSearch: true,
-    //   render: (_: any, session: TSession) => (
-    //     <Tooltip title="Chi tiết">
-    //       <IconButton onClick={() => setSelectSession(session.id)} size="large">
-    //         <Visibility />
-    //       </IconButton>
-    //     </Tooltip>
-    //   )
-    // }
   ];
   const createSessionsForm = useForm({
     // resolver: yupResolver(menuSchema),
@@ -92,15 +94,9 @@ const SessionListPage = () => {
   };
   const handleProcessCreateSessionsRequest = (data: any) => {
     const { name, startTime, endTime, dateFrom, dateTo } = data;
-    // convert all data to int to send request
     moment(dateFrom).format('YYYY-MM-DD');
     moment(dateTo).format('YYYY-MM-DD');
     var daylist = getDaysArray(dateFrom, dateTo);
-    // daylist.map((v) => v.toISOString().slice(0, 10));
-    console.log('name', name);
-    console.log('startTime', moment(startTime).format('HH:mm:ss'));
-    console.log('endTime', moment(endTime).format('HH:mm:ss'));
-    console.log('daylist', daylist);
 
     const request: TSessionCreate[] = [];
     daylist.forEach((day) => {
@@ -110,7 +106,6 @@ const SessionListPage = () => {
         endTime: `${day}T${moment(endTime).format('HH:mm:ss')}`
       });
     });
-    console.log('request', request);
     const createSessionsRequest: any = {
       sessions: request
     };
@@ -156,14 +151,18 @@ const SessionListPage = () => {
         </ModalForm>
       ]}
     >
-      {/* <OrderDetailDialog
-        orderId={detailOrder}
-        open={Boolean(detailOrder)}
-        onClose={() => setDetailOrder(null)}
-      /> */}
+      <SessionDetailDialog
+        sessionId={selectSession}
+        open={Boolean(selectSession)}
+        onClose={() => {
+          setSelectSession(null);
+          tableRef.current?.reload();
+        }}
+      />
       <Card>
         <Stack spacing={2}>
           <ResoTable
+            tableRef={tableRef}
             showAction={false}
             rowKey="menu_id"
             getData={(params: any) => {

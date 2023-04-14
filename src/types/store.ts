@@ -89,3 +89,23 @@ export type TSessionCreate = {
   startTime: string;
   endTime: string;
 };
+export type TSessionDetailUpdate = {
+  startTime: string;
+  endTime: string;
+  name: string;
+  initCashInVault: number;
+};
+
+export type TSessionDetail = {
+  sessionId: string;
+  startDateTime: string;
+  endDateTime: string;
+  name: string;
+  numberOfOrders: number;
+  totalAmount: number;
+  totalPromotion: number;
+  currentCashInVault: number;
+  initCashInVault: number;
+  profitAmount: number;
+  totalDiscountAmount: number;
+};

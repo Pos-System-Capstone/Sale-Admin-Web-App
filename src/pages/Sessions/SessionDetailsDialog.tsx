@@ -62,15 +62,10 @@ const SessionDetailDialog: React.FC<Props> = ({ open, onClose, sessionId }) => {
       date: moment(session?.endDateTime).format('YYYY-MM-DD'),
       initCashInVault: session?.initCashInVault
     });
-    console.log('session', updateSessionForm.getValues());
   }, [session, updateSessionForm]);
 
   const handleProcessUpdateSessionsRequest = (data: any) => {
     const { name, startTime, endTime, date, initCashInVault } = data;
-
-    console.log('name', name);
-    console.log('startTime', moment(startTime).format('HH:mm:ss'));
-    console.log('endTime', moment(endTime).format('HH:mm:ss'));
 
     const request: TSessionDetailUpdate = {
       name: name,
@@ -78,7 +73,6 @@ const SessionDetailDialog: React.FC<Props> = ({ open, onClose, sessionId }) => {
       endTime: `${moment(date).format('YYYY-MM-DD')}T${moment(endTime).format('HH:mm:ss')}`,
       initCashInVault: initCashInVault
     };
-    console.log('request', request);
     return request;
   };
 

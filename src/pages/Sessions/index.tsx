@@ -94,15 +94,9 @@ const SessionListPage = () => {
   };
   const handleProcessCreateSessionsRequest = (data: any) => {
     const { name, startTime, endTime, dateFrom, dateTo } = data;
-    // convert all data to int to send request
     moment(dateFrom).format('YYYY-MM-DD');
     moment(dateTo).format('YYYY-MM-DD');
     var daylist = getDaysArray(dateFrom, dateTo);
-    // daylist.map((v) => v.toISOString().slice(0, 10));
-    console.log('name', name);
-    console.log('startTime', moment(startTime).format('HH:mm:ss'));
-    console.log('endTime', moment(endTime).format('HH:mm:ss'));
-    console.log('daylist', daylist);
 
     const request: TSessionCreate[] = [];
     daylist.forEach((day) => {
@@ -112,7 +106,6 @@ const SessionListPage = () => {
         endTime: `${day}T${moment(endTime).format('HH:mm:ss')}`
       });
     });
-    console.log('request', request);
     const createSessionsRequest: any = {
       sessions: request
     };

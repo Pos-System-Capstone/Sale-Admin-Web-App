@@ -18,7 +18,7 @@ const Page = forwardRef<HTMLDivElement, PageProps>(
     return (
       <Box ref={ref} {...other}>
         <Helmet>
-          <title>{title} | Sale reso</title>
+          <title>{title} | Reso Sale Management</title>
         </Helmet>
         <Container maxWidth="lg" sx={{ mx: 'auto' }}>
           <Box pb={4}>

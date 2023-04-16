@@ -5,6 +5,7 @@ import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
 // utils
 import { fShortenNumber } from '../../../utils/formatNumber';
+import { TBrand } from 'types/brand';
 
 // ----------------------------------------------------------------------
 
@@ -34,9 +35,13 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 714000;
+export interface Props {
+  title: string;
+  brands: TBrand[];
+}
 
-export default function AnalyticsWeeklySales() {
+export default function AnalyticsWeeklySales(props: Props) {
+  const TOTAL = props.brands.length ?? 0;
   return (
     <RootStyle>
       <IconWrapperStyle>
@@ -44,7 +49,7 @@ export default function AnalyticsWeeklySales() {
       </IconWrapperStyle>
       <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Weekly Sales
+        {props.title}
       </Typography>
     </RootStyle>
   );

@@ -13,7 +13,6 @@ import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
 import useAuth from 'hooks/useAuth';
-import { Role } from 'utils/role';
 
 // ----------------------------------------------------------------------
 
@@ -64,9 +63,7 @@ function DashboardLayout() {
   return (
     <RootStyle>
       <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
-      {!user?.role.includes(Role.SystemAdmin) && (
-        <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
-      )}
+      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
       <MainStyle
         sx={{
           transition: theme.transitions.create('margin', {

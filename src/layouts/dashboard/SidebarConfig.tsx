@@ -37,16 +37,16 @@ const ICONS = {
 
 // SYSTEM ADMIN SIDEBAR CONFIG
 export const systemAdminSidebarConfig = [
-  // {
-  //   subheader: 'Tổng quan',
-  //   items: [
-  //     {
-  //       title: 'Tổng quan',
-  //       path: PATH_DASHBOARD.general.app,
-  //       icon: ICONS.dashboard
-  //     }
-  //   ]
-  // },
+  {
+    subheader: 'Tổng quan',
+    items: [
+      {
+        title: 'Báo cáo',
+        path: PATH_DASHBOARD.general.analytics,
+        icon: ICONS.dashboard
+      }
+    ]
+  },
   {
     subheader: 'Quản lý hệ thống',
     items: [
@@ -186,6 +186,21 @@ export const storeManagerSidebarConfig = [
   {
     subheader: 'Tổng quan',
     items: [
+      {
+        title: 'Báo cáo',
+        path: PATH_DASHBOARD.general.app,
+        icon: ICONS.dashboard
+      },
+      // {
+      //   title: 'Báo cáo',
+      //   path: PATH_DASHBOARD.general.analytics,
+      //   icon: ICONS.dashboard
+      // },
+      // {
+      //   title: 'Báo cáo',
+      //   path: PATH_DASHBOARD.general.ecommerce,
+      //   icon: ICONS.dashboard
+      // },
       {
         title: 'Chi tiết cửa hàng',
         path: PATH_DASHBOARD.stores.storeDetail,

@@ -18,26 +18,36 @@ import {
   AnalyticsCurrentSubject,
   AnalyticsConversionRates
 } from '../../components/_dashboard/general-analytics';
+import { useQuery } from 'react-query';
+import brandApi from 'api/brand';
 
 // ----------------------------------------------------------------------
 
 export default function GeneralAnalytics() {
   const { themeStretch } = useSettings();
+  const params = {
+    size: 1000,
+    page: 1
+  };
+  const { data: brands } = useQuery(['brands', params], () =>
+    brandApi.get(params).then((res) => res.data.items)
+  );
 
+  console.log('brands', brands);
   return (
-    <Page title="Dashboard: Analytics | Minimal-UI">
+    <Page title="Báo cáo tổng hợp">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
+          Chào mừng bạn đến với trang quản trị hệ thống
         </Typography>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AnalyticsWeeklySales />
+            <AnalyticsWeeklySales title="Thương hiệu" brands={brands ?? []} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AnalyticsNewUsers />
+            <AnalyticsNewUsers title="Cửa hàng" brands={brands ?? []} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>

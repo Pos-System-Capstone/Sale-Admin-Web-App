@@ -197,7 +197,7 @@ export const storeManagerSidebarConfig = [
       //   icon: ICONS.dashboard
       // },
       // {
-      //   title: 'Báo cáo',
+      //   title: 'Báo cáo ca',
       //   path: PATH_DASHBOARD.general.ecommerce,
       //   icon: ICONS.dashboard
       // },

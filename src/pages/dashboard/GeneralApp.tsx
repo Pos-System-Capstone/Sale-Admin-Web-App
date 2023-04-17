@@ -95,56 +95,58 @@ export default function GeneralApp() {
       <Grid container spacing={2}>
         <Grid item xs={12} md={12}>
           <AppWelcome displayName={user?.displayName} />
-        </Grid>
-        <Grid item xs={12} md={12}>
-          <Stack direction={'row'} sx={{ flexWrap: 'nowrap', justifyContent: 'space-between' }}>
-            <Box>
-              <Typography variant="h4">Thông tin chi tiết về cửa hàng</Typography>
-              <Typography variant="body2">
-                Dựa trên dữ liệu ngày {dateRange()[0]} đến {dateRange()[1]}
-              </Typography>
-            </Box>
-            <Box>
-              <SelectDateRange value={options} onChange={setOptions} showOptionDateRange={false} />
-            </Box>
-          </Stack>
-        </Grid>
+        </Grid>{' '}
         {user?.role.includes(Role.StoreManager) && (
-          <Grid item xs={12} md={4}>
-            <AppTotalActiveUsers title="Tổng đơn hàng" todayOrder={orders} />
-          </Grid>
-        )}
-        {user?.role.includes(Role.StoreManager) && (
-          <Grid item xs={12} md={4}>
-            <AppTotalDownloads
-              title="Tổng đơn hàng hoàn thành"
-              todayOrder={orders !== undefined ? orders : []}
-            />
-          </Grid>
-        )}
-        {user?.role.includes(Role.StoreManager) && (
-          <Grid item xs={12} md={4}>
-            <AppTotalInstalled
-              title="Tổng doanh thu"
-              todayOrder={orders !== undefined ? orders : []}
-            />
-          </Grid>
-        )}
-        {user?.role.includes(Role.StoreManager) && (
-          <Grid item xs={12} md={4} lg={4}>
-            <AppCurrentDownload
-              title="Loại đơn hàng "
-              todayOrder={orders !== undefined ? orders : []}
-            />
-          </Grid>
-        )}
-        {user?.role.includes(Role.StoreManager) && (
-          <Grid item xs={12} md={8} lg={8}>
-            <AppAreaInstalled
-              title="Biểu đồ đơn hàng theo giờ"
-              todayOrder={orders !== undefined ? orders : []}
-            />
-          </Grid>
+          <>
+            <Grid item xs={12} md={12}>
+              <Stack direction={'row'} sx={{ flexWrap: 'nowrap', justifyContent: 'space-between' }}>
+                <Box>
+                  <Typography variant="h4">Thông tin chi tiết về cửa hàng</Typography>
+                  <Typography variant="body2">
+                    Dựa trên dữ liệu ngày {dateRange()[0]} đến {dateRange()[1]}
+                  </Typography>
+                </Box>
+                <Box>
+                  <SelectDateRange
+                    value={options}
+                    onChange={setOptions}
+                    showOptionDateRange={false}
+                  />
+                </Box>
+              </Stack>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <AppTotalActiveUsers title="Tổng đơn hàng" todayOrder={orders} />
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <AppTotalDownloads
+                title="Tổng đơn hàng hoàn thành"
+                todayOrder={orders !== undefined ? orders : []}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <AppTotalInstalled
+                title="Tổng doanh thu"
+                todayOrder={orders !== undefined ? orders : []}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={4} lg={4}>
+              <AppCurrentDownload
+                title="Loại đơn hàng "
+                todayOrder={orders !== undefined ? orders : []}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={8} lg={8}>
+              <AppAreaInstalled
+                title="Biểu đồ đơn hàng theo giờ"
+                todayOrder={orders !== undefined ? orders : []}
+              />
+            </Grid>
+          </>
         )}
         {/* {user?.role.includes(Role.StoreManager) && (
           <Grid item xs={12} lg={12}>

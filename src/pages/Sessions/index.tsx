@@ -43,8 +43,8 @@ const SessionListPage = () => {
     {
       title: 'Bắt đầu',
       dataIndex: 'startDateTime',
-      hideInSearch: true,
-      valueType: 'datetime'
+      valueType: 'datetime',
+      hideInSearch: true
     },
     {
       title: 'Kết thúc',
@@ -164,7 +164,7 @@ const SessionListPage = () => {
           <ResoTable
             tableRef={tableRef}
             showAction={false}
-            rowKey="menu_id"
+            rowKey="id"
             getData={(params: any) => {
               return storeApi.getStoreSessions(user?.storeId || '', params);
             }}

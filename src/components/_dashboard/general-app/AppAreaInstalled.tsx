@@ -1,48 +1,110 @@
-import { merge } from 'lodash';
+import { forEach, merge } from 'lodash';
 import { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 // material
 import { Card, CardHeader, Box, TextField } from '@mui/material';
 //
 import { BaseOptionChart } from '../../charts';
+import { OrderStatus, TOrder } from 'types/order';
 
 // ----------------------------------------------------------------------
 
-const CHART_DATA = [
-  {
-    year: 2019,
-    data: [
-      { name: 'Asia', data: [10, 41, 35, 51, 49, 62, 69, 91, 148] },
-      { name: 'America', data: [10, 34, 13, 56, 77, 88, 99, 77, 45] }
-    ]
-  },
-  {
-    year: 2020,
-    data: [
-      { name: 'Asia', data: [148, 91, 69, 62, 49, 51, 35, 41, 10] },
-      { name: 'America', data: [45, 77, 99, 88, 77, 56, 13, 34, 10] }
-    ]
-  }
-];
+export interface Props {
+  title: string;
+  todayOrder: TOrder[];
+}
 
-export default function AppAreaInstalled() {
-  const [seriesData, setSeriesData] = useState(2019);
+export default function AppAreaInstalled(props: Props) {
+  const [seriesData, setSeriesData] = useState(0);
 
   const handleChangeSeriesData = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSeriesData(Number(event.target.value));
   };
+  const listOrderByHour = (listOrder: TOrder[]) => {
+    const listOrderTime = [];
+    for (let index = 6; index < 24; index++) {
+      let count: number = 0;
+      forEach(listOrder, (order) => {
+        const time = new Date(order.endDate).getHours();
+        if (time === index && order.status === OrderStatus.PAID) {
+          count++;
+        }
+      });
+      listOrderTime.push(count);
+    }
+    console.log('listOrderTime', listOrderTime);
+    return listOrderTime;
+  };
 
+  const listOrderAmountByHour = (listOrder: TOrder[]) => {
+    const listOrderTime = [];
+    for (let index = 6; index < 24; index++) {
+      let count: number = 0;
+      forEach(listOrder, (order: TOrder) => {
+        const time = new Date(order.endDate).getHours();
+        if (time === index && order.status === OrderStatus.PAID) {
+          count += order.finalAmount;
+        }
+      });
+      listOrderTime.push(count);
+    }
+    return listOrderTime;
+  };
+
+  const CHART_DATA = [
+    {
+      day: 'Tổng đơn hàng',
+      value: 0,
+      data: [
+        {
+          name: 'Số đơn',
+          data: listOrderByHour(props.todayOrder)
+        }
+        // { name: 'Hôm qua', data: listOrderByHour(props.yesterdayOrder) }
+      ]
+    },
+    {
+      day: 'Tổng doanh thu',
+      value: 1,
+      data: [
+        {
+          name: 'Doanh thu',
+          data: listOrderAmountByHour(props.todayOrder)
+        }
+        // { name: 'Hôm qua', data: listOrderAmountByHour(props.yesterdayOrder) }
+      ]
+    }
+  ];
   const chartOptions = merge(BaseOptionChart(), {
     xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+      categories: [
+        '6h',
+        '7h',
+        '8h',
+        '9h',
+        '10h',
+        '11h',
+        '12h',
+        '13h',
+        '14h',
+        '15h',
+        '16',
+        '17h',
+        '18h',
+        '19h',
+        '20h',
+        '21h',
+        '22h',
+        '23h'
+      ]
     }
   });
 
   return (
     <Card>
       <CardHeader
-        title="Area Installed"
-        subheader="(+43%) than last year"
+        title={props.title}
+        subheader="Bao gồm tổng đơn và tổng doanh thu cho đơn hàng đã hoành thành"
         action={
           <TextField
             select
@@ -71,8 +133,8 @@ export default function AppAreaInstalled() {
             }}
           >
             {CHART_DATA.map((option) => (
-              <option key={option.year} value={option.year}>
-                {option.year}
+              <option key={option.value} value={option.value}>
+                {option.day}
               </option>
             ))}
           </TextField>
@@ -80,8 +142,8 @@ export default function AppAreaInstalled() {
       />
 
       {CHART_DATA.map((item) => (
-        <Box key={item.year} sx={{ mt: 3, mx: 3 }} dir="ltr">
-          {item.year === seriesData && (
+        <Box key={item.value} sx={{ mt: 3, mx: 3 }} dir="ltr">
+          {item.value === seriesData && (
             <ReactApexChart type="line" series={item.data} options={chartOptions} height={364} />
           )}
         </Box>

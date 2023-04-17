@@ -7,6 +7,7 @@ import { Card, CardHeader } from '@mui/material';
 import { fNumber } from '../../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../charts';
+import { OrderType, TOrder } from 'types/order';
 
 // ----------------------------------------------------------------------
 
@@ -31,19 +32,30 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const CHART_DATA = [12244, 53345, 44313, 78343];
+export interface Props {
+  title: string;
+  todayOrder: TOrder[];
+}
 
-export default function AppCurrentDownload() {
+export default function AppCurrentDownload(props: Props) {
   const theme = useTheme();
 
+  const TOTAL_PAID_ORDER = props.todayOrder.reduce(
+    (acc: any, cur: TOrder) => (cur.orderType === OrderType.EATIN ? (acc += 1) : (acc += 0)),
+    0
+  );
+  const TOTAL_PENDING_ORDER = props.todayOrder.reduce(
+    (acc: any, cur: TOrder) => (cur.orderType === OrderType.TAKE_AWAY ? (acc += 1) : (acc += 0)),
+    0
+  );
+  const TOTAL_CANCLE_ORDER = props.todayOrder.reduce(
+    (acc: any, cur: TOrder) => (cur.orderType === OrderType.DELIVERY ? (acc += 1) : (acc += 0)),
+    0
+  );
+  const CHART_DATA = [TOTAL_PAID_ORDER, TOTAL_PENDING_ORDER, TOTAL_CANCLE_ORDER];
   const chartOptions = merge(BaseOptionChart(), {
-    colors: [
-      theme.palette.primary.lighter,
-      theme.palette.primary.light,
-      theme.palette.primary.main,
-      theme.palette.primary.dark
-    ],
-    labels: ['Mac', 'Window', 'iOS', 'Android'],
+    colors: [theme.palette.primary.main, theme.palette.secondary.main, theme.palette.error.main],
+    labels: ['Tại quán', 'Mang đi', 'Giao hàng'],
     stroke: { colors: [theme.palette.background.paper] },
     legend: { floating: true, horizontalAlign: 'center' },
     tooltip: {
@@ -77,7 +89,7 @@ export default function AppCurrentDownload() {
 
   return (
     <Card>
-      <CardHeader title="Current Download" />
+      <CardHeader title={props.title} />
       <ChartWrapperStyle dir="ltr">
         <ReactApexChart type="donut" series={CHART_DATA} options={chartOptions} height={280} />
       </ChartWrapperStyle>

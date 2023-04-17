@@ -55,6 +55,9 @@ const buildFormItem = (tableConfig: TableType) => {
     case 'dateRange':
       C = DateRangePickerField;
       break;
+    case 'datetime':
+      C = DatePickerField;
+      break;
     case 'switch':
       C = SwitchField;
       break;

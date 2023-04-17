@@ -14,7 +14,7 @@ export default function Logo({ sx }: BoxProps) {
       src={
         user.brandPicUrl
           ? user.brandPicUrl
-          : 'https://cdn.haitrieu.com/wp-content/uploads/2022/03/Icon-Passio-Coffee-Tra.png'
+          : 'https://firebasestorage.googleapis.com/v0/b/pos-system-47f93.appspot.com/o/files%2Flogo.png?alt=media&token=423dceec-a73b-4313-83ed-9b56f8f3996c'
       }
       sx={{ width: 30, height: 30, ...sx }}
     />

@@ -1,14 +1,11 @@
-import { Icon } from '@iconify/react';
 import { ApexOptions } from 'apexcharts';
 
-import ReactApexChart from 'react-apexcharts';
-import trendingUpFill from '@iconify/icons-eva/trending-up-fill';
-import trendingDownFill from '@iconify/icons-eva/trending-down-fill';
 // material
 import { alpha, useTheme, styled } from '@mui/material/styles';
-import { Box, Card, Typography, Stack } from '@mui/material';
+import { Box, Card, Typography } from '@mui/material';
 // utils
-import { fNumber, fPercent } from '../../../utils/formatNumber';
+import { fNumber } from '../../../utils/formatNumber';
+import { TOrder } from 'types/order';
 
 // ----------------------------------------------------------------------
 
@@ -25,36 +22,39 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const PERCENT = 2.6;
-const TOTAL_USER = 18765;
-const CHART_DATA = [{ data: [2532, 6632, 4132, 8932, 6332, 2532, 4432, 1232, 3632, 932, 3354] }];
+// const PERCENT = 2.6;
 
-export default function AppTotalActiveUsers() {
+export interface Props {
+  title: string;
+  todayOrder: TOrder[];
+}
+
+export default function AppTotalActiveUsers(props: Props) {
   const theme = useTheme();
-
+  // const CHART_DATA = [{ data: [TOTAL_YESTERDAY_ORDER, TOTAL_TODAY_ORDER] }];
   const chartOptions: ApexOptions = {
     colors: [theme.palette.primary.main],
     chart: { sparkline: { enabled: true } },
     plotOptions: { bar: { columnWidth: '68%', borderRadius: 2 } },
-    labels: ['1', '2', '3', '4', '5', '6', '7', '8'],
+    labels: ['Hôm qua', 'Hôm nay'],
     tooltip: {
-      x: { show: false },
+      x: { show: true },
       y: {
         formatter: (seriesName: number | string) => fNumber(seriesName),
 
         title: {
-          formatter: (seriesName: number | string) => `#${seriesName}`
+          formatter: (seriesName: number | string) => `Đơn hàng:`
         }
       },
-      marker: { show: false }
+      marker: { show: true }
     }
   };
 
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
       <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="subtitle2">Total Active Users</Typography>
-        <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
+        <Typography variant="subtitle2">{props.title}</Typography>
+        {/* <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
           <IconWrapperStyle
             sx={{
               ...(PERCENT < 0 && {
@@ -69,18 +69,20 @@ export default function AppTotalActiveUsers() {
             {PERCENT > 0 && '+'}
             {fPercent(PERCENT)}
           </Typography>
-        </Stack>
+        </Stack> */}
 
-        <Typography variant="h3">{fNumber(TOTAL_USER)}</Typography>
+        <Typography variant="h3">
+          {fNumber(props.todayOrder !== undefined ? props.todayOrder.length : 0)}
+        </Typography>
       </Box>
 
-      <ReactApexChart
+      {/* <ReactApexChart
         type="bar"
         series={CHART_DATA}
         options={chartOptions}
         width={60}
         height={36}
-      />
+      /> */}
     </Card>
   );
 }

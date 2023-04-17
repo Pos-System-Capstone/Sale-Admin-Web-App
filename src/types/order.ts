@@ -20,6 +20,7 @@ export enum OrderStatus {
 }
 
 export type TOrder = {
+  items: any;
   id: string;
   invoiceId: string;
   staffName: string;

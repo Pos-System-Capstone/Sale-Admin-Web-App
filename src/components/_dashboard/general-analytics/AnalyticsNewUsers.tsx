@@ -5,6 +5,7 @@ import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
 // utils
 import { fShortenNumber } from '../../../utils/formatNumber';
+import { TBrand } from 'types/brand';
 
 // ----------------------------------------------------------------------
 
@@ -31,12 +32,17 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
     0.24
   )} 100%)`
 }));
+export interface Props {
+  title: string;
+  brands: TBrand[];
+}
 
 // ----------------------------------------------------------------------
 
 const TOTAL = 1352831;
 
-export default function AnalyticsNewUsers() {
+export default function AnalyticsNewUsers(props: Props) {
+  const TOTAL = props.brands.reduce((acc, brand) => acc + brand.numberOfStores, 0);
   return (
     <RootStyle>
       <IconWrapperStyle>
@@ -44,7 +50,7 @@ export default function AnalyticsNewUsers() {
       </IconWrapperStyle>
       <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        New Users
+        {props.title}
       </Typography>
     </RootStyle>
   );

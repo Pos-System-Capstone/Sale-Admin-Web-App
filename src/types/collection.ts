@@ -27,7 +27,7 @@ export type TCollection = {
 };
 export enum CollectionStatus {
   ACTIVE = 'Active',
-  DEACTIVE = 'Deactive'
+  DEACTIVATE = 'Deactivate'
 }
 
 export enum CollectionTypeEnum {

@@ -3,7 +3,7 @@ import { Visibility } from '@mui/icons-material';
 import Label from 'components/Label';
 
 // material
-import { Box, Card, IconButton, Stack, Tooltip, Typography } from '@mui/material';
+import { Avatar, Box, Card, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import brandApi from 'api/brand';
 import ResoTable from 'components/ResoTable/ResoTable';
 // components
@@ -21,6 +21,19 @@ const BrandListPage = () => {
       title: 'STT',
       dataIndex: 'index',
       hideInSearch: true
+    },
+    {
+      title: 'Hình ảnh',
+      dataIndex: 'picUrl',
+      hideInSearch: true,
+      render: (src, { brand_name }: any) => (
+        <Avatar
+          alt={brand_name}
+          src={src}
+          variant="circular"
+          style={{ width: '54px', height: '54px' }}
+        />
+      )
     },
     {
       title: 'Tên nhãn hiệu',

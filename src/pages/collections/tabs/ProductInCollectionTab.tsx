@@ -70,7 +70,7 @@ const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
         <Avatar
           alt={product_name}
           src={src}
-          variant="square"
+          variant="circular"
           style={{ width: '54px', height: '54px' }}
         />
       )

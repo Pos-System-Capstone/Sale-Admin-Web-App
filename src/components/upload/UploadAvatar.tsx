@@ -88,7 +88,7 @@ export default function UploadAvatar({
   const { enqueueSnackbar } = useSnackbar();
   const onDrop = useCallback(
     async (acceptedFiles) => {
-      console.log('acceptedFiles', acceptedFiles);
+      // console.log('acceptedFiles', acceptedFiles);
       const file = acceptedFiles[0];
       const storageRef = ref(storage, `/files/${file.name}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
@@ -109,7 +109,7 @@ export default function UploadAvatar({
         () => {
           // download url
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            console.log(url);
+            // console.log(url);
             if (onFormChange) {
               onFormChange(url);
             }

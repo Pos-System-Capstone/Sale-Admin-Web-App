@@ -4,7 +4,7 @@ import Router from './routes';
 import ThemeConfig from './theme';
 import GlobalStyles from './theme/globalStyles';
 // components
-import Settings from 'components/settings';
+// import Settings from 'components/settings';
 import { useState } from 'react';
 import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -46,10 +46,10 @@ export default function App() {
                 <GlobalStyles />
                 <ProgressBarStyle />
                 <BaseOptionChartStyle />
-                <Settings />
                 <ScrollToTop />
                 <GoogleAnalytics />
                 <Router />
+                {/* <Settings /> */}
                 {/* {isInitialized ? <Router /> : <LoadingScreen />} */}
               </NotistackProvider>
             </RtlLayout>

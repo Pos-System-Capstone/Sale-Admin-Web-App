@@ -25,71 +25,6 @@ import { MenuStatus, PosMenu, TCreateMenuInformation } from 'types/menu';
 import { TTableColumn } from 'types/table';
 import { convertTimeToInteger, processDayFiter } from 'utils/utils';
 
-export const menuColumns: TTableColumn<PosMenu>[] = [
-  {
-    title: 'Code',
-    dataIndex: 'code'
-  },
-  {
-    title: 'Thời gian hiệu lực',
-    hideInSearch: true,
-    render: (_, data: PosMenu) =>
-      data.startTime && data.endTime ? (
-        <Typography>
-          <Label key={data.code} color="primary">
-            {moment(data.startTime, 'HH:mm:ss').format('HH:mm')}
-          </Label>{' '}
-          -{' '}
-          <Label key={data.code} color="primary">
-            {moment(data.endTime, 'HH:mm:ss').format('HH:mm')}
-          </Label>
-        </Typography>
-      ) : (
-        '-'
-      )
-  },
-  {
-    title: 'Ngày áp dụng',
-    dataIndex: 'dateFilter',
-    hideInSearch: true,
-    render: (_: any, { dateFilter }: PosMenu) => (
-      <Stack direction="row" spacing={1}>
-        {dateFilter?.map((date) => (
-          <Chip size="small" key={date} label={date} />
-        ))}
-      </Stack>
-    )
-  },
-  {
-    title: 'Trạng thái',
-    dataIndex: 'status',
-    hideInSearch: true,
-    render: (status) =>
-      status == MenuStatus.ACTIVE ? (
-        <Label color="primary">Hoạt Động</Label>
-      ) : (
-        <Label color="error">Tạm ẩn</Label>
-      )
-  },
-  {
-    title: 'Độ ưu tiên',
-    dataIndex: 'priority',
-    hideInSearch: true
-  },
-  {
-    title: 'Ngày tạo',
-    dataIndex: 'createdAt',
-    hideInSearch: true,
-    render: (_: any, { createdAt }: PosMenu) => (
-      <Stack direction="row" spacing={1}>
-        <Label key={createdAt} color="warning">
-          {moment(createdAt).format('DD/MM/YYYY')}
-        </Label>
-      </Stack>
-    )
-  }
-];
-
 const MenusPage = () => {
   const navigate = useNavigate();
   const tableRef = useRef<any>();
@@ -98,6 +33,71 @@ const MenusPage = () => {
   const [isShowConfirmDeleteDialog, setIsShowConfirmDeleteDialog] = useState(false);
   const [deleteMenu, setDeleteMenu] = useState<PosMenu>();
 
+  const menuColumns: TTableColumn<PosMenu>[] = [
+    {
+      title: 'Code',
+      dataIndex: 'code'
+    },
+    {
+      title: 'Thời gian hiệu lực',
+      hideInSearch: true,
+      render: (_, data: PosMenu) =>
+        data.startTime && data.endTime ? (
+          <Typography>
+            <Label key={data.code} color="primary">
+              {moment(data.startTime, 'HH:mm:ss').format('HH:mm')}
+            </Label>{' '}
+            -{' '}
+            <Label key={data.code} color="primary">
+              {moment(data.endTime, 'HH:mm:ss').format('HH:mm')}
+            </Label>
+          </Typography>
+        ) : (
+          '-'
+        )
+    },
+    {
+      title: 'Ngày áp dụng',
+      dataIndex: 'dateFilter',
+      hideInSearch: true,
+      render: (_: any, { dateFilter }: PosMenu) => (
+        <Stack direction="row" spacing={1}>
+          {dateFilter?.map((date) => (
+            <Chip size="small" key={date} label={date} />
+          ))}
+        </Stack>
+      )
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'status',
+      hideInSearch: true,
+      render: (status) =>
+        status == MenuStatus.ACTIVE ? (
+          <Label color="primary">Hoạt Động</Label>
+        ) : (
+          <Label color="error">Tạm ẩn</Label>
+        )
+    },
+    {
+      title: 'Độ ưu tiên',
+      dataIndex: 'priority',
+      hideInSearch: true
+    },
+    {
+      title: 'Ngày tạo',
+      dataIndex: 'createdAt',
+      hideInSearch: true,
+      render: (_: any, { createdAt }: PosMenu) => (
+        <Stack direction="row" spacing={1}>
+          <Label key={createdAt} color="warning">
+            {moment(createdAt).format('DD/MM/YYYY')}
+          </Label>
+        </Stack>
+      )
+    }
+  ];
+
   const createMenuForm = useForm({
     resolver: yupResolver(menuSchema),
     shouldUnregister: true,
@@ -105,7 +105,7 @@ const MenusPage = () => {
       time_ranges: [{ from: null, to: null }],
       allDay: false,
       isBaseMenu: false,
-      useBaseMenu: false
+      isUseBaseMenu: false
     }
   });
 
@@ -143,7 +143,8 @@ const MenusPage = () => {
   };
 
   const handleProcessCreateNewMenuRequest = (data: any) => {
-    const { code, startTime, endTime, dayFilter, priority, allDay, isBaseMenu, useBaseMenu } = data;
+    const { code, startTime, endTime, dayFilter, priority, allDay, isBaseMenu, isUseBaseMenu } =
+      data;
     let startTimeToInt = 0;
     let endTimeToInt = 0;
 
@@ -159,7 +160,7 @@ const MenusPage = () => {
     const dayFilterTotal = processDayFiter(dayFilter);
     const processedData: TCreateMenuInformation = {
       isBaseMenu: isBaseMenu ?? false,
-      useBaseMenu: useBaseMenu ?? false,
+      isUseBaseMenu: isUseBaseMenu ?? false,
       code: code,
       priority: parseInt(priority),
       dateFilter: dayFilterTotal,

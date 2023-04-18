@@ -5,6 +5,7 @@ import { isValidToken, setSession } from '../utils/jwt';
 import { getUserInfo, setUserInfo } from '../utils/utils';
 // @types
 import { ActionMap, AuthState, AuthUser, JWTContextType } from '../@types/authentication';
+import { useNavigate } from 'react-router';
 
 // ----------------------------------------------------------------------
 
@@ -84,6 +85,7 @@ const JWTReducer = (state: AuthState, action: JWTActions) => {
 const AuthContext = createContext<JWTContextType | null>(null);
 
 function AuthProvider({ children }: { children: ReactNode }) {
+  const navigate = useNavigate();
   const [state, dispatch] = useReducer(JWTReducer, initialState);
 
   useEffect(() => {
@@ -153,12 +155,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
       password
     });
     const { accessToken, id, name, role, status, brandId, storeId, brandPicUrl } = response.data;
-    // console.log('response', response.data);
-    // console.log('id', id);
-    // console.log('role', role);
-    // console.log('accessToken', accessToken);
-    // console.log('name', name);
-    // console.log('status', status);
     const user = {
       id: id,
       name: name,
@@ -167,11 +163,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
       brandId: brandId,
       storeId: storeId,
       brandPicUrl: brandPicUrl
-      // roles: apps?.find(
-      //   ({ name }: { name: string }) => name === process.env.REACT_APP_IDENTITY_API_NAME
-      // ).role
     };
-    // console.log('user', user);
     setSession(accessToken);
     setUserInfo(user);
     dispatch({

@@ -31,14 +31,14 @@ export default function AccountPopover() {
 
   const MENU_OPTIONS = [
     {
-      label: 'Home',
-      icon: homeFill,
-      linkTo: '/'
-    },
-    {
       label: 'Profile',
       icon: personFill,
       linkTo: PATH_DASHBOARD.user.profileById(userInfoFromLocalStorage.id.toString())
+    },
+    {
+      label: 'Trang chủ',
+      icon: homeFill,
+      linkTo: '/'
     }
   ];
 
@@ -60,7 +60,7 @@ export default function AccountPopover() {
     try {
       await logout?.();
       if (isMountedRef.current) {
-        navigate('/');
+        navigate('/', { replace: true });
         handleClose();
         removeLocalStorage('USER_INFO');
       }
@@ -71,7 +71,7 @@ export default function AccountPopover() {
   };
 
   useEffect(() => {
-    setUserInfoFromLocalStorage(JSON.parse(getUserInfo() ?? ''));
+    setUserInfoFromLocalStorage(JSON.parse(getUserInfo() ?? '{}'));
   }, []);
 
   return (

@@ -18,7 +18,7 @@ function CreateNewBrandForm({ onFinish }: Props) {
           justifyContent={'center'}
         >
           <Box>
-            <UploadImageField.Avatar name="pic_url" label="Hình ảnh" />
+            <UploadImageField.Avatar name="picUrl" label="Hình ảnh" />
           </Box>
         </Grid>
         <Grid item xs={12} sm={6}>

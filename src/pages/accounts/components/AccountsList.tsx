@@ -113,8 +113,7 @@ export default function AccountsList() {
     // Store Manager get list staff of store
     else if (user?.storeId && user?.role.includes(Role.StoreManager)) {
       return storeApi.getStoreEmployees(user?.storeId, newParam);
-    }
-    else return;
+    } else return;
   };
 
   // confirm({

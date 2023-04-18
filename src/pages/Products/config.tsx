@@ -1,6 +1,6 @@
 // import { Label } from '@mui/icons-material';
-import { Avatar, Chip } from '@mui/material';
 // import AutocompleteCategory from 'components/form/common/Category/AutocompleteCategory';
+import { Avatar, Chip } from '@mui/material';
 import { PRODUCT_TYPE_DATA } from 'constraints';
 import { ProductStatusEnum, TProduct } from 'types/product';
 import { TTableColumn } from 'types/table';
@@ -16,18 +16,13 @@ export const productColumns: TTableColumn<TProduct>[] = [
     dataIndex: 'picUrl',
     hideInSearch: true,
     render: (src, { name }: any) => (
-      <Avatar alt={name} src={src} variant="square" style={{ width: '54px', height: '54px' }} />
+      <Avatar alt={name} src={src} variant="circular" style={{ width: '54px', height: '54px' }} />
     )
   },
   {
     title: 'Tên sản phẩm',
     dataIndex: 'name'
   },
-  // {
-  //   title: 'Giá mặc định',
-  //   dataIndex: '',
-  //   hideInSearch: true
-  // },
   {
     title: 'Mã sản phẩm',
     dataIndex: 'code',

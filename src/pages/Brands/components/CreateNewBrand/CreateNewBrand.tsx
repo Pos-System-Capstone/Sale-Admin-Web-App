@@ -1,11 +1,11 @@
 import { Card, Stack } from '@mui/material';
-import brandApi from 'api/brand';
 import Page from 'components/Page';
 import { useSnackbar } from 'notistack';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { TNewBrandCreate } from 'types/brand';
 import CreateNewBrandForm from './CreateNewBrandForm';
+import brandApi from 'api/brand';
 
 const CreateNewBrand = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -22,7 +22,6 @@ const CreateNewBrand = () => {
   });
 
   const onSubmitCreateNewBrand = (values: TNewBrandCreate) => {
-    console.log('values ne: ', values);
     return brandApi
       .createNewBrand(values)
       .then((res) => {

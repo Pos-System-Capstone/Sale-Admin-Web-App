@@ -40,7 +40,7 @@ const CollectionListPage = () => {
         <Avatar
           alt={product_name}
           src={src}
-          variant="square"
+          variant="circular"
           style={{ width: '54px', height: '54px' }}
         />
       )
@@ -51,12 +51,12 @@ const CollectionListPage = () => {
       valueType: 'select',
       valueEnum: [
         {
-          label: 'Hoạt đọng',
+          label: 'Hoạt động',
           value: CollectionStatus.ACTIVE
         },
         {
-          label: 'Không Hoạt đọng',
-          value: CollectionStatus.DEACTIVE
+          label: 'Không hoạt động',
+          value: CollectionStatus.DEACTIVATE
         }
       ]
     },

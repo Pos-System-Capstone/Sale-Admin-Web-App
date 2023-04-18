@@ -7,7 +7,7 @@ import { Box, Stack } from '@mui/material';
 import brandApi from 'api/brand';
 import storeApi from 'api/store';
 import userApi from 'api/user';
-import { UpdateConfirmDialog } from 'components/DeleteConfirmDialog';
+import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 import useAuth from 'hooks/useAuth';
 import { useLocation, useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +20,7 @@ import { EmployeeStatus } from 'types/employee';
 import { TTableColumn } from 'types/table';
 
 export default function AccountsList() {
-  const ref = useRef<any>();
+  const tableRef = useRef<any>();
   const { storeId, brandId } = useParams();
   const location = useLocation();
   const [deleteUser, setDeleteUser] = useState<TUser>({
@@ -77,31 +77,19 @@ export default function AccountsList() {
     }
   ];
 
-  const onDelete = (currentDeleteAccount?: TUser) => {
-    // console.log('user to delete ne: ', currentDeleteAccount);
-    if (currentDeleteAccount?.status === UserStatus.ACTIVE) {
-      return userApi
-        .updateUserStatus(deleteUser.id, UserStatus.DEACTIVATE)
-        .then(() => {
-          enqueueSnackbar('Xoá thành công', { variant: 'success' });
-        })
-        .catch(() => {
-          enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
-            variant: 'error'
-          });
+  const onDelete = async () => {
+    await userApi
+      .updateUserStatus(deleteUser.id, UserStatus.DEACTIVATE)
+      .then(() => {
+        enqueueSnackbar('Xoá thành công', { variant: 'success' });
+        tableRef.current?.reload();
+        setIsOpenDeleteConfirmDialog(!isOpenDeleteConfirmDialog);
+      })
+      .catch(() => {
+        enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
+          variant: 'error'
         });
-    } else if (currentDeleteAccount?.status === UserStatus.DEACTIVATE) {
-      return userApi
-        .updateUserStatus(deleteUser.id, UserStatus.ACTIVE)
-        .then(() => {
-          enqueueSnackbar('Thay đổi trạng thái thành công', { variant: 'success' });
-        })
-        .catch(() => {
-          enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
-            variant: 'error'
-          });
-        });
-    }
+      });
   };
 
   const handleCallListDataBaseOnRole = (params: any) => {
@@ -126,11 +114,6 @@ export default function AccountsList() {
     else if (user?.storeId && user?.role.includes(Role.StoreManager)) {
       return storeApi.getStoreEmployees(user?.storeId, newParam);
     }
-    // else if (storeId) {
-    //   return storeApi.getStoreEmployees(storeId, params);
-    // } else if (brandId) {
-    //   return brandApi.getListUserOfBrand(brandId, params);
-    // }
     else return;
   };
 
@@ -158,30 +141,32 @@ export default function AccountsList() {
   //   }
   // });
   useEffect(() => {
-    const form = ref.current?.formControl;
+    const form = tableRef.current?.formControl;
     if (!form) return;
-  }, [ref]);
+  }, [tableRef]);
 
   return (
     <Stack spacing={2}>
       <Box>
         <ResoTable
-          ref={ref}
+          ref={tableRef}
           pagination
           getData={(params: any) => handleCallListDataBaseOnRole(params)}
           onEdit={(user: TUser) => {
             navigate(`${PATH_DASHBOARD.user.profileById(user.id)}`);
           }}
-          onDelete={(user: TUser) => (setIsOpenDeleteConfirmDialog(true), setDeleteUser(user))}
+          onDelete={(user: TUser) => (
+            setIsOpenDeleteConfirmDialog(!isOpenDeleteConfirmDialog), setDeleteUser(user)
+          )}
           columns={accountColumns}
           rowKey="id"
           key={'accountList'}
         />
 
-        <UpdateConfirmDialog
+        <DeleteConfirmDialog
           open={isOpenDeleteConfirmDialog}
-          onClose={() => setIsOpenDeleteConfirmDialog(false)}
-          onDelete={() => onDelete(deleteUser)}
+          onClose={() => setIsOpenDeleteConfirmDialog(!isOpenDeleteConfirmDialog)}
+          onDelete={() => onDelete()}
           title={'Xác nhận cập nhật trạng thái người dùng'}
           description={'Người dùng này sẽ thay đổi trạng thái hoạt động'}
         />

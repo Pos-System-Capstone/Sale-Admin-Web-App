@@ -130,7 +130,7 @@ const MenuForm = ({ isUpdateMenu }: Props) => {
             <CheckBoxField
               size="small"
               fullWidth
-              name="useBaseMenu"
+              name="isUseBaseMenu"
               label="Sử dụng các phẩm có sẵn trong menu của nhãn hàng"
               value="true"
             />

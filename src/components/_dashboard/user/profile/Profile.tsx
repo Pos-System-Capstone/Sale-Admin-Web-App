@@ -2,13 +2,12 @@ import { Button, Card, CircularProgress, Grid } from '@mui/material';
 import userApi from 'api/user';
 import { UpdateConfirmDialog } from 'components/DeleteConfirmDialog';
 import Page from 'components/Page';
-import { SHA256 } from 'crypto-js';
 import useAuth from 'hooks/useAuth';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
-import { TUpdateUser, TUser } from 'types/user';
+import { TUpdateUser, TUser, UserStatus } from 'types/user';
 import { Role } from 'utils/role';
 import ProfileAbout from './ProfileAbout';
 
@@ -20,7 +19,10 @@ export default function Profile({ updateMode }: Props) {
   const { accountId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
   const updateUserInfoForm = useForm<TUpdateUser>();
-  const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false);
+  const [isOpenConfirmUpdateUserInformationDialog, setIsOpenConfirmUpdateUserInformationDialog] =
+    useState(false);
+  const [isShowConfirmUpdateStatusDialog, setIsShowConfirmUpdateStatusDialog] = useState(false);
+  const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
   const { user } = useAuth();
   const [userInfo, setUserInfo] = useState<TUser>();
   const [isLoading, setIsLoading] = useState(false);
@@ -40,18 +42,16 @@ export default function Profile({ updateMode }: Props) {
 
   const handleSubmitUpdateUserInfoForm = (updateUserInformationFromForm: TUpdateUser) => {
     const updateUserInformation = { ...updateUserInformationFromForm };
-    if (updateUserInformation.password) {
-      updateUserInformation.password = SHA256(updateUserInformation.password ?? '').toString();
-    }
     // Handle submit form for STORE MANAGER update STAFF
     if (user?.role.includes(Role.StoreManager)) {
       userApi
         .updateUserInformation(accountId ?? '', updateUserInformation, user.storeId)
         ?.then((res) => {
-          enqueueSnackbar(`cập nhật thành công`, {
+          enqueueSnackbar(`Cập nhật thành công`, {
             variant: 'success'
           });
-          setIsOpenConfirmDialog(!isOpenConfirmDialog);
+          setIsUpdateSuccess(!isUpdateSuccess);
+          setIsOpenConfirmUpdateUserInformationDialog(!isOpenConfirmUpdateUserInformationDialog);
         })
         .catch((err) => {
           enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
@@ -64,10 +64,11 @@ export default function Profile({ updateMode }: Props) {
       userApi
         .updateUserInformation(accountId ?? '', updateUserInformation, userInfo?.storeId)
         ?.then((res) => {
-          enqueueSnackbar(`cập nhật thành công`, {
+          enqueueSnackbar(`Cập nhật thành công`, {
             variant: 'success'
           });
-          setIsOpenConfirmDialog(!isOpenConfirmDialog);
+          setIsUpdateSuccess(!isUpdateSuccess);
+          setIsOpenConfirmUpdateUserInformationDialog(!isOpenConfirmUpdateUserInformationDialog);
         })
         .catch((err) => {
           enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
@@ -77,15 +78,45 @@ export default function Profile({ updateMode }: Props) {
     }
   };
 
+  const onConfirmUpdateProfileStatus = async () => {
+    await userApi
+      .updateUserStatus(userInfo?.id ? userInfo.id : '', UserStatus.ACTIVE)
+      .then(() => {
+        enqueueSnackbar('Thay đổi trạng thái thành công', { variant: 'success' });
+        setIsUpdateSuccess(!isUpdateSuccess);
+        setIsShowConfirmUpdateStatusDialog(!isShowConfirmUpdateStatusDialog);
+      })
+      .catch(() => {
+        enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
+          variant: 'error'
+        });
+      });
+  };
+
   useEffect(() => {
     setIsLoading(!isLoading);
     getUserInfo();
-  }, [accountId]);
+  }, [accountId, isUpdateSuccess]);
 
   return isLoading ? (
     <CircularProgress />
   ) : (
-    <Page title="Thông tin người dùng">
+    <Page
+      title="Thông tin người dùng"
+      actions={() => [
+        userInfo?.status === UserStatus.DEACTIVATE && (
+          <Button
+            onClick={() => setIsShowConfirmUpdateStatusDialog(!isShowConfirmUpdateStatusDialog)}
+            key="delete-menu"
+            size="medium"
+            color="primary"
+            variant="contained"
+          >
+            Kích hoạt tài khoản
+          </Button>
+        )
+      ]}
+    >
       <Card variant="outlined">
         <FormProvider {...updateUserInfoForm}>
           <Grid container spacing={2}>
@@ -106,7 +137,11 @@ export default function Profile({ updateMode }: Props) {
                   userInfo?.role.includes(Role.StoreStaff)) ||
                 user?.name === userInfo?.name) && (
                 <Button
-                  onClick={() => setIsOpenConfirmDialog(!isOpenConfirmDialog)}
+                  onClick={() =>
+                    setIsOpenConfirmUpdateUserInformationDialog(
+                      !isOpenConfirmUpdateUserInformationDialog
+                    )
+                  }
                   variant="contained"
                 >
                   Cập nhật
@@ -116,12 +151,19 @@ export default function Profile({ updateMode }: Props) {
             <UpdateConfirmDialog
               title={'Xác nhận update thông tin'}
               description={'Bạn chắc chắn muốn cập nhật thông tin ?'}
-              open={isOpenConfirmDialog}
-              onClose={() => setIsOpenConfirmDialog(false)}
+              open={isOpenConfirmUpdateUserInformationDialog}
+              onClose={() => setIsOpenConfirmUpdateUserInformationDialog(false)}
               onUpdate={updateUserInfoForm.handleSubmit(handleSubmitUpdateUserInfoForm)}
             />
           </Grid>
         </FormProvider>
+        <UpdateConfirmDialog
+          open={isShowConfirmUpdateStatusDialog}
+          onClose={() => setIsShowConfirmUpdateStatusDialog(!isShowConfirmUpdateStatusDialog)}
+          onUpdate={() => onConfirmUpdateProfileStatus()}
+          title={'Xác nhận cập nhật trạng thái người dùng'}
+          description={'Người dùng này sẽ thay đổi trạng thái hoạt động'}
+        />
       </Card>
     </Page>
   );

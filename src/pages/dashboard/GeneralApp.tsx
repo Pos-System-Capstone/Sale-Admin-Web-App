@@ -34,38 +34,52 @@ export default function GeneralApp() {
     switch (options) {
       case 'TODAY':
         return [
-          moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss'),
-          moment(moment()).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
+          // moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss'),
+          // moment(moment()).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
+          moment(moment().startOf('day')).format('DD-MM-YYYY'),
+          moment(moment()).add(1, 'day').startOf('day').format('DD-MM-YYYY')
         ];
       case '7_DAYS':
         return [
-          moment(moment().startOf('day').add(-7, 'days')).format('YYYY-MM-DD HH:mm:ss'),
-          moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss')
+          // moment(moment().startOf('day').add(-7, 'days')).format('YYYY-MM-DD HH:mm:ss'),
+          // moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss')
+          moment(moment().startOf('day').add(-7, 'days')).format('DD-MM-YYYY'),
+          moment(moment().startOf('day')).format('DD-MM-YYYY')
         ];
       case 'PREV_WEEK':
         return [
-          moment().startOf('week').subtract(7, 'days').format('YYYY-MM-DD HH:mm:ss'),
-          moment().endOf('week').subtract(7, 'days').format('YYYY-MM-DD HH:mm:ss')
+          // moment().startOf('week').subtract(7, 'days').format('YYYY-MM-DD HH:mm:ss'),
+          // moment().endOf('week').subtract(7, 'days').format('YYYY-MM-DD HH:mm:ss')
+          moment().startOf('week').subtract(7, 'days').format('DD-MM-YYYY'),
+          moment().endOf('week').subtract(7, 'days').format('DD-MM-YYYY')
         ];
       case 'PREV_MONTH':
         return [
-          moment().subtract(1, 'months').startOf('month').format('YYYY-MM-DD HH:mm:ss'),
-          moment().startOf('month').format('YYYY-MM-DD HH:mm:ss')
+          // moment().subtract(1, 'months').startOf('month').format('YYYY-MM-DD HH:mm:ss'),
+          // moment().startOf('month').format('YYYY-MM-DD HH:mm:ss')
+          moment().subtract(1, 'months').startOf('month').format('DD-MM-YYYY'),
+          moment().startOf('month').format('DD-MM-YYYY')
         ];
       case '30_DAYS':
         return [
-          moment(moment().add(-30, 'days').startOf('days')).format('YYYY-MM-DD HH:mm:ss'),
-          moment(moment().startOf('days')).format('YYYY-MM-DD HH:mm:ss')
+          // moment(moment().add(-30, 'days').startOf('days')).format('YYYY-MM-DD HH:mm:ss'),
+          // moment(moment().startOf('days')).format('YYYY-MM-DD HH:mm:ss')
+          moment(moment().add(-30, 'days').startOf('days')).format('DD-MM-YYYY'),
+          moment(moment().startOf('days')).format('DD-MM-YYYY')
         ];
       case '90_DAYS':
         return [
-          moment(moment().add(-90, 'days').startOf('days')).format('YYYY-MM-DD HH:mm:ss'),
-          moment(moment().startOf('days')).format('YYYY-MM-DD HH:mm:ss')
+          // moment(moment().add(-90, 'days').startOf('days')).format('YYYY-MM-DD HH:mm:ss'),
+          // moment(moment().startOf('days')).format('YYYY-MM-DD HH:mm:ss')
+          moment(moment().add(-90, 'days').startOf('days')).format('DD-MM-YYYY'),
+          moment(moment().startOf('days')).format('DD-MM-YYYY')
         ];
       default:
         return [
-          moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss'),
-          moment(moment()).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
+          // moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss'),
+          // moment(moment()).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
+          moment(moment().startOf('day')).format('DD-MM-YYYY'),
+          moment(moment()).add(1, 'day').startOf('day').format('DD-MM-YYYY')
         ];
     }
   };

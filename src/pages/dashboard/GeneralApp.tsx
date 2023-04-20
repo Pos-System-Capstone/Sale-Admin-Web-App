@@ -18,7 +18,6 @@ import { useQuery } from 'react-query';
 import orderApi from 'api/order';
 import moment from 'moment';
 import { useState } from 'react';
-import { TOrder } from 'types/order';
 import SelectDateRange from 'pages/report/components/SelectDateRange';
 
 // ----------------------------------------------------------------------
@@ -34,58 +33,47 @@ export default function GeneralApp() {
     switch (options) {
       case 'TODAY':
         return [
-          // moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss'),
-          // moment(moment()).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
-          moment(moment().startOf('day')).format('DD-MM-YYYY'),
-          moment(moment()).add(1, 'day').startOf('day').format('DD-MM-YYYY')
+          moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss'),
+          moment(moment()).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
         ];
       case '7_DAYS':
         return [
-          // moment(moment().startOf('day').add(-7, 'days')).format('YYYY-MM-DD HH:mm:ss'),
-          // moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss')
-          moment(moment().startOf('day').add(-7, 'days')).format('DD-MM-YYYY'),
-          moment(moment().startOf('day')).format('DD-MM-YYYY')
+          moment(moment().startOf('day').add(-7, 'days')).format('YYYY-MM-DD HH:mm:ss'),
+          moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss')
         ];
       case 'PREV_WEEK':
         return [
-          // moment().startOf('week').subtract(7, 'days').format('YYYY-MM-DD HH:mm:ss'),
-          // moment().endOf('week').subtract(7, 'days').format('YYYY-MM-DD HH:mm:ss')
-          moment().startOf('week').subtract(7, 'days').format('DD-MM-YYYY'),
-          moment().endOf('week').subtract(7, 'days').format('DD-MM-YYYY')
+          moment().startOf('week').subtract(6, 'days').format('YYYY-MM-DD HH:mm:ss'),
+          moment()
+            .endOf('week')
+            .subtract(6, 'days')
+            .add(1, 'day')
+            .startOf('day')
+            .format('YYYY-MM-DD HH:mm:ss')
         ];
       case 'PREV_MONTH':
         return [
-          // moment().subtract(1, 'months').startOf('month').format('YYYY-MM-DD HH:mm:ss'),
-          // moment().startOf('month').format('YYYY-MM-DD HH:mm:ss')
-          moment().subtract(1, 'months').startOf('month').format('DD-MM-YYYY'),
-          moment().startOf('month').format('DD-MM-YYYY')
+          moment().subtract(1, 'months').startOf('month').format('YYYY-MM-DD HH:mm:ss'),
+          moment().startOf('month').format('YYYY-MM-DD HH:mm:ss')
         ];
       case '30_DAYS':
         return [
-          // moment(moment().add(-30, 'days').startOf('days')).format('YYYY-MM-DD HH:mm:ss'),
-          // moment(moment().startOf('days')).format('YYYY-MM-DD HH:mm:ss')
-          moment(moment().add(-30, 'days').startOf('days')).format('DD-MM-YYYY'),
-          moment(moment().startOf('days')).format('DD-MM-YYYY')
+          moment(moment().add(-30, 'days').startOf('days')).format('YYYY-MM-DD HH:mm:ss'),
+          moment(moment().startOf('days')).format('YYYY-MM-DD HH:mm:ss')
         ];
       case '90_DAYS':
         return [
-          // moment(moment().add(-90, 'days').startOf('days')).format('YYYY-MM-DD HH:mm:ss'),
-          // moment(moment().startOf('days')).format('YYYY-MM-DD HH:mm:ss')
-          moment(moment().add(-90, 'days').startOf('days')).format('DD-MM-YYYY'),
-          moment(moment().startOf('days')).format('DD-MM-YYYY')
+          moment(moment().add(-90, 'days').startOf('days')).format('YYYY-MM-DD HH:mm:ss'),
+          moment(moment().startOf('days')).format('YYYY-MM-DD HH:mm:ss')
         ];
       default:
         return [
-          // moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss'),
-          // moment(moment()).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
-          moment(moment().startOf('day')).format('DD-MM-YYYY'),
-          moment(moment()).add(1, 'day').startOf('day').format('DD-MM-YYYY')
+          moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss'),
+          moment(moment()).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
         ];
     }
   };
 
-  const [todayOrder, setTodayOrder] = useState<TOrder[] | []>([]);
-  const [yesterdayOrder, setYesterdayOrder] = useState<TOrder[] | []>([]);
   const params = {
     size: 1000,
     page: 1,

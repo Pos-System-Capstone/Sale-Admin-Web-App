@@ -40,12 +40,29 @@ export default function Profile({ updateMode }: Props) {
         });
       });
 
-  const handleSubmitUpdateUserInfoForm = (updateUserInformationFromForm: TUpdateUser) => {
+  const handleSubmitUpdateUserInfoForm = async (updateUserInformationFromForm: TUpdateUser) => {
     const updateUserInformation = { ...updateUserInformationFromForm };
     // Handle submit form for STORE MANAGER update STAFF
-    if (user?.role.includes(Role.StoreManager)) {
-      userApi
-        .updateUserInformation(accountId ?? '', updateUserInformation, user.storeId)
+    if (user?.role.includes(Role.StoreManager) && userInfo?.role.includes(Role.StoreStaff)) {
+      await userApi
+        .updateUserInformation(userInfo.id ?? '', updateUserInformation, user.storeId)
+        ?.then((res) => {
+          enqueueSnackbar(`Cập nhật thành công`, {
+            variant: 'success'
+          });
+          setIsUpdateSuccess(!isUpdateSuccess);
+          setIsOpenConfirmUpdateUserInformationDialog(!isOpenConfirmUpdateUserInformationDialog);
+        })
+        .catch((err) => {
+          enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
+            variant: 'error'
+          });
+        });
+    }
+    // Handle submit form for STORE MANAGER update their account
+    else if (user?.role.includes(Role.StoreManager) && userInfo?.role.includes(Role.StoreManager)) {
+      await userApi
+        .updateUserInformation(user.id ?? '', updateUserInformation, user.storeId)
         ?.then((res) => {
           enqueueSnackbar(`Cập nhật thành công`, {
             variant: 'success'
@@ -60,9 +77,26 @@ export default function Profile({ updateMode }: Props) {
         });
     }
     // Handle submit form for BRAND MANAGER update STORE MANAGER
-    else if (user?.role.includes(Role.BrandManager)) {
-      userApi
-        .updateUserInformation(accountId ?? '', updateUserInformation, userInfo?.storeId)
+    else if (user?.role.includes(Role.BrandManager) && userInfo?.role.includes(Role.StoreManager)) {
+      await userApi
+        .updateUserInformation(userInfo.id ?? '', updateUserInformation, userInfo?.storeId)
+        ?.then((res) => {
+          enqueueSnackbar(`Cập nhật thành công`, {
+            variant: 'success'
+          });
+          setIsUpdateSuccess(!isUpdateSuccess);
+          setIsOpenConfirmUpdateUserInformationDialog(!isOpenConfirmUpdateUserInformationDialog);
+        })
+        .catch((err) => {
+          enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
+            variant: 'error'
+          });
+        });
+    }
+    // Handle submit form for BRAND MANAGER update their account
+    else if (user?.role.includes(Role.BrandManager) && userInfo?.role.includes(Role.BrandManager)) {
+      await userApi
+        .updateUserInformation(user.id ?? '', updateUserInformation, user.brandId)
         ?.then((res) => {
           enqueueSnackbar(`Cập nhật thành công`, {
             variant: 'success'

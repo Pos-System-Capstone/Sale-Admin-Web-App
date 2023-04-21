@@ -185,15 +185,17 @@ const UpdateMenuPage = () => {
       <Page
         title={`Chi tiết bảng giá ${menu?.code}`}
         actions={() => [
-          <Button
-            onClick={() => setIsShowConfirmUpdateDialog(!isShowConfirmUpdateDialog)}
-            key="delete-menu"
-            size="medium"
-            color="primary"
-            variant="contained"
-          >
-            Đưa menu vào hoạt động
-          </Button>
+          menu?.status === MenuStatus.DEACTIVATE && (
+            <Button
+              onClick={() => setIsShowConfirmUpdateDialog(!isShowConfirmUpdateDialog)}
+              key="delete-menu"
+              size="medium"
+              color="primary"
+              variant="contained"
+            >
+              Đưa menu vào hoạt động
+            </Button>
+          )
         ]}
       >
         <Tabs

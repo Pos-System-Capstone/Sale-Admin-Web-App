@@ -211,7 +211,7 @@ const MenusPage = () => {
               return false;
             }
           }}
-          title={<Typography variant="h4">Thêm menu mới</Typography>}
+          title={<Typography variant="h4">Tạo menu mới</Typography>}
           trigger={
             <Button variant="contained" startIcon={<Icon icon={plusFill} />}>
               Tạo menu mới

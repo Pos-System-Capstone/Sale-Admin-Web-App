@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
-import { FileDownload, Visibility } from '@mui/icons-material';
+import { Visibility } from '@mui/icons-material';
 // material
-import { Button, Card, IconButton, Stack, Tooltip } from '@mui/material';
+import { Card, IconButton, Stack, Tooltip } from '@mui/material';
 import orderApi from 'api/order';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
@@ -9,13 +9,11 @@ import useAuth from 'hooks/useAuth';
 import useLocales from 'hooks/useLocales';
 import { useState } from 'react';
 // components
-import { useNavigate } from 'react-router-dom';
 import { ORDER_STATUS_OPTONS, ORDER_TYPE_OPTONS, TOrder } from 'types/order';
 import { TTableColumn } from 'types/table';
 import OrderDetailDialog from './components/OrderDetailDialog';
 
 const OrderListPage = () => {
-  const navigate = useNavigate();
   const { translate } = useLocales();
   const { user } = useAuth();
 
@@ -84,18 +82,18 @@ const OrderListPage = () => {
   return (
     <Page
       title="Danh sách đơn hàng"
-      actions={() => [
-        <Button
-          key="export-file"
-          onClick={() => {
-            //   navigate('/menus/create');
-          }}
-          variant="contained"
-          startIcon={<FileDownload />}
-        >
-          Xuất file
-        </Button>
-      ]}
+      // actions={() => [
+      //   <Button
+      //     key="export-file"
+      //     onClick={() => {
+      //       //   navigate('/menus/create');
+      //     }}
+      //     variant="contained"
+      //     startIcon={<FileDownload />}
+      //   >
+      //     Xuất file
+      //   </Button>
+      // ]}
     >
       <OrderDetailDialog
         orderId={detailOrder}

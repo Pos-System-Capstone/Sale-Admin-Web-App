@@ -24,6 +24,15 @@ export type TStoreCreate = {
   address: string;
 };
 
+export type TStoreUpdate = {
+  name?: string;
+  shortName?: string;
+  email?: string;
+  phone?: string;
+  code?: string;
+  address?: string;
+};
+
 export type TStoreDetail = {
   id: string;
   brandId: string;

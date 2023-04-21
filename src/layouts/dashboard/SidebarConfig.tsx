@@ -134,12 +134,12 @@ export const brandAdminSidebarConfig = [
         title: 'Thực đơn',
         path: PATH_DASHBOARD.menus.root,
         icon: ICONS.menu
-      },
-      {
-        title: 'Cửa hàng áp dụng thực đơn',
-        path: PATH_DASHBOARD.menus.storeMenu,
-        icon: ICONS.storeApply
       }
+      // {
+      //   title: 'Cửa hàng áp dụng thực đơn',
+      //   path: PATH_DASHBOARD.menus.storeMenu,
+      //   icon: ICONS.storeApply
+      // }
     ]
   },
   {

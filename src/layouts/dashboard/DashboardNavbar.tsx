@@ -11,7 +11,6 @@ import { MHidden } from '../../components/@material-extend';
 // hooks
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 import AccountPopover from './AccountPopover';
-import LanguagePopover from './LanguagePopover';
 
 // ----------------------------------------------------------------------
 
@@ -153,7 +152,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
             Promotion
           </Button> */}
 
-          <LanguagePopover />
+          {/* <LanguagePopover /> */}
           <AccountPopover />
         </Stack>
       </ToolbarStyle>

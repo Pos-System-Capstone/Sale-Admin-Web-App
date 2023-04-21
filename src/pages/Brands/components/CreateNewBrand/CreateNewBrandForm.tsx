@@ -36,7 +36,7 @@ function CreateNewBrandForm({ onFinish }: Props) {
 
         <Grid item xs={12} sm={12} display={'flex'} justifyContent={'end'}>
           <Button variant="contained" onClick={onFinish}>
-            Thêm
+            Tạo mới
           </Button>
         </Grid>
         {/* <Grid item xs={12} sm={6}>

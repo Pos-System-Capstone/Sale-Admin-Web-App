@@ -12,6 +12,8 @@ import {
 } from '@mui/material';
 import brandApi from 'api/brand';
 import Label from 'components/Label';
+import { Icon } from '@iconify/react';
+import plusFill from '@iconify/icons-eva/plus-fill';
 import Page from 'components/Page';
 import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 import useAuth from 'hooks/useAuth';
@@ -178,7 +180,7 @@ const BrandDetailPage = () => {
                 <Box>
                   <Button
                     onClick={() => setOpenAddAccountModel(!openAddAccountModel)}
-                    variant="contained"
+                    startIcon={<Icon icon={plusFill} />}
                   >
                     Tạo tài khoản mới
                   </Button>

@@ -23,7 +23,7 @@ const AddAccountModal = ({ onClose, onFinish, ...modalProps }: Props) => {
     <Dialog {...modalProps}>
       <DialogTitle>
         <Typography mb={2} variant="h3">
-          Thêm Tài khoản
+          Thêm tài khoản
         </Typography>
       </DialogTitle>
       <DialogContent>
@@ -40,10 +40,10 @@ const AddAccountModal = ({ onClose, onFinish, ...modalProps }: Props) => {
       </DialogContent>
       <DialogActions>
         <Button variant="text" onClick={onClose}>
-          Quay lại
+          Huỷ
         </Button>
         <Button variant="contained" onClick={onFinish}>
-          Thêm
+          Tạo mới
         </Button>
       </DialogActions>
     </Dialog>

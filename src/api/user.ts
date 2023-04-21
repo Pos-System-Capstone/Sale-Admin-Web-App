@@ -18,9 +18,8 @@ const updateUserInformation = (
 ) => {
   if (storeId) {
     return requestWebAdmin.put(`stores/${storeId}/users/${userId}`, data);
+  } else if (brandId) {
   }
-  // else if (brandId) {
-  // }
 };
 
 const userApi = {

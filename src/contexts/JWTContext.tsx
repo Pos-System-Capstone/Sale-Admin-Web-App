@@ -166,6 +166,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
     };
     setSession(accessToken);
     setUserInfo(user);
+    navigate('/', { replace: true });
     dispatch({
       type: Types.Login,
       payload: {

@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
 import useDashboard, { withDashboard } from 'hooks/useDashboard';
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import { useDispatch } from 'redux/store';
 
 // material
 import { styled, useTheme } from '@mui/material/styles';
 import LoadingPage from 'components/LoadingPage';
-import { fetchGlobalState } from 'redux/admin/thunk';
+// import { fetchGlobalState } from 'redux/admin/thunk';
 // hooks
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 //
+import useAuth from 'hooks/useAuth';
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
-import useAuth from 'hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -46,15 +46,15 @@ function DashboardLayout() {
   const { open, setNavOpen: setOpen } = useDashboard();
   const { user } = useAuth();
 
-  const [isLoadingState, setIsLoadingState] = useState(true);
+  const [isLoadingState, setIsLoadingState] = useState(false);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    // fetch global
-    setIsLoadingState(true);
-    dispatch(fetchGlobalState()).then(() => setIsLoadingState(false));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   // fetch global
+  //   setIsLoadingState(true);
+  //   dispatch(fetchGlobalState()).then(() => setIsLoadingState(false));
+  // }, [dispatch]);
 
   if (isLoadingState) {
     return <LoadingPage />;

@@ -7,8 +7,7 @@ import { Button, Card } from '@mui/material';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
-import { useSnackbar } from 'notistack';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
@@ -26,10 +25,6 @@ export default function EcommerceShop() {
   const [activeTab, setActiveTab] = useState('1');
   const ref = useRef<any>();
 
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
-    setActiveTab(newValue);
-  };
-  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { t } = useLocales();
   const [isShowConfirmDeleteProductDialog, setIsShowConfirmDeleteProductDialog] = useState(false);
@@ -64,12 +59,6 @@ export default function EcommerceShop() {
     //   }
     // });
   };
-
-  useEffect(() => {
-    const form = ref.current?.formControl;
-    if (!form) return;
-    form.setValue('is-extra-cate', activeTab === '2');
-  }, [activeTab, ref]);
 
   return (
     <Page
@@ -108,14 +97,14 @@ export default function EcommerceShop() {
         <ResoTable
           ref={ref}
           pagination
-          getData={productApi.get}
+          getData={(params: any) => productApi.get(params)}
           onEdit={editProduct}
           onDelete={(data: TProductBase) => {
             setIsShowConfirmDeleteProductDialog(true);
             setRemoveProductData(data);
           }}
           columns={productColumns}
-          rowKey="product_id"
+          rowKey="id"
         />
         <DeleteConfirmDialog
           title={'Xác nhận xoá sản phẩm'}

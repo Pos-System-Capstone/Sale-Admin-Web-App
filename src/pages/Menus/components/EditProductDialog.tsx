@@ -75,7 +75,7 @@ const ProductInMenuDialog = ({ open, onClose, onSubmit, data, updateMode = false
             <InputField name="id" defaultValue={data?.id} sx={{ display: 'none' }} />
             <Grid container py={2} spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField disabled fullWidth name="name" label="Tên sản phẩm" value={data?.code} />
+                <TextField disabled fullWidth name="name" label="Tên sản phẩm" value={data?.name} />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -83,7 +83,7 @@ const ProductInMenuDialog = ({ open, onClose, onSubmit, data, updateMode = false
                   fullWidth
                   name="code"
                   label="Mã sản phẩm"
-                  defaultValue={data?.name}
+                  defaultValue={data?.code}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>

@@ -2,7 +2,7 @@
 // import AutocompleteCategory from 'components/form/common/Category/AutocompleteCategory';
 import { Avatar, Chip } from '@mui/material';
 import { PRODUCT_TYPE_DATA } from 'constraints';
-import { ProductStatusEnum, TProduct } from 'types/product';
+import { TProduct } from 'types/product';
 import { TTableColumn } from 'types/table';
 
 export const productColumns: TTableColumn<TProduct>[] = [
@@ -24,6 +24,12 @@ export const productColumns: TTableColumn<TProduct>[] = [
     dataIndex: 'name'
   },
   {
+    title: 'Giá bán',
+    dataIndex: 'sellingPrice',
+    hideInSearch: true,
+    valueType: 'money'
+  },
+  {
     title: 'Mã sản phẩm',
     dataIndex: 'code',
     hideInSearch: true
@@ -34,34 +40,34 @@ export const productColumns: TTableColumn<TProduct>[] = [
     valueType: 'select',
     valueEnum: PRODUCT_TYPE_DATA,
     hideInSearch: true,
-    render: (type) => <Chip label={PRODUCT_TYPE_DATA.find(({ value }) => value == type)?.label} />
-  },
-  {
-    title: 'Trạng thái',
-    dataIndex: 'status',
-    // width: 150,
-    // render: (status) =>
-    //   status == ProductStatusEnum.Active ? (
-    //     <Label color="primary">Hoạt Động</Label>
-    //   ) : (
-    //     <Label color="disabled">Tạm ẩn</Label>
-    //   ),
-    valueEnum: [
-      {
-        label: 'Hoạt động',
-        value: ProductStatusEnum.Active,
-        color: 'primary'
-      },
-      {
-        label: 'Tạm ẩn',
-        value: ProductStatusEnum.Deactive,
-        color: 'disabled'
-      }
-    ],
-    valueType: 'select',
-    hideInSearch: true,
-    formProps: {
-      fullWidth: true
-    }
+    render: (type) => <Chip label={PRODUCT_TYPE_DATA.find(({ value }) => value === type)?.label} />
   }
+  // {
+  //   title: 'Trạng thái',
+  //   dataIndex: 'status',
+  //   width: 150,
+  //   render: (status) =>
+  //     status == ProductStatusEnum.Active ? (
+  //       <Label color="primary">Hoạt Động</Label>
+  //     ) : (
+  //       <Label color="disabled">Tạm ẩn</Label>
+  //     ),
+  //   valueEnum: [
+  //     {
+  //       label: 'Hoạt động',
+  //       value: ProductStatusEnum.Active,
+  //       color: 'primary'
+  //     },
+  //     {
+  //       label: 'Tạm ẩn',
+  //       value: ProductStatusEnum.Deactive,
+  //       color: 'disabled'
+  //     }
+  //   ],
+  //   valueType: 'select',
+  //   hideInSearch: true,
+  //   formProps: {
+  //     fullWidth: true
+  //   }
+  // }
 ];

@@ -39,7 +39,6 @@ export const productColumns: TTableColumn<TProduct>[] = [
     dataIndex: 'type',
     valueType: 'select',
     valueEnum: PRODUCT_TYPE_DATA,
-    hideInSearch: true,
     render: (type) => <Chip label={PRODUCT_TYPE_DATA.find(({ value }) => value === type)?.label} />
   }
   // {

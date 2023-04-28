@@ -27,6 +27,11 @@ export const PRODUCT_TYPE_DATA = [
     value: ProductTypeEnum.EXTRA,
     typeCode: 'EXTRA',
     label: 'Sản phẩm  Extra'
+  },
+  {
+    value: ProductTypeEnum.COMBO,
+    typeCode: 'COMBO',
+    label: 'Sản phẩm  Combo'
   }
 ];
 

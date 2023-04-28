@@ -12,13 +12,15 @@ interface Props {
 const AutocompleteCategory = (props: Props) => {
   const { data: categories } = useCategories({ page: 1, size: 1000 });
   console.log('categories', categories);
-  const extraCategories = categories?.filter((cate) => cate.categoryType == CategoryType.EXTRA);
+  const extraCategories = categories?.filter((cate) => cate.categoryType === CategoryType.EXTRA);
 
   const cateOptions =
-    extraCategories != undefined && props.isExtra
+    extraCategories !== undefined && props.isExtra
       ? extraCategories?.map((c) => ({ label: c.name, value: c.id }))
       : categories !== undefined
-      ? categories?.map((c) => ({ label: c.name, value: c.id }))
+      ? categories
+          ?.filter((cate) => cate.categoryType !== CategoryType.EXTRA)
+          .map((c) => ({ label: c.name, value: c.id }))
       : [];
   const getOpObj = (option: any) => {
     if (!option) return option;

@@ -8,11 +8,13 @@ import useLocales from 'hooks/useLocales';
 import { useSnackbar } from 'notistack';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router';
-import { deleteProdById, getComboById } from 'redux/product/api';
+import { deleteProdById } from 'redux/product/api';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { CollectionTypeEnum } from 'types/collection';
-import { TProductBase } from 'types/product';
-import { comboColumns } from './components/columns';
+import { ProductTypeEnum, TProduct, TProductBase } from 'types/product';
+
+import productApi from 'api/product';
+import { productColumns } from '../config';
 
 interface Props {}
 
@@ -82,15 +84,13 @@ const ComboList = (props: Props) => {
           <ResoTable
             pagination
             ref={ref}
-            // defaultFilters={{
-            //   'product-type': ProductTypeEnum.Combo
-            // }}
-            getData={() => getComboById(0)}
-            onEdit={(data: TProductBase) =>
-              navigate(`${PATH_DASHBOARD.combos.editById(data.product_id)}`)
-            }
+            defaultFilters={{
+              type: ProductTypeEnum.COMBO
+            }}
+            getData={(params: any) => productApi.get(params)}
+            onEdit={(data: TProduct) => navigate(`${PATH_DASHBOARD.combos.editById(data.id)}`)}
             onDelete={onDelete}
-            columns={comboColumns}
+            columns={productColumns}
             rowKey="product_id"
           />
         </Stack>

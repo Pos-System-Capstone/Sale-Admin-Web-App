@@ -150,25 +150,20 @@ export const brandAdminSidebarConfig = [
         title: 'Sản phẩm',
         path: PATH_DASHBOARD.products.list,
         icon: ICONS.product
-      },
-      {
-        title: 'Sản phẩm combo',
-        path: PATH_DASHBOARD.combos.list,
-        icon: ICONS.combo
       }
     ]
   },
   {
-    subheader: 'Nhóm sản phẩm',
+    subheader: 'Danh mục sản phẩm',
     path: PATH_DASHBOARD.group.root,
     items: [
       {
-        title: 'Sản phẩm thường',
+        title: 'Danh mục thường',
         path: PATH_DASHBOARD.categories.list,
         icon: ICONS.category
       },
       {
-        title: 'Sản phẩm extra',
+        title: 'Danh mục extra',
         path: PATH_DASHBOARD.categories.extra,
         icon: ICONS.extraCategory
       },

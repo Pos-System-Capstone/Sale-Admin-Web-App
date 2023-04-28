@@ -16,12 +16,14 @@ import AutocompleteProduct from './form/AutocompleteProduct';
 
 type Props = {
   updateMode?: boolean;
+  isCombo?: boolean;
 };
 
 // eslint-disable-next-line arrow-body-style
-const MiddleForm: React.FC<Props> = ({ updateMode }) => {
+const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
   const { watch } = useFormContext<TProduct>();
   const productType = watch('type');
+  console.log('productType', productType);
   return (
     <Box>
       <Stack spacing={3}>
@@ -38,6 +40,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
                 name="type"
                 label="Loại sản phẩm"
               ></SelectField>
+
               <Box>
                 <Grid container spacing={2}>
                   {' '}
@@ -125,7 +128,8 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
                     />
                   </Grid>
                   {(productType === ProductTypeEnum.SINGLE ||
-                    productType === ProductTypeEnum.PARENT) && (
+                    productType === ProductTypeEnum.PARENT ||
+                    productType === ProductTypeEnum.COMBO) && (
                     <Grid item xs={6}>
                       <AutocompleteCategory
                         isExtra={false}

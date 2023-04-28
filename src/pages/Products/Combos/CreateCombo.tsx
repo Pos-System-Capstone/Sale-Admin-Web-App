@@ -1,25 +1,22 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Card, Stack, Step, StepLabel, Stepper, Typography } from '@mui/material';
-import { DraftEditorField } from 'components/form';
-import SeoForm from 'components/form/Seo/SeoForm';
+import { Box, Button, Stack, Step, StepLabel, Stepper } from '@mui/material';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { createMasterProd } from 'redux/product/api';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { CombinationModeEnum, CreateComboForm } from 'types/product';
-import { CardTitle } from '../components/Card';
-import BasicProductInfoForm from '../components/form/BasicProductInfoForm';
+// import BasicProductInfoForm from '../components/form/BasicProductInfoForm';
 // import CategoryTreeForm from '../components/form/CategoryTreeForm';
-import ProductImagesForm from '../components/form/ProductImagesForm';
-import { validationSchema } from '../type';
+// import ProductImagesForm from '../components/form/ProductImagesForm';
+
 import { normalizeProductCombo, transformComboForm } from '../utils';
 import ChoiceGroupComboForm from './components/form/ChoiceGroupComboForm';
 import { useProduct } from 'hooks/products/useProduct';
+import MiddleForm from '../components/MiddleForm';
 interface Props {}
 const STEPS = ['Thông tin', 'Nhóm sản phẩm'];
 
@@ -31,9 +28,7 @@ const CreateCombo = (props: Props) => {
 
   const [activeStep, setActiveStep] = useState(0);
 
-  const createComboForm = useForm({
-    resolver: activeStep === 0 ? yupResolver(validationSchema) : undefined
-  });
+  const createComboForm = useForm({});
 
   const { data, isLoading } = useProduct(Number(cloneProductId), {
     select: (res) => normalizeProductCombo(res as any),
@@ -111,24 +106,17 @@ const CreateCombo = (props: Props) => {
         <Box display="flex">
           {activeStep === 0 && (
             <Stack p={1} spacing={3}>
-              <Card id="product-detail">
-                <Stack spacing={2} textAlign="left">
-                  <CardTitle mb={2} variant="subtitle1">
-                    Thông tin sản phẩm
-                  </CardTitle>
-                  <BasicProductInfoForm />
-                  <Box>
+              <MiddleForm isCombo={true} />
+              {/* <Box>
                     <Stack direction="row" justifyContent="space-between">
                       <Typography my={2} variant="subtitle2">
                         Danh mục chứa sản phẩm
                       </Typography>
                     </Stack>
-                  </Box>
-                  {/* <CategoryTreeForm /> */}
-                </Stack>
-              </Card>
+                  </Box> */}
+              {/* <CategoryTreeForm /> */}
 
-              <Card>
+              {/* <Card>
                 <CardTitle mb={2} variant="subtitle1">
                   Mô tả
                 </CardTitle>
@@ -142,21 +130,21 @@ const CreateCombo = (props: Props) => {
 
               <Card>
                 <ProductImagesForm />
-              </Card>
+              </Card> */}
 
-              <Card id="seo">
+              {/* <Card id="seo">
                 <CardTitle mb={2} variant="subtitle1">
                   SEO
                 </CardTitle>
                 <Box textAlign="left">
                   <SeoForm />
                 </Box>
-              </Card>
+              </Card> */}
             </Stack>
           )}
           {activeStep === 1 && (
             <Stack width="100%">
-              <ChoiceGroupComboForm />
+              <ChoiceGroupComboForm id={''} />
             </Stack>
           )}
         </Box>

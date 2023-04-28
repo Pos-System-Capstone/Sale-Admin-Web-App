@@ -45,7 +45,8 @@ export enum ProductTypeEnum {
   SINGLE = 'SINGLE',
   PARENT = 'PARENT',
   CHILD = 'CHILD',
-  EXTRA = 'EXTRA'
+  EXTRA = 'EXTRA',
+  COMBO = 'COMBO'
 }
 export enum ProductSizeEnum {
   Small = 'S',
@@ -81,7 +82,7 @@ export type TProductInOrderDetail = {
 };
 
 export enum CombinationModeEnum {
-  FixedCombo = 0,
+  FixedCombo = 'FIXED',
   ChoiceCombo = 1
 }
 
@@ -255,6 +256,15 @@ export type ComboProductType = {
   max: number;
 };
 
+export type CreateGroupProductForm = {
+  comboProductId: string;
+  name: string;
+  combinationMode: string;
+  priority: number;
+  quantity: number;
+  productIds: string[];
+};
+
 export const PRODUCT_TYPE_OPTIONS = [
   {
     value: ProductTypeEnum.SINGLE,
@@ -271,6 +281,10 @@ export const PRODUCT_TYPE_OPTIONS = [
   {
     value: ProductTypeEnum.CHILD,
     label: 'Sản phẩm con'
+  },
+  {
+    value: ProductTypeEnum.COMBO,
+    label: 'Sản phẩm combo'
   }
 ];
 export const PRODUCT_SIZE_OPTIONS = [

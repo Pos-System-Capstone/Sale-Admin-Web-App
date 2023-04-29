@@ -1,5 +1,5 @@
 import { Box, Button, Grid } from '@mui/material';
-import { InputField, SelectField, UploadImageField } from 'components/form';
+import { InputField, UploadImageField } from 'components/form';
 import { BrandStatus, TBrandDetail } from 'types/brand';
 
 type Props = {
@@ -71,7 +71,7 @@ function UpdateBrandInformationForm({ currentBrandInformation, onFinish }: Props
             // defaultValue={currentBrandInformation?.phone}
           />
         </Grid>
-        <Grid key={'status'} item xs={12} sm={8}>
+        {/* <Grid key={'status'} item xs={12} sm={8}>
           <SelectField
             fullWidth
             name="status"
@@ -79,7 +79,7 @@ function UpdateBrandInformationForm({ currentBrandInformation, onFinish }: Props
             // defaultValue={currentBrandInformation?.status}
             options={brandStatusOptions}
           />
-        </Grid>
+        </Grid> */}
 
         <Grid item xs={12} sm={12} display={'flex'} justifyContent={'end'}>
           <Button variant="contained" onClick={onFinish}>

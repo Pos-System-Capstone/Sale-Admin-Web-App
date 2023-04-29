@@ -1,12 +1,10 @@
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 import { Icon } from '@iconify/react';
-import { AppBar, Box, Button, IconButton, Stack, Toolbar } from '@mui/material';
+import { AppBar, Box, IconButton, Stack, Toolbar } from '@mui/material';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import Label from 'components/Label';
-import useLocales from 'hooks/useLocales';
-import { useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { MHidden } from '../../components/@material-extend';
 // hooks
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
@@ -74,19 +72,18 @@ export const DashboardNavLayout = ({ onOpenSidebar, children, ...props }: any) =
 
 export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps) {
   const { isCollapse } = useCollapseDrawer();
-  const { translate } = useLocales();
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
-  const firstElementOfPath = pathname.split('/')[1];
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const navigate = useNavigate();
+  // const { translate } = useLocales();
+  // const [open, setOpen] = useState(false);
+  // const firstElementOfPath = pathname.split('/')[1];
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
   const envLabelColor = (env: any) => {
     switch (env) {
@@ -130,13 +127,13 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
               {process.env.REACT_APP_ENVIROMENT}
             </Label>
           )}
-          <Button
+          {/* <Button
             onClick={() => {
               navigate('/report');
             }}
           >
             Report
-          </Button>
+          </Button> */}
           {/* <Button
             onClick={() => {
               navigate('/dashboard');

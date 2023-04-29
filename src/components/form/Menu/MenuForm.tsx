@@ -1,8 +1,16 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { HelpOutline } from '@mui/icons-material';
 import { MobileTimePicker } from '@mui/lab';
-import { IconButton } from '@mui/material';
-import { Box, FormLabel, Grid, Stack, TextField, Tooltip, Typography } from '@mui/material';
+import {
+  Box,
+  FormLabel,
+  Grid,
+  IconButton,
+  Stack,
+  TextField,
+  Tooltip,
+  Typography
+} from '@mui/material';
 import brandApi from 'api/brand';
 import { DAY_OF_WEEK_CONFIG_VALUE_BY_BIT } from 'constraints';
 import useAuth from 'hooks/useAuth';
@@ -125,7 +133,7 @@ const MenuForm = ({ isUpdateMenu }: Props) => {
             />
           </Grid>
         )}
-        {hasBaseMenu?.hasBaseMenu && (
+        {!isUpdateMenu && hasBaseMenu?.hasBaseMenu && (
           <Grid item xs={12}>
             <CheckBoxField
               size="small"

@@ -36,7 +36,7 @@ const UpdateBrandInformation = ({ currentBrandInformation, onUpdateFormSuccessfu
     return brandApi
       .updateBrandInformation(currentBrandInformation ? currentBrandInformation.id : '', values)
       .then(() => {
-        enqueueSnackbar(`Tạo thành công`, {
+        enqueueSnackbar(`Cập nhật thành công`, {
           variant: 'success'
         });
         onUpdateFormSuccessful();

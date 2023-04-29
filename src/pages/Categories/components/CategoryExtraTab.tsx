@@ -1,33 +1,22 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
-import { Icon } from '@iconify/react';
-import {
-  Box,
-  Button,
-  Card,
-  IconButton,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Typography
-} from '@mui/material';
+import { Avatar, Box, Card, Chip } from '@mui/material';
 import categoryApi from 'api/category';
-import CategoryExtraForm from 'components/form/CategoryExtra/CategoryExtraForm';
 import confirm from 'components/Modal/confirm';
-import ModalForm from 'components/ModalForm/ModalForm';
 import ResoTable from 'components/ResoTable/ResoTable';
+import { PRODUCT_TYPE_DATA } from 'constraints';
 import useAddExtra from 'hooks/extra-categories/useAddExtra';
 import useDeleteExtra from 'hooks/extra-categories/useDeleteExtra';
 import useUpdateExtra from 'hooks/extra-categories/useUpdateExtra';
 import { useSnackbar } from 'notistack';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
-import { TCategory, TCategoryExtra } from 'types/category';
-import { ModifierSelectType, modifierSelectTypeOptions } from 'types/Modifier';
+import { ModifierSelectType } from 'types/Modifier';
+import { TCategoryExtra } from 'types/category';
+import { TProduct } from 'types/product';
 import { TTableColumn } from 'types/table';
 import * as yup from 'yup';
-import { normalizeExtra, transformExtra } from '../helper';
+import { transformExtra } from '../helper';
 
 interface Props {}
 
@@ -123,107 +112,144 @@ const CategoryExtraTab = (props: Props) => {
     return false;
   };
 
-  const categoryExtraColumns: TTableColumn<TCategoryExtra>[] = [
+  const categoryExtraColumns: TTableColumn<TProduct>[] = [
     {
-      title: 'Tên',
-      dataIndex: 'extra_cate',
-      render: (data: TCategory) => <Typography>{data.name}</Typography>
+      title: 'STT',
+      dataIndex: 'index',
+      hideInSearch: true
     },
     {
-      title: 'Số lượng tối thiểu',
-      dataIndex: 'min_max'
-      // render: (value, __) => <TextField value={value} label="Mã sản phẩm" disabled />
+      title: 'Hình ảnh',
+      dataIndex: 'picUrl',
+      hideInSearch: true,
+      render: (src, { name }: any) => (
+        <Avatar alt={name} src={src} variant="circular" style={{ width: '54px', height: '54px' }} />
+      )
     },
     {
-      title: 'Kiểu',
-      dataIndex: 'select_type',
+      title: 'Tên sản phẩm',
+      dataIndex: 'name'
+    },
+    {
+      title: 'Giá bán',
+      dataIndex: 'sellingPrice',
+      hideInSearch: true,
+      valueType: 'money'
+    },
+    {
+      title: 'Mã sản phẩm',
+      dataIndex: 'code',
+      hideInSearch: true
+    },
+    {
+      title: 'Loại Sản Phẩm',
+      dataIndex: 'type',
       valueType: 'select',
-      valueEnum: modifierSelectTypeOptions
-    },
-    {
-      title: 'Hành động',
-      valueType: 'option',
-      render: (_, data) => {
-        const { id } = data;
-        return (
-          <>
-            <IconButton
-              key={`menu-${id}`}
-              onClick={(e) => {
-                openEditMenu(e);
-                setOpenMenu(id);
-              }}
-              aria-label="more"
-              aria-controls="long-menu"
-              aria-haspopup="true"
-              size="large"
-            >
-              <Icon icon={moreVerticalFill} />
-            </IconButton>
-            <Menu
-              anchorEl={_anchorEl}
-              MenuListProps={{
-                'aria-labelledby': 'edit-menu'
-              }}
-              onClose={(e) => {
-                setAnchorEl(null);
-                setOpenMenu(null);
-              }}
-              open={id == _openMenu}
-              key={`menu-edit-${id}`}
-              id={`menu-edit-${id}`}
-              sx={{
-                p: 0
-              }}
-            >
-              <MenuItem>
-                <ListItemText>Danh sách sản phẩm</ListItemText>
-              </MenuItem>
-              <ModalForm
-                onOk={async () => {
-                  try {
-                    await updateForm.handleSubmit(
-                      (data: any) => {
-                        return updateExtraAsync({
-                          categoryExtraId: Number(id),
-                          data: transformExtra(data)
-                        });
-                      },
-                      (e) => {
-                        throw e;
-                      }
-                    )();
-                    tableRef.current?.reload();
-                    return true;
-                  } catch (error) {
-                    return false;
-                  }
-                }}
-                title={<Typography variant="h3">Cập nhật extra</Typography>}
-                trigger={
-                  <MenuItem onClick={() => updateForm.reset(normalizeExtra(data))}>
-                    <ListItemText>Điều chỉnh</ListItemText>
-                  </MenuItem>
-                }
-              >
-                <FormProvider {...updateForm}>
-                  <CategoryExtraForm updateMode />
-                </FormProvider>
-              </ModalForm>
-
-              <MenuItem onClick={() => onDeleteExtra(data)}>
-                <ListItemText>Xoá</ListItemText>
-              </MenuItem>
-            </Menu>
-          </>
-        );
-      }
+      valueEnum: PRODUCT_TYPE_DATA,
+      render: (type) => (
+        <Chip label={PRODUCT_TYPE_DATA.find(({ value }) => value === type)?.label} />
+      )
     }
+    // {
+    //   title: 'Tên',
+    //   dataIndex: 'name',
+    //   render: (data: TCategory) => <Typography>{data.name}</Typography>
+    // },
+    // {
+    //   title: 'Số lượng tối thiểu',
+    //   dataIndex: 'min_max'
+    //   // render: (value, __) => <TextField value={value} label="Mã sản phẩm" disabled />
+    // },
+    // {
+    // title: 'Mã sản phẩm',
+    //   dataIndex: 'select_type',
+    //   valueType: 'select',
+    //   valueEnum: modifierSelectTypeOptions
+    // },
+    // {
+    //   title: 'Hành động',
+    //   valueType: 'option',
+    //   render: (_, data) => {
+    //     const { id } = data;
+    //     return (
+    //       <>
+    //         <IconButton
+    //           key={`menu-${id}`}
+    //           onClick={(e) => {
+    //             openEditMenu(e);
+    //             setOpenMenu(id);
+    //           }}
+    //           aria-label="more"
+    //           aria-controls="long-menu"
+    //           aria-haspopup="true"
+    //           size="large"
+    //         >
+    //           <Icon icon={moreVerticalFill} />
+    //         </IconButton>
+    //         <Menu
+    //           anchorEl={_anchorEl}
+    //           MenuListProps={{
+    //             'aria-labelledby': 'edit-menu'
+    //           }}
+    //           onClose={(e) => {
+    //             setAnchorEl(null);
+    //             setOpenMenu(null);
+    //           }}
+    //           open={id == _openMenu}
+    //           key={`menu-edit-${id}`}
+    //           id={`menu-edit-${id}`}
+    //           sx={{
+    //             p: 0
+    //           }}
+    //         >
+    //           <MenuItem>
+    //             <ListItemText>Danh sách sản phẩm</ListItemText>
+    //           </MenuItem>
+    //           <ModalForm
+    //             onOk={async () => {
+    //               try {
+    //                 await updateForm.handleSubmit(
+    //                   (data: any) => {
+    //                     return updateExtraAsync({
+    //                       categoryExtraId: Number(id),
+    //                       data: transformExtra(data)
+    //                     });
+    //                   },
+    //                   (e) => {
+    //                     throw e;
+    //                   }
+    //                 )();
+    //                 tableRef.current?.reload();
+    //                 return true;
+    //               } catch (error) {
+    //                 return false;
+    //               }
+    //             }}
+    //             title={<Typography variant="h3">Cập nhật extra</Typography>}
+    //             trigger={
+    //               <MenuItem onClick={() => updateForm.reset(normalizeExtra(data))}>
+    //                 <ListItemText>Điều chỉnh</ListItemText>
+    //               </MenuItem>
+    //             }
+    //           >
+    //             <FormProvider {...updateForm}>
+    //               <CategoryExtraForm updateMode />
+    //             </FormProvider>
+    //           </ModalForm>
+
+    //           <MenuItem onClick={() => onDeleteExtra(data)}>
+    //             <ListItemText>Xoá</ListItemText>
+    //           </MenuItem>
+    //         </Menu>
+    //       </>
+    //     );
+    //   }
+    // }
   ];
 
   return (
     <Card>
-      <ModalForm
+      {/* <ModalForm
         onOk={async () => {
           try {
             await createExtraForm.handleSubmit(onAddExtra, (e) => {
@@ -241,7 +267,7 @@ const CategoryExtraTab = (props: Props) => {
         <FormProvider {...createExtraForm}>
           <CategoryExtraForm />
         </FormProvider>
-      </ModalForm>
+      </ModalForm> */}
       <Box py={2}>
         <FormProvider {...categoryExtraForm}>
           <ResoTable
@@ -251,7 +277,7 @@ const CategoryExtraTab = (props: Props) => {
             showAction={false}
             columns={categoryExtraColumns}
             rowKey="cate_id"
-            getData={(params: any) => categoryApi.getExtraCategoriesFromCateId(id!, params)}
+            getData={(params: any) => categoryApi.getProductsInCategory(id!, params)}
           />
         </FormProvider>
       </Box>

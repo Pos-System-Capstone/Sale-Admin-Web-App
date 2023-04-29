@@ -31,8 +31,12 @@ const ModalAddOrRemoveProductInMenu = ({
   const [open, setOpen] = useState(false);
   const [selectedProductIds, setSelectedProductIds] = useState<string[]>();
   const { id } = useParams();
-  const { data: productsInMenu } = useQuery(['product', menuId ?? id], () =>
-    getProductInMenus(id ?? '', { page: 1, size: 100 })
+  const { data: productsInMenu } = useQuery(
+    ['product', menuId ?? id],
+    () => getProductInMenus(id!, { page: 1, size: 200 }),
+    {
+      enabled: Boolean(id)
+    }
   );
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {

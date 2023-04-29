@@ -124,14 +124,23 @@ const UpdateMenuPage = () => {
   };
 
   const handleMenuInformationToUpdate = (data: any) => {
-    const { dayFilter, endTime, startTime, priority } = data;
-
-    const processedDataToUpdate: TUpdateMenuInformation = {
-      priority: priority,
-      dateFilter: dayFilter.length > 0 ? processDayFiter(dayFilter) : undefined,
-      startTime: startTime ? convertTimeToInteger(moment(startTime).format('HH:mm')) : undefined,
-      endTime: endTime ? convertTimeToInteger(moment(endTime).format('HH:mm')) : undefined
-    };
+    const { dayFilter, endTime, startTime, priority, allDay } = data;
+    let processedDataToUpdate: TUpdateMenuInformation;
+    if (allDay) {
+      processedDataToUpdate = {
+        priority: priority,
+        dateFilter: dayFilter.length > 0 ? processDayFiter(dayFilter) : undefined,
+        startTime: 0,
+        endTime: 1439
+      };
+    } else {
+      processedDataToUpdate = {
+        priority: priority,
+        dateFilter: dayFilter.length > 0 ? processDayFiter(dayFilter) : undefined,
+        startTime: startTime ? convertTimeToInteger(moment(startTime).format('HH:mm')) : undefined,
+        endTime: endTime ? convertTimeToInteger(moment(endTime).format('HH:mm')) : undefined
+      };
+    }
     return processedDataToUpdate;
   };
   const MENU_TABS = [

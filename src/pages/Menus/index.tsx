@@ -21,7 +21,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { getMenusOfBrand } from 'redux/menu/api';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { MenuStatus, PosMenu, TCreateMenuInformation } from 'types/menu';
+import { DateFilter, MenuStatus, PosMenu, TCreateMenuInformation } from 'types/menu';
 import { TTableColumn } from 'types/table';
 import { convertTimeToInteger, processDayFiter } from 'utils/utils';
 
@@ -63,7 +63,11 @@ const MenusPage = () => {
       render: (_: any, { dateFilter }: PosMenu) => (
         <Stack direction="row" spacing={1}>
           {dateFilter?.map((date) => (
-            <Chip size="small" key={date} label={date} />
+            <Chip
+              size="small"
+              key={date}
+              label={Object.values(DateFilter)[Object.keys(DateFilter).indexOf(date)]}
+            />
           ))}
         </Stack>
       )
@@ -132,7 +136,6 @@ const MenusPage = () => {
           variant: 'success'
         });
         setIsShowConfirmDeleteDialog(!isShowConfirmDeleteDialog);
-        console.log(`tableRef.current`, tableRef.current);
         tableRef.current?.reload();
       });
     } catch (error) {
@@ -192,7 +195,7 @@ const MenusPage = () => {
                       return true;
                     })
                     .catch((err) => {
-                      enqueueSnackbar(err.errors.Code[0], {
+                      enqueueSnackbar(err.Error, {
                         variant: 'error'
                       });
                       return false;
@@ -204,7 +207,6 @@ const MenusPage = () => {
               )();
               return true;
             } catch (error) {
-              console.log(`error`, error);
               enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {
                 variant: 'error'
               });

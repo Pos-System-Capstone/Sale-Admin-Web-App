@@ -8,6 +8,7 @@ import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDesc
 import moment from 'moment';
 import { MenuStatus, PosMenu } from 'types/menu';
 import { Card, CardTitle } from '../../Products/components/Card';
+import { DateFilter } from 'types/menu';
 
 const columns: ResoDescriptionColumnType<PosMenu>[] = [
   {
@@ -56,7 +57,11 @@ const columns: ResoDescriptionColumnType<PosMenu>[] = [
     render: (_: any, { dateFilter }: PosMenu) => (
       <Stack direction="row" spacing={1}>
         {dateFilter?.map((date) => (
-          <Chip size="small" key={date} label={date} />
+          <Chip
+            size="small"
+            key={date}
+            label={Object.values(DateFilter)[Object.keys(DateFilter).indexOf(date)]}
+          />
         ))}
       </Stack>
     )

@@ -151,7 +151,7 @@ const StoreDetailPage = () => {
                 onClick={() => setOpenUpdateStoreInformationForm(!openUpdateStoreInformationForm)}
                 variant="contained"
               >
-                Cập nhật
+                Cập nhật thông tin
               </Button>
             )}
           </Stack>

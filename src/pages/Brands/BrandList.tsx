@@ -12,6 +12,8 @@ import Page from 'components/Page';
 import { useNavigate } from 'react-router-dom';
 import { BrandStatus, TBrand } from 'types/brand';
 import { TTableColumn } from 'types/table';
+import plusFill from '@iconify/icons-eva/plus-fill';
+import { Icon } from '@iconify/react';
 
 const BrandListPage = () => {
   const navigate = useNavigate();
@@ -86,7 +88,11 @@ const BrandListPage = () => {
           alignItems="center"
         >
           <Typography variant="h3">Danh sách thương hiệu</Typography>
-          <Button onClick={() => navigate('new')} variant="contained">
+          <Button
+            onClick={() => navigate('new')}
+            variant="contained"
+            startIcon={<Icon icon={plusFill} />}
+          >
             Tạo nhãn hiệu mới
           </Button>
         </Stack>

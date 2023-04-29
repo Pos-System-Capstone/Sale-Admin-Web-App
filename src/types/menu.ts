@@ -17,13 +17,13 @@ export type Menu = {
 };
 
 export enum DateFilter {
-  MONDAY = 'Monday',
-  TUESDAY = 'Tuesday',
-  WEDNESDAY = 'Wednesday',
-  THURSDAY = 'Thursday',
-  FRIDAY = 'Friday',
-  SATURDAY = 'Saturday',
-  SUNDAY = 'Sunday'
+  Monday = 'Thứ hai',
+  Tuesday = 'Thứ ba',
+  Wednesday = 'Thứ tư',
+  Thursday = 'Thứ năm',
+  Friday = 'Thứ sáu',
+  Saturday = 'Thứ bảy',
+  Sunday = 'Chủ nhật'
 }
 
 export enum MenuStatus {

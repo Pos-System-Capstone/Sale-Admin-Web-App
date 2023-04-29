@@ -32,7 +32,7 @@ const ModalStoresApplyMenuForm = ({
   const [selectedStoreIds, setSelectedStoreIds] = useState<string[]>();
   const { data: storesInMenu } = useQuery(
     ['store', menuId],
-    () => getStoreApplyMenus(menuId ?? '', { page: 1, size: 100 }),
+    () => getStoreApplyMenus(menuId ?? '', { page: 1, size: 200 }),
     {
       enabled: Boolean(menuId)
     }

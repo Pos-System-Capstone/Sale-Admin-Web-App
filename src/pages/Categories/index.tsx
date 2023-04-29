@@ -1,6 +1,9 @@
 /* eslint-disable camelcase */
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
+import { Visibility } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
+import { Tooltip } from '@mui/material';
 // material
 import { Button, Card, Stack } from '@mui/material';
 import categoryApi from 'api/category';
@@ -57,6 +60,21 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
           <Label color="warning"> Không hoạt động </Label>
         );
       }
+    },
+    {
+      title: 'Chi tiết',
+      fixed: 'right',
+      hideInSearch: true,
+      render: (_: any, cate: TCategory) => (
+        <Tooltip title="Chi tiết">
+          <IconButton
+            onClick={() => navigate(`${PATH_DASHBOARD.categories.editById(cate.id)}`)}
+            size="large"
+          >
+            <Visibility />
+          </IconButton>
+        </Tooltip>
+      )
     }
     // {
     //   title: 'Hình ảnh',
@@ -184,14 +202,15 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
       <Card>
         <Stack spacing={2}>
           <ResoTable
-            defaultFilters={{
-              type: isExtra ? CategoryType.EXTRA : CategoryType.NORMAL
-            }}
-            ref={tableRef}
             onEdit={(cate: TCategory) => {
               navigate(`${PATH_DASHBOARD.categories.editById(cate.id)}`);
             }}
             onDelete={(cate: TCategory) => setCurrentDeleteItem(cate)}
+            showAction={false}
+            defaultFilters={{
+              type: isExtra ? CategoryType.EXTRA : CategoryType.NORMAL
+            }}
+            ref={tableRef}
             rowKey="id"
             getData={categoryApi.get}
             columns={categoryColumns}

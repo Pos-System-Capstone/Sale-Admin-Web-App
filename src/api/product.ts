@@ -1,4 +1,4 @@
-import { CreateGroupProductForm, TGroupProduct, TProduct } from 'types/product';
+import { CreateGroupProductForm, ProductsInGroup, TGroupProduct, TProduct } from 'types/product';
 import { generateAPIWithPaging } from './utils';
 import request from 'utils/axios';
 import { BaseReponse } from 'types/response';
@@ -9,9 +9,19 @@ const getListGroupProductOfCombo = (brandId: string, productId: string, params?:
   request.get<TGroupProduct[]>(`/brands/${brandId}/products/${productId}/groupProducts`, {
     params
   });
+const updateGroupProductOfComBos = (brandId: string, groupId: string, payload: any) =>
+  request.put<TGroupProduct>(`/brands/${brandId}/groupProducts/${groupId}`, payload);
+
+const updateProductInGroup = (productInGroupId: string, groupId: string, payload: any) =>
+  request.put<ProductsInGroup>(
+    `/groupProducts/${groupId}/productInGroup/${productInGroupId}`,
+    payload
+  );
 const productApi = {
   createGroupProduct,
   getListGroupProductOfCombo,
+  updateGroupProductOfComBos,
+  updateProductInGroup,
   ...generateAPIWithPaging<TProduct>('products')
 };
 

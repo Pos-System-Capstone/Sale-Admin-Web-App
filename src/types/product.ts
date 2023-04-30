@@ -98,18 +98,18 @@ export type TProductInGroup = {
   default_min_max: string;
 };
 
-export type TGroupProduct = {
-  id: number;
-  base_product_id: number;
-  collection_id?: number;
-  combination_mode?: CombinationModeEnum;
-  default_min_max: string;
-  product_id?: number;
-  position: number;
-  description: string;
-  quantity: number;
-  product_name: string;
-};
+// export type TGroupProduct = {
+//   id: number;
+//   base_product_id: number;
+//   collection_id?: number;
+//   combination_mode?: CombinationModeEnum;
+//   default_min_max: string;
+//   product_id?: number;
+//   position: number;
+//   description: string;
+//   quantity: number;
+//   product_name: string;
+// };
 
 export type TProductBase = {
   product_id?: number;
@@ -263,6 +263,29 @@ export type CreateGroupProductForm = {
   priority: number;
   quantity: number;
   productIds: string[];
+};
+
+export type TGroupProduct = {
+  id: string;
+  comboProductId: string;
+  name: string;
+  combinationMode: string;
+  priority: number;
+  quantity: number;
+  status: string;
+  productsInGroups: ProductsInGroup[];
+};
+
+export type ProductsInGroup = {
+  id: string;
+  groupProductId: string;
+  productId: string;
+  priority: number;
+  additionalPrice: number;
+  min: number;
+  max: number;
+  quantity: number;
+  status: string;
 };
 
 export const PRODUCT_TYPE_OPTIONS = [

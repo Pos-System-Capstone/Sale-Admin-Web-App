@@ -5,8 +5,6 @@ import {
   CombinationModeEnum,
   ComboProductType,
   CreateComboForm,
-  CreateComboRequest,
-  ProductTypeEnum,
   TProductBase,
   TProductCombo,
   TProductMaster
@@ -116,42 +114,4 @@ export const normalizeProductCombo = (values: TProductCombo): CreateComboForm =>
   // console.log(`data`, data);
 
   return data as CreateComboForm;
-};
-
-export const transformComboForm = (
-  formData: CreateComboForm,
-  mode: CombinationModeEnum = CombinationModeEnum.ChoiceCombo
-): CreateComboRequest => {
-  let data: Partial<CreateComboRequest> = { ...transformDraftToStr(formData) } as any;
-  data.groups = [];
-  formData.groups.forEach((g) => {
-    data.groups?.push({
-      collection_id: g.collection_id,
-      combination_mode: g.combination_mode,
-      default_min_max: `${g.default ?? 0}-${g.min ?? 0}-${g.max ?? 0}`,
-      position: g.position,
-      base_product_id: g.base_product_id,
-      id: g.id
-    });
-    data.groups?.push(
-      ...g.products.map((p) => ({
-        ...p,
-        collection_id: g.collection_id,
-        default_min_max: `${p.default ?? 0}-${p.min ?? 0}-${p.max ?? 0}`,
-        product_id: p.product_id,
-        base_product_id: p.base_product_id
-      }))
-    );
-  });
-  formData.fixedProducts?.forEach((g) => {
-    data.groups?.push({
-      ...g,
-      product_id: g.product_id,
-      combination_mode: CombinationModeEnum.FixedCombo,
-      default_min_max: `${g.default ?? 0}-${g.min ?? 0}-${g.max ?? 1}`,
-      base_product_id: g.base_product_id
-    });
-  });
-  data.product_type = ProductTypeEnum.SINGLE;
-  return data as CreateComboRequest;
 };

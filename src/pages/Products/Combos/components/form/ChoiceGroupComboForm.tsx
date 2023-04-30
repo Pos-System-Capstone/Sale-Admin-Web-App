@@ -16,12 +16,17 @@ import {
   Button
 } from '@mui/material';
 import { InputField } from 'components/form';
-import { FormProvider, useFieldArray, useForm, useFormContext, useWatch } from 'react-hook-form';
+import { FormProvider, useFieldArray, useForm, useFormContext } from 'react-hook-form';
 import { CardTitle } from 'pages/Products/components/Card';
 // import ModalCollectionForm from '../ModalCollectionForm';
 import { Add } from '@mui/icons-material';
 import { differenceBy } from 'lodash';
-import { CombinationModeEnum, CreateGroupProductForm, TProduct } from 'types/product';
+import {
+  CombinationModeEnum,
+  CreateGroupProductForm,
+  TGroupProduct,
+  TProduct
+} from 'types/product';
 import ModalProductForm from 'components/ModalProductForm/ModalProductForm';
 import { Card } from '@mui/material';
 
@@ -29,6 +34,8 @@ import { useEffect } from 'react';
 import productApi from 'api/product';
 import useAuth from 'hooks/useAuth';
 import { useSnackbar } from 'notistack';
+import { useQuery } from 'react-query';
+import GroupProduct from './UpdateGroupProductForm';
 
 interface Props {
   id: string;
@@ -57,6 +64,15 @@ const ChoiceGroupComboForm = (props: Props) => {
       productIds: []
     }
   });
+
+  const { data: listGroupProduct, refetch } = useQuery(
+    ['groupProduct', user?.brandId, props.id],
+    () => productApi.getListGroupProductOfCombo(user?.brandId, props.id).then((res) => res.data),
+    {
+      enabled: Boolean(props.id)
+    }
+  );
+  console.log('listGroupProduct', listGroupProduct);
 
   const controlledFields = fields.map((g, idx) => ({
     ...g,
@@ -125,19 +141,11 @@ const ChoiceGroupComboForm = (props: Props) => {
   useEffect(() => {
     createGroupFrom.setValue('productIds', selectedProdIds);
   }, [createGroupFrom, fixedProductsControlledFields, selectedProdIds]);
-  const group = createGroupFrom.getValues();
-  console.log('group', group);
-  const handleAddGroup = () => {
-    createGroupFrom.handleSubmit(async (data) => {
-      await productApi.createGroupProduct(user?.brandId, data).then((res) => {
-        console.log(`res`, res);
-      });
-    });
-  };
   const submitHandler = (values: CreateGroupProductForm) =>
     productApi
       .createGroupProduct(user?.brandId, values)
       .then((res) => {
+        refetch();
         enqueueSnackbar(`Thêm thành công ${values.name}`, {
           variant: 'success'
         });
@@ -149,7 +157,7 @@ const ChoiceGroupComboForm = (props: Props) => {
       });
 
   return (
-    <>
+    <Stack padding={2} spacing={2}>
       <FormProvider {...createGroupFrom}>
         <Card>
           <Stack spacing={2}>
@@ -204,79 +212,22 @@ const ChoiceGroupComboForm = (props: Props) => {
               </Grid>
               {/* <ProductGroupTable groupIdx={idx} control={control} /> */}
             </Stack>
-
-            {/* {controlledFields.map((group: TCollection, idx) => (
-              <Stack spacing={2} key={`extra-product-group-${group.id}`}>
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  alignItems="center"
-                  justifyContent="space-between"
-                >
-                  <Stack direction="row" spacing={1} alignItems="center" mb={1}>
-                    <Label color="default">{idx + 1}</Label>
-                    <Typography variant="h6">{group.name}</Typography>
-                  </Stack>
-                  <IconButton onClick={() => removeGroup(idx)} sx={{ color: 'red' }} size="large">
-                    <Icon icon={trashIcon} />
-                  </IconButton>
-                </Stack>
-                <Stack spacing={2} pl={2}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      <InputField
-                        fullWidth
-                        type="number"
-                        label="Số sản phẩm tối thiểu được chọn trong nhóm"
-                        name={`groups.${idx}.min`}
-                      />
-                      <InputField name={`groups.${idx}.id`} style={{ display: 'none' }} hidden />
-                      <InputField
-                        name={`groups.${idx}.base_product_id`}
-                        style={{ display: 'none' }}
-                        hidden
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <InputField
-                        fullWidth
-                        type="number"
-                        label="Số sản phẩm tối đa được chọn trong nhóm"
-                        name={`groups.${idx}.max`}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <InputField
-                        fullWidth
-                        type="number"
-                        label="Thứ tự"
-                        name={`groups.${idx}.position`}
-                      />
-                    </Grid>
-                  </Grid>
-                  <ProductGroupTable groupIdx={idx} control={control} />
-                </Stack>
-              </Stack>
-            ))} */}
             {Boolean(fixedProductsControlledFields?.length) && (
               <Stack spacing={2} pt={2}>
-                <Card>
-                  <Stack spacing={2}>
-                    <CardTitle mb={2} variant="subtitle1">
-                      Sản phẩm
-                    </CardTitle>
-                    <FixedProductTable
-                      products={fixedProductsControlledFields}
-                      onRemove={removeFixedProduct}
-                    />
-                  </Stack>
-                </Card>
+                <FixedProductTable
+                  products={fixedProductsControlledFields}
+                  onRemove={removeFixedProduct}
+                />
               </Stack>
             )}
           </Stack>
         </Card>
       </FormProvider>
-    </>
+
+      {listGroupProduct?.map((group: TGroupProduct, idx) => (
+        <GroupProduct key={idx} idx={idx} groupProduct={group} comboId={props.id} />
+      ))}
+    </Stack>
   );
 };
 
@@ -309,7 +260,7 @@ const FixedProductTable = ({
                   </Stack>
                 </Box>
               </TableCell>
-              <TableCell align="center">{data.sellingPrice}</TableCell>
+              <TableCell align="center">{data.sellingPrice} đ</TableCell>
               {/* <TableCell align="center">
                 <InputField
                   type="number"
@@ -336,79 +287,4 @@ const FixedProductTable = ({
     </TableContainer>
   );
 };
-
-const ProductGroupTable = ({ groupIdx, control }: { groupIdx: number; control: any }) => {
-  const arrName = `groups.${groupIdx}.products`;
-  const watchFieldArr = useWatch({ control, name: arrName });
-  const { fields } = useFieldArray({
-    control,
-    name: `groups.${groupIdx}.products`
-  });
-
-  const products = (fields ?? [])?.map((f, idx) => ({
-    ...f,
-    ...watchFieldArr[idx]
-  }));
-
-  return (
-    <TableContainer>
-      <Table aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="left">Sản phẩm</TableCell>
-            <TableCell align="center">Giá</TableCell>
-            <TableCell align="center">Tối thiểu</TableCell>
-            <TableCell align="center">Tối đa</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {products.map((data, idx) => (
-            <TableRow key={data.id}>
-              <TableCell align="left">
-                <Box display="flex" justifyContent="space-between">
-                  <Stack direction="row" spacing={2} alignItems="center">
-                    <Avatar variant="square" src={data.pic_url} />
-                    <Typography noWrap>{data.product_name}</Typography>
-                  </Stack>
-                </Box>
-              </TableCell>
-              <TableCell align="center">{data.price}</TableCell>
-              <TableCell align="center">
-                <InputField
-                  type="number"
-                  size="small"
-                  key={`product-position-${data[idx]?.id}`}
-                  label="Tối thiểu"
-                  name={`${arrName}.${idx}.min`}
-                />
-              </TableCell>
-              <TableCell align="center">
-                <InputField
-                  key={`product-baseproduct-${data[idx]?.id}`}
-                  name={`${arrName}.${idx}.base_product_id`}
-                  style={{ display: 'none' }}
-                  hidden
-                />
-                <InputField
-                  key={`product-id-${data[idx]?.id}`}
-                  name={`${arrName}.${idx}.id`}
-                  style={{ display: 'none' }}
-                  hidden
-                />
-                <InputField
-                  type="number"
-                  size="small"
-                  key={`product-position-${data[idx]?.id}`}
-                  label="Tối đa"
-                  name={`${arrName}.${idx}.max`}
-                />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-};
-
 export default ChoiceGroupComboForm;

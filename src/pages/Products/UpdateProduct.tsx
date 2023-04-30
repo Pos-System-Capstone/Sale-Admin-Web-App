@@ -211,11 +211,13 @@ const UpdateProduct = () => {
             </TabList>
           </Box>
           <TabPanel value={'1'}>
-            <MiddleForm updateMode={true} />
+            <Stack mb={2} spacing={2} width="100%">
+              <MiddleForm updateMode={true} />
+            </Stack>
           </TabPanel>
           {productDetails?.type === ProductTypeEnum.COMBO && (
             <TabPanel value={'2'}>
-              <Stack width="100%">
+              <Stack mb={2} spacing={2} width="100%">
                 <ChoiceGroupComboForm id={id ?? ''} />
               </Stack>
             </TabPanel>

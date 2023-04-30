@@ -6,14 +6,13 @@ import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { createMasterProd } from 'redux/product/api';
-import { PATH_DASHBOARD } from 'routes/paths';
-import { CombinationModeEnum, CreateComboForm } from 'types/product';
+
+import { CreateComboForm } from 'types/product';
 // import BasicProductInfoForm from '../components/form/BasicProductInfoForm';
 // import CategoryTreeForm from '../components/form/CategoryTreeForm';
 // import ProductImagesForm from '../components/form/ProductImagesForm';
 
-import { normalizeProductCombo, transformComboForm } from '../utils';
+import { normalizeProductCombo } from '../utils';
 import ChoiceGroupComboForm from './components/form/ChoiceGroupComboForm';
 import { useProduct } from 'hooks/products/useProduct';
 import MiddleForm from '../components/MiddleForm';
@@ -42,20 +41,20 @@ const CreateCombo = (props: Props) => {
 
   const { handleSubmit } = createComboForm;
 
-  const onSubmit = (values: any) => {
-    return createMasterProd(transformComboForm(values, CombinationModeEnum.ChoiceCombo))
-      .then((res) => {
-        enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
-          variant: 'success'
-        });
-        navigate(`${PATH_DASHBOARD.combos.editById(res.data)}`);
-      })
-      .catch((err) => {
-        enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
-          variant: 'error'
-        });
-      });
-  };
+  // const onSubmit = (values: any) => {
+  //   return createMasterProd(transformComboForm(values, CombinationModeEnum.ChoiceCombo))
+  //     .then((res) => {
+  //       enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
+  //         variant: 'success'
+  //       });
+  //       navigate(`${PATH_DASHBOARD.combos.editById(res.data)}`);
+  //     })
+  //     .catch((err) => {
+  //       enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
+  //         variant: 'error'
+  //       });
+  //     });
+  // };
 
   return (
     <FormProvider {...createComboForm}>
@@ -77,7 +76,7 @@ const CreateCombo = (props: Props) => {
             </Button>
           )}
           {activeStep === STEPS.length - 1 && (
-            <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
+            <LoadingAsyncButton onClick={null} type="submit" variant="contained">
               Lưu
             </LoadingAsyncButton>
           )}

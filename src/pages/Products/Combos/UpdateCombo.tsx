@@ -24,11 +24,9 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
 import { addOrRemoveProductsInMenu } from 'redux/menu/api';
-import { updateProdById } from 'redux/product/api';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { CombinationModeEnum } from 'types/product';
+
 import { validationSchema } from '../type';
-import { transformComboForm, transformDraftToStr } from '../utils';
 import ChoiceGroupComboForm from './components/form/ChoiceGroupComboForm';
 import { useProductDetail } from 'hooks/products/useProduct';
 import MiddleForm from '../components/MiddleForm';
@@ -115,20 +113,20 @@ const UpdateCombo = (props: Props) => {
   // }, [product]);
   const { handleSubmit } = createComboForm;
 
-  const onSubmit = (values: any) => {
-    const data = transformDraftToStr(values);
-    return updateProdById(comboId!, transformComboForm(data, CombinationModeEnum.ChoiceCombo))
-      .then((res) => {
-        enqueueSnackbar(`Cập nhật thành công ${values.product_name}`, {
-          variant: 'success'
-        });
-      })
-      .catch((err) => {
-        enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
-          variant: 'error'
-        });
-      });
-  };
+  // const onSubmit = (values: any) => {
+  //   const data = transformDraftToStr(values);
+  //   return updateProdById(comboId!, transformComboForm(data, CombinationModeEnum.ChoiceCombo))
+  //     .then((res) => {
+  //       enqueueSnackbar(`Cập nhật thành công ${values.product_name}`, {
+  //         variant: 'success'
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
+  //         variant: 'error'
+  //       });
+  //     });
+  // };
 
   if (isLoading) {
     return <CircularProgress />;
@@ -159,7 +157,7 @@ const UpdateCombo = (props: Props) => {
             </Button>
           )}
           {activeStep === STEPS.length - 1 && (
-            <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
+            <LoadingAsyncButton onClick={null} type="submit" variant="contained">
               Lưu
             </LoadingAsyncButton>
           )}

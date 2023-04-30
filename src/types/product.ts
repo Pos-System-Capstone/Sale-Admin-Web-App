@@ -181,6 +181,10 @@ export type TProductType = {
   HAS_EXTRA: 'HAS_EXTRA';
 };
 
+export enum ProductInGroupStatusEnum {
+  ACTIVE = 'Active',
+  DEACTIVE = 'Deactivate'
+}
 // product for creating menu
 export type TProductOfCreateMenu = {
   id: string;

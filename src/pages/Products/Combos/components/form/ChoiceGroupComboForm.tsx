@@ -225,7 +225,13 @@ const ChoiceGroupComboForm = (props: Props) => {
       </FormProvider>
 
       {listGroupProduct?.map((group: TGroupProduct, idx) => (
-        <GroupProduct key={idx} idx={idx} groupProduct={group} comboId={props.id} />
+        <GroupProduct
+          key={idx}
+          idx={idx}
+          groupProduct={group}
+          comboId={props.id}
+          onReload={refetch}
+        />
       ))}
     </Stack>
   );

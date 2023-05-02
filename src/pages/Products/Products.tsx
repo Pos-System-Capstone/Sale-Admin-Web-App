@@ -11,7 +11,7 @@ import React, { useRef, useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { ProductTypeEnum, TProduct, TProductBase } from 'types/product';
+import { TProduct, TProductBase } from 'types/product';
 // import confirm from 'components/Modal/confirm';
 // import { deleteProdById } from '../../redux/product/api';
 //
@@ -64,16 +64,16 @@ export default function EcommerceShop() {
     <Page
       title="Quản lý sản phẩm"
       actions={() => [
-        <Button
-          key="add-product-extra"
-          onClick={() => {
-            navigate(`${PATH_DASHBOARD.products.newProduct}?productType=${ProductTypeEnum.EXTRA}`);
-          }}
-          variant="outlined"
-          startIcon={<Icon icon={plusFill} />}
-        >
-          Thêm extra
-        </Button>,
+        // <Button
+        //   key="add-product-extra"
+        //   onClick={() => {
+        //     navigate(`${PATH_DASHBOARD.products.newProduct}?productType=${ProductTypeEnum.EXTRA}`);
+        //   }}
+        //   variant="outlined"
+        //   startIcon={<Icon icon={plusFill} />}
+        // >
+        //   Thêm extra
+        // </Button>,
         <Button
           key="add-product"
           onClick={() => {
@@ -99,10 +99,10 @@ export default function EcommerceShop() {
           pagination
           getData={(params: any) => productApi.get(params)}
           onEdit={editProduct}
-          onDelete={(data: TProductBase) => {
-            setIsShowConfirmDeleteProductDialog(true);
-            setRemoveProductData(data);
-          }}
+          // onDelete={(data: TProductBase) => {
+          //   setIsShowConfirmDeleteProductDialog(true);
+          //   setRemoveProductData(data);
+          // }}
           columns={productColumns}
           rowKey="id"
         />

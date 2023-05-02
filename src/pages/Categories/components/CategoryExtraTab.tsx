@@ -10,13 +10,14 @@ import useUpdateExtra from 'hooks/extra-categories/useUpdateExtra';
 import { useSnackbar } from 'notistack';
 import { useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { ModifierSelectType } from 'types/Modifier';
 import { TCategoryExtra } from 'types/category';
 import { TProduct } from 'types/product';
 import { TTableColumn } from 'types/table';
 import * as yup from 'yup';
 import { transformExtra } from '../helper';
+import { PATH_DASHBOARD } from 'routes/paths';
 
 interface Props {}
 
@@ -45,7 +46,7 @@ const CategoryExtraTab = (props: Props) => {
   const tableRef = useRef<any>();
   const [_anchorEl, setAnchorEl] = useState(null);
   const [_openMenu, setOpenMenu] = useState<null | number>(null);
-
+  const navigate = useNavigate();
   const { mutateAsync: addExtraAsync } = useAddExtra();
   const { mutateAsync: updateExtraAsync } = useUpdateExtra();
   const { mutateAsync: deleteExtraAsync } = useDeleteExtra();
@@ -97,6 +98,9 @@ const CategoryExtraTab = (props: Props) => {
       },
       onCancle: () => {}
     });
+  };
+  const editProduct = (data: TProduct) => {
+    navigate(`${PATH_DASHBOARD.products.root}/${data.id}`);
   };
 
   const onAddExtra = async (values: TCategoryExtra) => {
@@ -274,8 +278,8 @@ const CategoryExtraTab = (props: Props) => {
             ref={tableRef}
             showFilter={false}
             showSettings={false}
-            showAction={false}
             columns={categoryExtraColumns}
+            onEdit={editProduct}
             rowKey="cate_id"
             getData={(params: any) => categoryApi.getProductsInCategory(id!, params)}
           />

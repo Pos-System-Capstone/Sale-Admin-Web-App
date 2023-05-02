@@ -1,35 +1,35 @@
-
 export type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
-  ? {
-    type: Key;
-  }
-  : {
-    type: Key;
-    payload: M[Key];
-  };
+    ? {
+        type: Key;
+      }
+    : {
+        type: Key;
+        payload: M[Key];
+      };
 };
 
 export type UserRole = 'SysAdmin' | 'store-admin' | any;
 
 export type AuthUser =
   | {
-    name: string;
-    role?: UserRole[];
-    displayName: string;
-    email?: string;
-    photoURL?: string;
-    phoneNumber?: string;
-    country?: string;
-    address?: string;
-    state?: string;
-    city?: string;
-    zipCode?: number;
-    about?: string;
-    isPublic?: boolean;
-    brandPicUrl?: string
-    [key: string]: any;
-  }
+      id: string;
+      name: string;
+      role?: UserRole[];
+      displayName: string;
+      email?: string;
+      photoURL?: string;
+      phoneNumber?: string;
+      country?: string;
+      address?: string;
+      state?: string;
+      city?: string;
+      zipCode?: number;
+      about?: string;
+      isPublic?: boolean;
+      brandPicUrl?: string;
+      [key: string]: any;
+    }
   | null
   | Record<string, any>;
 

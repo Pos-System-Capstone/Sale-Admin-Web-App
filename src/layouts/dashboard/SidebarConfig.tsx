@@ -37,16 +37,16 @@ const ICONS = {
 
 // SYSTEM ADMIN SIDEBAR CONFIG
 export const systemAdminSidebarConfig = [
-  {
-    subheader: 'Tổng quan',
-    items: [
-      {
-        title: 'Báo cáo',
-        path: PATH_DASHBOARD.general.analytics,
-        icon: ICONS.dashboard
-      }
-    ]
-  },
+  // {
+  //   subheader: 'Tổng quan',
+  //   items: [
+  //     {
+  //       title: 'Báo cáo',
+  //       path: PATH_DASHBOARD.general.analytics,
+  //       icon: ICONS.dashboard
+  //     }
+  //   ]
+  // },
   {
     subheader: 'Quản lý hệ thống',
     items: [

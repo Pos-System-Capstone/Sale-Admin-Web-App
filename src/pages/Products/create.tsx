@@ -6,7 +6,7 @@ import { Box, Button, Stack } from '@mui/material';
 import productApi from 'api/product';
 import { useSnackbar } from 'notistack';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { ProductTypeEnum, TProductCreate } from 'types/product';
 import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
@@ -21,8 +21,8 @@ const CreateProduct = () => {
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
 
-  const [searchParams] = useSearchParams();
-  const cloneProductId: any = searchParams.get('cloneProductId');
+  // const [searchParams] = useSearchParams();
+  // const cloneProductId: any = searchParams.get('cloneProductId');
   // const productType: any = Number(searchParams.get('productType') ?? ProductTypeEnum.Single);
 
   const methods = useForm<TProductCreate>({
@@ -51,16 +51,12 @@ const CreateProduct = () => {
           });
         });
     }
-    console.log('productvalue', data);
     return productApi
       .create(data)
       .then((res) => {
-        enqueueSnackbar(
-          `Tạo thành công ${values.name} ${values.size ? `size ${values.size}` : ''}`,
-          {
-            variant: 'success'
-          }
-        );
+        enqueueSnackbar(`Tạo thành công ${data.name}`, {
+          variant: 'success'
+        });
         navigate(PATH_DASHBOARD.products.editById(res.data.id));
       })
       .catch((err) => {

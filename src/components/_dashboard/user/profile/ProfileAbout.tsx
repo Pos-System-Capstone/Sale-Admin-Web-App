@@ -15,11 +15,11 @@ export default function ProfileAbout({ updateMode, userInfo }: Props) {
 
   // return view of Store Manager, Brand Manager, Brand Admin
   if (
+    user?.id == userInfo?.id ||
     (user?.role.includes(Role.SystemAdmin) &&
       (userInfo?.role.includes(Role.BrandAdmin) || userInfo?.role.includes(Role.BrandManager))) ||
     (user?.role.includes(Role.BrandManager) && userInfo?.role.includes(Role.StoreManager)) ||
-    (user?.role.includes(Role.StoreManager) && userInfo?.role.includes(Role.StoreStaff)) ||
-    user?.name === userInfo?.name
+    (user?.role.includes(Role.StoreManager) && userInfo?.role.includes(Role.StoreStaff))
   ) {
     return (
       <Grid container spacing={2}>

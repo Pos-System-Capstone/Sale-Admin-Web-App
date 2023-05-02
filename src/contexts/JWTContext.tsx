@@ -4,8 +4,8 @@ import axios, { axiosInstances } from '../utils/axios';
 import { isValidToken, setSession } from '../utils/jwt';
 import { getUserInfo, setUserInfo } from '../utils/utils';
 // @types
-import { ActionMap, AuthState, AuthUser, JWTContextType } from '../@types/authentication';
 import { useNavigate } from 'react-router';
+import { ActionMap, AuthState, AuthUser, JWTContextType } from '../@types/authentication';
 
 // ----------------------------------------------------------------------
 
@@ -149,7 +149,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const login = async (username: string, password: string) => {
-    // const response = await axiosInstances.login.post('/users/login', {
     const response = await axiosInstances.login.post('/auth/login', {
       username,
       password
@@ -195,7 +194,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = async () => {
     setSession(null);
+    setUserInfo({});
     dispatch({ type: Types.Logout });
+    navigate('/auth/login', { replace: true });
   };
 
   const resetPassword = (email: string) => console.log(email);

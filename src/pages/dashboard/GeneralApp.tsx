@@ -81,7 +81,6 @@ export default function GeneralApp() {
     endDate: dateRange()[1]
   };
 
-  console.log('params', params);
   const { data: orders } = useQuery(
     ['orders', user, params],
     () => orderApi.getOrderList(user?.storeId ?? '', params).then((res) => res.data.items),
@@ -89,9 +88,10 @@ export default function GeneralApp() {
       refetchOnWindowFocus: false
     }
   );
-  console.log('options', options);
-  console.log('getDaterange', dateRange());
-  console.log('orders', orders);
+  // console.log('params', params);
+  // console.log('options', options);
+  // console.log('getDaterange', dateRange());
+  // console.log('orders', orders);
   return (
     <Page title="Báo cáo tổng quan">
       <Grid container spacing={2}>

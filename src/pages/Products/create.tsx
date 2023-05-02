@@ -28,7 +28,10 @@ const CreateProduct = () => {
   const methods = useForm<TProductCreate>({
     // resolver: yupResolver(validationSchema),
     defaultValues: {
-      description: ''
+      description: '',
+      sellingPrice: 0,
+      discountPrice: 0,
+      historicalPrice: 0
     }
   });
   const { handleSubmit, reset, watch } = methods;

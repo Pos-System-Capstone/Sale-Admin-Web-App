@@ -8,18 +8,23 @@ import brandApi from 'api/brand';
 import storeApi from 'api/store';
 import userApi from 'api/user';
 import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
+import Label from 'components/Label';
 import useAuth from 'hooks/useAuth';
 import { useLocation, useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { TUser, UserRole, UserStatus } from 'types/user';
-import { roleEnumArray } from '../config';
-import Label from 'components/Label';
-import { Role } from 'utils/role';
 import { EmployeeStatus } from 'types/employee';
 import { TTableColumn } from 'types/table';
+import { TUser, UserRole, UserStatus } from 'types/user';
+import { Role } from 'utils/role';
+import { roleEnumArray } from '../config';
 
-export default function AccountsList() {
+type Props = {
+  isUpdate?: boolean;
+};
+
+export default function AccountsList(props: Props) {
+  const { isUpdate } = props;
   const tableRef = useRef<any>();
   const { storeId, brandId } = useParams();
   const location = useLocation();
@@ -143,6 +148,10 @@ export default function AccountsList() {
     const form = tableRef.current?.formControl;
     if (!form) return;
   }, [tableRef]);
+
+  useEffect(() => {
+    tableRef.current?.reload();
+  }, [isUpdate]);
 
   return (
     <Stack spacing={2}>

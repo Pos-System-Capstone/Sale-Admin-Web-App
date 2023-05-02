@@ -67,13 +67,13 @@ export default function LoginForm() {
         if (isMountedRef.current) {
           setSubmitting(false);
         }
-      } catch (error) {
-        enqueueSnackbar(error ? `${error}` : 'Có lỗi', {
+      } catch (er: any) {
+        enqueueSnackbar(er ? `${er.error}` : 'Có lỗi', {
           variant: 'error'
         });
         if (isMountedRef.current) {
           setSubmitting(false);
-          setErrors({ afterSubmit: (error as any).message });
+          setErrors({ afterSubmit: (er as any).message });
         }
       }
     }

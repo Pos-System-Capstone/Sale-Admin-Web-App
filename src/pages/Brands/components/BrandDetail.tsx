@@ -1,3 +1,5 @@
+import plusFill from '@iconify/icons-eva/plus-fill';
+import { Icon } from '@iconify/react';
 import { TabContext, TabList } from '@mui/lab';
 import {
   Avatar,
@@ -12,15 +14,13 @@ import {
 } from '@mui/material';
 import brandApi from 'api/brand';
 import Label from 'components/Label';
-import { Icon } from '@iconify/react';
-import plusFill from '@iconify/icons-eva/plus-fill';
 import Page from 'components/Page';
 import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 import useAuth from 'hooks/useAuth';
 import { useSnackbar } from 'notistack';
-import AccountsList from 'pages/accounts/components/AccountsList';
 import StoresList from 'pages/Stores/components/StoresList';
-import { useState } from 'react';
+import AccountsList from 'pages/accounts/components/AccountsList';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
@@ -36,6 +36,7 @@ const BrandDetailPage = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [openUpdateBrandInformationForm, setOpenUpdateBrandInformationForm] = useState(false);
   const [openAddAccountModel, setOpenAddAccountModel] = useState(false);
+  const [isSuccessfully, setIsSuccessfully] = useState(false);
 
   const { data: brand, refetch } = useQuery(['brands', user?.brandId], async () => {
     if (brandId) {
@@ -93,8 +94,8 @@ const BrandDetailPage = () => {
     defaultValues: {
       brandId: brandId ?? '',
       status: UserStatus.ACTIVE
-    },
-    shouldUnregister: false
+    }
+    // shouldUnregister: false
   });
 
   const onSubmitCreateUser = (values: TUserCreate) => {
@@ -102,9 +103,10 @@ const BrandDetailPage = () => {
     return brandApi
       .createUserOfBrand(brandId ?? '', createUserData)
       .then((res) => {
-        enqueueSnackbar(`Tạo thành công`, {
+        enqueueSnackbar(`Tạo tài khoản thành công`, {
           variant: 'success'
         });
+        setIsSuccessfully(!isSuccessfully);
         setOpenAddAccountModel(false);
       })
       .catch((err) => {
@@ -113,6 +115,10 @@ const BrandDetailPage = () => {
         });
       });
   };
+
+  useEffect(() => {
+    addAccountForm.reset();
+  }, [openAddAccountModel]);
 
   return (
     <Page>
@@ -192,7 +198,7 @@ const BrandDetailPage = () => {
                 <StoresList />
               ) : (
                 <Box>
-                  <AccountsList />
+                  <AccountsList isUpdate={isSuccessfully} />
                 </Box>
               )}
             </Stack>

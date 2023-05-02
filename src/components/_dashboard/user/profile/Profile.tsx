@@ -162,14 +162,14 @@ export default function Profile({ updateMode }: Props) {
               {/* Brand Manager => update store manager info */}
               {/* Store Manager => update staff info */}
               {/* User account => update their info */}
-              {((user?.role.includes(Role.SystemAdmin) &&
-                (userInfo?.role.includes(Role.BrandAdmin) ||
-                  userInfo?.role.includes(Role.BrandManager))) ||
+              {(user?.id == userInfo?.id ||
+                (user?.role.includes(Role.SystemAdmin) &&
+                  (userInfo?.role.includes(Role.BrandAdmin) ||
+                    userInfo?.role.includes(Role.BrandManager))) ||
                 (user?.role.includes(Role.BrandManager) &&
                   userInfo?.role.includes(Role.StoreManager)) ||
                 (user?.role.includes(Role.StoreManager) &&
-                  userInfo?.role.includes(Role.StoreStaff)) ||
-                user?.name === userInfo?.name) && (
+                  userInfo?.role.includes(Role.StoreStaff))) && (
                 <Button
                   onClick={() =>
                     setIsOpenConfirmUpdateUserInformationDialog(

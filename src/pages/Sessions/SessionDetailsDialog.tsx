@@ -95,13 +95,13 @@ const SessionDetailDialog: React.FC<Props> = ({ open, onClose, sessionId }) => {
           <DialogContent dividers>
             <FormProvider {...updateSessionForm}>
               <Grid container spacing={2}>
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12} md={12}>
                   <InputField size="small" fullWidth name="name" label="Tên Ca" />
                   <Typography color="red" variant="caption">
                     Nếu để trống, tên ca sẽ là Ca:(Thời gian bắt đầu)-(Thời gian kết thúc)
                   </Typography>
                 </Grid>
-                <Grid item xs={12} md={4}>
+                {/* <Grid item xs={12} md={4}>
                   <InputField
                     size="small"
                     fullWidth
@@ -113,7 +113,7 @@ const SessionDetailDialog: React.FC<Props> = ({ open, onClose, sessionId }) => {
                   <Typography color="red" variant="caption">
                     Số tiền có sẵn trong két lúc bắt đầu ca
                   </Typography>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                   <FormLabel component="p" title="Khung giờ" />
 
@@ -191,10 +191,10 @@ const SessionDetailDialog: React.FC<Props> = ({ open, onClose, sessionId }) => {
                     handleProcessUpdateSessionsRequest(updateSessionForm.getValues())
                   )
                   .then((res) => {
+                    onClose();
                     enqueueSnackbar('Cập nhật thành công', {
                       variant: 'success'
                     });
-                    onClose();
                     return true;
                   })
                   .catch((err) => {

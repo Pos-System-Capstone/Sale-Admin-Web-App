@@ -63,12 +63,12 @@ const SessionListPage = () => {
       hideInSearch: true,
       valueType: 'money'
     },
-    {
-      title: 'Tổng tiền trong két',
-      dataIndex: 'currentCashInVault',
-      valueType: 'money',
-      hideInSearch: true
-    },
+    // {
+    //   title: 'Tổng tiền trong két',
+    //   dataIndex: 'currentCashInVault',
+    //   valueType: 'money',
+    //   hideInSearch: true
+    // },
     {
       title: 'Chi tiết',
       fixed: 'right',
@@ -125,10 +125,11 @@ const SessionListPage = () => {
                 handleProcessCreateSessionsRequest(createSessionsForm.getValues())
               )
               .then((res) => {
+                tableRef.current?.reload();
                 enqueueSnackbar('Tạo ca thành công', {
                   variant: 'success'
                 });
-                tableRef.current?.reload();
+
                 return true;
               })
               .catch((err) => {
@@ -155,14 +156,14 @@ const SessionListPage = () => {
         sessionId={selectSession}
         open={Boolean(selectSession)}
         onClose={() => {
-          setSelectSession(null);
           tableRef.current?.reload();
+          setSelectSession(null);
         }}
       />
       <Card>
         <Stack spacing={2}>
           <ResoTable
-            tableRef={tableRef}
+            ref={tableRef}
             showAction={false}
             rowKey="id"
             getData={(params: any) => {

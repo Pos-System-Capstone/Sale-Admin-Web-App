@@ -165,7 +165,7 @@ const MenusPage = () => {
       isBaseMenu: isBaseMenu ?? false,
       isUseBaseMenu: isUseBaseMenu ?? false,
       code: code,
-      priority: parseInt(priority),
+      priority: priority ? parseInt(priority) : 0,
       dateFilter: dayFilterTotal,
       startTime: startTimeToInt,
       endTime: endTimeToInt

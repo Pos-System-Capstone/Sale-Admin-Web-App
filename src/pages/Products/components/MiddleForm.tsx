@@ -96,7 +96,8 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
                   </Grid>
                   {(productType === ProductTypeEnum.CHILD ||
                     productType === ProductTypeEnum.SINGLE ||
-                    productType === ProductTypeEnum.EXTRA) && (
+                    productType === ProductTypeEnum.EXTRA ||
+                    productType === ProductTypeEnum.COMBO) && (
                     <>
                       <Grid item xs={6}>
                         <InputField
@@ -136,7 +137,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
                   {(productType === ProductTypeEnum.SINGLE ||
                     productType === ProductTypeEnum.PARENT ||
                     productType === ProductTypeEnum.COMBO) && (
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                       <AutocompleteCategory
                         isExtra={false}
                         name="categoryId"

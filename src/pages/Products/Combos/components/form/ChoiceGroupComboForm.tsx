@@ -12,7 +12,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Avatar,
   Button
 } from '@mui/material';
 import { InputField } from 'components/form';
@@ -261,7 +260,15 @@ const FixedProductTable = ({
               <TableCell align="left">
                 <Box display="flex" justifyContent="space-between">
                   <Stack direction="row" spacing={2} alignItems="center">
-                    <Avatar variant="square" src={data.picUrl} />
+                    <Box
+                      component="img"
+                      alt={data.name}
+                      src={
+                        data.picUrl ??
+                        'https://firebasestorage.googleapis.com/v0/b/pos-system-47f93.appspot.com/o/files%2Fproduct.png?alt=media&token=8eb70c21-2c0e-4d5c-b92a-0b93c3020c9b'
+                      }
+                      sx={{ width: 48, height: 48, borderRadius: 1.5 }}
+                    />
                     <Typography noWrap>{data.name}</Typography>
                   </Stack>
                 </Box>

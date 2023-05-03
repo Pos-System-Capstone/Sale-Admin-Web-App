@@ -2,7 +2,6 @@ import { ErrorMessage } from '@hookform/error-message';
 import closeIcon from '@iconify/icons-eva/close-outline';
 import { Icon } from '@iconify/react';
 import {
-  Avatar,
   Box,
   IconButton,
   Stack,
@@ -38,7 +37,15 @@ const AddProductTable = ({ control }) => {
               <TableCell align="left">
                 <Box display="flex" justifyContent="space-between">
                   <Stack direction="row" spacing={2} alignItems="center">
-                    <Avatar variant="square" src={data.pic_url} />
+                    <Box
+                      component="img"
+                      alt={data.product_name}
+                      src={
+                        data.picUrl ??
+                        'https://firebasestorage.googleapis.com/v0/b/pos-system-47f93.appspot.com/o/files%2Fproduct.png?alt=media&token=8eb70c21-2c0e-4d5c-b92a-0b93c3020c9b'
+                      }
+                      sx={{ width: 48, height: 48, borderRadius: 1.5 }}
+                    />
                     <Typography noWrap>{data.product_name}</Typography>
                   </Stack>
                 </Box>

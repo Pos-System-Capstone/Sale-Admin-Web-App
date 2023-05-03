@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
-import { Avatar, Box, Button, Card, Typography } from '@mui/material';
+import { Box, Button, Card, Typography } from '@mui/material';
 import menuApi from 'api/menu';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { get } from 'lodash-es';
@@ -117,11 +117,14 @@ const ProductInMenuTab = (props) => {
               title: 'Hình ảnh',
               dataIndex: 'picUrl',
               render: (src, { product_name }) => (
-                <Avatar
+                <Box
+                  component="img"
                   alt={product_name}
-                  src={src}
-                  variant="square"
-                  style={{ width: '54px', height: '54px', zIndex: 1 }}
+                  src={
+                    src ??
+                    'https://firebasestorage.googleapis.com/v0/b/pos-system-47f93.appspot.com/o/files%2Fproduct.png?alt=media&token=8eb70c21-2c0e-4d5c-b92a-0b93c3020c9b'
+                  }
+                  sx={{ width: 48, height: 48, borderRadius: 1.5 }}
                 />
               ),
               hideInSearch: true

@@ -1,4 +1,4 @@
-import { Avatar } from '@mui/material';
+import { Box } from '@mui/material';
 import AutocompleteCategory from 'components/form/common/Category/AutocompleteCategory';
 import Label from 'components/Label';
 import React from 'react';
@@ -16,11 +16,14 @@ export const comboColumns: TTableColumn<TProductBase>[] = [
     dataIndex: 'pic_url',
     hideInSearch: true,
     render: (src, { product_name }: any) => (
-      <Avatar
+      <Box
+        component="img"
         alt={product_name}
-        src={src}
-        variant="square"
-        style={{ width: '54px', height: '54px' }}
+        src={
+          src ??
+          'https://firebasestorage.googleapis.com/v0/b/pos-system-47f93.appspot.com/o/files%2Fproduct.png?alt=media&token=8eb70c21-2c0e-4d5c-b92a-0b93c3020c9b'
+        }
+        sx={{ width: 48, height: 48, borderRadius: 1.5 }}
       />
     )
   },

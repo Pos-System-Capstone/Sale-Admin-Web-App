@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Avatar, Box, Card, Chip } from '@mui/material';
+import { Box, Card, Chip } from '@mui/material';
 import categoryApi from 'api/category';
 import confirm from 'components/Modal/confirm';
 import ResoTable from 'components/ResoTable/ResoTable';
@@ -127,7 +127,15 @@ const CategoryExtraTab = (props: Props) => {
       dataIndex: 'picUrl',
       hideInSearch: true,
       render: (src, { name }: any) => (
-        <Avatar alt={name} src={src} variant="circular" style={{ width: '54px', height: '54px' }} />
+        <Box
+          component="img"
+          alt={name}
+          src={
+            src ??
+            'https://firebasestorage.googleapis.com/v0/b/pos-system-47f93.appspot.com/o/files%2Fproduct.png?alt=media&token=8eb70c21-2c0e-4d5c-b92a-0b93c3020c9b'
+          }
+          sx={{ width: 48, height: 48, borderRadius: 1.5 }}
+        />
       )
     },
     {

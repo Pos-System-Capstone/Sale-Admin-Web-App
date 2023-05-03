@@ -52,7 +52,7 @@ export const transformMenuForm = (values: any) => {
 export const menuSchema = yup.object({
   code: yup.string().required('Vui lòng nhập menu code'),
   dayFilter: yup.array().min(1, 'Vui lòng chọn ngày áp dụng'),
-  priority: yup.string().required('Vui lòng nhập ưu tiên').min(0, 'Vui lòng nhập đúng'),
+  priority: yup.number().min(0, 'Vui lòng nhập đúng'),
   startTime: yup.date(),
   endTime: yup
     .date()

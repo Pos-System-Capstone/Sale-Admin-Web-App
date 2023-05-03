@@ -4,6 +4,7 @@ import { Box, Grid, Stack, Typography } from '@mui/material';
 import useAuth from '../../hooks/useAuth';
 import useSettings from '../../hooks/useSettings';
 // components
+import orderApi from 'api/order';
 import {
   AppAreaInstalled,
   AppCurrentDownload,
@@ -12,13 +13,12 @@ import {
   AppTotalInstalled,
   AppWelcome
 } from 'components/_dashboard/general-app';
-import Page from '../../components/Page';
-import { Role } from 'utils/role';
-import { useQuery } from 'react-query';
-import orderApi from 'api/order';
 import moment from 'moment';
-import { useState } from 'react';
 import SelectDateRange from 'pages/report/components/SelectDateRange';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { Role } from 'utils/role';
+import Page from '../../components/Page';
 
 // ----------------------------------------------------------------------
 
@@ -93,7 +93,7 @@ export default function GeneralApp() {
   // console.log('getDaterange', dateRange());
   // console.log('orders', orders);
   return (
-    <Page title="Báo cáo tổng quan">
+    <Page title={user?.role.includes(Role.StoreManager) ? 'Báo cáo tổng quan' : ''}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={12}>
           <AppWelcome displayName={user?.displayName} />

@@ -10,6 +10,7 @@ import {
 import { InputField } from 'components/form';
 import useLocales from 'hooks/useLocales';
 import { FormProvider, useForm } from 'react-hook-form';
+import { ProductTypeEnum } from 'types/product';
 
 type TProductUpdate = {
   id: string;
@@ -62,6 +63,7 @@ const ProductInMenuDialog = ({ open, onClose, onSubmit, data, updateMode = false
   //   }
   //   return inputs;
   // }, []);
+  console.log('data ne: ', data);
 
   return (
     <FormProvider {...form}>
@@ -86,16 +88,16 @@ const ProductInMenuDialog = ({ open, onClose, onSubmit, data, updateMode = false
                   defaultValue={data?.code}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <InputField
                   fullWidth
-                  type={'number'}
+                  disabled={data?.type === ProductTypeEnum.PARENT}
                   name="sellingPrice"
                   label="Giá bán sản phẩm"
                   defaultValue={data?.sellingPrice}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <InputField
                   fullWidth
                   type={'number'}
@@ -104,14 +106,19 @@ const ProductInMenuDialog = ({ open, onClose, onSubmit, data, updateMode = false
                   defaultValue={data?.discountPrice}
                   // placeholder="Nhập để cập nhật mật khẩu mới"
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
           </DialogContent>
           <DialogActions>
             <Button onClick={onClose} variant="outlined" color="inherit">
               {translate('common.cancel')}
             </Button>
-            <Button onClick={form.handleSubmit(onSubmit)} variant="contained">
+
+            <Button
+              disabled={data?.type == ProductTypeEnum.PARENT}
+              onClick={form.handleSubmit(onSubmit)}
+              variant="contained"
+            >
               {translate('common.update')}
             </Button>
           </DialogActions>

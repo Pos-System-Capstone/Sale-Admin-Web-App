@@ -6,6 +6,7 @@ import { getUserInfo, setUserInfo } from '../utils/utils';
 // @types
 import { useNavigate } from 'react-router';
 import { ActionMap, AuthState, AuthUser, JWTContextType } from '../@types/authentication';
+import { Role } from 'utils/role';
 
 // ----------------------------------------------------------------------
 
@@ -154,6 +155,12 @@ function AuthProvider({ children }: { children: ReactNode }) {
       password
     });
     const { accessToken, id, name, role, status, brandId, storeId, brandPicUrl } = response.data;
+    if (role === Role.StoreStaff) {
+      setSession(null);
+      setUserInfo({});
+      navigate('/auth/login', { replace: true });
+      throw new Error('Bạn không có quyền đăng nhập vào hệ thống');
+    }
     const user = {
       id: id,
       name: name,

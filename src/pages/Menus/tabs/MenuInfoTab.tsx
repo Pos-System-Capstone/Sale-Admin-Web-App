@@ -51,9 +51,21 @@ const columns: ResoDescriptionColumnType<PosMenu>[] = [
     )
   },
   {
+    title: 'Trạng thái',
+    dataIndex: 'status',
+    hideInSearch: true,
+    render: (status) =>
+      status == MenuStatus.ACTIVE ? (
+        <Label color="primary">Hoạt Động</Label>
+      ) : (
+        <Label color="error">Tạm ẩn</Label>
+      )
+  },
+  {
     title: 'Ngày áp dụng',
     dataIndex: 'dateFilter',
     hideInSearch: true,
+    span: 2,
     render: (_: any, { dateFilter }: PosMenu) => (
       <Stack direction="row" spacing={1}>
         {dateFilter?.map((date) => (
@@ -65,17 +77,6 @@ const columns: ResoDescriptionColumnType<PosMenu>[] = [
         ))}
       </Stack>
     )
-  },
-  {
-    title: 'Trạng thái',
-    dataIndex: 'status',
-    hideInSearch: true,
-    render: (status) =>
-      status == MenuStatus.ACTIVE ? (
-        <Label color="primary">Hoạt Động</Label>
-      ) : (
-        <Label color="error">Tạm ẩn</Label>
-      )
   }
 ];
 

@@ -55,18 +55,19 @@ export default function LoginForm() {
     validationSchema: LoginSchema,
     onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
       try {
-        await login(values.user_name, values.password);
-        enqueueSnackbar('Đăng nhập thành công', {
-          variant: 'success',
-          action: (key) => (
-            <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-              <Icon icon={closeFill} />
-            </MIconButton>
-          )
+        await login(values.user_name, values.password).then(() => {
+          enqueueSnackbar('Đăng nhập thành công', {
+            variant: 'success',
+            action: (key) => (
+              <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+                <Icon icon={closeFill} />
+              </MIconButton>
+            )
+          });
+          if (isMountedRef.current) {
+            setSubmitting(false);
+          }
         });
-        if (isMountedRef.current) {
-          setSubmitting(false);
-        }
       } catch (er: any) {
         enqueueSnackbar(er ? `${er.error}` : 'Có lỗi', {
           variant: 'error'

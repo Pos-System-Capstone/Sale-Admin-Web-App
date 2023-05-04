@@ -43,7 +43,7 @@ export const PaymentProviderConfig = (props: Props) => {
   const [selectZalopay, setSelectZalopay] = useState<boolean>(false);
   const [selectVNpay, setSelectVNpay] = useState<boolean>(false);
   const [selectVietQR, setSelectVietQR] = useState<boolean>(false);
-  const paymentMapping = useForm({
+  const paymentMapping = useForm<TPaymentMapping>({
     defaultValues: {}
   });
   useEffect(() => {
@@ -121,14 +121,14 @@ export const PaymentProviderConfig = (props: Props) => {
           </Stack>
           {selectZalopay && (
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <InputField fullWidth name="zaloPayConfigRequest.appId" label="AppId" />
+              <Grid item xs={2}>
+                <InputField fullWidth name="zaloPayConfigRequest.appId" helperText="App Id" />
               </Grid>
-              <Grid item xs={12}>
-                <InputField fullWidth name="zaloPayConfigRequest.key1" label="Key1" />
+              <Grid item xs={5}>
+                <InputField fullWidth name="zaloPayConfigRequest.key1" helperText="Key 1" />
               </Grid>
-              <Grid item xs={12}>
-                <InputField fullWidth name="zaloPayConfigRequest.key2" label="Key2" />
+              <Grid item xs={5}>
+                <InputField fullWidth name="zaloPayConfigRequest.key2" helperText="Key 2" />
               </Grid>
             </Grid>
           )}
@@ -140,11 +140,15 @@ export const PaymentProviderConfig = (props: Props) => {
           </Stack>
           {selectVNpay && (
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <InputField fullWidth name="vnPayConfigRequest.tmnCode" label="tmnCode" />
+              <Grid item xs={5}>
+                <InputField fullWidth name="vnPayConfigRequest.tmnCode" helperText="tmn Code" />
               </Grid>
-              <Grid item xs={12}>
-                <InputField fullWidth name="vnPayConfigRequest.secureHash" label="secureHash" />
+              <Grid item xs={7}>
+                <InputField
+                  fullWidth
+                  name="vnPayConfigRequest.secureHash"
+                  helperText="secure Hash"
+                />
               </Grid>
             </Grid>
           )}
@@ -156,21 +160,21 @@ export const PaymentProviderConfig = (props: Props) => {
           </Stack>
           {selectVietQR && (
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={4}>
-                <InputField fullWidth name="vietQrConfigRequest.bankCode" label="Bank Code" />
+              <Grid item xs={4}>
+                <InputField fullWidth name="vietQrConfigRequest.bankCode" helperText="Bank Code" />
               </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={4}>
                 <InputField
                   fullWidth
                   name="vietQrConfigRequest.accountNumber"
-                  label="Số tài khoản"
+                  helperText="Số tài khoản"
                 />
               </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={4}>
                 <InputField
                   fullWidth
                   name="vietQrConfigRequest.accountName"
-                  label="Tên chủ tài khoản"
+                  helperText="Tên chủ tài khoản"
                 />
               </Grid>
             </Grid>

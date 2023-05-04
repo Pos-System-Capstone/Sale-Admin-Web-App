@@ -1,3 +1,5 @@
+import plusFill from '@iconify/icons-eva/plus-fill';
+import { Icon } from '@iconify/react';
 import { Button, Card } from '@mui/material';
 import Page from 'components/Page';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +10,12 @@ const StoreOfBrandList = () => {
   return (
     <Page
       actions={() => [
-        <Button key="add-store" onClick={() => navigate('new')} variant="contained">
+        <Button
+          key="add-store"
+          onClick={() => navigate('new')}
+          startIcon={<Icon icon={plusFill} />}
+          variant="contained"
+        >
           Tạo cửa hàng mới
         </Button>
       ]}

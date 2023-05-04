@@ -100,6 +100,7 @@ const BrandDetailPage = () => {
 
   const onSubmitCreateUser = (values: TUserCreate) => {
     const createUserData = { ...values };
+    createUserData.brandId = brandId ?? '';
     return brandApi
       .createUserOfBrand(brandId ?? '', createUserData)
       .then((res) => {

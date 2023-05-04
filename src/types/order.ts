@@ -93,12 +93,12 @@ export const ORDER_STATUS_OPTONS = [
     label: 'Hoàn thành',
     value: OrderStatus.PAID,
     color: 'success'
-  },
-  {
-    label: 'Huỷ',
-    value: OrderStatus.CANCEL,
-    color: 'error'
   }
+  // {
+  //   label: 'Huỷ',
+  //   value: OrderStatus.CANCEL,
+  //   color: 'error'
+  // }
 ];
 
 export const ORDER_TYPE_OPTONS = [

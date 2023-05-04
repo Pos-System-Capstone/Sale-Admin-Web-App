@@ -38,12 +38,14 @@ const OrderListPage = () => {
     {
       title: 'Thời gian tạo',
       dataIndex: 'startDate',
-      valueType: 'date'
+      valueType: 'date',
+      hideInSearch: true
     },
     {
       title: 'Thời gian hoàn thành',
       dataIndex: 'endDate',
-      valueType: 'date'
+      valueType: 'date',
+      hideInSearch: true
     },
     {
       title: 'Tổng tiền',

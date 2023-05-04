@@ -97,7 +97,16 @@ export default function AppAreaInstalled(props: Props) {
         '22h',
         '23h'
       ]
-    }
+    },
+    yaxis: [
+      {
+        labels: {
+          formatter: function (val: number) {
+            return val.toFixed(0);
+          }
+        }
+      }
+    ]
   });
 
   return (

@@ -36,17 +36,17 @@ const OrderListPage = () => {
       hideInSearch: true
     },
     {
-      title: 'Thời gian tạo',
+      title: 'Ngày tạo',
       dataIndex: 'startDate',
-      valueType: 'date',
-      hideInSearch: true
+      valueType: 'date'
+      // hideInSearch: true
     },
-    {
-      title: 'Thời gian hoàn thành',
-      dataIndex: 'endDate',
-      valueType: 'date',
-      hideInSearch: true
-    },
+    // {
+    //   title: 'Thời gian hoàn thành',
+    //   dataIndex: 'endDate',
+    //   valueType: 'datetime'
+    //   // hideInSearch: true
+    // },
     {
       title: 'Tổng tiền',
       dataIndex: 'finalAmount',

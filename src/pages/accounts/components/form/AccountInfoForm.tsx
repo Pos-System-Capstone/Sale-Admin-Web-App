@@ -1,12 +1,20 @@
-import { Box, Grid, TextField } from '@mui/material';
+import eyeFill from '@iconify/icons-eva/eye-fill';
+import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+import { Icon } from '@iconify/react';
+import { Box, Grid, IconButton, InputAdornment, TextField } from '@mui/material';
 import { InputField, SelectField } from 'components/form';
 import useAuth from 'hooks/useAuth';
+import { useState } from 'react';
 import { Role } from 'utils/role';
 
 interface Props {}
 
 const AccountInfoForm = (props: Props) => {
   const { user } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const handleShowPassword = () => {
+    setShowPassword((show) => !show);
+  };
 
   return (
     <>
@@ -24,6 +32,15 @@ const AccountInfoForm = (props: Props) => {
               type={'password'}
               name="password"
               label="Mật khẩu"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleShowPassword} edge="end" size="large">
+                      <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
               required
               size="small"
             />
@@ -69,27 +86,6 @@ const AccountInfoForm = (props: Props) => {
               />
             )}
           </Grid>
-          {/* {user?.role.includes(Role.BrandAdmin) || user?.role.includes(Role.BrandManager) && (
-            <Grid item xs={6}>
-              <SelectField
-                options={[
-                  {
-                    label: 'Hoạt động',
-                    value: 'Active'
-                  },
-                  {
-                    label: 'Ngừng hoạt động',
-                    value: 'Deactivate '
-                  }
-                ]}
-                // name={`modifiers.${optIndex}.selectType`}
-                size="small"
-                label="Trạng thái"
-                sx={{ width: '150px' }}
-                name="status"
-              />
-            </Grid>
-          )} */}
         </Grid>
       </Box>
     </>

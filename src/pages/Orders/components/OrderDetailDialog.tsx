@@ -61,7 +61,7 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
       hideInSearch: true
     },
     {
-      title: 'Ngày tạo',
+      title: 'Thời gian tạo',
       dataIndex: 'checkInDate',
       valueType: 'datetime',
       hideInSearch: true

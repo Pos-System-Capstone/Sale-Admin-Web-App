@@ -94,34 +94,6 @@ const ChoiceGroupComboForm = (props: Props) => {
     ...fixedProductsFieldArray[idx]
   }));
 
-  // const handleAddGroup = async (ids: number[], selectedCollections: any[]) => {
-  //   const differentGroups = differenceBy(selectedCollections, controlledFields, 'id');
-  //   const productInCollections = await Promise.all(
-  //     differentGroups.map((group: TCollection) =>
-  //       productInCollectionApi.getProductsInCollection(group.id)
-  //     )
-  //   );
-
-  //   console.log(`productInCollections`, productInCollections);
-
-  //   const newGroups = [...differentGroups.map(({ id, ...c }) => ({ ...c, collection_id: id }))];
-  //   productInCollections.forEach((productData, idx) => {
-  //     if (newGroups[idx]) {
-  //       newGroups[idx].combination_mode = CombinationModeEnum.ChoiceCombo;
-  //       newGroups[idx].products = productData.data.items.map((p) => ({
-  //         ...p,
-  //         min: 0,
-  //         max: 1,
-  //         position: 0
-  //       }));
-  //     }
-  //   });
-
-  //   console.log(`newGroups`, newGroups);
-
-  //   appendGroup([...newGroups]);
-  // };
-
   const handleAddFixedProduct = async (ids: number[], selectedProds: any[]) => {
     const differentProds = differenceBy(
       selectedProds,

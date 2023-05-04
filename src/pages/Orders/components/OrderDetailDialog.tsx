@@ -15,7 +15,6 @@ import {
 } from '@mui/material';
 import orderApi from 'api/order';
 import EmptyContent from 'components/EmptyContent';
-import Label from 'components/Label';
 import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useAuth from 'hooks/useAuth';
@@ -114,23 +113,23 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
       dataIndex: 'orderStatus',
       valueEnum: ORDER_STATUS_OPTONS,
       hideInSearch: true
-    },
-    {
-      title: 'Phương thức thanh toán',
-      dataIndex: 'payment',
-      hideInSearch: true,
-      render: (payment) => {
-        return (
-          <Stack spacing={2}>
-            {payment != null ? (
-              <Label color="primary">{payment.name}</Label>
-            ) : (
-              <Label color="info">Chưa thực hiện thanh toán</Label>
-            )}
-          </Stack>
-        );
-      }
     }
+    // {
+    //   title: 'Phương thức thanh toán',
+    //   dataIndex: 'payment',
+    //   hideInSearch: true,
+    //   render: (payment) => {
+    //     return (
+    //       <Stack spacing={2}>
+    //         {payment != null ? (
+    //           <Label color="primary">{payment.name}</Label>
+    //         ) : (
+    //           <Label color="info">Chưa thực hiện thanh toán</Label>
+    //         )}
+    //       </Stack>
+    //     );
+    //   }
+    // }
   ];
 
   const orderItemColumns: TTableColumn<TProductInOrderDetail>[] = [

@@ -104,9 +104,9 @@ export default function GeneralApp() {
               <Stack direction={'row'} sx={{ flexWrap: 'nowrap', justifyContent: 'space-between' }}>
                 <Box>
                   <Typography variant="h4">Thông tin chi tiết về cửa hàng</Typography>
-                  <Typography variant="body2">
+                  {/* <Typography variant="body2">
                     Dựa trên dữ liệu ngày {dateRange()[0]} đến {dateRange()[1]}
-                  </Typography>
+                  </Typography> */}
                 </Box>
                 <Box>
                   <SelectDateRange

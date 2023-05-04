@@ -29,6 +29,7 @@ import { TUserCreate, UserStatus } from 'types/user';
 import { Role } from 'utils/role';
 import AddAccountModal from './AddAccountModel';
 import UpdateBrandInformation from './UpdateBrandInformation/UpdateBrandInformation';
+import { PaymentProviderConfig } from './PaymentMethođUpdate';
 
 const BrandDetailPage = () => {
   const { brandId } = useParams();
@@ -92,7 +93,7 @@ const BrandDetailPage = () => {
 
   const addAccountForm = useForm<TUserCreate>({
     defaultValues: {
-      brandId: brandId ?? '',
+      brandId: user?.brandId ?? '',
       status: UserStatus.ACTIVE
     }
     // shouldUnregister: false
@@ -206,16 +207,28 @@ const BrandDetailPage = () => {
           </TabContext>
         </Card>
       ) : (
-        <Card sx={{ my: 2 }}>
-          <Stack spacing={2}>
-            <Box>
-              <Typography my={2} variant="h5">
-                Danh sách cửa hàng
-              </Typography>
-              <StoresList />
-            </Box>
-          </Stack>
-        </Card>
+        <>
+          <Card sx={{ my: 2 }}>
+            <Stack spacing={2}>
+              <Box>
+                <Typography my={2} variant="h5">
+                  Phương thức thanh toán
+                </Typography>
+                <PaymentProviderConfig brand={brand} />
+              </Box>
+            </Stack>
+          </Card>
+          <Card sx={{ my: 2 }}>
+            <Stack spacing={2}>
+              <Box>
+                <Typography my={2} variant="h5">
+                  Danh sách cửa hàng
+                </Typography>
+                <StoresList />
+              </Box>
+            </Stack>
+          </Card>
+        </>
       )}
       <FormProvider {...addAccountForm}>
         <AddAccountModal

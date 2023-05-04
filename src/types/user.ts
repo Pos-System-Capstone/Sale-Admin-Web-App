@@ -44,11 +44,11 @@ export type TUserInfo = TUser & {
 export const CREATE_USER_ROLE_OPTIONS = [
   {
     value: UserRole.BrandAdmin,
-    label: 'BrandAdmin'
+    label: 'Brand Admin'
   },
   {
     value: UserRole.BrandManager,
-    label: 'BrandManager'
+    label: 'Brand Manager'
   }
 ];
 

@@ -139,12 +139,12 @@ const ProductInMenuTab = (props) => {
               render: (value) => <Typography>{formatCurrency(value)}</Typography>,
               hideInSearch: true
             },
-            {
-              title: 'Giá khuyến mãi',
-              dataIndex: 'discountPrice',
-              render: (value) => <Typography>{formatCurrency(value)}</Typography>,
-              hideInSearch: true
-            },
+            // {
+            //   title: 'Giá khuyến mãi',
+            //   dataIndex: 'discountPrice',
+            //   render: (value) => <Typography>{formatCurrency(value)}</Typography>,
+            //   hideInSearch: true
+            // },
             {
               title: 'Giá bán',
               dataIndex: 'sellingPrice',

@@ -29,7 +29,7 @@ const AccountInfoForm = (props: Props) => {
           <Grid item xs={6}>
             <InputField
               fullWidth
-              type={'password'}
+              type={showPassword ? 'text' : 'password'}
               name="password"
               label="Mật khẩu"
               InputProps={{

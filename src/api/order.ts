@@ -41,9 +41,14 @@ const getOrderList = (storeId: string, params: any) => {
   } else return request.get<TOrder>(`stores/${storeId}/orders`, { params });
 };
 
+const getListOrder = (storeId: string, params: any) => {
+  return request.get<TOrder>(`stores/${storeId}/orders`, { params });
+};
+
 const orderApi = {
   getOrderDetail,
   getOrderList,
+  getListOrder,
   ...generateAPIWithPaging<TOrder>('orders')
 };
 

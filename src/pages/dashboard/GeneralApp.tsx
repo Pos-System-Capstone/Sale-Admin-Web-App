@@ -14,11 +14,12 @@ import {
   AppWelcome
 } from 'components/_dashboard/general-app';
 import moment from 'moment';
-import SelectDateRange from 'pages/report/components/SelectDateRange';
-import { useState } from 'react';
+// import SelectDateRange from 'pages/report/components/SelectDateRange';
 import { useQuery } from 'react-query';
 import { Role } from 'utils/role';
 import Page from '../../components/Page';
+import { DatePickerField } from 'components/form';
+import { FormProvider, useForm } from 'react-hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -28,70 +29,84 @@ export default function GeneralApp() {
   if (user?.role.includes(Role.StoreManager)) {
   }
 
-  const [options, setOptions] = useState('TODAY');
-  const dateRange = () => {
-    switch (options) {
-      case 'TODAY':
-        return [
-          moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss'),
-          moment(moment()).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
-        ];
-      case '7_DAYS':
-        return [
-          moment(moment().startOf('day').add(-7, 'days')).format('YYYY-MM-DD HH:mm:ss'),
-          moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss')
-        ];
-      case 'PREV_WEEK':
-        return [
-          moment().startOf('week').subtract(6, 'days').format('YYYY-MM-DD HH:mm:ss'),
-          moment()
-            .endOf('week')
-            .subtract(6, 'days')
-            .add(1, 'day')
-            .startOf('day')
-            .format('YYYY-MM-DD HH:mm:ss')
-        ];
-      case 'PREV_MONTH':
-        return [
-          moment().subtract(1, 'months').startOf('month').format('YYYY-MM-DD HH:mm:ss'),
-          moment().startOf('month').format('YYYY-MM-DD HH:mm:ss')
-        ];
-      case '30_DAYS':
-        return [
-          moment(moment().add(-30, 'days').startOf('days')).format('YYYY-MM-DD HH:mm:ss'),
-          moment(moment().startOf('days')).format('YYYY-MM-DD HH:mm:ss')
-        ];
-      case '90_DAYS':
-        return [
-          moment(moment().add(-90, 'days').startOf('days')).format('YYYY-MM-DD HH:mm:ss'),
-          moment(moment().startOf('days')).format('YYYY-MM-DD HH:mm:ss')
-        ];
-      default:
-        return [
-          moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss'),
-          moment(moment()).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
-        ];
+  // const [options, setOptions] = useState('TODAY');
+  // const dateRange = () => {
+  //   switch (options) {
+  //     case 'TODAY':
+  //       return [
+  //         moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss'),
+  //         moment(moment()).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
+  //       ];
+  //     case '7_DAYS':
+  //       return [
+  //         moment(moment().startOf('day').add(-7, 'days')).format('YYYY-MM-DD HH:mm:ss'),
+  //         moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss')
+  //       ];
+  //     case 'PREV_WEEK':
+  //       return [
+  //         moment().startOf('week').subtract(6, 'days').format('YYYY-MM-DD HH:mm:ss'),
+  //         moment()
+  //           .endOf('week')
+  //           .subtract(6, 'days')
+  //           .add(1, 'day')
+  //           .startOf('day')
+  //           .format('YYYY-MM-DD HH:mm:ss')
+  //       ];
+  //     case 'PREV_MONTH':
+  //       return [
+  //         moment().subtract(1, 'months').startOf('month').format('YYYY-MM-DD HH:mm:ss'),
+  //         moment().startOf('month').format('YYYY-MM-DD HH:mm:ss')
+  //       ];
+  //     case '30_DAYS':
+  //       return [
+  //         moment(moment().add(-30, 'days').startOf('days')).format('YYYY-MM-DD HH:mm:ss'),
+  //         moment(moment().startOf('days')).format('YYYY-MM-DD HH:mm:ss')
+  //       ];
+  //     case '90_DAYS':
+  //       return [
+  //         moment(moment().add(-90, 'days').startOf('days')).format('YYYY-MM-DD HH:mm:ss'),
+  //         moment(moment().startOf('days')).format('YYYY-MM-DD HH:mm:ss')
+  //       ];
+  //     default:
+  //       return [
+  //         moment(moment().startOf('day')).format('YYYY-MM-DD HH:mm:ss'),
+  //         moment(moment()).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
+  //       ];
+  //   }
+  // };
+  const filterForm = useForm({
+    defaultValues: {
+      size: 10000,
+      page: 1,
+      startDate: moment.now(),
+      endDate: moment.now()
     }
+  });
+
+  const transformdata = (data: any) => {
+    const { startDate, endDate, size, page } = data;
+    return {
+      page: page,
+      size: size,
+      startDate: moment(startDate).startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+      endDate: moment(endDate).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
+    };
   };
 
-  const params = {
-    size: 1000,
-    page: 1,
-    startDate: dateRange()[0],
-    endDate: dateRange()[1]
-  };
+  const params = filterForm.watch();
 
   const { data: orders } = useQuery(
     ['orders', user, params],
-    () => orderApi.getOrderList(user?.storeId ?? '', params).then((res) => res.data.items),
+    () =>
+      orderApi
+        .getListOrder(user?.storeId ?? '', transformdata(params))
+        .then((res) => res.data.items),
     {
       refetchOnWindowFocus: false
     }
   );
-  // console.log('params', params);
-  // console.log('options', options);
-  // console.log('getDaterange', dateRange());
-  // console.log('orders', orders);
+  console.log('dateRange', filterForm.watch());
+  console.log('orders', orders);
   return (
     <Page title={user?.role.includes(Role.StoreManager) ? 'Báo cáo tổng quan' : ''}>
       <Grid container spacing={2}>
@@ -101,7 +116,10 @@ export default function GeneralApp() {
         {user?.role.includes(Role.StoreManager) && (
           <>
             <Grid item xs={12} md={12}>
-              <Stack direction={'row'} sx={{ flexWrap: 'nowrap', justifyContent: 'space-between' }}>
+              <Stack
+                direction={'column'}
+                sx={{ flexWrap: 'nowrap', justifyContent: 'space-between' }}
+              >
                 <Box>
                   <Typography variant="h4">Thông tin chi tiết về cửa hàng</Typography>
                   {/* <Typography variant="body2">
@@ -109,18 +127,18 @@ export default function GeneralApp() {
                   </Typography> */}
                 </Box>
                 <Box>
-                  <SelectDateRange
-                    value={options}
-                    onChange={setOptions}
-                    showOptionDateRange={false}
-                  />
+                  <FormProvider {...filterForm}>
+                    <Stack direction="row" spacing={1}>
+                      <DatePickerField size="small" name="startDate" label="Từ ngày" />
+                      <DatePickerField size="small" name="endDate" label="Đến ngày" />
+                    </Stack>
+                  </FormProvider>
                 </Box>
               </Stack>
             </Grid>
             <Grid item xs={12} md={4}>
               <AppTotalActiveUsers title="Tổng đơn hàng" todayOrder={orders} />
             </Grid>
-
             <Grid item xs={12} md={4}>
               <AppTotalDownloads
                 title="Tổng đơn hàng hoàn thành"

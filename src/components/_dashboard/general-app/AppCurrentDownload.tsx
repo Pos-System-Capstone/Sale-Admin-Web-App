@@ -7,7 +7,7 @@ import { Card, CardHeader } from '@mui/material';
 import { fNumber } from '../../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../charts';
-import { OrderType, TOrder } from 'types/order';
+import { OrderStatus, OrderType, TOrder } from 'types/order';
 
 // ----------------------------------------------------------------------
 
@@ -41,15 +41,24 @@ export default function AppCurrentDownload(props: Props) {
   const theme = useTheme();
 
   const TOTAL_PAID_ORDER = props.todayOrder.reduce(
-    (acc: any, cur: TOrder) => (cur.orderType === OrderType.EATIN ? (acc += 1) : (acc += 0)),
+    (acc: any, cur: TOrder) =>
+      cur.orderType === OrderType.EATIN && cur.status === OrderStatus.PAID
+        ? (acc += 1)
+        : (acc += 0),
     0
   );
   const TOTAL_PENDING_ORDER = props.todayOrder.reduce(
-    (acc: any, cur: TOrder) => (cur.orderType === OrderType.TAKE_AWAY ? (acc += 1) : (acc += 0)),
+    (acc: any, cur: TOrder) =>
+      cur.orderType === OrderType.TAKE_AWAY && cur.status === OrderStatus.PAID
+        ? (acc += 1)
+        : (acc += 0),
     0
   );
   const TOTAL_CANCLE_ORDER = props.todayOrder.reduce(
-    (acc: any, cur: TOrder) => (cur.orderType === OrderType.DELIVERY ? (acc += 1) : (acc += 0)),
+    (acc: any, cur: TOrder) =>
+      cur.orderType === OrderType.DELIVERY && cur.status === OrderStatus.PAID
+        ? (acc += 1)
+        : (acc += 0),
     0
   );
   const CHART_DATA = [TOTAL_PAID_ORDER, TOTAL_PENDING_ORDER, TOTAL_CANCLE_ORDER];

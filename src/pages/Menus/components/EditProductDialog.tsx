@@ -97,16 +97,26 @@ const ProductInMenuDialog = ({ open, onClose, onSubmit, data, updateMode = false
                   defaultValue={data?.sellingPrice}
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6}>
                 <InputField
                   fullWidth
                   type={'number'}
                   name="discountPrice"
                   label="Giá giảm"
                   defaultValue={data?.discountPrice}
-                  // placeholder="Nhập để cập nhật mật khẩu mới"
+                  helperText="Nhập số tiền giảm"
                 />
-              </Grid> */}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputField
+                  fullWidth
+                  type={'number'}
+                  name="historicalPrice"
+                  label="Giá cos"
+                  defaultValue={data?.discountPrice}
+                  helperText="Nhập chi phí sản xuất"
+                />
+              </Grid>
             </Grid>
           </DialogContent>
           <DialogActions>

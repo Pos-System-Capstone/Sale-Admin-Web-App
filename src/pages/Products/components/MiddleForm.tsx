@@ -99,7 +99,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
                     productType === ProductTypeEnum.EXTRA ||
                     productType === ProductTypeEnum.COMBO) && (
                     <>
-                      <Grid item xs={6}>
+                      <Grid item xs={4}>
                         <InputField
                           fullWidth
                           type="number"
@@ -110,7 +110,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
                           helperText="Giá bán của sản phẩm"
                         />
                       </Grid>
-                      {/* <Grid item xs={4}>
+                      <Grid item xs={4}>
                         <InputField
                           fullWidth
                           type="number"
@@ -118,10 +118,10 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
                           label="Giá giảm"
                           required
                           size="small"
-                          helperText="Giá áp dụng khi không được cấu hình trong menu"
+                          helperText="Giá giảm của sản phẩm"
                         />
-                      </Grid> */}
-                      <Grid item xs={6}>
+                      </Grid>
+                      <Grid item xs={4}>
                         <InputField
                           fullWidth
                           type="number"

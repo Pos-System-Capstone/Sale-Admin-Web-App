@@ -118,3 +118,43 @@ export type TSessionDetail = {
   profitAmount: number;
   totalDiscountAmount: number;
 };
+
+export type StoreReport = {
+  storeId: string;
+  categoryReports: CategoryReport[];
+  totalAmount: number;
+  totalDiscount: number;
+  vatAmount: number;
+  finalAmount: number;
+  productCosAmount: number;
+  totalRevenue: number;
+  inStoreAmount: number;
+  deliAmount: number;
+  takeAwayAmount: number;
+  totalProduct: number;
+  totalOrder: number;
+  totalOrderInStore: number;
+  totalOrderTakeAway: number;
+  totalOrderDeli: number;
+  averageBill: number;
+  timeLine: number[];
+  totalOrderTimeLine: number[];
+  totalAmountTimeLine: number[];
+};
+
+export type CategoryReport = {
+  id: string;
+  name: string;
+  totalProduct: number;
+  totalAmount: number;
+  totalDiscount: number;
+  productReports: ProductReport[];
+};
+
+export type ProductReport = {
+  id: string;
+  name: string;
+  quantity: number;
+  totalAmount: number;
+  totalDiscount: number;
+};

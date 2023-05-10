@@ -33,7 +33,7 @@ export const parseParams = (params: any) => {
 };
 
 const admin = `${process.env.REACT_APP_WEB_ADMIN_URL}`;
-const account = `${process.env.REACT_APP_LOGIN_BASE_URL}`;
+const account = `${process.env.REACT_APP_WEB_ADMIN_URL}`;
 const paymentService = `${process.env.REACT_APP_PAYMENT_SERVICE_URL}`;
 
 const requestWebAdmin = axios.create({

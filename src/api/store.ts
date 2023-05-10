@@ -1,4 +1,5 @@
 import {
+  StoreReport,
   TSession,
   TSessionCreate,
   TSessionDetail,
@@ -35,6 +36,8 @@ const updateStoreStatus = (storeId: string, storeStatus: string) => {
   };
   return requestWebAdmin.patch(`stores/${storeId}`, payload);
 };
+const getStoreReport = (storeId: string, params: any) =>
+  requestWebAdmin.get<StoreReport>(`stores/${storeId}/day-report`, { params: params });
 const updateStoreInformation = (storeId: string, data: TStoreUpdate) => {
   return requestWebAdmin.put(`stores/${storeId}`, data);
 };
@@ -49,6 +52,7 @@ const storeApi = {
   updateStoreSessionDetail,
   updateStoreStatus,
   updateStoreInformation,
+  getStoreReport,
   ...generateAPIWithPaging<TStore>('stores')
 };
 

@@ -7,7 +7,6 @@ import { Card, CardHeader } from '@mui/material';
 import { fNumber } from '../../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../charts';
-import { OrderStatus, OrderType, TOrder } from 'types/order';
 
 // ----------------------------------------------------------------------
 
@@ -34,34 +33,14 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 
 export interface Props {
   title: string;
-  todayOrder: TOrder[];
+  totalInStore: number;
+  totalTakeAway: number;
+  totalDelivery: number;
 }
 
 export default function AppCurrentDownload(props: Props) {
   const theme = useTheme();
-
-  const TOTAL_PAID_ORDER = props.todayOrder.reduce(
-    (acc: any, cur: TOrder) =>
-      cur.orderType === OrderType.EATIN && cur.status === OrderStatus.PAID
-        ? (acc += 1)
-        : (acc += 0),
-    0
-  );
-  const TOTAL_PENDING_ORDER = props.todayOrder.reduce(
-    (acc: any, cur: TOrder) =>
-      cur.orderType === OrderType.TAKE_AWAY && cur.status === OrderStatus.PAID
-        ? (acc += 1)
-        : (acc += 0),
-    0
-  );
-  const TOTAL_CANCLE_ORDER = props.todayOrder.reduce(
-    (acc: any, cur: TOrder) =>
-      cur.orderType === OrderType.DELIVERY && cur.status === OrderStatus.PAID
-        ? (acc += 1)
-        : (acc += 0),
-    0
-  );
-  const CHART_DATA = [TOTAL_PAID_ORDER, TOTAL_PENDING_ORDER, TOTAL_CANCLE_ORDER];
+  const CHART_DATA = [props.totalInStore, props.totalTakeAway, props.totalDelivery];
   const chartOptions = merge(BaseOptionChart(), {
     colors: [theme.palette.primary.main, theme.palette.secondary.main, theme.palette.error.main],
     labels: ['Tại quán', 'Mang đi', 'Giao hàng'],

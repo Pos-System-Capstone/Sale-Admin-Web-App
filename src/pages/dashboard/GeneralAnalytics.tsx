@@ -15,8 +15,7 @@ import {
   AnalyticsCurrentVisits,
   AnalyticsWebsiteVisits,
   AnalyticsTrafficBySite,
-  AnalyticsCurrentSubject,
-  AnalyticsConversionRates
+  AnalyticsCurrentSubject
 } from '../../components/_dashboard/general-analytics';
 import { useQuery } from 'react-query';
 import brandApi from 'api/brand';
@@ -66,9 +65,9 @@ export default function GeneralAnalytics() {
             <AnalyticsCurrentVisits />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AnalyticsConversionRates />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} md={6} lg={4}>
             <AnalyticsCurrentSubject />

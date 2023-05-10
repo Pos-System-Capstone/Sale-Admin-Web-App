@@ -1,18 +1,10 @@
 // material
-import { Box, Grid, Stack, Typography } from '@mui/material';
+import { Box, Card, Grid, Stack, Typography } from '@mui/material';
 // hooks
 import useAuth from '../../hooks/useAuth';
 import useSettings from '../../hooks/useSettings';
 // components
-import orderApi from 'api/order';
-import {
-  AppAreaInstalled,
-  AppCurrentDownload,
-  AppTotalActiveUsers,
-  AppTotalDownloads,
-  AppTotalInstalled,
-  AppWelcome
-} from 'components/_dashboard/general-app';
+import { AppAreaInstalled, AppCurrentDownload } from 'components/_dashboard/general-app';
 import moment from 'moment';
 // import SelectDateRange from 'pages/report/components/SelectDateRange';
 import { useQuery } from 'react-query';
@@ -20,6 +12,9 @@ import { Role } from 'utils/role';
 import Page from '../../components/Page';
 import { DatePickerField } from 'components/form';
 import { FormProvider, useForm } from 'react-hook-form';
+import storeApi from 'api/store';
+import { fNumber } from 'utils/formatNumber';
+import { AnalyticsConversionRates } from 'components/_dashboard/general-analytics';
 
 // ----------------------------------------------------------------------
 
@@ -95,87 +90,88 @@ export default function GeneralApp() {
 
   const params = filterForm.watch();
 
-  const { data: orders } = useQuery(
+  const { data: report } = useQuery(
     ['orders', user, params],
     () =>
-      orderApi
-        .getListOrder(user?.storeId ?? '', transformdata(params))
-        .then((res) => res.data.items),
+      storeApi.getStoreReport(user?.storeId ?? '', transformdata(params)).then((res) => res.data),
     {
       refetchOnWindowFocus: false
     }
   );
   console.log('dateRange', filterForm.watch());
-  console.log('orders', orders);
+  console.log('report', report);
   return (
     <Page title={user?.role.includes(Role.StoreManager) ? 'Báo cáo tổng quan' : ''}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={12}>
-          <AppWelcome displayName={user?.displayName} />
-        </Grid>{' '}
         {user?.role.includes(Role.StoreManager) && (
           <>
             <Grid item xs={12} md={12}>
-              <Stack
-                direction={'column'}
-                sx={{ flexWrap: 'nowrap', justifyContent: 'space-between' }}
-              >
-                <Box>
-                  <Typography variant="h4">Thông tin chi tiết về cửa hàng</Typography>
-                  {/* <Typography variant="body2">
-                    Dựa trên dữ liệu ngày {dateRange()[0]} đến {dateRange()[1]}
-                  </Typography> */}
+              <FormProvider {...filterForm}>
+                <Stack direction="row" spacing={1}>
+                  <DatePickerField size="small" name="startDate" label="Từ ngày" />
+                  <DatePickerField size="small" name="endDate" label="Đến ngày" />
+                </Stack>
+              </FormProvider>
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+              <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+                <Box sx={{ flexGrow: 1 }}>
+                  <Typography variant="subtitle1">Đơn hoàn thành</Typography>
+                  <Typography variant="h4">{fNumber(report?.totalOrder ?? 0)}</Typography>
                 </Box>
-                <Box>
-                  <FormProvider {...filterForm}>
-                    <Stack direction="row" spacing={1}>
-                      <DatePickerField size="small" name="startDate" label="Từ ngày" />
-                      <DatePickerField size="small" name="endDate" label="Đến ngày" />
-                    </Stack>
-                  </FormProvider>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+              <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+                <Box sx={{ flexGrow: 1 }}>
+                  <Typography variant="subtitle1">Doanh thu</Typography>
+
+                  <Typography variant="h4">{fNumber(report?.finalAmount ?? 0)}đ</Typography>
                 </Box>
-              </Stack>
+              </Card>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <AppTotalActiveUsers title="Tổng đơn hàng" todayOrder={orders} />
+            <Grid item xs={12} md={6} lg={3}>
+              <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+                <Box sx={{ flexGrow: 1 }}>
+                  <Typography variant="subtitle1">Chi phí SP</Typography>
+                  <Typography variant="h4">{fNumber(report?.productCosAmount ?? 0)}đ</Typography>
+                </Box>
+              </Card>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <AppTotalDownloads
-                title="Tổng đơn hàng hoàn thành"
-                todayOrder={orders !== undefined ? orders : []}
-              />
-            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+              <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+                <Box sx={{ flexGrow: 1 }}>
+                  <Typography variant="subtitle1">Lợi nhuận</Typography>
 
-            <Grid item xs={12} md={4}>
-              <AppTotalInstalled
-                title="Tổng doanh thu"
-                todayOrder={orders !== undefined ? orders : []}
-              />
+                  <Typography variant="h4">{fNumber(report?.totalRevenue ?? 0)}đ</Typography>
+                </Box>
+              </Card>
             </Grid>
-
             <Grid item xs={12} md={4} lg={4}>
               <AppCurrentDownload
                 title="Loại đơn hàng "
-                todayOrder={orders !== undefined ? orders : []}
+                totalInStore={report?.totalOrderInStore ?? 0}
+                totalTakeAway={report?.totalOrderTakeAway ?? 0}
+                totalDelivery={report?.totalOrderDeli ?? 0}
               />
             </Grid>
-
             <Grid item xs={12} md={8} lg={8}>
               <AppAreaInstalled
                 title="Biểu đồ đơn hàng theo giờ"
-                todayOrder={orders !== undefined ? orders : []}
+                timeline={report?.timeLine ?? []}
+                orderTimeLine={report?.totalOrderTimeLine ?? []}
+                amountTimeLine={report?.totalAmountTimeLine ?? []}
               />
             </Grid>
+            {report?.categoryReports
+              .sort((a, b) => b.totalProduct - a.totalProduct)
+              .map((item) => (
+                <Grid key={item.id} item xs={12} md={6} lg={6}>
+                  <AnalyticsConversionRates category={item} />
+                </Grid>
+              ))}
           </>
         )}
-        {/* {user?.role.includes(Role.StoreManager) && (
-          <Grid item xs={12} lg={12}>
-            <AppNewInvoice />
-          </Grid>
-        )} */}
-        {/* <Grid item xs={12} md={6} lg={4}>
-          <AppTopAuthors />
-        </Grid> */}
       </Grid>
     </Page>
   );

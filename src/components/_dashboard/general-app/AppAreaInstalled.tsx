@@ -1,17 +1,18 @@
-import { forEach, merge } from 'lodash';
 import { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 // material
 import { Card, CardHeader, Box, TextField } from '@mui/material';
 //
 import { BaseOptionChart } from '../../charts';
-import { OrderStatus, TOrder } from 'types/order';
+import { merge } from 'lodash';
 
 // ----------------------------------------------------------------------
 
 export interface Props {
   title: string;
-  todayOrder: TOrder[];
+  timeline: number[];
+  orderTimeLine: number[];
+  amountTimeLine: number[];
 }
 
 export default function AppAreaInstalled(props: Props) {
@@ -19,36 +20,6 @@ export default function AppAreaInstalled(props: Props) {
 
   const handleChangeSeriesData = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSeriesData(Number(event.target.value));
-  };
-  const listOrderByHour = (listOrder: TOrder[]) => {
-    const listOrderTime = [];
-    for (let index = 6; index < 24; index++) {
-      let count: number = 0;
-      forEach(listOrder, (order) => {
-        const time = new Date(order.endDate).getHours();
-        if (time === index && order.status === OrderStatus.PAID) {
-          count++;
-        }
-      });
-      listOrderTime.push(count);
-    }
-    console.log('listOrderTime', listOrderTime);
-    return listOrderTime;
-  };
-
-  const listOrderAmountByHour = (listOrder: TOrder[]) => {
-    const listOrderTime = [];
-    for (let index = 6; index < 24; index++) {
-      let count: number = 0;
-      forEach(listOrder, (order: TOrder) => {
-        const time = new Date(order.endDate).getHours();
-        if (time === index && order.status === OrderStatus.PAID) {
-          count += order.finalAmount;
-        }
-      });
-      listOrderTime.push(count);
-    }
-    return listOrderTime;
   };
 
   const CHART_DATA = [
@@ -58,7 +29,7 @@ export default function AppAreaInstalled(props: Props) {
       data: [
         {
           name: 'Số đơn',
-          data: listOrderByHour(props.todayOrder)
+          data: props.orderTimeLine
         }
         // { name: 'Hôm qua', data: listOrderByHour(props.yesterdayOrder) }
       ]
@@ -69,7 +40,7 @@ export default function AppAreaInstalled(props: Props) {
       data: [
         {
           name: 'Doanh thu',
-          data: listOrderAmountByHour(props.todayOrder)
+          data: props.amountTimeLine
         }
         // { name: 'Hôm qua', data: listOrderAmountByHour(props.yesterdayOrder) }
       ]
@@ -77,26 +48,9 @@ export default function AppAreaInstalled(props: Props) {
   ];
   const chartOptions = merge(BaseOptionChart(), {
     xaxis: {
-      categories: [
-        '6h',
-        '7h',
-        '8h',
-        '9h',
-        '10h',
-        '11h',
-        '12h',
-        '13h',
-        '14h',
-        '15h',
-        '16',
-        '17h',
-        '18h',
-        '19h',
-        '20h',
-        '21h',
-        '22h',
-        '23h'
-      ]
+      categories: props.timeline.map((item) => {
+        return item.toString().concat('h');
+      })
     },
     yaxis: [
       {

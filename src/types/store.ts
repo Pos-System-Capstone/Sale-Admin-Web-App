@@ -102,7 +102,6 @@ export type TSessionDetailUpdate = {
   startTime: string;
   endTime: string;
   name: string;
-  initCashInVault: number;
 };
 
 export type TSessionDetail = {

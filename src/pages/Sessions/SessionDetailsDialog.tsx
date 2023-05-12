@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import storeApi from 'api/store';
 import EmptyContent from 'components/EmptyContent';
+import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 
 import { DatePickerField, InputField } from 'components/form';
 import useAuth from 'hooks/useAuth';
@@ -26,7 +27,7 @@ import { useSnackbar } from 'notistack';
 import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
-import { TSessionDetailUpdate } from 'types/store';
+import { TSessionDetail, TSessionDetailUpdate } from 'types/store';
 
 type Props = {
   open: boolean;
@@ -50,34 +51,64 @@ const SessionDetailDialog: React.FC<Props> = ({ open, onClose, sessionId }) => {
       name: session?.name,
       startTime: session?.startDateTime,
       endTime: session?.endDateTime,
-      date: moment(session?.endDateTime).format('YYYY-MM-DD'),
-      initCashInVault: session?.initCashInVault
+      date: moment(session?.endDateTime).format('YYYY-MM-DD')
     }
   });
   useEffect(() => {
     updateSessionForm.reset({
       name: session?.name,
       startTime: session?.startDateTime,
-      endTime: session?.endDateTime,
-      date: moment(session?.endDateTime).format('YYYY-MM-DD'),
-      initCashInVault: session?.initCashInVault
+      endTime: session?.endDateTime
     });
   }, [session, updateSessionForm]);
-
+  const brandDetailColumns: ResoDescriptionColumnType<TSessionDetail>[] = [
+    {
+      title: 'Thời gian bắt đầu',
+      dataIndex: 'startDateTime',
+      valueType: 'datetime'
+    },
+    {
+      title: 'Thời gian kết thúc',
+      dataIndex: 'endDateTime',
+      valueType: 'datetime'
+    },
+    {
+      title: 'Tên ca',
+      dataIndex: 'name'
+    },
+    {
+      title: 'Số đơn',
+      dataIndex: 'numberOfOrders'
+    },
+    {
+      title: 'Tổng tiền',
+      dataIndex: 'totalAmount',
+      valueType: 'money'
+    },
+    {
+      title: 'Tổng khuyến mãi',
+      dataIndex: 'totalDiscountAmount',
+      valueType: 'money'
+    },
+    {
+      title: 'Doanh thu sau khuyến mãi',
+      dataIndex: 'profitAmount',
+      valueType: 'money'
+    }
+  ];
   const handleProcessUpdateSessionsRequest = (data: any) => {
     const { name, startTime, endTime, date, initCashInVault } = data;
 
     const request: TSessionDetailUpdate = {
       name: name,
       startTime: `${moment(date).format('YYYY-MM-DD')}T${moment(startTime).format('HH:mm:ss')}`,
-      endTime: `${moment(date).format('YYYY-MM-DD')}T${moment(endTime).format('HH:mm:ss')}`,
-      initCashInVault: initCashInVault
+      endTime: `${moment(date).format('YYYY-MM-DD')}T${moment(endTime).format('HH:mm:ss')}`
     };
     return request;
   };
 
   return (
-    <Dialog maxWidth="sm" scroll="paper" open={open} onClose={onClose}>
+    <Dialog maxWidth="md" scroll="paper" open={open} onClose={onClose}>
       {isLoading ? (
         <CircularProgress />
       ) : !session ? (
@@ -93,6 +124,13 @@ const SessionDetailDialog: React.FC<Props> = ({ open, onClose, sessionId }) => {
             </IconButton>
           </DialogTitle>
           <DialogContent dividers>
+            <ResoDescriptions
+              labelProps={{ fontWeight: 'bold' }}
+              columns={brandDetailColumns as any}
+              datasource={session}
+              column={2}
+            />
+            <Box sx={{ mt: 2 }} />
             <FormProvider {...updateSessionForm}>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={12}>
@@ -116,7 +154,6 @@ const SessionDetailDialog: React.FC<Props> = ({ open, onClose, sessionId }) => {
                 </Grid> */}
                 <Grid item xs={12}>
                   <FormLabel component="p" title="Khung giờ" />
-
                   <Box key={'time-ranges'}>
                     <Stack direction="row" spacing={1} alignItems="center">
                       <Controller

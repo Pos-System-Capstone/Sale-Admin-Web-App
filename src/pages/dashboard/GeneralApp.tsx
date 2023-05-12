@@ -83,8 +83,8 @@ export default function GeneralApp() {
     return {
       page: page,
       size: size,
-      startDate: moment(startDate).startOf('day').format('YYYY-MM-DD HH:mm:ss'),
-      endDate: moment(endDate).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
+      startDate: moment(startDate).startOf('day').format('YYYY-MM-DD'),
+      endDate: moment(endDate).startOf('day').format('YYYY-MM-DD')
     };
   };
 

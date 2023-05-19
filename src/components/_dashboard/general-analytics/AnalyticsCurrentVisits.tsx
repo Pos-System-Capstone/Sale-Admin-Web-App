@@ -33,8 +33,19 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 const CHART_DATA = [4344, 5435, 1443, 4443];
+export interface Props {
+  title: string;
+  totalCash: number;
+  totalMomo: number;
+  totalBanking: number;
+  totalVisa: number;
+  cashAmount: number;
+  momoAmount: number;
+  bankingAmount: number;
+  visaAmount: number;
+}
 
-export default function AnalyticsCurrentVisits() {
+export default function AnalyticsCurrentVisits(props: Props) {
   const theme = useTheme();
   const [seriesData, setSeriesData] = useState(0);
   const handleChangeSeriesData = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +56,10 @@ export default function AnalyticsCurrentVisits() {
       day: 'Tổng đơn hàng',
       value: 0,
       data: [
-        100, 100, 100
+        props.totalCash,
+        props.totalMomo,
+        props.totalBanking,
+        props.totalVisa
         // { name: 'Hôm qua', data: listOrderByHour(props.yesterdayOrder) }
       ]
     },
@@ -53,7 +67,10 @@ export default function AnalyticsCurrentVisits() {
       day: 'Tổng doanh thu',
       value: 1,
       data: [
-        100, 100, 100
+        props.cashAmount,
+        props.momoAmount,
+        props.bankingAmount,
+        props.visaAmount
         // { name: 'Hôm qua', data: listOrderAmountByHour(props.yesterdayOrder) }
       ]
     }
@@ -86,7 +103,7 @@ export default function AnalyticsCurrentVisits() {
   return (
     <Card>
       <CardHeader
-        title="Phương thức thanh toán"
+        title={props.title}
         action={
           <TextField
             select
@@ -126,7 +143,7 @@ export default function AnalyticsCurrentVisits() {
         (item) =>
           item.value === seriesData && (
             <ChartWrapperStyle dir="ltr">
-              <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={320} />
+              <ReactApexChart type="pie" series={item.data} options={chartOptions} height={320} />
             </ChartWrapperStyle>
           )
       )}

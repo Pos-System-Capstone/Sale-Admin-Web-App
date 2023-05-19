@@ -12,7 +12,6 @@ import {
   AnalyticsNewsUpdate,
   AnalyticsWeeklySales,
   AnalyticsOrderTimeline,
-  AnalyticsCurrentVisits,
   AnalyticsWebsiteVisits,
   AnalyticsTrafficBySite,
   AnalyticsCurrentSubject
@@ -61,9 +60,9 @@ export default function GeneralAnalytics() {
             <AnalyticsWebsiteVisits />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AnalyticsCurrentVisits />
-          </Grid>
+          </Grid> */}
 
           {/* <Grid item xs={12} md={6} lg={8}>
             <AnalyticsConversionRates />

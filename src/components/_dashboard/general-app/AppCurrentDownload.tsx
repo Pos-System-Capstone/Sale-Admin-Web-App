@@ -89,7 +89,7 @@ export default function AppCurrentDownload(props: Props) {
     plotOptions: {
       pie: {
         donut: {
-          size: '80%',
+          size: '75%',
           labels: {
             value: {
               formatter: (val: number | string) => fNumber(val)

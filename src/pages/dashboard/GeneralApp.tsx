@@ -143,12 +143,10 @@ export default function GeneralApp() {
               <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
                 <Box sx={{ flexGrow: 1 }}>
                   <Typography variant="subtitle1">Lợi nhuận(5)=(3)-(4)</Typography>
-
                   <Typography variant="h4">{fNumber(report?.totalRevenue ?? 0)}đ</Typography>
                 </Box>
               </Card>
             </Grid>
-
             <Grid item xs={12} md={6} lg={6}>
               <AppCurrentDownload
                 title="Loại đơn hàng "
@@ -161,7 +159,17 @@ export default function GeneralApp() {
               />
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
-              <AnalyticsCurrentVisits />
+              <AnalyticsCurrentVisits
+                title={'Phương thức thanh toán'}
+                totalCash={report?.totalCash ?? 0}
+                totalMomo={report?.totalMomo ?? 0}
+                totalBanking={report?.totalBanking ?? 0}
+                totalVisa={report?.totalVisa ?? 0}
+                cashAmount={report?.cashAmount ?? 0}
+                momoAmount={report?.momoAmount ?? 0}
+                bankingAmount={report?.bankingAmount ?? 0}
+                visaAmount={report?.visaAmount ?? 0}
+              />
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
               <AppAreaInstalled

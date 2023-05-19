@@ -136,6 +136,14 @@ export type StoreReport = {
   totalOrderTakeAway: number;
   totalOrderDeli: number;
   averageBill: number;
+  totalCash: number;
+  totalMomo: number;
+  totalBanking: number;
+  totalVisa: number;
+  cashAmount: number;
+  momoAmount: number;
+  bankingAmount: number;
+  visaAmount: number;
   timeLine: number[];
   totalOrderTimeLine: number[];
   totalAmountTimeLine: number[];

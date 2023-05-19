@@ -173,6 +173,46 @@ export const brandAdminSidebarConfig = [
         icon: ICONS.collection
       }
     ]
+  },
+  {
+    subheader: 'promotion.general',
+    items: [
+      {
+        title: 'promotion.dashboard',
+        path: PATH_PROMOTION_APP.general.app,
+        icon: ICONS.dashboard
+      }
+    ]
+  },
+  {
+    subheader: 'promotion.campaign',
+    items: [
+      {
+        title: 'promotion.promotion',
+        path: PATH_PROMOTION_APP.promotion.root,
+        icon: ICONS.category
+      },
+      {
+        title: 'promotion.voucher',
+        path: PATH_PROMOTION_APP.voucher.root,
+        icon: ICONS.tag
+      },
+      {
+        title: 'promotion.condition',
+        path: PATH_PROMOTION_APP.condition.root,
+        icon: ICONS.extraCategory
+      },
+      {
+        title: 'promotion.action',
+        path: PATH_PROMOTION_APP.action.root,
+        icon: ICONS.storeApply
+      },
+      {
+        title: 'promotion.gift',
+        path: PATH_PROMOTION_APP.gift.root,
+        icon: ICONS.ecommerce
+      }
+    ]
   }
 ];
 

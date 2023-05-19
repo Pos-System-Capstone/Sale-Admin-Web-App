@@ -29,6 +29,7 @@ export type TOrder = {
   finalAmount: number;
   orderType: OrderType;
   status: OrderStatus;
+  paymentType: string;
 };
 
 export type TOrderDetailItem = {
@@ -54,8 +55,8 @@ export type TOrderDetailItem = {
 export enum TOrderPaymentType {
   CASH = 'CASH',
   MOMO = 'MOMO',
-  VNPAY = 'VNPAY',
-  ZALOPAY = 'ZALOPAY'
+  BANKING = 'BANKING',
+  VISA = 'VISA'
 }
 
 export type TOrderPayment = {
@@ -75,6 +76,7 @@ export type TOrderDetail = {
   orderStatus: OrderStatus;
   orderType: OrderType;
   checkInDate: string;
+  paymentType: string;
   payment: TOrderPayment;
   productList: TProductInOrderDetail[];
 };
@@ -123,25 +125,21 @@ export const ORDER_TYPE_OPTONS = [
   }
 ];
 
-export const PAYMENT_TYPE_OPTONS = [
+export const PAYMENT_TYPE_OPTIONS = [
   {
-    label: 'Tất cả',
-    value: ''
+    label: 'Tiền mặt',
+    value: TOrderPaymentType.CASH
   },
   {
-    label: PaymentType.AT_RESTAURANT,
-    value: PaymentType.AT_RESTAURANT
+    label: 'Momo',
+    value: TOrderPaymentType.MOMO
   },
   {
-    label: PaymentType.DELIVERY,
-    value: PaymentType.DELIVERY
+    label: 'Ngân hàng',
+    value: TOrderPaymentType.BANKING
   },
   {
-    label: PaymentType.TAKE_AWAY,
-    value: PaymentType.TAKE_AWAY
-  },
-  {
-    label: PaymentType.CREDIT,
-    value: PaymentType.CREDIT
+    label: 'Visa/MasterCard',
+    value: TOrderPaymentType.VISA
   }
 ];

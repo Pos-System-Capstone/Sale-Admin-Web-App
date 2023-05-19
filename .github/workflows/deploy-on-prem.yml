@@ -12,28 +12,28 @@ on:
         type: string
         required: false
         default: '.env.production'
-jobs: 
+jobs:
   Build:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - uses: actions/checkout@master
       - name: Install Node
-        run: | 
-              sudo apt update
-              curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
-              sudo apt -y install nodejs
+        run: |
+          sudo apt update
+          curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
+          sudo apt -y install nodejs
       - name: Build Artifact
-        run: | 
-              if [ -z "${{inputs.envFile}}" ] 
-              then 
-              ENV=.env.production
-              else 
-              ENV=${{inputs.envFile}}
-              fi
-              export NODE_OPTIONS=--openssl-legacy-provider && npm install --legacy-peer-deps && \
-              npm i -g env-cmd && \
-              export NODE_OPTIONS=--openssl-legacy-provider && CI=false env-cmd -f ${ENV} npm run build
-              cp ${{ github.workspace }}/cfg/web.config ${{ github.workspace }}/build/
+        run: |
+          if [ -z "${{inputs.envFile}}" ] 
+          then 
+          ENV=.env.production
+          else 
+          ENV=${{inputs.envFile}}
+          fi
+          export NODE_OPTIONS=--openssl-legacy-provider && npm install --legacy-peer-deps && \
+          npm i -g env-cmd && \
+          export NODE_OPTIONS=--openssl-legacy-provider && CI=false env-cmd -f ${ENV} npm run build
+          cp ${{ github.workspace }}/cfg/web.config ${{ github.workspace }}/build/
       - name: Zip Package
         run: |
           cd ${{ github.workspace }}/build

@@ -9,7 +9,7 @@ import useAuth from 'hooks/useAuth';
 import useLocales from 'hooks/useLocales';
 import { useState } from 'react';
 // components
-import { ORDER_STATUS_OPTONS, ORDER_TYPE_OPTONS, TOrder } from 'types/order';
+import { ORDER_STATUS_OPTONS, ORDER_TYPE_OPTONS, PAYMENT_TYPE_OPTIONS, TOrder } from 'types/order';
 import { TTableColumn } from 'types/table';
 import OrderDetailDialog from './components/OrderDetailDialog';
 
@@ -28,13 +28,14 @@ const OrderListPage = () => {
     {
       title: 'Mã hoá đơn',
       dataIndex: 'invoiceId',
-      hideInSearch: true
+      hideInSearch: true,
+      fixed: 'left'
     },
-    {
-      title: 'Người tạo',
-      dataIndex: 'staffName',
-      hideInSearch: true
-    },
+    // {
+    //   title: 'Người tạo',
+    //   dataIndex: 'staffName',
+    //   hideInSearch: true
+    // },
     {
       title: 'Ngày tạo',
       dataIndex: 'startDate',
@@ -61,11 +62,19 @@ const OrderListPage = () => {
       fixed: 'left'
     },
     {
+      title: 'Thanh toán',
+      dataIndex: 'paymentType',
+      valueEnum: PAYMENT_TYPE_OPTIONS,
+      valueType: 'select',
+      hideInSearch: true,
+      fixed: 'left'
+    },
+    {
       title: 'Trạng thái',
       dataIndex: 'status',
       valueEnum: ORDER_STATUS_OPTONS,
       valueType: 'select',
-      fixed: 'right'
+      fixed: 'left'
     },
     {
       title: translate('pages.orders.table.detail'),

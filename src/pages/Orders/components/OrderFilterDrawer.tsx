@@ -16,7 +16,7 @@ import {
 import { RadioGroupField } from 'components/form';
 import Scrollbar from 'components/Scrollbar';
 import useLocales from 'hooks/useLocales';
-import { ORDER_STATUS_OPTONS, PAYMENT_TYPE_OPTONS } from 'types/order';
+import { ORDER_STATUS_OPTONS, PAYMENT_TYPE_OPTIONS } from 'types/order';
 // @types
 
 // ----------------------------------------------------------------------
@@ -119,7 +119,7 @@ export default function OrderFilterDrawer({
                   Loại hóa đơn
                 </Typography>
                 <RadioGroupField
-                  options={PAYMENT_TYPE_OPTONS}
+                  options={PAYMENT_TYPE_OPTIONS}
                   name="paymentType"
                   //   label="Loai hoa don"
                 />

@@ -20,6 +20,19 @@ import BrandListPage from 'pages/Brands/BrandList';
 import Insights from 'pages/report/Insights';
 import useAuth from 'hooks/useAuth';
 import { Role } from 'utils/role';
+import PromotionDash from 'pages/dashboard/PromotionSystemDashboard';
+import ActionPage from 'pages/promotionEngine/Action';
+import NewActionPage from 'pages/promotionEngine/Action/create';
+import ConditionPage from 'pages/promotionEngine/Condition';
+import NewCondition from 'pages/promotionEngine/Condition/createCondition';
+import ProfilePage from 'pages/promotionEngine/Configuration/profile';
+import SettingPage from 'pages/promotionEngine/Configuration/settings';
+import GiftPage from 'pages/promotionEngine/Gift';
+import NewGiftPage from 'pages/promotionEngine/Gift/create';
+import CreatePromotion from 'pages/promotionEngine/Promotion/CreatePromotion';
+import CreateVoucher from 'pages/promotionEngine/Voucher/createVoucher';
+import Promotion from 'pages/promotionEngine/Promotion';
+import Voucher from 'pages/promotionEngine/Voucher';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -272,6 +285,63 @@ export default function Router() {
               children: [{ path: '', element: <StoreReport /> }]
             }
           ]
+        }
+      ]
+    },
+    {
+      path: 'promotion-system',
+      element: (
+        <AuthGuard>
+          <RoleBasedGuard accessibleRoles={[]}>
+            <DashBoardReport />
+          </RoleBasedGuard>
+        </AuthGuard>
+      ),
+      children: [
+        { path: '', element: <Navigate to="/promotion-system/app" replace /> },
+        { path: 'app', element: <PromotionDash /> },
+        {
+          path: 'promotion',
+          children: [
+            { path: '', element: <Promotion /> },
+            { path: 'new', element: <CreatePromotion /> }
+          ]
+        },
+        {
+          path: 'voucher',
+          children: [
+            { path: '', element: <Voucher /> },
+            { path: 'new', element: <CreateVoucher /> }
+          ]
+        },
+        {
+          path: 'condition',
+          children: [
+            { path: '', element: <ConditionPage /> },
+            { path: 'new', element: <NewCondition /> }
+          ]
+        },
+        {
+          path: 'action',
+          children: [
+            { path: '', element: <ActionPage /> },
+            { path: 'new', element: <NewActionPage /> }
+          ]
+        },
+        {
+          path: 'gift',
+          children: [
+            { path: '', element: <GiftPage /> },
+            { path: 'new', element: <NewGiftPage /> }
+          ]
+        },
+        {
+          path: 'setting',
+          children: [{ path: '', element: <SettingPage /> }]
+        },
+        {
+          path: 'profile',
+          children: [{ path: '', element: <ProfilePage /> }]
         }
       ]
     },

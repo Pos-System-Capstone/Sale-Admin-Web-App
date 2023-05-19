@@ -20,7 +20,12 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import useAuth from 'hooks/useAuth';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { ORDER_STATUS_OPTONS, ORDER_TYPE_OPTONS, TOrderDetail } from 'types/order';
+import {
+  ORDER_STATUS_OPTONS,
+  ORDER_TYPE_OPTONS,
+  PAYMENT_TYPE_OPTIONS,
+  TOrderDetail
+} from 'types/order';
 import { TProductInOrderDetail } from 'types/product';
 import { TTableColumn } from 'types/table';
 
@@ -113,23 +118,14 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
       dataIndex: 'orderStatus',
       valueEnum: ORDER_STATUS_OPTONS,
       hideInSearch: true
+    },
+    {
+      title: 'Phương thức thanh toán',
+      dataIndex: 'paymentType',
+      hideInSearch: true,
+      valueEnum: PAYMENT_TYPE_OPTIONS,
+      valueType: 'select'
     }
-    // {
-    //   title: 'Phương thức thanh toán',
-    //   dataIndex: 'payment',
-    //   hideInSearch: true,
-    //   render: (payment) => {
-    //     return (
-    //       <Stack spacing={2}>
-    //         {payment != null ? (
-    //           <Label color="primary">{payment.name}</Label>
-    //         ) : (
-    //           <Label color="info">Chưa thực hiện thanh toán</Label>
-    //         )}
-    //       </Stack>
-    //     );
-    //   }
-    // }
   ];
 
   const orderItemColumns: TTableColumn<TProductInOrderDetail>[] = [
@@ -194,7 +190,7 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
                 labelProps={{ fontWeight: 'bold' }}
                 columns={orderColumns as any}
                 datasource={order}
-                column={3}
+                column={2}
               />
 
               <ResoTable

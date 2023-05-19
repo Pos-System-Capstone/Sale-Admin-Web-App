@@ -1,10 +1,10 @@
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 import { Icon } from '@iconify/react';
-import { AppBar, Box, IconButton, Stack, Toolbar } from '@mui/material';
+import { AppBar, Box, Button, IconButton, Stack, Toolbar } from '@mui/material';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import Label from 'components/Label';
-import { useLocation, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { MHidden } from '../../components/@material-extend';
 // hooks
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
@@ -74,7 +74,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
   const { isCollapse } = useCollapseDrawer();
   const { pathname } = useLocation();
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const { translate } = useLocales();
   // const [open, setOpen] = useState(false);
   // const firstElementOfPath = pathname.split('/')[1];
@@ -141,13 +141,13 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           >
             Sale
           </Button> */}
-          {/* <Button
+          <Button
             onClick={() => {
               navigate('/promotion-system');
             }}
           >
             Promotion
-          </Button> */}
+          </Button>
 
           {/* <LanguagePopover /> */}
           <AccountPopover />

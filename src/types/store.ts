@@ -147,6 +147,15 @@ export type StoreReport = {
   timeLine: number[];
   totalOrderTimeLine: number[];
   totalAmountTimeLine: number[];
+  totalSizeS: number;
+  totalSizeM: number;
+  totalSizeL: number;
+  totalAmountSizeS: number;
+  totalAmountSizeM: number;
+  totalAmountSizeL: number;
+  totalProductDiscount: number;
+  totalPromotionDiscount: number;
+  totalPromotionUsed: number;
 };
 
 export type CategoryReport = {
@@ -155,6 +164,7 @@ export type CategoryReport = {
   totalProduct: number;
   totalAmount: number;
   totalDiscount: number;
+  finalAmount: number;
   productReports: ProductReport[];
 };
 
@@ -164,4 +174,5 @@ export type ProductReport = {
   quantity: number;
   totalAmount: number;
   totalDiscount: number;
+  finalAmount: number;
 };

@@ -19,7 +19,7 @@ import {
 import useAuth from '../../hooks/useAuth';
 import useSettings from '../../hooks/useSettings';
 // components
-import { AppAreaInstalled, AppCurrentDownload } from 'components/_dashboard/general-app';
+import { AppAreaInstalled } from 'components/_dashboard/general-app';
 import moment from 'moment';
 // import SelectDateRange from 'pages/report/components/SelectDateRange';
 import { useQuery } from 'react-query';
@@ -79,7 +79,7 @@ export default function GeneralApp() {
                 </Stack>
               </FormProvider>
             </Grid>
-            <Grid item xs={12} md={4} lg={4}>
+            <Grid item xs={12} md={6} lg={3}>
               <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
                 <Box sx={{ flexGrow: 1 }}>
                   <Typography variant="subtitle1">Đơn hoàn thành(6)</Typography>
@@ -87,7 +87,7 @@ export default function GeneralApp() {
                 </Box>
               </Card>
             </Grid>
-            <Grid item xs={12} md={4} lg={4}>
+            <Grid item xs={12} md={6} lg={3}>
               <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
                 <Box sx={{ flexGrow: 1 }}>
                   <Typography variant="subtitle1">Sản phẩm đã bán</Typography>
@@ -95,7 +95,15 @@ export default function GeneralApp() {
                 </Box>
               </Card>
             </Grid>
-            <Grid item xs={12} md={4} lg={4}>
+            <Grid item xs={12} md={6} lg={3}>
+              <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+                <Box sx={{ flexGrow: 1 }}>
+                  <Typography variant="subtitle1">Khuyến mãi đã dùng</Typography>
+                  <Typography variant="h4">{fNumber(report?.totalPromotionUsed ?? 0)}</Typography>
+                </Box>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
               <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
                 <Box sx={{ flexGrow: 1 }}>
                   <Typography variant="subtitle1">Bình quân hoá đơn(5)=(3)/(6)</Typography>
@@ -104,21 +112,41 @@ export default function GeneralApp() {
                 </Box>
               </Card>
             </Grid>
-            <Grid item xs={12} md={4} lg={4}>
+            <Grid item xs={12} md={4} lg={3}>
               <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
                 <Box sx={{ flexGrow: 1 }}>
-                  <Typography variant="subtitle1">Doanh thu trước giảm giá(1)</Typography>
+                  <Typography variant="subtitle1">Doanh thu trước giảm(1)</Typography>
 
                   <Typography variant="h4">{fNumber(report?.totalAmount ?? 0)}đ</Typography>
                 </Box>
               </Card>
             </Grid>
-            <Grid item xs={12} md={4} lg={4}>
+            <Grid item xs={12} md={4} lg={3}>
               <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
                 <Box sx={{ flexGrow: 1 }}>
                   <Typography variant="subtitle1">Giảm giá(2)</Typography>
 
                   <Typography variant="h4">{fNumber(report?.totalDiscount ?? 0)}đ</Typography>
+                </Box>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={4} lg={3}>
+              <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+                <Box sx={{ flexGrow: 1 }}>
+                  <Typography variant="subtitle1">Giảm giá sản phẩm(2.1)</Typography>
+                  <Typography variant="h4">
+                    {fNumber(report?.totalProductDiscount ?? 0)}đ
+                  </Typography>
+                </Box>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={4} lg={3}>
+              <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+                <Box sx={{ flexGrow: 1 }}>
+                  <Typography variant="subtitle1">Chương trình khuyến mãi(2.2)</Typography>
+                  <Typography variant="h4">
+                    {fNumber(report?.totalPromotionDiscount ?? 0)}đ
+                  </Typography>
                 </Box>
               </Card>
             </Grid>
@@ -131,15 +159,15 @@ export default function GeneralApp() {
                 </Box>
               </Card>
             </Grid>
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6} lg={4}>
               <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
                 <Box sx={{ flexGrow: 1 }}>
-                  <Typography variant="subtitle1">Chi phí SP(4)</Typography>
+                  <Typography variant="subtitle1">Chi phí sản phẩm(4)</Typography>
                   <Typography variant="h4">{fNumber(report?.productCosAmount ?? 0)}đ</Typography>
                 </Box>
               </Card>
             </Grid>
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6} lg={4}>
               <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
                 <Box sx={{ flexGrow: 1 }}>
                   <Typography variant="subtitle1">Lợi nhuận(5)=(3)-(4)</Typography>
@@ -148,27 +176,77 @@ export default function GeneralApp() {
               </Card>
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
-              <AppCurrentDownload
+              <AnalyticsCurrentVisits
                 title="Loại đơn hàng "
-                totalInStore={report?.totalOrderInStore ?? 0}
-                totalTakeAway={report?.totalOrderTakeAway ?? 0}
-                totalDelivery={report?.totalOrderDeli ?? 0}
-                totalInStoreAmount={report?.inStoreAmount ?? 0}
-                totalTakeAwayAmount={report?.takeAwayAmount ?? 0}
-                totalDeliveryAmount={report?.deliAmount ?? 0}
+                totalOrder={[
+                  report?.totalOrderInStore ?? 0,
+                  report?.totalOrderTakeAway ?? 0,
+                  report?.totalOrderDeli ?? 0
+                ]}
+                totalOrderAmount={[
+                  report?.inStoreAmount ?? 0,
+                  report?.takeAwayAmount ?? 0,
+                  report?.deliAmount ?? 0
+                ]}
+                listName={['Tại quán', 'Mang đi', 'Giao hàng']}
+                filterTitle={['Số lượng đơn', 'Doanh thu']}
               />
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
               <AnalyticsCurrentVisits
-                title={'Phương thức thanh toán'}
-                totalCash={report?.totalCash ?? 0}
-                totalMomo={report?.totalMomo ?? 0}
-                totalBanking={report?.totalBanking ?? 0}
-                totalVisa={report?.totalVisa ?? 0}
-                cashAmount={report?.cashAmount ?? 0}
-                momoAmount={report?.momoAmount ?? 0}
-                bankingAmount={report?.bankingAmount ?? 0}
-                visaAmount={report?.visaAmount ?? 0}
+                title={'Hình thức thanh toán'}
+                totalOrder={[
+                  report?.totalCash ?? 0,
+                  report?.totalMomo ?? 0,
+                  report?.totalBanking ?? 0,
+                  report?.totalVisa ?? 0
+                ]}
+                totalOrderAmount={[
+                  report?.cashAmount ?? 0,
+                  report?.momoAmount ?? 0,
+                  report?.bankingAmount ?? 0,
+                  report?.visaAmount ?? 0
+                ]}
+                listName={['Tiền mặt', 'Momo', 'Ngân hàng', 'Visa/MasterCard']}
+                filterTitle={['Số lượng đơn', 'Doanh thu']}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <AnalyticsCurrentVisits
+                title={'Danh mục sản phẩm'}
+                totalOrder={
+                  report?.categoryReports
+                    ?.sort((a, b) => b.totalAmount - a.totalAmount)
+                    .map((item) => item.totalProduct) ?? []
+                }
+                totalOrderAmount={
+                  report?.categoryReports
+                    ?.sort((a, b) => b.totalAmount - a.totalAmount)
+                    .map((item) => item.totalAmount) ?? []
+                }
+                listName={
+                  report?.categoryReports
+                    ?.sort((a, b) => b.totalAmount - a.totalAmount)
+                    .map((item) => item.name) ?? []
+                }
+                filterTitle={['Số lượng sản phẩm', 'Doanh thu sản phẩm']}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <AnalyticsCurrentVisits
+                title={'Kích cỡ sản phẩm'}
+                totalOrder={[
+                  report?.totalSizeS ?? 0,
+                  report?.totalSizeM ?? 0,
+                  report?.totalSizeL ?? 0
+                ]}
+                totalOrderAmount={[
+                  report?.totalAmountSizeS ?? 0,
+                  report?.totalAmountSizeM ?? 0,
+                  report?.totalAmountSizeL ?? 0
+                ]}
+                listName={['Size S', 'Size M', 'Size L']}
+                filterTitle={['Số lượng sản phẩm', 'Doanh thu sản phẩm']}
               />
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
@@ -179,16 +257,42 @@ export default function GeneralApp() {
                 amountTimeLine={report?.totalAmountTimeLine ?? []}
               />
             </Grid>
-
+            {report?.categoryReports
+              .sort((a, b) => b.totalProduct - a.totalProduct)
+              .map((item) => (
+                <Grid key={item.id} item xs={12} md={6} lg={6}>
+                  <AnalyticsCurrentVisits
+                    title={item.name}
+                    totalOrder={
+                      item.productReports
+                        ?.sort((a, b) => b.totalAmount - a.totalAmount)
+                        .map((item) => item.quantity) ?? []
+                    }
+                    totalOrderAmount={
+                      item.productReports
+                        ?.sort((a, b) => b.totalAmount - a.totalAmount)
+                        .map((item) => item.finalAmount) ?? []
+                    }
+                    listName={
+                      item.productReports
+                        ?.sort((a, b) => b.totalAmount - a.totalAmount)
+                        .map((item) => item.name) ?? []
+                    }
+                    filterTitle={['Số lượng sản phẩm', 'Doanh thu sản phẩm']}
+                  />
+                </Grid>
+              ))}
             {report?.categoryReports
               .sort((a, b) => b.totalProduct - a.totalProduct)
               .map((item) => (
                 <Grid key={item.id} item xs={12} md={12} lg={12}>
                   <Card>
                     <CardHeader
-                      title={`${item.name} - ${item.totalProduct} Sp -  ${fCurrencyVN(
+                      title={`${item.name}  -  ${item.totalProduct} SP  -  Trước giảm:${fCurrencyVN(
                         item.totalAmount
-                      )} đ`}
+                      )}đ  -  Giảm giá:${fCurrencyVN(
+                        item.totalDiscount
+                      )}đ  -  Sau giảm:${fCurrencyVN(item.finalAmount)}đ`}
                     />
                     <Divider />
                     <CardContent>
@@ -198,8 +302,9 @@ export default function GeneralApp() {
                             <TableRow>
                               <TableCell align="left">Sản phẩm</TableCell>
                               <TableCell align="center">Số lượng</TableCell>
-                              <TableCell align="center">Doanh thu</TableCell>
+                              <TableCell align="center">Doanh thu trước giảm</TableCell>
                               <TableCell align="center">Giảm giá</TableCell>
+                              <TableCell align="center">Doanh thu sau giảm</TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
@@ -221,6 +326,9 @@ export default function GeneralApp() {
                                   <TableCell align="center">
                                     {fCurrencyVN(data.totalDiscount)} đ
                                   </TableCell>
+                                  <TableCell align="center">
+                                    {fCurrencyVN(data.finalAmount)} đ
+                                  </TableCell>
                                 </TableRow>
                               ))}
                           </TableBody>
@@ -230,13 +338,6 @@ export default function GeneralApp() {
                   </Card>
                 </Grid>
               ))}
-            {/* {report?.categoryReports
-              .sort((a, b) => b.totalProduct - a.totalProduct)
-              .map((item) => (
-                <Grid key={item.id} item xs={12} md={6} lg={6}>
-                  <AnalyticsConversionRates category={item} />
-                </Grid>
-              ))} */}
           </>
         )}
       </Grid>

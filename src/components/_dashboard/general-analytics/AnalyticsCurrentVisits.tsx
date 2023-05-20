@@ -35,14 +35,10 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 const CHART_DATA = [4344, 5435, 1443, 4443];
 export interface Props {
   title: string;
-  totalCash: number;
-  totalMomo: number;
-  totalBanking: number;
-  totalVisa: number;
-  cashAmount: number;
-  momoAmount: number;
-  bankingAmount: number;
-  visaAmount: number;
+  totalOrder: number[];
+  totalOrderAmount: number[];
+  listName: string[];
+  filterTitle: string[];
 }
 
 export default function AnalyticsCurrentVisits(props: Props) {
@@ -53,26 +49,14 @@ export default function AnalyticsCurrentVisits(props: Props) {
   };
   const CHART_DATA_PIE = [
     {
-      day: 'Tổng đơn hàng',
+      day: props.filterTitle[0],
       value: 0,
-      data: [
-        props.totalCash,
-        props.totalMomo,
-        props.totalBanking,
-        props.totalVisa
-        // { name: 'Hôm qua', data: listOrderByHour(props.yesterdayOrder) }
-      ]
+      data: props.totalOrder
     },
     {
-      day: 'Tổng doanh thu',
+      day: props.filterTitle[1],
       value: 1,
-      data: [
-        props.cashAmount,
-        props.momoAmount,
-        props.bankingAmount,
-        props.visaAmount
-        // { name: 'Hôm qua', data: listOrderAmountByHour(props.yesterdayOrder) }
-      ]
+      data: props.totalOrderAmount
     }
   ];
   const chartOptions = merge(BaseOptionChart(), {
@@ -80,9 +64,20 @@ export default function AnalyticsCurrentVisits(props: Props) {
       theme.palette.primary.main,
       theme.palette.info.main,
       theme.palette.warning.main,
-      theme.palette.error.main
+      theme.palette.error.main,
+      theme.palette.success.main,
+      theme.palette.primary.light,
+      theme.palette.info.light,
+      theme.palette.warning.light,
+      theme.palette.error.light,
+      theme.palette.success.light,
+      theme.palette.primary.dark,
+      theme.palette.info.dark,
+      theme.palette.warning.dark,
+      theme.palette.error.dark,
+      theme.palette.success.dark
     ],
-    labels: ['Tiền mặt', 'Momo', 'Ngân hàng', 'Visa/MasterCard'],
+    labels: props.listName,
     stroke: { colors: [theme.palette.background.paper] },
     legend: { floating: true, horizontalAlign: 'center' },
     dataLabels: { enabled: true, dropShadow: { enabled: false } },

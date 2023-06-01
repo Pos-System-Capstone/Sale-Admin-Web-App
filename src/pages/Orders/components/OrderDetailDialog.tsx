@@ -204,6 +204,9 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
             </Stack>
           </DialogContent>
           <DialogActions>
+            <Button color="error" variant="outlined" onClick={onClose}>
+              Huỷ đơn
+            </Button>
             <Button onClick={onClose}>Đóng</Button>
           </DialogActions>
         </>

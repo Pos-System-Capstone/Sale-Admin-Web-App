@@ -27,7 +27,7 @@ const SessionListPage = () => {
   const tableRef = useRef<any>();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [selectSession, setSelectSession] = useState<string | null>(null);
+  const [selectSession, setSelectSession] = useState<TSession | null>(null);
 
   const orderColumns: TTableColumn<TSession>[] = [
     {
@@ -52,17 +52,17 @@ const SessionListPage = () => {
       valueType: 'datetime',
       hideInSearch: true
     },
-    {
-      title: 'Số đơn',
-      dataIndex: 'numberOfOrders',
-      hideInSearch: true
-    },
-    {
-      title: 'Tổng tiền',
-      dataIndex: 'totalFinalAmount',
-      hideInSearch: true,
-      valueType: 'money'
-    },
+    // {
+    //   title: 'Số đơn',
+    //   dataIndex: 'numberOfOrders',
+    //   hideInSearch: true
+    // },
+    // {
+    //   title: 'Tổng tiền',
+    //   dataIndex: 'totalFinalAmount',
+    //   hideInSearch: true,
+    //   valueType: 'money'
+    // },
     // {
     //   title: 'Tổng tiền trong két',
     //   dataIndex: 'currentCashInVault',
@@ -75,7 +75,7 @@ const SessionListPage = () => {
       hideInSearch: true,
       render: (_: any, session: TSession) => (
         <Tooltip title="Chi tiết">
-          <IconButton onClick={() => setSelectSession(session.id)} size="large">
+          <IconButton onClick={() => setSelectSession(session)} size="large">
             <Visibility />
           </IconButton>
         </Tooltip>
@@ -153,7 +153,7 @@ const SessionListPage = () => {
       ]}
     >
       <SessionDetailDialog
-        sessionId={selectSession}
+        session={selectSession!}
         open={Boolean(selectSession)}
         onClose={() => {
           tableRef.current?.reload();

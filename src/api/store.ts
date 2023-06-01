@@ -1,4 +1,5 @@
 import {
+  SessionReport,
   StoreReport,
   TSession,
   TSessionCreate,
@@ -26,6 +27,8 @@ const getStoreSessions = (storeId: string, params?: any) =>
   requestWebAdmin.get<BaseReponse<TSession>>(`stores/${storeId}/sessions`, { params });
 const getStoreSessionDetail = (storeId: string, sessionId: string) =>
   requestWebAdmin.get<TSessionDetail>(`stores/${storeId}/sessions/${sessionId}`);
+const getStoreSessionReport = (sessionId: string) =>
+  requestWebAdmin.get<SessionReport>(`report/session-report/${sessionId}`);
 const updateStoreSessionDetail = (storeId: string, sessionId: string, data: TSessionDetailUpdate) =>
   requestWebAdmin.put<TSessionDetail>(`stores/${storeId}/sessions/${sessionId}`, data);
 const updateStoreStatus = (storeId: string, storeStatus: string) => {
@@ -50,6 +53,7 @@ const storeApi = {
   getStoreSessions,
   getStoreSessionDetail,
   updateStoreSessionDetail,
+  getStoreSessionReport,
   updateStoreStatus,
   updateStoreInformation,
   getStoreReport,

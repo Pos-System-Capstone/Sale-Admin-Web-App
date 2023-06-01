@@ -17,7 +17,7 @@ const getOrderList = (storeId: string, params: any) => {
       { params }
     );
   }
-  if (startDate != undefined) {
+  if (startDate !== undefined) {
     return request.get<TOrder>(
       `stores/${storeId}/orders?page=${page}&size=${size}&startDate=${moment(
         startDate,
@@ -28,7 +28,7 @@ const getOrderList = (storeId: string, params: any) => {
       }
     );
   }
-  if (endDate != undefined) {
+  if (endDate !== undefined) {
     return request.get<TOrder>(
       `stores/${storeId}/orders?page=${page}&size=${size}&endDate=${moment(
         endDate,

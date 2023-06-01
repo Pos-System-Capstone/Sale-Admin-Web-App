@@ -27,22 +27,22 @@ import { useSnackbar } from 'notistack';
 import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
-import { TSessionDetail, TSessionDetailUpdate } from 'types/store';
+import { SessionReport, TSession, TSessionDetailUpdate } from 'types/store';
 
 type Props = {
   open: boolean;
   onClose: VoidFunction;
-  sessionId?: string | null;
+  session?: TSession;
 };
 
-const SessionDetailDialog: React.FC<Props> = ({ open, onClose, sessionId }) => {
+const SessionDetailDialog: React.FC<Props> = ({ open, onClose, session }) => {
   const { user } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
-  const { data: session, isLoading } = useQuery(
-    ['orders', sessionId],
-    () => storeApi.getStoreSessionDetail(user?.storeId, sessionId!).then((res) => res.data),
+  const { data: sessionReport, isLoading } = useQuery(
+    ['orders', session?.id],
+    () => storeApi.getStoreSessionReport(session?.id!).then((res) => res.data),
     {
-      enabled: Boolean(sessionId)
+      enabled: Boolean(session?.id)
     }
   );
   const updateSessionForm = useForm({
@@ -61,39 +61,54 @@ const SessionDetailDialog: React.FC<Props> = ({ open, onClose, sessionId }) => {
       endTime: session?.endDateTime
     });
   }, [session, updateSessionForm]);
-  const brandDetailColumns: ResoDescriptionColumnType<TSessionDetail>[] = [
+  const brandDetailColumns: ResoDescriptionColumnType<SessionReport>[] = [
     {
-      title: 'Thời gian bắt đầu',
-      dataIndex: 'startDateTime',
-      valueType: 'datetime'
+      title: 'Doanh thu trước khuyến mãi',
+      dataIndex: 'totalAmount'
     },
     {
-      title: 'Thời gian kết thúc',
-      dataIndex: 'endDateTime',
-      valueType: 'datetime'
-    },
-    {
-      title: 'Tên ca',
-      dataIndex: 'name'
-    },
-    {
-      title: 'Số đơn',
-      dataIndex: 'numberOfOrders'
-    },
-    {
-      title: 'Tổng tiền',
-      dataIndex: 'totalAmount',
-      valueType: 'money'
-    },
-    {
-      title: 'Tổng khuyến mãi',
-      dataIndex: 'totalDiscountAmount',
-      valueType: 'money'
+      title: 'Khuyến mãi',
+      dataIndex: 'totalDiscount'
     },
     {
       title: 'Doanh thu sau khuyến mãi',
-      dataIndex: 'profitAmount',
-      valueType: 'money'
+      dataIndex: 'finalAmount'
+    },
+    {
+      title: 'Tổng đơn hàng',
+      dataIndex: 'totalOrder'
+    },
+    {
+      title: 'Tổng đơn tiền mặt',
+      dataIndex: 'totalCash'
+    },
+    {
+      title: 'Doanh thu tiền mặt',
+      dataIndex: 'cashAmount'
+    },
+    {
+      title: 'Tổng đơn chuyển khoản',
+      dataIndex: 'totalBanking'
+    },
+    {
+      title: 'Doanh thu chuyển khoản',
+      dataIndex: 'bankingAmount'
+    },
+    {
+      title: 'Tổng đơn Momo',
+      dataIndex: 'totalMomo'
+    },
+    {
+      title: 'Doanh thu Momo',
+      dataIndex: 'momoAmount'
+    },
+    {
+      title: 'Tổng đơn Visa',
+      dataIndex: 'totalVisa'
+    },
+    {
+      title: 'Doanh thu Visa',
+      dataIndex: 'visaAmount'
     }
   ];
   const handleProcessUpdateSessionsRequest = (data: any) => {
@@ -127,7 +142,7 @@ const SessionDetailDialog: React.FC<Props> = ({ open, onClose, sessionId }) => {
             <ResoDescriptions
               labelProps={{ fontWeight: 'bold' }}
               columns={brandDetailColumns as any}
-              datasource={session}
+              datasource={sessionReport}
               column={2}
             />
             <Box sx={{ mt: 2 }} />
@@ -224,7 +239,7 @@ const SessionDetailDialog: React.FC<Props> = ({ open, onClose, sessionId }) => {
                 return storeApi
                   .updateStoreSessionDetail(
                     user!.storeId,
-                    sessionId!,
+                    session.id!,
                     handleProcessUpdateSessionsRequest(updateSessionForm.getValues())
                   )
                   .then((res) => {

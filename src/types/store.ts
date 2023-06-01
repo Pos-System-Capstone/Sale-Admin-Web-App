@@ -176,3 +176,18 @@ export type ProductReport = {
   totalDiscount: number;
   finalAmount: number;
 };
+
+export type SessionReport = {
+  totalAmount: number;
+  totalDiscount: number;
+  finalAmount: number;
+  totalOrder: number;
+  totalCash: number;
+  totalBanking: number;
+  totalMomo: number;
+  totalVisa: number;
+  cashAmount: number;
+  momoAmount: number;
+  bankingAmount: number;
+  visaAmount: number;
+};

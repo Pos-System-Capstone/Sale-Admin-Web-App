@@ -4,7 +4,6 @@ import {
   DraftEditorField,
   InputField,
   RadioGroupField,
-  SelectField,
   SwitchField
 } from 'components/form';
 import CheckBoxGroupField from 'components/form/CheckBoxGroupField';
@@ -19,6 +18,7 @@ import {
   giftActionList,
   kindActionList,
   particularDayList,
+  PromotionType,
   promotionTypeList,
   timeFrameList
 } from 'pages/promotionEngine/Promotion/components/config';
@@ -43,19 +43,16 @@ export default function StepOne({ watch }: any) {
     setParticularDay((prev) => !prev);
   };
 
-  const [promoType = 'usingCode', promoAction = 'discount', unlimitedDate, timeFrame] = watch([
+  const [promoType, promoAction = 'discount', unlimitedDate, timeFrame] = watch([
     'promotionType',
     'promotion-action',
     'unlimited',
     'timeFrameChecked',
     'timeFrame'
   ]);
-
+  console.log(promoType);
   return (
     <Stack p={1} spacing={3}>
-      <Typography px={2} variant="h3" textAlign="left" sx={{ textTransform: 'uppercase' }}>
-        {translate('promotionSystem.promotion.createPromotion.promotionType')}
-      </Typography>
       <Card>
         <Stack spacing={4} px={2} py={1} textAlign="left" direction="row">
           <FormBox
@@ -63,16 +60,16 @@ export default function StepOne({ watch }: any) {
               'promotionSystem.promotion.createPromotion.questionPromotionType'
             )}`}
           >
-            <Stack spacing={2} direction="column" width={'100%'}>
+            <Stack direction="column" width={'100%'}>
               <RadioGroupField
                 sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
                 fullWidth
                 options={promotionType}
                 name="promotionType"
-                defaultValue="usingVoucher"
+                defaultValue="Amount"
               />
-              <Grid container gap={2}>
-                <Grid item xs={12}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
                   <InputField
                     fullWidth
                     size="small"
@@ -83,7 +80,8 @@ export default function StepOne({ watch }: any) {
                     color="primary"
                   />
                 </Grid>
-                <Grid item xs={12}>
+
+                <Grid item xs={12} md={6}>
                   <InputField
                     fullWidth
                     size="small"
@@ -95,36 +93,67 @@ export default function StepOne({ watch }: any) {
                     disabled={promoType === 'automatic'}
                   />
                 </Grid>
+                {promoType === PromotionType.PERCENT && (
+                  <Grid item xs={12} md={6}>
+                    <InputField
+                      fullWidth
+                      size="small"
+                      color="primary"
+                      name="promotionCode"
+                      label={'Giảm tối đa'}
+                      disabled={promoType === 'automatic'}
+                    />
+                  </Grid>
+                )}
+
+                <Grid item xs={12} md={6}>
+                  <InputField
+                    fullWidth
+                    size="small"
+                    color="primary"
+                    name="promotionCode"
+                    label={'Giá trị đơn hàng tối thiểu'}
+                    disabled={promoType === 'automatic'}
+                  />
+                </Grid>
+                {promoType !== PromotionType.PERCENT && (
+                  <Grid item xs={12} md={6}>
+                    <InputField
+                      fullWidth
+                      size="small"
+                      color="primary"
+                      name="promotionCode"
+                      label={'Số tiền được giảm'}
+                      disabled={promoType === 'automatic'}
+                    />
+                  </Grid>
+                )}
+                {promoType === PromotionType.PERCENT && (
+                  <Grid item xs={12} md={6}>
+                    <InputField
+                      fullWidth
+                      size="small"
+                      color="primary"
+                      name="promotionCode"
+                      label={'Phần trăm được giảm'}
+                      disabled={promoType === 'automatic'}
+                      hidden={promoType !== 'Percent'}
+                    />
+                  </Grid>
+                )}
               </Grid>
-            </Stack>
-          </FormBox>
-          <FormBox
-            title={`${translate('promotionSystem.promotion.createPromotion.questionActionType')}`}
-          >
-            <Stack spacing={2} direction="column" width={'100%'}>
-              <RadioGroupField
-                sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}
-                fullWidth
-                options={kindAction}
-                name="promotion-action"
-                defaultValue="discount"
-              />
-              {promoAction === 'discount' && (
-                <SelectField
-                  fullWidth
-                  label={`${translate('promotionSystem.promotion.createPromotion.discount')}`}
-                  name="discountAction"
-                  options={discountAction}
-                />
-              )}
-              {promoAction === 'gift' && (
-                <SelectField
-                  fullWidth
-                  label={`${translate('promotionSystem.promotion.createPromotion.gift')}`}
-                  name="giftAction"
-                  options={giftAction}
-                />
-              )}
+
+              <Box>
+                <Typography>
+                  {'Hoạt động'}
+                  {/* <Switch checked={particularDay} onChange={handleParticularDay} /> */}
+                  <Switch />
+                </Typography>
+
+                {/* {particularDay && (
+                  <CheckBoxGroupField name={'particularDays'} options={particularDays} />
+                )} */}
+              </Box>
             </Stack>
           </FormBox>
         </Stack>

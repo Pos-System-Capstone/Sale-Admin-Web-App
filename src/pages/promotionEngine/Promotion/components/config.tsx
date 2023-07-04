@@ -6,16 +6,16 @@ const promotionTypeList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
     {
-      label: `${translate('promotionSystem.promotion.createPromotion.usingVoucher')}`,
-      value: 'usingVoucher'
+      label: 'Giảm theo số tiền',
+      value: 'Amount'
     },
     {
-      label: `${translate('promotionSystem.promotion.createPromotion.usingCode')}`,
-      value: 'usingCode'
+      label: `Giảm theo phần trăm %`,
+      value: 'Percent'
     },
     {
-      label: `${translate('promotionSystem.promotion.createPromotion.automatic')}`,
-      value: 'automatic'
+      label: 'Giảm theo sản phẩm',
+      value: 'Product'
     }
   ];
 };
@@ -264,6 +264,11 @@ const memberLevelList = () => {
     }
   ];
 };
+export enum PromotionType {
+  PERCENT = 'Percent',
+  AMOUNT = 'Amount',
+  PRODUCT = 'Product'
+}
 export {
   promotionTypeList,
   particularDayList,

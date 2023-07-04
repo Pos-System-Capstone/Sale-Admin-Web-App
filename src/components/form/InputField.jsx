@@ -13,6 +13,7 @@ const FormInput = ({
   fullWidth = false,
   className = null,
   size = 'small',
+  isHidden = false,
   ...props
 }) => {
   const { control } = useFormContext();

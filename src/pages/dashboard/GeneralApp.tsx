@@ -320,15 +320,9 @@ export default function GeneralApp() {
                                     </Box>
                                   </TableCell>
                                   <TableCell align="center">{data.quantity}</TableCell>
-                                  <TableCell align="center">
-                                    {fCurrencyVN(data.totalAmount)} đ
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {fCurrencyVN(data.totalDiscount)} đ
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {fCurrencyVN(data.finalAmount)} đ
-                                  </TableCell>
+                                  <TableCell align="center">{data.totalAmount}</TableCell>
+                                  <TableCell align="center">{data.totalDiscount}</TableCell>
+                                  <TableCell align="center">{data.finalAmount}</TableCell>
                                 </TableRow>
                               ))}
                           </TableBody>

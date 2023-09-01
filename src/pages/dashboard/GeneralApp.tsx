@@ -30,6 +30,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import storeApi from 'api/store';
 import { fCurrencyVN, fNumber } from 'utils/formatNumber';
 import { AnalyticsCurrentVisits } from 'components/_dashboard/general-analytics';
+import TimeRangeChart from 'components/_dashboard/general-app/TimeRangeChart';
 
 // ----------------------------------------------------------------------
 
@@ -252,6 +253,14 @@ export default function GeneralApp() {
             <Grid item xs={12} md={12} lg={12}>
               <AppAreaInstalled
                 title="Biểu đồ đơn hàng theo giờ"
+                timeline={report?.timeLine ?? []}
+                orderTimeLine={report?.totalOrderTimeLine ?? []}
+                amountTimeLine={report?.totalAmountTimeLine ?? []}
+              />
+            </Grid>
+            <Grid item xs={12} md={12} lg={12}>
+              <TimeRangeChart
+                title="Biểu đồ đơn hàng theo nhóm giờ "
                 timeline={report?.timeLine ?? []}
                 orderTimeLine={report?.totalOrderTimeLine ?? []}
                 amountTimeLine={report?.totalAmountTimeLine ?? []}

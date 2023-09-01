@@ -24,25 +24,25 @@ export default function AppAreaInstalled(props: Props) {
 
   const CHART_DATA = [
     {
-      day: 'Tổng đơn hàng',
-      value: 0,
-      data: [
-        {
-          name: 'Số đơn',
-          data: props.orderTimeLine
-        }
-        // { name: 'Hôm qua', data: listOrderByHour(props.yesterdayOrder) }
-      ]
-    },
-    {
       day: 'Tổng doanh thu',
-      value: 1,
+      value: 0,
       data: [
         {
           name: 'Doanh thu',
           data: props.amountTimeLine
         }
         // { name: 'Hôm qua', data: listOrderAmountByHour(props.yesterdayOrder) }
+      ]
+    },
+    {
+      day: 'Tổng đơn hàng',
+      value: 1,
+      data: [
+        {
+          name: 'Số đơn',
+          data: props.orderTimeLine
+        }
+        // { name: 'Hôm qua', data: listOrderByHour(props.yesterdayOrder) }
       ]
     }
   ];

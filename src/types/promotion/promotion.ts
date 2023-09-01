@@ -96,3 +96,31 @@ export type PromotionTier = {
     voucher?: [];
   };
 };
+
+export type TPromotion = {
+  id: string;
+  name: string;
+  code: string;
+  description: string;
+  type: string;
+  maxDiscount: number;
+  minConditionAmount: number;
+  discountAmount: number;
+  discountPercent: number;
+  isAvailable: boolean;
+  startTime: string;
+  endTime: string;
+  dateFilters: string[];
+  listProductApply: ListProductApply[];
+  status: string;
+};
+
+export type ListProductApply = {
+  productId: string;
+};
+export enum PromotionType {
+  AMOUNT = 'Amount',
+  PRODUCT = 'Product',
+  PERCENT = 'Percent',
+  AUTO_APPLY = 'AutoApply'
+}

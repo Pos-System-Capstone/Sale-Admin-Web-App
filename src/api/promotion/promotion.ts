@@ -1,5 +1,5 @@
 import useLocales from 'hooks/useLocales';
-import { TPromotionBase } from 'types/promotion/promotion';
+import { PromotionType, TPromotion, TPromotionBase } from 'types/promotion/promotion';
 import { BaseReponse } from 'types/response';
 import { axiosInstances } from 'utils/axios';
 
@@ -86,27 +86,22 @@ export const DISCOUNT_TYPE_DATA = () => {
   ];
 };
 export const STATUS_TYPE_DATA = () => {
-  const { translate } = useLocales();
   return [
-    { value: 0, label: translate('promotionSystem.promotion.table.statusType.all') },
-    { value: 1, label: translate('promotionSystem.promotion.table.statusType.draft') },
-    { value: 2, label: translate('promotionSystem.promotion.table.statusType.published') },
-    { value: 3, label: translate('promotionSystem.promotion.table.statusType.unPublished') },
-    { value: 4, label: translate('promotionSystem.promotion.table.statusType.expired') }
+    { value: 'Active', label: 'Hoạt động' },
+    { value: 'Deactive', label: 'Không hoạt động' }
   ];
 };
 export const PROMOTION_TYPE_DATA = () => {
-  const { translate } = useLocales();
   return [
-    { value: 1, label: translate('promotionSystem.promotion.createPromotion.usingVoucher') },
-    { value: 2, label: translate('promotionSystem.promotion.createPromotion.usingCode') },
-    { value: 3, label: translate('promotionSystem.promotion.createPromotion.automatic') },
-    { value: null, label: '' }
+    { value: PromotionType.PRODUCT, label: 'Giảm sản phẩm' },
+    { value: PromotionType.PERCENT, label: 'Giảm phần trăm đơn hàng' },
+    { value: PromotionType.AMOUNT, label: 'Giảm đơn hàng' },
+    { value: PromotionType.AUTO_APPLY, label: 'Tự động giảm' }
   ];
 };
 
 const getPromotion = (params?: any) =>
-  request.get<BaseReponse<TPromotionBase>>(`/promotions`, { params });
+  request.get<BaseReponse<TPromotion[]>>(`/promotion`, { params });
 
 const createPromotion = (data?: any) =>
   request.post<BaseReponse<TPromotionBase>>(`/promotions`, data);

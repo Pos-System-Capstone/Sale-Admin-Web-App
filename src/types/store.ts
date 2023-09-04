@@ -156,6 +156,7 @@ export type StoreReport = {
   totalProductDiscount: number;
   totalPromotionDiscount: number;
   totalPromotionUsed: number;
+  promotionReports: PromotionReport[];
 };
 
 export type CategoryReport = {
@@ -190,4 +191,11 @@ export type SessionReport = {
   momoAmount: number;
   bankingAmount: number;
   visaAmount: number;
+};
+
+export type PromotionReport = {
+  id: string;
+  name: string;
+  quantity: number;
+  totalDiscount: number;
 };

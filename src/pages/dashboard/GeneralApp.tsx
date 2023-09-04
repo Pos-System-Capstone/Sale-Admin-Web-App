@@ -341,6 +341,43 @@ export default function GeneralApp() {
                   </Card>
                 </Grid>
               ))}
+
+            <Grid item xs={12} md={12} lg={12}>
+              <Card>
+                <CardHeader title={' Báo cáo chương trình khuyến mãi  '} />
+                <Divider />
+                <CardContent>
+                  <TableContainer>
+                    <Table aria-label="fixerd products table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="left">Khuyến mãi</TableCell>
+                          <TableCell align="center">Số lượng</TableCell>
+                          <TableCell align="center">Giảm giá</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {report?.promotionReports
+                          .sort((a, b) => b.totalDiscount - a.totalDiscount)
+                          .map((data, idx) => (
+                            <TableRow key={idx}>
+                              <TableCell align="left">
+                                <Box display="flex" justifyContent="space-between">
+                                  <Stack direction="row" spacing={2} alignItems="center">
+                                    <Typography noWrap>{data.name}</Typography>
+                                  </Stack>
+                                </Box>
+                              </TableCell>
+                              <TableCell align="center">{data.quantity}</TableCell>
+                              <TableCell align="center">{data.totalDiscount}</TableCell>
+                            </TableRow>
+                          ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </CardContent>
+              </Card>
+            </Grid>
           </>
         )}
       </Grid>

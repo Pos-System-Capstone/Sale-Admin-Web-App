@@ -33,6 +33,11 @@ import CreatePromotion from 'pages/promotionEngine/Promotion/CreatePromotion';
 import CreateVoucher from 'pages/promotionEngine/Voucher/createVoucher';
 import Promotion from 'pages/promotionEngine/Promotion';
 import Voucher from 'pages/promotionEngine/Voucher';
+import DateReport from 'pages/report/TradingReport/DateReport';
+import MonthReport from 'pages/report/TradingReport/MonthReport';
+import TimeReport from 'pages/report/TradingReport/TimeReport';
+import PromotionReport from 'pages/report/PromotionReport';
+import DayReport from 'pages/report/TradingReport';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -281,6 +286,31 @@ export default function Router() {
               element: <OverviewMonth />
             },
             {
+              path: 'payment',
+              children: [{ path: '', element: <PaymentReport /> }]
+            },
+            {
+              path: 'product-progress',
+              children: [{ path: '', element: <ProductProgressReport /> }]
+            },
+            {
+              path: 'product-sale',
+              children: [{ path: '', element: <ProductSaleReport /> }]
+            },
+            {
+              path: 'day-report',
+              children: [
+                { path: '', element: <DayReport /> },
+                { path: 'time-report', element: <TimeReport /> },
+                { path: 'date-report', element: <DateReport /> },
+                { path: 'month-report', element: <MonthReport /> }
+              ]
+            },
+            {
+              path: 'promotion',
+              children: [{ path: '', element: <PromotionReport /> }]
+            },
+            {
               path: 'stores',
               children: [{ path: '', element: <StoreReport /> }]
             }
@@ -474,6 +504,13 @@ const LogPage = Loadable(lazy(() => import('../pages/Log')));
 const OverviewDate = Loadable(lazy(() => import('../pages/report/Overview/OverviewDate')));
 const OverviewMonth = Loadable(lazy(() => import('../pages/report/Overview/OverviewMonth')));
 const StoreReport = Loadable(lazy(() => import('../pages/report/StoreReport')));
+const ProductSaleReport = Loadable(
+  lazy(() => import('../pages/report/ProductReport/ProductSaleReport'))
+);
+const ProductProgressReport = Loadable(
+  lazy(() => import('../pages/report/ProductReport/ProductProgressReport'))
+);
+const PaymentReport = Loadable(lazy(() => import('../pages/report/PaymentReport')));
 const HomePage = Loadable(lazy(() => import('../pages/report/Home')));
 
 // user

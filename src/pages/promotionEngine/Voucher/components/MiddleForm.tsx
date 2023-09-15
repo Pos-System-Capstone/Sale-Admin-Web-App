@@ -6,6 +6,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 // import Label from 'components/Label';
 // import ModalForm from 'components/ModalForm/ModalForm';
 // import ResoTable from 'components/ResoTable/ResoTable';
+// import useExtraCategory from 'hooks/extra-categories/useExtraCategoy';
 import useLocales from 'hooks/useLocales';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -27,6 +28,8 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
   const cateId = watch('cat_id');
   const productType = watch('product_type');
   const isExtraProduct = productType === ProductTypeEnum.EXTRA;
+
+  // const { data: extras } = useExtraCategory(cateId);
 
   const productExtraColumns: TTableColumn<TProductBase>[] = [
     {

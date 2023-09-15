@@ -8,6 +8,7 @@ export enum StoreStatus {
 export type TStore = {
   id: string;
   brandId: string;
+  code: string;
   name: string;
   shortName: string;
   email: string;

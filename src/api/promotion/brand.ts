@@ -2,7 +2,7 @@ import { TBrandBase } from 'types/promotion/brand';
 import { BaseReponse } from 'types/response';
 import { axiosInstances } from 'utils/axios';
 
-const request = axiosInstances.webAdmin;
+const request = axiosInstances.promotion;
 
 const getAll = (params?: any) => request.get<BaseReponse<TBrandBase>>(`/brands`, { params });
 

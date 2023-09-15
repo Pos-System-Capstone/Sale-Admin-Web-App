@@ -5,22 +5,22 @@ import { Icon } from '@iconify/react';
 import { Button, Card, Stack } from '@mui/material';
 import conditionApi from 'api/promotion/condition';
 import CategoryModal from 'components/CategoryModal';
+import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 // components
 import { useNavigate } from 'react-router-dom';
 import { addCategoy, deleteCategoyById, editCategory } from 'redux/category/api';
-import { RootState } from 'redux/store';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TCategory } from 'types/category';
 import { TConditionBase } from 'types/promotion/condition';
 import { TTableColumn } from 'types/table';
 import { fDateTime } from 'utils/formatTime';
+import { getUserInfo } from 'utils/utils';
 
 const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
   const navigate = useNavigate();
@@ -31,7 +31,9 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
   const [formModal, setFormModal] = useState(false);
   const [updateCateId, setUpdateCateId] = useState<number | null>(null);
   const [currentDeleteItem, setCurrentDeleteItem] = useState<TCategory | null>(null);
-  const brandId = useSelector((state: RootState) => state.brand);
+  // const brandId = useSelector((state: RootState) => state.brand);
+  const userRaw = getUserInfo();
+  const user: any = JSON.parse(userRaw ?? '{}');
   const columns: TTableColumn<TConditionBase>[] = [
     {
       title: 'NO',
@@ -58,9 +60,9 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
 
   useEffect(() => {
     if (tableRef.current) {
-      tableRef.current.formControl.setValue('BrandId', brandId!);
+      tableRef.current.formControl.setValue('BrandId', user.brandId!);
     }
-  }, [brandId]);
+  }, [user]);
 
   const addCategoryHander = (values: TCategory) =>
     addCategoy(values)
@@ -94,7 +96,7 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
       });
 
   const deleteCategoryHander = () =>
-    deleteCategoyById(currentDeleteItem?.id!)
+    deleteCategoyById(currentDeleteItem?.name!)
       .then(() => setCurrentDeleteItem(null))
       .then(tableRef.current?.reload)
       .then(() =>
@@ -133,7 +135,7 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
         onAdd={addCategoryHander}
         onEdit={editCategoryHander}
       />
-      {/* <DeleteConfirmDialog
+      <DeleteConfirmDialog
         open={Boolean(currentDeleteItem)}
         onClose={() => setCurrentDeleteItem(null)}
         onDelete={deleteCategoryHander}
@@ -142,7 +144,7 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
             {translate('common.confirmDeleteTitle')} <strong>{currentDeleteItem?.name}</strong>
           </>
         }
-      /> */}
+      />
       <Card>
         <Stack spacing={2}>
           <ResoTable
@@ -154,7 +156,7 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
               console.log('delete');
             }}
             rowKey="condition_id"
-            getData={() => conditionApi.getConditionRules({ BrandId: brandId })}
+            getData={(params: any) => conditionApi.getConditionRules(params)}
             columns={columns}
           />
         </Stack>

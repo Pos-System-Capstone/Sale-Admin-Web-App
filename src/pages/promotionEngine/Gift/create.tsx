@@ -10,6 +10,7 @@ import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton
 import Page from 'components/Page';
 import useDashboard from 'hooks/useDashboard';
 import useLocales from 'hooks/useLocales';
+import { TFunction } from 'i18next';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
@@ -20,12 +21,19 @@ import { useSearchParams } from 'react-router-dom';
 import { createCollection } from 'redux/collections/api';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { CollectionTypeEnum, TCollection } from 'types/collection';
+import * as yup from 'yup';
 
 const NewGiftPage = () => {
   const { translate } = useLocales();
   const [searchParams] = useSearchParams();
   const type: any = Number(searchParams.get('type') ?? CollectionTypeEnum.MenuCollection);
   const isMenuCollection = type === CollectionTypeEnum.MenuCollection;
+
+  const collectionSchema = (translate: TFunction) =>
+    yup.object({
+      name: yup.string().required(translate('common.required', { name: 'Bộ sưu tập' })),
+      products: yup.array().min(isMenuCollection ? 0 : 1, 'Vui lòng có ít nhất một sản phẩm')
+    });
 
   const form = useForm<Partial<TCollection & { products: any[] }>>({
     defaultValues: {
@@ -34,6 +42,7 @@ const NewGiftPage = () => {
       description: '',
       products: []
     }
+    // resolver: yupResolver(collectionSchema(translate))
   });
   const { setNavOpen } = useDashboard();
   const { enqueueSnackbar } = useSnackbar();

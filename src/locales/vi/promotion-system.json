@@ -24,6 +24,7 @@
     "table": {
       "no": "STT",
       "name": "Tên",
+      "code": "Mã",
       "type": "Loại",
       "action": "Hành động",
       "startDate": "Ngày bắt đầu",

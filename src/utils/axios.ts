@@ -4,7 +4,9 @@ import axios, { AxiosRequestConfig } from 'axios';
 export enum AxiosClientFactoryEnum {
   ADMIN = 'admin',
   LOGIN = 'login',
-  PAYMENT = 'payment'
+  PAYMENT = 'payment',
+  REPORT = 'report',
+  PROMOTION = 'promotion'
 }
 
 // ----------------------------------------------------------------------
@@ -35,6 +37,8 @@ export const parseParams = (params: any) => {
 const admin = `${process.env.REACT_APP_WEB_ADMIN_URL}`;
 const account = `${process.env.REACT_APP_WEB_ADMIN_URL}`;
 const paymentService = `${process.env.REACT_APP_PAYMENT_SERVICE_URL}`;
+const report = `${process.env.REACT_APP_REPORT_BASE_URL}`;
+const promotion = `${process.env.REACT_APP_PROMOTION_BASE_URL}`;
 
 const requestWebAdmin = axios.create({
   baseURL: admin,
@@ -83,6 +87,28 @@ const requestLogin = axios.create({
   paramsSerializer: parseParams
 });
 
+const requestPromotion = axios.create({
+  baseURL: promotion,
+  paramsSerializer: parseParams
+});
+
+requestPromotion.interceptors.request.use((options) => {
+  const { method } = options;
+
+  if (method === 'put' || method === 'post') {
+    Object.assign(options.headers, {
+      'Content-Type': 'application/json;charset=UTF-8'
+    });
+  }
+
+  return options;
+});
+
+requestPromotion.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
+);
+
 requestLogin.interceptors.request.use((options) => {
   const { method } = options;
 
@@ -100,27 +126,27 @@ requestLogin.interceptors.response.use(
   (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
 );
 
-// const requestReport = axios.create({
-//   baseURL: report,
-//   paramsSerializer: parseParams
-// });
+const requestReport = axios.create({
+  baseURL: report,
+  paramsSerializer: parseParams
+});
 
-// requestReport.interceptors.request.use((options) => {
-//   const { method } = options;
+requestReport.interceptors.request.use((options) => {
+  const { method } = options;
 
-//   if (method === 'put' || method === 'post') {
-//     Object.assign(options.headers, {
-//       'Content-Type': 'application/json;charset=UTF-8'
-//     });
-//   }
+  if (method === 'put' || method === 'post') {
+    Object.assign(options.headers, {
+      'Content-Type': 'application/json;charset=UTF-8'
+    });
+  }
 
-//   return options;
-// });
+  return options;
+});
 
-// requestReport.interceptors.response.use(
-//   (response) => response,
-//   (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
-// );
+requestReport.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
+);
 
 // ----------------------------------------------------------------------
 class AxiosClientFactory {
@@ -147,8 +173,12 @@ class AxiosClientFactory {
         return requestWebAdmin;
       case 'login':
         return requestLogin;
+      case 'report':
+        return requestReport;
       case 'payment':
         return requestPaymentServices;
+      case 'promotion':
+        return requestPromotion;
       default:
         return requestWebAdmin;
     }
@@ -162,7 +192,9 @@ const axiosClientFactory = new AxiosClientFactory();
 export const axiosInstances = {
   login: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.LOGIN),
   webAdmin: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.ADMIN),
-  paymentService: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.PAYMENT)
+  paymentService: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.PAYMENT),
+  report: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.REPORT),
+  promotion: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.PROMOTION)
 };
 
 export default axiosInstances.webAdmin;

@@ -1,14 +1,21 @@
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 import { Icon } from '@iconify/react';
 import { AppBar, Box, Button, IconButton, Stack, Toolbar } from '@mui/material';
+import navigation2Outline from '@iconify/icons-eva/navigation-2-outline';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import Label from 'components/Label';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { MHidden } from '../../components/@material-extend';
 // hooks
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 import AccountPopover from './AccountPopover';
+import { useState } from 'react';
+import brandApi from 'api/brand';
+import { useQuery } from 'react-query';
+import { getAppToken, getUserInfo } from 'utils/utils';
+import StoreNavigationDialog from 'components/StoreNavigationDialog';
+import { TStore } from 'types/store';
 
 // ----------------------------------------------------------------------
 
@@ -75,15 +82,14 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
   const { pathname } = useLocation();
 
   const navigate = useNavigate();
-  // const { translate } = useLocales();
-  // const [open, setOpen] = useState(false);
-  // const firstElementOfPath = pathname.split('/')[1];
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
+  const [open, setOpen] = useState(false);
+  const firstElementOfPath = pathname.split('/')[1];
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const envLabelColor = (env: any) => {
     switch (env) {
@@ -97,8 +103,27 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
         return 'info';
     }
   };
+  const userRaw = getUserInfo();
+  const user: any = JSON.parse(userRaw ?? '{}');
 
-  const { storeId } = useParams();
+  const { data: listStore } = useQuery(
+    ['stores', user.brandId],
+    async () => {
+      return brandApi
+        .getStoreOfBrand(user.brandId, { page: 1, size: 100 })
+        .then((res) => res.data.items);
+    },
+    {
+      enabled: Boolean(user.brandId)
+    }
+  );
+  const handleSelectStore = (store: TStore) => {
+    const token = getAppToken();
+    window.open(
+      `${process.env.REACT_APP_STORE_MANAGEMENT_APP_URL}/auth/login?accessToken=${token}`,
+      '_blank'
+    );
+  };
 
   return (
     <RootStyle
@@ -108,45 +133,57 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
         })
       }}
     >
+      <StoreNavigationDialog open={open} onClose={handleClose} onSelectStore={handleSelectStore} />
       <ToolbarStyle>
         <MHidden width="lgUp">
           <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }} size="large">
             <Icon icon={menu2Fill} />
           </IconButton>
         </MHidden>
-
         <Box sx={{ flexGrow: 1 }} />
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          {/* {firstElementOfPath === 'report' && (
+          {firstElementOfPath === 'report' && (
             <Label color="success" sx={{ marginRight: '350px', height: '30px', fontSize: '15px' }}>
-              {nameStoreReport?.name || 'HỆ THỐNG'}
+              {'HỆ THỐNG'}
             </Label>
-          )} */}
+          )}
           {process.env.REACT_APP_ENVIROMENT !== 'production' && (
             <Label color={envLabelColor(process.env.REACT_APP_ENVIROMENT)}>
               {process.env.REACT_APP_ENVIROMENT}
             </Label>
           )}
-          {/* <Button
-            onClick={() => {
-              navigate('/report');
-            }}
-          >
-            Report
-          </Button> */}
-          {/* <Button
+          <Button
             onClick={() => {
               navigate('/dashboard');
             }}
           >
             Sale
-          </Button> */}
+          </Button>
+          <Button
+            onClick={() => {
+              navigate('/report');
+            }}
+          >
+            Report
+          </Button>
+
           <Button
             onClick={() => {
               navigate('/promotion-system');
             }}
           >
             Promotion
+          </Button>
+          <Button
+            onClick={handleClickOpen}
+            variant="outlined"
+            startIcon={<Icon icon={navigation2Outline} />}
+          >
+            {firstElementOfPath === 'report'
+              ? listStore === undefined
+                ? 'HỆ THỐNG'
+                : listStore[0].name || 'HỆ THỐNG'
+              : 'a'}
           </Button>
 
           {/* <LanguagePopover /> */}

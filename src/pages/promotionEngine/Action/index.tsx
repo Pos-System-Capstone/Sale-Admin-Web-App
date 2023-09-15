@@ -6,19 +6,20 @@ import { Button, Card, Stack } from '@mui/material';
 import actionApi from 'api/promotion/action';
 import { GIFT_TYPE_DATA } from 'api/promotion/promotion';
 import storeApi from 'api/store';
+import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
+
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 // components
 import { useNavigate } from 'react-router-dom';
-import { RootState } from 'redux/store';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TStore } from 'types/store';
 import { fDateTime } from 'utils/formatTime';
+import { getUserInfo } from 'utils/utils';
 const ActionPage = () => {
   const GIFT_TYPE_ENUM = GIFT_TYPE_DATA();
 
@@ -27,7 +28,11 @@ const ActionPage = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [currentDeleteItem, setCurrentDeleteItem] = useState<TStore | null>(null);
   const tableRef = useRef<any>();
-  const brandId = useSelector((state: RootState) => state.brand);
+  // const brandId = useSelector((state: RootState) => state.brand);
+
+  const userRaw = getUserInfo();
+  const user: any = JSON.parse(userRaw ?? '{}');
+
   const deleteStoreHandler = () =>
     storeApi
       .delete(currentDeleteItem?.id!)
@@ -77,9 +82,10 @@ const ActionPage = () => {
 
   useEffect(() => {
     if (tableRef.current) {
-      tableRef.current.formControl.setValue('BrandId', brandId!);
+      tableRef.current.formControl.setValue('BrandId', user.brandId!);
+      tableRef.current.formControl.setValue('ActionType', 0);
     }
-  }, [brandId]);
+  }, [user]);
 
   return (
     <Page
@@ -97,7 +103,7 @@ const ActionPage = () => {
         </Button>
       ]}
     >
-      {/* <DeleteConfirmDialog
+      <DeleteConfirmDialog
         open={Boolean(currentDeleteItem)}
         onClose={() => setCurrentDeleteItem(null)}
         onDelete={deleteStoreHandler}
@@ -106,19 +112,14 @@ const ActionPage = () => {
             {translate('common.confirmDeleteTitle')} <strong>{currentDeleteItem?.name}</strong>
           </>
         }
-      /> */}
+      />
       <Card>
         <Stack spacing={2}>
           <ResoTable
             rowKey="id"
             ref={tableRef}
             onEdit={(stores: any) => navigate(`${PATH_PROMOTION_APP.action.root}/${stores.id}`)}
-            getData={() =>
-              actionApi.get({
-                brandId,
-                ActionType: 0
-              })
-            }
+            getData={(params: any) => actionApi.get(params)}
             onDelete={setCurrentDeleteItem}
             columns={columns}
           />

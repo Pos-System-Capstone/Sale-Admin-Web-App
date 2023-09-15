@@ -13,18 +13,19 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //
 import voucherApi from 'api/promotion/voucher';
-import { useSelector } from 'react-redux';
-import { RootState } from 'redux/store';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TVoucherBase } from 'types/promotion/voucher';
 import { TTableColumn } from 'types/table';
+import { getUserInfo } from 'utils/utils';
 
 // ----------------------------------------------------------------------
 
 export default function Voucher() {
   const [activeTab, setActiveTab] = useState('1');
   const ref = useRef<any>();
-  const brandId = useSelector((state: RootState) => state.brand);
+  const userRaw = getUserInfo();
+  const user: any = JSON.parse(userRaw ?? '{}');
+  // const brandId = useSelector((state: RootState) => state.brand);
 
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
@@ -65,9 +66,9 @@ export default function Voucher() {
 
   useEffect(() => {
     if (ref.current) {
-      ref.current.formControl.setValue('BrandId', brandId!);
+      ref.current.formControl.setValue('BrandId', user.brandId!);
     }
-  }, [brandId]);
+  }, [user]);
   return (
     <Page
       title={`${t('promotionSystem.voucher.title')}`}
@@ -89,13 +90,7 @@ export default function Voucher() {
           <ResoTable
             ref={ref}
             pagination
-            getData={() =>
-              voucherApi.getVoucher({
-                brandId,
-                ActionType: 0,
-                PostActionType: 0
-              })
-            }
+            getData={(params: any) => voucherApi.getVoucher(params)}
             onEdit={() => console.log('edit')}
             onDelete={() => console.log('delete')}
             columns={productColumns}

@@ -22,3 +22,25 @@ export type TActionBase = {
   promotionTier?: [];
   voucherGroup?: [];
 };
+export interface ActionCreate {
+  name: string;
+  brandId: string;
+  actionType: number;
+  discountType: number;
+  discountQuantity: number;
+  discountAmount: number;
+  discountPercentage: number;
+  fixedPrice: number;
+  maxAmount: number;
+  minPriceAfter: number;
+  orderLadderProduct: number;
+  ladderPrice: number;
+  bundlePrice: number;
+  bundleQuantity: number;
+  bundleStrategy: number;
+  listProduct: ListProduct[];
+}
+export interface ListProduct {
+  productId: string;
+  quantity: number;
+}

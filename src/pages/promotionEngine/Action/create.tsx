@@ -21,12 +21,20 @@ import { useNavigate } from 'react-router-dom';
 import storeApi from 'redux/store/api';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TStore } from 'types/store';
+import React, { useState } from 'react';
+import TaskComponent from './cartop';
 
 const NewActionPage = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
   const { translate } = useLocales();
+
+  const [selectedText, setSelectedText] = useState<string | null>(null);
+
+  const handleTreeItemClick = (text: string) => {
+    setSelectedText(text);
+  };
 
   const methods = useForm({
     resolver: yupResolver(storeSchemaBuilder(translate)),
@@ -111,6 +119,7 @@ const NewActionPage = () => {
                           nodeId="2"
                           label="Discount amount (VNĐ)"
                           icon=" "
+                          onClick={() => handleTreeItemClick('2')}
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
@@ -124,6 +133,7 @@ const NewActionPage = () => {
                           nodeId="3"
                           label="Discount percentage (%)"
                           icon=" "
+                          onClick={() => handleTreeItemClick('3')}
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
@@ -137,6 +147,7 @@ const NewActionPage = () => {
                           nodeId="4"
                           label="Discount unit"
                           icon=" "
+                          onClick={() => handleTreeItemClick('4')}
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
@@ -150,6 +161,7 @@ const NewActionPage = () => {
                           nodeId="5"
                           label="Fixed price"
                           icon=" "
+                          onClick={() => handleTreeItemClick('5')}
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
@@ -163,6 +175,7 @@ const NewActionPage = () => {
                           nodeId="6"
                           label="Ladder price"
                           icon=" "
+                          onClick={() => handleTreeItemClick('6')}
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
@@ -176,6 +189,7 @@ const NewActionPage = () => {
                           nodeId="7"
                           label="Bundle price"
                           icon=" "
+                          onClick={() => handleTreeItemClick('7')}
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
@@ -201,6 +215,7 @@ const NewActionPage = () => {
                           nodeId="9"
                           label="Discount amount (VNĐ)"
                           icon=" "
+                          onClick={() => handleTreeItemClick('9')}
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
@@ -214,6 +229,7 @@ const NewActionPage = () => {
                           nodeId="10"
                           label="Discount percentage (%)"
                           icon=" "
+                          onClick={() => handleTreeItemClick('10')}
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
@@ -227,6 +243,7 @@ const NewActionPage = () => {
                           nodeId="11"
                           label="Shipping amount (VNĐ)"
                           icon=" "
+                          onClick={() => handleTreeItemClick('11')}
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
@@ -240,6 +257,7 @@ const NewActionPage = () => {
                           nodeId="12"
                           label="Shipping percentage (%)"
                           icon=" "
+                          onClick={() => handleTreeItemClick('12')}
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
@@ -263,7 +281,9 @@ const NewActionPage = () => {
                       }
                     }}
                   >
-                    <Paper variant="outlined" sx={{ width: '100%' }}></Paper>
+                    <Paper variant="outlined" sx={{ width: '100%' }}>
+                      {<TaskComponent selectedText={selectedText} />}
+                    </Paper>
                   </Box>
                 </Grid>
               </Grid>

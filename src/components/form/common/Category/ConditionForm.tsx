@@ -14,6 +14,7 @@ import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
+import CreateConditionForm from './createConditionForm.tsx/createConditionForm';
 // import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 interface Props {
@@ -24,6 +25,13 @@ const ConditionForm = ({ updateMode }: Props) => {
   const { translate } = useLocales();
   const { watch } = useFormContext();
   const [categories, setCategories] = useState<TCategory[]>([]);
+  const [currentContent, setCurrentContent] = useState<string | null>(null);
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+
+  const handleTreeItemClick = (nodeId: string, content: string) => {
+    setSelectedNodeId(nodeId);
+    setCurrentContent(content);
+  };
 
   const { data } = useCategories({ page: 1, size: 100 });
 
@@ -105,11 +113,17 @@ const ConditionForm = ({ updateMode }: Props) => {
               defaultExpandIcon={<ChevronRightIcon />}
               sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto', m: '20px 0' }}
             >
-              <TreeItem nodeId="1" label="Cart item" icon=" ">
+              <TreeItem
+                nodeId="1"
+                label="Cart item"
+                icon=" "
+                onClick={() => handleTreeItemClick('1', 'Cart item content')}
+              >
                 <TreeItem
                   nodeId="2"
                   label="Quantity"
                   icon=" "
+                  onClick={() => handleTreeItemClick('2', 'Cart item content')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -123,6 +137,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                   nodeId="3"
                   label="Product code"
                   icon=" "
+                  onClick={() => handleTreeItemClick('3', 'Cart item content')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -167,6 +182,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                 nodeId="4"
                 label="Cart"
                 icon=" "
+                onClick={() => handleTreeItemClick('4', 'Cart item content')}
                 sx={{
                   mb: '0.5rem',
                   mt: '1rem'
@@ -176,6 +192,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                   nodeId="5"
                   label="Quantity"
                   icon=" "
+                  onClick={() => handleTreeItemClick('5', 'Cart item content')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -187,8 +204,9 @@ const ConditionForm = ({ updateMode }: Props) => {
                 />
                 <TreeItem
                   nodeId="6"
-                  label="Product code"
+                  label="Amount"
                   icon=" "
+                  onClick={() => handleTreeItemClick('6', 'Cart item content')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -236,7 +254,11 @@ const ConditionForm = ({ updateMode }: Props) => {
               }
             }}
           >
-            <Paper variant="outlined" sx={{ width: '100%' }}></Paper>
+            <Paper variant="outlined" sx={{ width: '100%' }}>
+              {selectedNodeId !== null && (
+                <CreateConditionForm nodeId={selectedNodeId} content={currentContent} />
+              )}
+            </Paper>
           </Box>
         </Grid>
       </Grid>

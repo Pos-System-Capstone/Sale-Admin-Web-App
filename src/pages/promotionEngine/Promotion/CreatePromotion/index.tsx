@@ -1,5 +1,5 @@
 import { Box, Button, Stack, Step, StepLabel, Stepper } from '@mui/material';
-import promotionApi from 'api/promotion/promotion';
+// import promotionApi from 'api/promotion/promotion';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import useLocales from 'hooks/useLocales';
@@ -8,11 +8,14 @@ import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
+// import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import * as Yup from 'yup';
 import StepOne from './StepOne';
 import StepThree from './StepThree';
 import StepTwo from './StepTwo';
+import { TPromotionBase } from 'types/promotion/promotion';
+
+// import { yupResolver } from '@hookform/resolvers/yup';
 
 interface Props {}
 const CreatePromotion = (props: Props) => {
@@ -93,8 +96,17 @@ const CreatePromotion = (props: Props) => {
     timeFrame: '',
     paymentMethodList: ''
   };
-  const createPromotionForm = useForm({
-    // resolver: activeStep === 0 ? yupResolver(validationSchema) : yupResolver(validationSchema2)
+  const createPromotionForm = useForm<TPromotionBase>({
+    // resolver: activeStep === 0 ? yupResolver(validationSchema) : yupResolver(validationSchema2);
+    defaultValues: {
+      promotionType: 0,
+      promotionCode: '',
+      promotionName: '',
+      startDate: Date.now(),
+      endDate: Date.now(),
+      hourFilter: 0,
+      paymentMethod: []
+    }
   });
 
   // const { data, isLoading } = usePromotion(Number(clonePromoId), {
@@ -161,19 +173,20 @@ const CreatePromotion = (props: Props) => {
   ];
 
   const onSubmit = (values: any) => {
-    promotionApi
-      .createPromotion(testPayLoad)
-      .then((res) => {
-        enqueueSnackbar(`Tạo thành công ${values.promotionName}`, {
-          variant: 'success'
-        });
-        navigate(PATH_PROMOTION_APP.promotion.root);
-      })
-      .catch((err) => {
-        enqueueSnackbar(`${err}`, {
-          variant: 'error'
-        });
-      });
+    console.log('promotionCreate', values);
+    // promotionApi
+    //   .createPromotion(testPayLoad)
+    //   .then((res) => {
+    //     enqueueSnackbar(`Tạo thành công ${values.promotionName}`, {
+    //       variant: 'success'
+    //     });
+    //     navigate(PATH_PROMOTION_APP.promotion.root);
+    //   })
+    //   .catch((err) => {
+    //     enqueueSnackbar(`${err}`, {
+    //       variant: 'error'
+    //     });
+    //   });
   };
 
   const { handleSubmit, watch, formState } = createPromotionForm;

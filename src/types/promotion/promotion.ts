@@ -9,13 +9,13 @@ export type TPromotionBase = {
   postActionType?: number;
   imgUrl?: string;
   description?: string;
-  startDate?: string;
-  endDate?: string;
+  startDate?: any;
+  endDate?: any;
   exclusive?: any;
   applyBy?: any;
   saleMode?: any;
   gender?: number;
-  paymentMethod?: number;
+  paymentMethod?: any;
   forHoliday?: number;
   forMembership?: number;
   dayFilter?: number;

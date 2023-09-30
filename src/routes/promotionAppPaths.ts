@@ -38,7 +38,8 @@ export const PATH_PROMOTION_APP = {
   },
   action: {
     root: path(ROOTS_DASHBOARD, '/action'),
-    new: path(ROOTS_DASHBOARD, '/action/new')
+    new: path(ROOTS_DASHBOARD, '/action/new'),
+    editById: (id: any) => path(ROOTS_DASHBOARD, `/action/${id}`)
   },
   gift: {
     root: path(ROOTS_DASHBOARD, '/gift'),

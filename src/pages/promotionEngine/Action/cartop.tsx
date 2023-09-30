@@ -1,11 +1,12 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 // import { InputField } from 'components/form';
-import { SelectField } from 'components/form';
-import { List, ListItem, TextField, Typography } from '@mui/material';
+import { InputField, SelectField } from 'components/form';
+import { List, ListItem, Typography } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import ResoTable from 'components/ResoTable/ResoTable';
-import { getAllProduct } from 'redux/product/api';
-import { productColumns } from 'pages/Products/config';
+import productPromotionApi from 'api/promotion/product';
+import { getUserInfo } from 'utils/utils';
+import { productPromotionColumns } from '../Products/config';
 
 interface TaskComponentProps {
   selectedText: string | null;
@@ -31,6 +32,15 @@ const TaskComponent = ({
     setSelectedProductIds(ids);
   }, []);
   let content = null;
+  const tableRef = useRef<any>();
+
+  const userRaw = getUserInfo();
+  const user: any = JSON.parse(userRaw ?? '{}');
+  useEffect(() => {
+    if (tableRef.current) {
+      tableRef.current.formControl.setValue('brandId', user.brandId!);
+    }
+  }, [user]);
 
   switch (selectedText) {
     case '2':
@@ -38,8 +48,10 @@ const TaskComponent = ({
         <List>
           <ListItem sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography>discount</Typography>
-            <TextField
+            <InputField
+              name="discountAmount"
               sx={{ width: '100px' }}
+              type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
@@ -49,8 +61,10 @@ const TaskComponent = ({
           <ListItem sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography>minimum price of product after discount is</Typography>
             {/* <InputField name="minimumPrice" /> */}
-            <TextField
+            <InputField
+              name="minPriceAfter"
               sx={{ width: '100px' }}
+              type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
@@ -73,19 +87,23 @@ const TaskComponent = ({
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>discount</p>
             {/* <InputField name="discountPercent" /> */}
-            <TextField
+            <InputField
               sx={{ width: '100px' }}
+              type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
+              name="discountPercentage"
             />
             <p>%</p>
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>and maximum discount price is </p>
             {/* <InputField name="maximunDiscount" /> */}
-            <TextField
+            <InputField
+              name="maxAmount"
               sx={{ width: '100px' }}
+              type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
@@ -106,8 +124,10 @@ const TaskComponent = ({
         <List>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>discount</p>
-            <TextField
+            <InputField
+              name="discountAmount"
               sx={{ width: '100px' }}
+              type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
@@ -128,8 +148,10 @@ const TaskComponent = ({
         <List>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>fixed price</p>
-            <TextField
+            <InputField
+              name="fixedPrice"
               sx={{ width: '100px' }}
+              type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
@@ -150,8 +172,10 @@ const TaskComponent = ({
         <List>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>buy product at the price</p>
-            <TextField
+            <InputField
+              name="fixedPrice"
               sx={{ width: '100px' }}
+              type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
@@ -160,8 +184,10 @@ const TaskComponent = ({
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>since the product</p>
-            <TextField
+            <InputField
+              name="discountQuantity"
               sx={{ width: '100px' }}
+              type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
@@ -181,8 +207,10 @@ const TaskComponent = ({
         <List>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>buy</p>
-            <TextField
+            <InputField
+              name="discountQuantity"
               sx={{ width: '100px' }}
+              type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
@@ -191,8 +219,10 @@ const TaskComponent = ({
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>with the price</p>
-            <TextField
+            <InputField
+              name="fixedPrice"
               sx={{ width: '100px' }}
+              type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
@@ -226,8 +256,10 @@ const TaskComponent = ({
         <List>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>discount</p>
-            <TextField
+            <InputField
+              name="discountAmount"
               sx={{ width: '100px' }}
+              type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
@@ -236,8 +268,10 @@ const TaskComponent = ({
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>minimum price of cart after discount is</p>
-            <TextField
+            <InputField
+              name="minPriceAfter"
               sx={{ width: '100px' }}
+              type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
@@ -252,7 +286,9 @@ const TaskComponent = ({
         <List>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>discount</p>
-            <TextField
+            <InputField
+              name="discountPercentage"
+              type="number"
               sx={{ width: '100px' }}
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
@@ -262,7 +298,9 @@ const TaskComponent = ({
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>maximun discount price is</p>
-            <TextField
+            <InputField
+              name="minPriceAfter"
+              type="number"
               sx={{ width: '100px' }}
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
@@ -278,13 +316,15 @@ const TaskComponent = ({
         <List>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>discount</p>
-            <TextField
+            <InputField
+              name="discountAmount"
               sx={{ width: '100px' }}
+              type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
             />
-            <p>VND for fee for cart</p>
+            <p>VND for shipping fee for cart</p>
           </ListItem>
         </List>
       );
@@ -294,8 +334,10 @@ const TaskComponent = ({
         <List>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>discount</p>
-            <TextField
+            <InputField
+              name="discountPercentage"
               sx={{ width: '100px' }}
+              type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
@@ -304,7 +346,9 @@ const TaskComponent = ({
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>maximum discount price is</p>
-            <TextField
+            <InputField
+              name="maxAmount"
+              type="number"
               sx={{ width: '100px' }}
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
@@ -330,9 +374,10 @@ const TaskComponent = ({
           showAction={false}
           scroll={{ y: '50%', x: '100%' }}
           rowKey="id"
-          getData={getAllProduct}
+          ref={tableRef}
+          getData={(param: any) => productPromotionApi.getProduct(param)}
           onChangeSelection={handleChangeSelection}
-          columns={productColumns}
+          columns={productPromotionColumns}
         />
       </Drawer>
     </div>

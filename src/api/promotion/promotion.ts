@@ -5,27 +5,6 @@ import { axiosInstances } from 'utils/axios';
 
 const request = axiosInstances.promotion;
 
-export const GIFT_TYPE_DATA = () => {
-  const { translate } = useLocales();
-  return [
-    {
-      value: 1,
-      label: `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftVoucher')}`
-    },
-    {
-      value: 2,
-      label: `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftProduct')}`
-    },
-    {
-      value: 3,
-      label: `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftPoint')}`
-    },
-    {
-      value: 4,
-      label: `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftGameCode')}`
-    }
-  ];
-};
 export const DISCOUNT_TYPE_DATA = () => {
   const { translate } = useLocales();
   return [

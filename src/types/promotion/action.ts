@@ -18,11 +18,12 @@ export type TActionBase = {
   name?: any;
   brandId?: any;
   brand?: any;
+  bonusPointRate: number;
   actionProductMapping?: [];
   promotionTier?: [];
   voucherGroup?: [];
 };
-export interface ActionCreate {
+export type TActionCreate = {
   name: string;
   brandId: string;
   actionType: number;
@@ -38,9 +39,52 @@ export interface ActionCreate {
   bundlePrice: number;
   bundleQuantity: number;
   bundleStrategy: number;
-  listProduct: ListProduct[];
-}
-export interface ListProduct {
+  bonusPointRate: number;
+  listProduct?: ListProduct[];
+};
+
+export type ListProduct = {
   productId: string;
   quantity: number;
-}
+};
+
+export const ACTION_TYPE_DATA = () => {
+  return [
+    {
+      value: 1,
+      label: 'Giảm giá đơn hàng'
+    },
+    {
+      value: 2,
+      label: 'Giảm phần trăm đơn hàng'
+    },
+    {
+      value: 3,
+      label: 'Giảm phí shíp'
+    },
+    {
+      value: 4,
+      label: 'Giảm giá sản phẩm'
+    },
+    {
+      value: 5,
+      label: 'Giảm phần trăm sản phẩm'
+    },
+    {
+      value: 6,
+      label: 'Unit'
+    },
+    {
+      value: 7,
+      label: 'Giá cố định'
+    },
+    {
+      value: 8,
+      label: 'Ladder'
+    },
+    {
+      value: 9,
+      label: 'Bundle'
+    }
+  ];
+};

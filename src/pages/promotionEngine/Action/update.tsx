@@ -17,15 +17,16 @@ import TreeView from '@mui/lab/TreeView';
 import { InputField } from 'components/form';
 // import { storeSchemaBuilder } from 'pages/report/PromotionReport/utils';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState } from 'react';
 import TaskComponent from './cartop';
-import { TActionCreate } from 'types/promotion/action';
+import { TActionBase, TActionCreate } from 'types/promotion/action';
 import actionApi from 'api/promotion/action';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { getUserInfo } from 'utils/utils';
+import { useQuery } from 'react-query';
 
-const NewActionPage = () => {
+const UpdateActionPage = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
@@ -35,30 +36,41 @@ const NewActionPage = () => {
   // const brandId = useSelector((state: RootState) => state.brand);
   console.log('user', user.brandId);
 
+  const { id } = useParams();
+  const { data: action } = useQuery(
+    ['action', user.brandId],
+    async () => {
+      return actionApi.getActionById(id).then((res) => res.data);
+    },
+    {
+      enabled: Boolean(id)
+    }
+  );
+
   const [selectedText, setSelectedText] = useState<string | null>(null);
 
   const handleTreeItemClick = (text: string) => {
-    reset({
-      brandId: user.brandId,
-      discountType: 0,
-      discountQuantity: 0,
-      discountAmount: 0,
-      discountPercentage: 0,
-      fixedPrice: 0,
-      maxAmount: 0,
-      minPriceAfter: 0,
-      ladderPrice: 0,
-      bundlePrice: 0,
-      bundleQuantity: 0,
-      bundleStrategy: 0,
-      bonusPointRate: 0,
-      orderLadderProduct: 0,
-      listProduct: []
-    });
+    // reset({
+    //   brandId: user.brandId,
+    //   discountQuantity: 0,
+    //   discountAmount: 0,
+    //   discountPercentage: 0,
+    //   fixedPrice: 0,
+    //   maxAmount: 0,
+    //   minPriceAfter: 0,
+    //   ladderPrice: 0,
+    //   bundlePrice: 0,
+    //   bundleQuantity: 0,
+    //   bundleStrategy: 0,
+    //   bonusPointRate: 0,
+    //   orderLadderProduct: 0,
+    //   listProduct: []
+    // });
     setSelectedText(text);
   };
 
-  const methods = useForm<TActionCreate>({
+  const methods = useForm<TActionBase>({
+    defaultValues: { ...action }
     // resolver: yupResolver(storeSchemaBuilder(translate))
   });
   const { handleSubmit, setValue, reset } = methods;
@@ -350,4 +362,4 @@ const NewActionPage = () => {
   );
 };
 
-export default NewActionPage;
+export default UpdateActionPage;

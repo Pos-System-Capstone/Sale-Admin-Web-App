@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react';
 // material
 import { Button, Card, Stack } from '@mui/material';
 import actionApi from 'api/promotion/action';
-import { GIFT_TYPE_DATA } from 'api/promotion/promotion';
+
 import storeApi from 'api/store';
 import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 
@@ -17,11 +17,12 @@ import { useEffect, useRef, useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
+import { ACTION_TYPE_DATA } from 'types/promotion/action';
 import { TStore } from 'types/store';
 import { fDateTime } from 'utils/formatTime';
 import { getUserInfo } from 'utils/utils';
 const ActionPage = () => {
-  const GIFT_TYPE_ENUM = GIFT_TYPE_DATA();
+  const ACTION_TYPE_ENUM = ACTION_TYPE_DATA();
 
   const navigate = useNavigate();
   const { translate } = useLocales();
@@ -64,7 +65,7 @@ const ActionPage = () => {
       title: 'Type',
       dataIndex: 'actionType',
       hideInSearch: true,
-      valueEnum: GIFT_TYPE_ENUM
+      valueEnum: ACTION_TYPE_ENUM
     },
     {
       title: 'Created date',
@@ -82,7 +83,7 @@ const ActionPage = () => {
 
   useEffect(() => {
     if (tableRef.current) {
-      tableRef.current.formControl.setValue('BrandId', user.brandId!);
+      tableRef.current.formControl.setValue('brandId', user.brandId!);
       tableRef.current.formControl.setValue('ActionType', 0);
     }
   }, [user]);
@@ -118,7 +119,9 @@ const ActionPage = () => {
           <ResoTable
             rowKey="id"
             ref={tableRef}
-            onEdit={(stores: any) => navigate(`${PATH_PROMOTION_APP.action.root}/${stores.id}`)}
+            onEdit={(stores: any) =>
+              navigate(`${PATH_PROMOTION_APP.action.root}/${stores.actionId}`)
+            }
             getData={(params: any) => actionApi.get(params)}
             onDelete={setCurrentDeleteItem}
             columns={columns}

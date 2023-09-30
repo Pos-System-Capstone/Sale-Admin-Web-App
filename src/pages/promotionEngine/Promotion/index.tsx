@@ -3,7 +3,6 @@ import { Icon } from '@iconify/react';
 import { Button, Card, Stack } from '@mui/material';
 import promotionApi, {
   DISCOUNT_TYPE_DATA,
-  GIFT_TYPE_DATA,
   PROMOTION_TYPE_DATA,
   STATUS_TYPE_DATA
 } from 'api/promotion/promotion';
@@ -16,6 +15,7 @@ import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router';
 
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
+import { GIFT_TYPE_DATA } from 'types/promotion/gift';
 import { TPromotionBase } from 'types/promotion/promotion';
 import { TTableColumn } from 'types/table';
 import { getUserInfo } from 'utils/utils';
@@ -36,7 +36,7 @@ const Promotion = (props: Props) => {
   const PROMOTION_TYPE_ENUM = PROMOTION_TYPE_DATA();
 
   const promotionColumn: TTableColumn<TPromotionBase>[] = [
-    { title: 'brandId', dataIndex: 'BrandId', hideInTable: true, hideInSearch: true },
+    { title: 'brandId', dataIndex: 'brandId', hideInTable: true, hideInSearch: true },
     {
       title: `${translate('promotionSystem.promotion.table.no')}`,
       dataIndex: 'index',

@@ -38,6 +38,7 @@ import MonthReport from 'pages/report/TradingReport/MonthReport';
 import TimeReport from 'pages/report/TradingReport/TimeReport';
 import PromotionReport from 'pages/report/PromotionReport';
 import DayReport from 'pages/report/TradingReport';
+import UpdateActionPage from 'pages/promotionEngine/Action/update';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -355,7 +356,8 @@ export default function Router() {
           path: 'action',
           children: [
             { path: '', element: <ActionPage /> },
-            { path: 'new', element: <NewActionPage /> }
+            { path: 'new', element: <NewActionPage /> },
+            { path: ':id', element: <UpdateActionPage /> }
           ]
         },
         {

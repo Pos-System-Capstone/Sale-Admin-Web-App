@@ -1,8 +1,9 @@
 import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import useLocales from 'hooks/useLocales';
-import { fDateTime } from 'utils/formatTime';
+// import { fDateTime } from 'utils/formatTime';
 import { Card } from 'pages/promotionEngine/Promotion/components/Card';
+import { fDateTime } from 'utils/formatTime';
 
 function StepThree({ watch }: any) {
   const { translate } = useLocales();
@@ -20,7 +21,14 @@ function StepThree({ watch }: any) {
   //   'cod'
   // ]);
 
-  const [promotionName, startDate, endDate] = watch(['promotionName', 'startDate', 'endDate']);
+  const [promotionName, startDate, endDate, paymentMethod, saleMode, applyBy] = watch([
+    'promotionName',
+    'startDate',
+    'endDate',
+    'paymentMethod',
+    'saleMode',
+    'applyBy'
+  ]);
   return (
     <Stack p={1} spacing={3} width={'100%'}>
       <Typography px={2} variant="h3" sx={{ textTransform: 'uppercase' }}>
@@ -71,7 +79,9 @@ function StepThree({ watch }: any) {
                   <StyleWidthTypography variant="h6">
                     {translate('promotionSystem.promotion.preview.paymentMethod')}
                   </StyleWidthTypography>
-                  <StyleWidthTypography variant="body1"></StyleWidthTypography>
+                  <StyleWidthTypography variant="body1">
+                    {paymentMethod.map((e: any) => e + ', ')}
+                  </StyleWidthTypography>
                 </Box>
               </Grid>
               <Grid item xs={6}>
@@ -79,7 +89,7 @@ function StepThree({ watch }: any) {
                   <StyleWidthTypography variant="h6">
                     {translate('promotionSystem.promotion.preview.saleMode')}
                   </StyleWidthTypography>
-                  <StyleWidthTypography variant="body1">Delivery</StyleWidthTypography>
+                  <StyleWidthTypography variant="body1">saleMode</StyleWidthTypography>
                 </Box>
                 <Box display="flex" alignItems="center">
                   <StyleWidthTypography variant="h6">

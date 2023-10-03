@@ -32,3 +32,40 @@ export type TConditionBase = {
   insDate?: any;
   updDate?: any;
 };
+
+// export interface TConditionCreate {
+//   brandId: string
+//   ruleName: string
+//   description: string
+//   conditionGroup: ConditionGroup[]
+// }
+
+// export interface ConditionGroup {
+//   delFlg: boolean
+//   insDate: string
+//   updDate: string
+//   conditionGroupId: string
+//   groupNo: number
+//   nextOperator: number
+//   summary: string
+//   orderCondition: OrderCondition[]
+//   productCondition: ProductCondition[]
+// }
+
+// export interface OrderCondition {
+//   nextOperator: number
+//   indexGroup: number
+//   quantity: number
+//   quantityOperator: string
+//   amount: number
+//   amountOperator: string
+// }
+
+// export interface ProductCondition {
+//   indexGroup: number
+//   productConditionType: number
+//   productQuantity: number
+//   quantityOperator: string
+//   nextOperator: number
+// }
+

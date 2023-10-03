@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import { SelectChangeEvent, TextField, Typography } from '@mui/material';
 
+import { getUserInfo } from 'utils/utils';
+import productPromotionApi from 'api/promotion/product';
 import ResoTable from 'components/ResoTable/ResoTable';
-import { getAllProduct } from 'redux/product/api';
-import { productColumns } from 'pages/Products/config';
+import { productPromotionColumns } from 'pages/promotionEngine/Products/config';
 
 interface CreateConditionFormProps {
   nodeId: string;
@@ -28,6 +29,16 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
     setSelectedProductIds(ids);
     setSelectedProductCount(ids.length);
   }, []);
+
+  const tableRef = useRef<any>();
+
+  const userRaw = getUserInfo();
+  const user: any = JSON.parse(userRaw ?? '{}');
+  useEffect(() => {
+    if (tableRef.current) {
+      tableRef.current.formControl.setValue('brandId', user.brandId!);
+    }
+  }, [user]);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -474,9 +485,10 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
           showAction={false}
           scroll={{ y: '50%', x: '100%' }}
           rowKey="id"
-          getData={getAllProduct}
+          ref={tableRef}
+          getData={(param: any) => productPromotionApi.getProduct(param)}
           onChangeSelection={handleChangeSelection}
-          columns={productColumns}
+          columns={productPromotionColumns}
         />
       </Drawer>
       {formContent}

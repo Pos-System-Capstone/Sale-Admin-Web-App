@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Card, Stack } from '@mui/material';
-import categoryApi from 'api/category';
+
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import useDashboard from 'hooks/useDashboard';
@@ -12,9 +12,9 @@ import { transformDraftToStr, transformProductForm } from 'pages/Products/utils'
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
-import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
-import { TCategory } from 'types/category';
+
 import * as yup from 'yup';
+import { TConditionBase } from 'types/promotion/condition';
 
 interface Props {}
 
@@ -28,28 +28,28 @@ const NewCondition = (props: Props) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const isExtra: boolean = searchParams.get('isExtra') === 'true';
-  const createCategoryForm = useForm<TCategory>({
+  const createCategoryForm = useForm<TConditionBase>({
     resolver: yupResolver(schema),
     defaultValues: {},
     shouldUnregister: false
   });
 
-  const onSubmit = (values: TCategory) => {
+  const onSubmit = (values: TConditionBase) => {
     console.log(`data`, values);
     const data = transformProductForm(transformDraftToStr(values));
-    return categoryApi
-      .create(data)
-      .then((res) => {
-        enqueueSnackbar(`Tạo thành công`, {
-          variant: 'success'
-        });
-        navigate(`${PATH_PROMOTION_APP.condition.root}/${res.data}`);
-      })
-      .catch((err) => {
-        enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
-          variant: 'error'
-        });
-      });
+    // return categoryApi
+    //   .create(data)
+    //   .then((res) => {
+    //     enqueueSnackbar(`Tạo thành công`, {
+    //       variant: 'success'
+    //     });
+    //     navigate(`${PATH_PROMOTION_APP.condition.root}/${res.data}`);
+    //   })
+    //   .catch((err) => {
+    //     enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
+    //       variant: 'error'
+    //     });
+    //   });
   };
 
   return (

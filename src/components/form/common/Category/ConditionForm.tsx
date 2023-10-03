@@ -82,26 +82,22 @@ const ConditionForm = ({ updateMode }: Props) => {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={6} sm={8} style={{ height: '100px' }}>
+        <Grid item xs={6} sm={6} style={{ height: '100px' }}>
           <InputField
             fullWidth
-            name="cate_name"
+            name="ruleName"
             label={translate('categories.table.cateName')}
             maxlength="200px"
           />
           {/* <FormHelperText error>Please input name</FormHelperText> */}
         </Grid>
 
-        <Grid item xs={6} sm={4}>
-          <TextField
-            label={translate('categories.table.cateNameEn')}
-            fullWidth
-            multiline
-            rows={5}
-          ></TextField>
+        <Grid item xs={6} sm={6} sx={{ height: '70px' }}>
+          <TextField fullWidth label={translate('categories.table.cateNameEn')} size="small" />
           <FormHelperText error>Please input description</FormHelperText>
         </Grid>
       </Grid>
+
       <Grid container spacing={2}>
         <Grid item xs={6} sm={4}>
           <Paper variant="outlined" sx={{ width: '100%' }}>
@@ -123,7 +119,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                   nodeId="2"
                   label="Quantity"
                   icon=" "
-                  onClick={() => handleTreeItemClick('2', 'Cart item content')}
+                  onClick={() => handleTreeItemClick('2', 'Quantity')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -137,7 +133,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                   nodeId="3"
                   label="Product code"
                   icon=" "
-                  onClick={() => handleTreeItemClick('3', 'Cart item content')}
+                  onClick={() => handleTreeItemClick('3', 'Product code')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -182,7 +178,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                 nodeId="4"
                 label="Cart"
                 icon=" "
-                onClick={() => handleTreeItemClick('4', 'Cart item content')}
+                onClick={() => handleTreeItemClick('4', 'Cart')}
                 sx={{
                   mb: '0.5rem',
                   mt: '1rem'
@@ -192,7 +188,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                   nodeId="5"
                   label="Quantity"
                   icon=" "
-                  onClick={() => handleTreeItemClick('5', 'Cart item content')}
+                  onClick={() => handleTreeItemClick('5', 'Quantity')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -206,7 +202,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                   nodeId="6"
                   label="Amount"
                   icon=" "
-                  onClick={() => handleTreeItemClick('6', 'Cart item content')}
+                  onClick={() => handleTreeItemClick('6', 'Amount')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',

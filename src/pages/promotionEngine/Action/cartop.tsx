@@ -28,6 +28,7 @@ const TaskComponent = ({
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
+
   const handleChangeSelection = React.useCallback((ids) => {
     setSelectedProductIds(ids);
   }, []);

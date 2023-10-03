@@ -70,11 +70,11 @@ const Promotion = (props: Props) => {
               : 'default'
           }
         >
-          {value === 1
+          {value === 3
             ? translate('promotionSystem.promotion.createPromotion.usingVoucher')
             : value === 2
             ? translate('promotionSystem.promotion.createPromotion.usingCode')
-            : value === 3
+            : value === 1
             ? translate('promotionSystem.promotion.createPromotion.automatic')
             : translate('promotionSystem.common.unknown')}
         </Label>

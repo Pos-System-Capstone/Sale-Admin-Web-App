@@ -359,6 +359,24 @@ const TaskComponent = ({
         </List>
       );
       break;
+    case '13':
+      content = (
+        <List>
+          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
+            <p>Chuyển đổi từ tổng tiền đơn hàng thành điểm theo tỷ lệ</p>
+            <InputField
+              name="bonusPointRate"
+              sx={{ width: '100px' }}
+              type="number"
+              InputProps={{
+                style: { height: '25px', margin: '0 5px' }
+              }}
+            />
+            <p>cho đơn hàng</p>
+          </ListItem>
+        </List>
+      );
+      break;
     default:
       content = null;
       break;

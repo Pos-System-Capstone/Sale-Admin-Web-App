@@ -30,6 +30,8 @@ export default function StepOne({ watch }: any) {
   const discountAction = discountActionList();
   const promotionType = promotionTypeList();
   const kindAction = kindActionList();
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
+  const hourFilterList = timeFrameList();
 
   // const [timeFrameChecked, setTimeFrameChecked] = useState(false);
   // const handleTimeFrameChecked = () => {
@@ -174,7 +176,7 @@ export default function StepOne({ watch }: any) {
               </Grid>
             )} */}
             {timeFrameChecked && (
-              <CheckBoxGroupField name={'timeFrameList'} options={timeFrameList} />
+              <CheckBoxGroupField name={'timeFrameList'} options={hourFilterList} />
             )}
           </Box>
 

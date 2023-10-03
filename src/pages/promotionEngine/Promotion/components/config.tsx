@@ -115,43 +115,82 @@ const giftActionList = () => {
   ];
 };
 
-const timeFrameList: string[] = [
-  '00:00',
-  '01:00',
-  '02:00',
-  '03:00',
-  '04:00',
-  '05:00',
-  '06:00',
-  '07:00',
-  '08:00',
-  '09:00',
-  '10:00',
-  '11:00',
-  '12:00',
-  '13:00',
-  '14:00',
-  '15:00',
-  '16:00',
-  '17:00',
-  '18:00',
-  '19:00',
-  '20:00',
-  '21:00',
-  '22:00',
-  '23:00'
-];
+// const timeFrameList: string[] = [
+//   '00:00',
+//   '01:00',
+//   '02:00',
+//   '03:00',
+//   '04:00',
+//   '05:00',
+//   '06:00',
+//   '07:00',
+//   '08:00',
+//   '09:00',
+//   '10:00',
+//   '11:00',
+//   '12:00',
+//   '13:00',
+//   '14:00',
+//   '15:00',
+//   '16:00',
+//   '17:00',
+//   '18:00',
+//   '19:00',
+//   '20:00',
+//   '21:00',
+//   '22:00',
+//   '23:00'
+// ];
+
+const timeFrameList = () => {
+  const houserFilter = [];
+  for (let index = 0; index < 24; index++) {
+    if (index < 10) {
+      houserFilter.push({
+        value: Math.pow(2, index),
+        label: '0' + index + ':00'
+      });
+    } else {
+      houserFilter.push({
+        value: Math.pow(2, index),
+        label: index + ':00'
+      });
+    }
+  }
+  return houserFilter;
+};
 
 const particularDayList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    `${translate('promotionSystem.dayInWeek.sunday')}`,
-    `${translate('promotionSystem.dayInWeek.monday')}`,
-    `${translate('promotionSystem.dayInWeek.tuesday')}`,
-    `${translate('promotionSystem.dayInWeek.wednesday')}`,
-    `${translate('promotionSystem.dayInWeek.thursday')}`,
-    `${translate('promotionSystem.dayInWeek.friday')}`,
-    `${translate('promotionSystem.dayInWeek.saturday')}`
+    {
+      label: `${translate('promotionSystem.dayInWeek.sunday')}`,
+      value: Math.pow(2, 0)
+    },
+    {
+      label: `${translate('promotionSystem.dayInWeek.monday')}`,
+      value: Math.pow(2, 1)
+    },
+    {
+      label: `${translate('promotionSystem.dayInWeek.tuesday')}`,
+      value: Math.pow(2, 2)
+    },
+    {
+      label: `${translate('promotionSystem.dayInWeek.wednesday')}`,
+      value: Math.pow(2, 3)
+    },
+    {
+      label: `${translate('promotionSystem.dayInWeek.thursday')}`,
+      value: Math.pow(2, 4)
+    },
+    {
+      label: `${translate('promotionSystem.dayInWeek.friday')}`,
+      value: Math.pow(2, 5)
+    },
+    {
+      label: `${translate('promotionSystem.dayInWeek.saturday')}`,
+      value: Math.pow(2, 6)
+    }
   ];
 };
 
@@ -160,27 +199,27 @@ const paymentMethodList = () => {
   return [
     {
       label: `${translate('promotionSystem.promotion.settings.paymentMethodType.cash')}`,
-      value: 'cash'
+      value: 1
     },
     {
       label: `${translate('promotionSystem.promotion.settings.paymentMethodType.creditCard')}`,
-      value: 'creditCard'
+      value: 2
     },
     {
       label: `${translate('promotionSystem.promotion.settings.paymentMethodType.bankTransfer')}`,
-      value: 'bankTransfer'
+      value: 4
     },
     {
       label: `${translate('promotionSystem.promotion.settings.paymentMethodType.eWallet')}`,
-      value: 'eWallet'
+      value: 8
     },
     {
       label: `${translate('promotionSystem.promotion.settings.paymentMethodType.mobileBanking')}`,
-      value: 'mobileBanking'
+      value: 16
     },
     {
       label: `${translate('promotionSystem.promotion.settings.paymentMethodType.cod')}`,
-      value: 'cod'
+      value: 32
     }
   ];
 };
@@ -190,33 +229,33 @@ const targetCustomerList = () => {
   return [
     {
       label: translate('promotionSystem.promotion.settings.targetCustomerType.guest'),
-      value: 'guest'
+      value: 2
     },
     {
       label: translate('promotionSystem.promotion.settings.targetCustomerType.membership'),
-      value: 'membership'
+      value: 1
     }
   ];
 };
 const genderList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    { label: translate('promotionSystem.promotion.settings.genderType.male'), value: 'male' },
-    { label: translate('promotionSystem.promotion.settings.genderType.female'), value: 'female' }
+    { label: translate('promotionSystem.promotion.settings.genderType.male'), value: 1 },
+    { label: translate('promotionSystem.promotion.settings.genderType.female'), value: 2 }
   ];
 };
 
 const saleModeList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    { label: translate('promotionSystem.promotion.settings.saleModeType.eatIn'), value: 'eatIn' },
+    { label: translate('promotionSystem.promotion.settings.saleModeType.eatIn'), value: 1 },
     {
       label: translate('promotionSystem.promotion.settings.saleModeType.takeAway'),
-      value: 'takeAway'
+      value: 2
     },
     {
       label: translate('promotionSystem.promotion.settings.saleModeType.delivery'),
-      value: 'delivery'
+      value: 4
     }
   ];
 };
@@ -226,11 +265,11 @@ const applyByList = () => {
   return [
     {
       label: translate('promotionSystem.promotion.settings.applyByType.store'),
-      value: 'store'
+      value: 1
     },
     {
       label: translate('promotionSystem.promotion.settings.applyByType.online'),
-      value: 'online'
+      value: 2
     }
   ];
 };
@@ -239,15 +278,15 @@ const exclusiveList = () => {
   return [
     {
       label: translate('promotionSystem.promotion.settings.exclusiveType.none'),
-      value: 'none'
+      value: 0
     },
     {
       label: translate('promotionSystem.promotion.settings.exclusiveType.level'),
-      value: 'level'
+      value: 2
     },
     {
       label: translate('promotionSystem.promotion.settings.exclusiveType.global'),
-      value: 'global'
+      value: 1
     }
   ];
 };

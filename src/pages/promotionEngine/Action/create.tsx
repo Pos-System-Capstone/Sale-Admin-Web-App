@@ -322,6 +322,23 @@ const NewActionPage = () => {
                             borderRadius: '4px'
                           }}
                         />
+                        <TreeItem
+                          nodeId="13"
+                          label="Tặng điểm"
+                          icon=" "
+                          onClick={() => {
+                            handleTreeItemClick('13');
+                            setValue('actionType', 10);
+                          }}
+                          sx={{
+                            border: '1px solid #57d8a1',
+                            m: '10px 0',
+                            width: '190px',
+                            p: '1.1px',
+                            height: '25px',
+                            borderRadius: '4px'
+                          }}
+                        />
                       </TreeItem>
                     </TreeView>
                   </Paper>

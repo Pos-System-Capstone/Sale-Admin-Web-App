@@ -85,6 +85,10 @@ export const ACTION_TYPE_DATA = () => {
     {
       value: 9,
       label: 'Bundle'
+    },
+    {
+      value: 10,
+      label: 'Tặng điểm'
     }
   ];
 };

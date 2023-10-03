@@ -18,8 +18,8 @@ export type TPromotionBase = {
   paymentMethod?: any;
   forHoliday?: number;
   forMembership?: number;
-  dayFilter?: number;
-  hourFilter?: number;
+  dayFilter?: any;
+  hourFilter?: any;
   status?: number;
   // status?: number[];
   delFlg?: boolean;

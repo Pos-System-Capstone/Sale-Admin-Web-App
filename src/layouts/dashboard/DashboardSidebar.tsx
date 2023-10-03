@@ -116,14 +116,6 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
   // const systems = localStorage.getItem('system');
 
   const sidebarConfig = useMemo(() => {
-    const firstElementOfPath = pathname.split('/')[1];
-    if (firstElementOfPath === ROOTS_DASHBOARD_SALE.split('/')[1]) return brandAdminSidebarConfig;
-    if (firstElementOfPath === ROOTS_DASHBOARD_REPORT.split('/')[1]) {
-      const reportSideBarConfig = reportAppSidebarConfig();
-      return reportSideBarConfig;
-    }
-    if (firstElementOfPath === ROOTS_DASHBOARD_PROMOTION.split('/')[1])
-      return promotionAppSidebarConfig;
     if (user?.role.includes(Role.SystemAdmin)) {
       console.log('Sysadmin');
       return systemAdminSidebarConfig;
@@ -134,6 +126,14 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
     }
     if (user?.role.includes(Role.BrandAdmin)) {
       console.log('BrandAdmin');
+      const firstElementOfPath = pathname.split('/')[1];
+      if (firstElementOfPath === ROOTS_DASHBOARD_SALE.split('/')[1]) return brandAdminSidebarConfig;
+      if (firstElementOfPath === ROOTS_DASHBOARD_REPORT.split('/')[1]) {
+        const reportSideBarConfig = reportAppSidebarConfig();
+        return reportSideBarConfig;
+      }
+      if (firstElementOfPath === ROOTS_DASHBOARD_PROMOTION.split('/')[1])
+        return promotionAppSidebarConfig;
       return brandAdminSidebarConfig;
     }
     if (user?.role.includes(Role.StoreManager)) {

@@ -154,6 +154,9 @@ const Promotion = (props: Props) => {
             showAction={true}
             pagination
             ref={ref}
+            onEdit={(promotion: any) =>
+              navigate(`${PATH_PROMOTION_APP.promotion.root}/${promotion.promotionId}`)
+            }
             getData={(params: any) => promotionApi.getPromotion(params)}
             columns={promotionColumn}
             rowKey="promotionId"

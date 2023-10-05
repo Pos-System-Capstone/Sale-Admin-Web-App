@@ -14,6 +14,8 @@ export type TStore = {
   email: string;
   address: string;
   status: StoreStatus;
+  wifiName: string;
+  wifiPassword: string;
 };
 
 export type TStoreCreate = {
@@ -23,6 +25,8 @@ export type TStoreCreate = {
   phone: string;
   code: string;
   address: string;
+  wifiName: string;
+  wifiPassword: string;
 };
 
 export type TStoreUpdate = {
@@ -32,6 +36,8 @@ export type TStoreUpdate = {
   phone?: string;
   code?: string;
   address?: string;
+  wifiName?: string;
+  wifiPassword?: string;
 };
 
 export type TStoreDetail = {
@@ -44,6 +50,8 @@ export type TStoreDetail = {
   status: StoreStatus;
   phone: string;
   code: string;
+  wifiName: string;
+  wifiPassword: string;
 };
 
 export type TStoreInMenu = {

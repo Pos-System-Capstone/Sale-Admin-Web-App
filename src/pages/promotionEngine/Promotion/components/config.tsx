@@ -7,15 +7,15 @@ const promotionTypeList = () => {
   return [
     {
       label: `${translate('promotionSystem.promotion.createPromotion.usingVoucher')}`,
-      value: 'usingVoucher'
+      value: 2
     },
     {
       label: `${translate('promotionSystem.promotion.createPromotion.usingCode')}`,
-      value: 'usingCode'
+      value: 1
     },
     {
       label: `${translate('promotionSystem.promotion.createPromotion.automatic')}`,
-      value: 'automatic'
+      value: 0
     }
   ];
 };
@@ -38,55 +38,59 @@ const discountActionList = () => {
       label: `${translate(
         'promotionSystem.promotion.createPromotion.discountActionType.discountAmountOfOrder'
       )}`,
-      value: 'discountAmountOfOrder'
+      value: 1
     },
     {
       label: `${translate(
         'promotionSystem.promotion.createPromotion.discountActionType.discountPercentageOfOrder'
       )}`,
-      value: 'discountPercentageOfOrder'
+      value: 2
     },
     {
       label: `${translate(
         'promotionSystem.promotion.createPromotion.discountActionType.discountShippingFeeOfOrder'
       )}`,
-      value: 'discountShippingFeeOfOrder'
+      value: 3
     },
     {
       label: `${translate(
         'promotionSystem.promotion.createPromotion.discountActionType.discountAmountOfItem'
       )}`,
-      value: 'discountAmountOfItem'
+      value: 4
     },
     {
       label: `${translate(
         'promotionSystem.promotion.createPromotion.discountActionType.discountPercentOfItem'
       )}`,
-      value: 'discountPercentOfItem'
+      value: 5
     },
     {
       label: `${translate(
         'promotionSystem.promotion.createPromotion.discountActionType.discountUnitOfItem'
       )}`,
-      value: 'discountUnitOfItem'
+      value: 6
     },
     {
       label: `${translate(
         'promotionSystem.promotion.createPromotion.discountActionType.fixedPriceOfItem'
       )}`,
-      value: 'fixedPriceOfItem'
+      value: 7
     },
     {
       label: `${translate(
         'promotionSystem.promotion.createPromotion.discountActionType.ladderPriceOfItem'
       )}`,
-      value: 'ladderPriceOfItem'
+      value: 8
     },
     {
       label: `${translate(
         'promotionSystem.promotion.createPromotion.discountActionType.bundlePriceOfItem'
       )}`,
-      value: 'bundlePriceOfItem'
+      value: 9
+    },
+    {
+      label: 'Tặng điểm',
+      value: 10
     }
   ];
 };
@@ -220,6 +224,10 @@ const paymentMethodList = () => {
     {
       label: `${translate('promotionSystem.promotion.settings.paymentMethodType.cod')}`,
       value: 32
+    },
+    {
+      label: `${translate('Thẻ thành viên')}`,
+      value: 64
     }
   ];
 };

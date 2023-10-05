@@ -29,7 +29,6 @@ import { TUserCreate, UserStatus } from 'types/user';
 import { Role } from 'utils/role';
 import AddAccountModal from './AddAccountModel';
 import UpdateBrandInformation from './UpdateBrandInformation/UpdateBrandInformation';
-import { PaymentProviderConfig } from './PaymentMethođUpdate';
 
 const BrandDetailPage = () => {
   const { brandId } = useParams();
@@ -208,7 +207,7 @@ const BrandDetailPage = () => {
         </Card>
       ) : (
         <>
-          <Card sx={{ my: 2 }}>
+          {/* <Card sx={{ my: 2 }}>
             <Stack spacing={2}>
               <Box>
                 <Typography my={2} variant="h5">
@@ -217,7 +216,7 @@ const BrandDetailPage = () => {
                 <PaymentProviderConfig brand={brand} />
               </Box>
             </Stack>
-          </Card>
+          </Card> */}
           <Card sx={{ my: 2 }}>
             <Stack spacing={2}>
               <Box>

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { TOrder, TOrderDetail } from 'types/order';
+import { TOrder, TOrderDetail, TOrderUpdate } from 'types/order';
 import request from 'utils/axios';
 import { generateAPIWithPaging } from './utils';
 
@@ -45,10 +45,13 @@ const getListOrder = (storeId: string, params: any) => {
   return request.get<TOrder>(`stores/${storeId}/orders`, { params });
 };
 
+const updateOrder = (storeId: string, orderId: string, orderUpdate: TOrderUpdate) =>
+  request.put<TOrderDetail>(`stores/${storeId}/orders/${orderId}`, orderUpdate);
 const orderApi = {
   getOrderDetail,
   getOrderList,
   getListOrder,
+  updateOrder,
   ...generateAPIWithPaging<TOrder>('orders')
 };
 

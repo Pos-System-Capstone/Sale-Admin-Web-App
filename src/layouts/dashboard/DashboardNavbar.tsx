@@ -1,7 +1,6 @@
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 import { Icon } from '@iconify/react';
 import { AppBar, Box, Button, IconButton, Stack, Toolbar } from '@mui/material';
-import navigation2Outline from '@iconify/icons-eva/navigation-2-outline';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import Label from 'components/Label';
@@ -154,7 +153,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           )}
           <Button
             onClick={() => {
-              navigate('/dashboard');
+              navigate('/dashboard/brands/detail');
             }}
           >
             Sale
@@ -174,7 +173,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           >
             Promotion
           </Button>
-          <Button
+          {/* <Button
             onClick={handleClickOpen}
             variant="outlined"
             startIcon={<Icon icon={navigation2Outline} />}
@@ -183,8 +182,8 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
               ? listStore === undefined
                 ? 'HỆ THỐNG'
                 : listStore[0].name || 'HỆ THỐNG'
-              : 'a'}
-          </Button>
+              : 'HỆ THỐNG'}
+          </Button> */}
 
           {/* <LanguagePopover /> */}
           <AccountPopover />

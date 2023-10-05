@@ -104,7 +104,7 @@ const StoresList = () => {
 
   return (
     <Stack spacing={2}>
-      {user?.role.includes(Role.BrandManager) ? (
+      {user?.role.includes(Role.BrandManager) || user?.role.includes(Role.BrandAdmin) ? (
         <>
           <Box>
             <ResoTable

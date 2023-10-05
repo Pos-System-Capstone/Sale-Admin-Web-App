@@ -104,13 +104,13 @@ export default function AccountsList(props: Props) {
       return brandApi.getListUserOfBrand(brandId, newParam);
     }
     // Brand Manager get list store manager of store detail
-    else if (storeId && user?.role.includes(Role.BrandManager)) {
+    else if (storeId && user?.role.includes(Role.BrandAdmin)) {
       return storeApi.getStoreEmployees(storeId, newParam);
     }
     // Brand Manager get list user of all stores in brand
-    else if (user?.brandId && user?.role.includes(Role.BrandManager)) {
+    else if (user?.brandId && user?.role.includes(Role.BrandAdmin)) {
       newParam = {
-        role: Role.StoreManager,
+        role: Role.BrandAdmin,
         ...newParam
       };
       return brandApi.getListUserOfBrand(user.brandId, newParam);

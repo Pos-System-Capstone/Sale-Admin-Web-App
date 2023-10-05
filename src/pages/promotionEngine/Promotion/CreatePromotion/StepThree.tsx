@@ -4,6 +4,7 @@ import useLocales from 'hooks/useLocales';
 // import { fDateTime } from 'utils/formatTime';
 import { Card } from 'pages/promotionEngine/Promotion/components/Card';
 import { fDateTime } from 'utils/formatTime';
+import { paymentMethodList } from '../components/config';
 
 function StepThree({ watch }: any) {
   const { translate } = useLocales();
@@ -12,23 +13,8 @@ function StepThree({ watch }: any) {
     width: `${props.width || '50%'}`
   }));
 
-  // let [paymentMethod] = watch([
-  //   'cash',
-  //   'creditCard',
-  //   'bankTransfer',
-  //   'eWallet',
-  //   'mobileBanking',
-  //   'cod'
-  // ]);
+  const paymentList = paymentMethodList();
 
-  const [promotionName, startDate, endDate, paymentMethod, saleMode, applyBy] = watch([
-    'promotionName',
-    'startDate',
-    'endDate',
-    'paymentMethod',
-    'saleMode',
-    'applyBy'
-  ]);
   return (
     <Stack p={1} spacing={3} width={'100%'}>
       <Typography px={2} variant="h3" sx={{ textTransform: 'uppercase' }}>
@@ -41,18 +27,18 @@ function StepThree({ watch }: any) {
               {translate('promotionSystem.promotion.preview.name')}
             </StyleWidthTypography>
             <StyleWidthTypography marginTop="0" variant="body1">
-              {promotionName}
+              {watch('promotionName')}
             </StyleWidthTypography>
           </Box>
           <Box>
-            <Grid container spacing={6}>
-              <Grid item xs={6}>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
                 <Box display="flex" alignItems="center">
                   <StyleWidthTypography variant="h6">
                     {translate('promotionSystem.promotion.preview.startDate')}
                   </StyleWidthTypography>
                   <StyleWidthTypography variant="body1">
-                    {startDate ? fDateTime(startDate) : '-'}
+                    {watch('startDate') ? fDateTime(watch('startDate')) : '-'}
                   </StyleWidthTypography>
                 </Box>
                 <Box display="flex" alignItems="center">
@@ -60,7 +46,7 @@ function StepThree({ watch }: any) {
                     {translate('promotionSystem.promotion.preview.endDate')}
                   </StyleWidthTypography>
                   <StyleWidthTypography variant="body1">
-                    {endDate ? fDateTime(endDate) : '-'}
+                    {watch('endDate') ? fDateTime(watch('endDate')) : '-'}
                   </StyleWidthTypography>
                 </Box>
                 <Box display="flex" alignItems="center">
@@ -80,7 +66,10 @@ function StepThree({ watch }: any) {
                     {translate('promotionSystem.promotion.preview.paymentMethod')}
                   </StyleWidthTypography>
                   <StyleWidthTypography variant="body1">
-                    {paymentMethod.map((e: any) => e + ', ')}
+                    {watch('paymentMethod') !== undefined &&
+                      watch('paymentMethod').map(
+                        (e: any) => paymentList.find((p: any) => p.value === e)?.label + ', '
+                      )}
                   </StyleWidthTypography>
                 </Box>
               </Grid>

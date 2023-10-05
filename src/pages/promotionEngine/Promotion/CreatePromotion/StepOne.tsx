@@ -4,7 +4,6 @@ import {
   DraftEditorField,
   InputField,
   RadioGroupField,
-  SelectField,
   SwitchField
 } from 'components/form';
 import CheckBoxGroupField from 'components/form/CheckBoxGroupField';
@@ -44,15 +43,6 @@ export default function StepOne({ watch }: any) {
   const handleParticularDay = () => {
     setParticularDay((prev) => !prev);
   };
-
-  const [promoType = 'usingCode', promoAction = 'discount', unlimitedDate, timeFrame] = watch([
-    'promotionType',
-    'promotion-action',
-    'unlimited',
-    'timeFrameChecked',
-    'timeFrame'
-  ]);
-
   return (
     <Stack p={1} spacing={3}>
       <Typography px={2} variant="h3" textAlign="left" sx={{ textTransform: 'uppercase' }}>
@@ -94,13 +84,13 @@ export default function StepOne({ watch }: any) {
                     label={`${translate(
                       'promotionSystem.promotion.createPromotion.promotionCode'
                     )}`}
-                    disabled={promoType === 'automatic'}
+                    disabled={watch('promotionType') === 0}
                   />
                 </Grid>
               </Grid>
             </Stack>
           </FormBox>
-          <FormBox
+          {/* <FormBox
             title={`${translate('promotionSystem.promotion.createPromotion.questionActionType')}`}
           >
             <Stack spacing={2} direction="column" width={'100%'}>
@@ -111,7 +101,7 @@ export default function StepOne({ watch }: any) {
                 name="promotion-action"
                 defaultValue="discount"
               />
-              {promoAction === 'discount' && (
+              {watch('actionType') === 'discount' && (
                 <SelectField
                   fullWidth
                   label={`${translate('promotionSystem.promotion.createPromotion.discount')}`}
@@ -128,7 +118,7 @@ export default function StepOne({ watch }: any) {
                 />
               )}
             </Stack>
-          </FormBox>
+          </FormBox> */}
         </Stack>
       </Card>
       <Card>
@@ -144,7 +134,7 @@ export default function StepOne({ watch }: any) {
                   minDate={new Date()}
                 />
                 <DateTimePickerField
-                  disabled={unlimitedDate}
+                  disabled={watch('unlimitedDate')}
                   fullWidth
                   name="endDate"
                   label={translate('promotionSystem.common.end')}

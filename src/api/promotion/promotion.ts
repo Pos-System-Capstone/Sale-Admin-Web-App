@@ -90,6 +90,8 @@ const getPromotion = (params?: any) =>
 const createPromotion = (data?: any) =>
   request.post<BaseReponse<TPromotionBase>>(`/promotions`, data);
 
-const promotionApi = { getPromotion, createPromotion };
+const getPromotionById = (id?: string) => request.get<TPromotionBase>(`/promotions/${id}`);
+
+const promotionApi = { getPromotion, createPromotion, getPromotionById };
 
 export default promotionApi;

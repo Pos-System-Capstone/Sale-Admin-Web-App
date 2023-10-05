@@ -119,59 +119,6 @@ const CreatePromotion = (props: Props) => {
   //   staleTime: Infinity
   // });
 
-  const testPayLoad = [
-    {
-      delFlg: true,
-      insDate: '2022-07-29T09:19:29.543Z',
-      updDate: '2022-07-29T09:19:29.543Z',
-      promotionId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
-      brandId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
-      promotionCode: 'test',
-      promotionName: 'test',
-      actionType: 0,
-      postActionType: 0,
-      imgUrl: 'string',
-      description: 'string',
-      startDate: '2022-07-29T09:19:29.543Z',
-      endDate: '2022-07-29T09:19:29.543Z',
-      exclusive: 0,
-      applyBy: 0,
-      saleMode: 0,
-      gender: 0,
-      paymentMethod: 0,
-      forHoliday: 0,
-      forMembership: 0,
-      dayFilter: 0,
-      hourFilter: 0,
-      status: 0,
-      hasVoucher: true,
-      isAuto: true,
-      voucherGroupId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
-      voucherQuantity: 0,
-      conditionRuleId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
-      promotionType: 0,
-      promotionStoreMapping: [
-        {
-          delFlg: true,
-          insDate: '2022-07-29T09:19:29.543Z',
-          updDate: '2022-07-29T09:19:29.543Z',
-          id: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
-          storeId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
-          promotionId: '2062d776-ca5c-4429-9652-e3a662bc8dfa'
-        }
-      ],
-      memberLevelMapping: [
-        {
-          id: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
-          memberLevelId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
-          promotionId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
-          insDate: '2022-07-29T09:19:29.543Z',
-          updDate: '2022-07-29T09:19:29.543Z'
-        }
-      ]
-    }
-  ];
-
   const onSubmit = (values: any) => {
     console.log('promotionCreate', values);
     // promotionApi

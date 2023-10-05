@@ -79,17 +79,11 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
   const dispatch = useDispatch();
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
-  const { data: listStore } = useQuery(
-    ['stores', user.brandId],
-    async () => {
-      return brandApi
-        .getStoreOfBrand(user.brandId, { page: 1, size: 100 })
-        .then((res) => res.data.items);
-    },
-    {
-      enabled: Boolean(user.brandId)
-    }
-  );
+  const { data: listStore } = useQuery(['stores', user.brandId], async () => {
+    return brandApi
+      .getStoreOfBrand(user.brandId, { page: 1, size: 100 })
+      .then((res) => res.data.items);
+  });
   const [searchNameStoreReport, setSearchNameStoreReport] = useState<string | null>(null);
   const { run: runStore } = useDebounceFn(
     (values) => {

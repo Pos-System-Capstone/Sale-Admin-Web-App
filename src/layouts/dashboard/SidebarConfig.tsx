@@ -128,6 +128,31 @@ export const brandManagerSidebarConfig = [
 // BRAND ADMIN SIDEBAR CONFIG
 export const brandAdminSidebarConfig = [
   {
+    subheader: 'Dashboard',
+    items: [
+      {
+        title: 'Chi tiết thương hiệu',
+        path: PATH_DASHBOARD.brand.brandDetail,
+        icon: ICONS.tag
+      }
+    ]
+  },
+  {
+    subheader: 'Quản lý thương hiệu',
+    items: [
+      {
+        title: 'Danh sách cửa hàng',
+        path: PATH_DASHBOARD.brand.storesInBrand,
+        icon: ICONS.store
+      },
+      {
+        title: 'Danh sách tài khoản',
+        path: PATH_DASHBOARD.accounts.root,
+        icon: ICONS.user
+      }
+    ]
+  },
+  {
     subheader: 'Quản lý thực đơn',
     items: [
       {

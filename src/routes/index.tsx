@@ -39,6 +39,7 @@ import TimeReport from 'pages/report/TradingReport/TimeReport';
 import PromotionReport from 'pages/report/PromotionReport';
 import DayReport from 'pages/report/TradingReport';
 import UpdateActionPage from 'pages/promotionEngine/Action/update';
+import UpdatePromotion from 'pages/promotionEngine/Promotion/PromotionDetail/update';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -335,7 +336,8 @@ export default function Router() {
           path: 'promotion',
           children: [
             { path: '', element: <Promotion /> },
-            { path: 'new', element: <CreatePromotion /> }
+            { path: 'new', element: <CreatePromotion /> },
+            { path: ':id', element: <UpdatePromotion /> }
           ]
         },
         {

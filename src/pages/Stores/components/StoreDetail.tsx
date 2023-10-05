@@ -122,6 +122,16 @@ const StoreDetailPage = () => {
           <Label color="warning">Không hoạt động</Label>
         );
       }
+    },
+    {
+      title: 'Tên Wifi',
+      dataIndex: 'wifiName',
+      hideInSearch: true
+    },
+    {
+      title: 'Password Wifi',
+      dataIndex: 'wifiPassword',
+      hideInSearch: true
     }
   ];
 
@@ -129,7 +139,8 @@ const StoreDetailPage = () => {
     <Page
       title="Chi tiết cửa hàng"
       actions={() => [
-        user?.role.includes(Role.BrandManager) && store?.status.includes(StoreStatus.DEACTIVE) ? (
+        (user?.role.includes(Role.BrandManager) || user?.role.includes(Role.BrandAdmin)) &&
+        store?.status.includes(StoreStatus.DEACTIVE) ? (
           <Button
             key="add-store"
             onClick={() => setIsShowConfirmUpdateStatusDialog(!isShowConfirmUpdateStatusDialog)}
@@ -146,7 +157,7 @@ const StoreDetailPage = () => {
         <DialogContent dividers>
           <Stack spacing={2} direction="row" justifyContent="space-between" alignItems="center">
             <Typography variant="h5">Thông tin</Typography>
-            {user?.role.includes(Role.BrandManager) && (
+            {(user?.role.includes(Role.BrandManager) || user?.role.includes(Role.BrandAdmin)) && (
               <Button
                 onClick={() => setOpenUpdateStoreInformationForm(!openUpdateStoreInformationForm)}
                 variant="contained"
@@ -175,7 +186,7 @@ const StoreDetailPage = () => {
         </DialogContent>
       </Card>
 
-      {(user?.role.includes(Role.StoreManager) || user?.role.includes(Role.BrandManager)) && (
+      {
         <Card sx={{ my: 2 }}>
           <Stack spacing={2}>
             <Box sx={{ mb: 2 }} display={'flex'} justifyContent={'space-between'}>
@@ -195,7 +206,7 @@ const StoreDetailPage = () => {
             <AccountsList />
           </Stack>
         </Card>
-      )}
+      }
 
       <UpdateConfirmDialog
         open={isShowConfirmUpdateStatusDialog}

@@ -32,6 +32,11 @@ export type TOrder = {
   paymentType: string;
 };
 
+export type TOrderUpdate = {
+  status: OrderStatus;
+  paymentType: string;
+};
+
 export type TOrderDetailItem = {
   order_detail_id: number;
   order_id: number;

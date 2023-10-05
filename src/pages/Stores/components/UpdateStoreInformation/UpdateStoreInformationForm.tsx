@@ -60,6 +60,22 @@ function UpdateStoreInformationForm({ currentStoreInformation, onFinish }: Props
             // defaultValue={currentStoreInformation?.phone}
           />
         </Grid>
+        <Grid key={'wifiName'} item xs={12} sm={4}>
+          <InputField
+            fullWidth
+            name="wifiName"
+            label="Tên Wifi"
+            // defaultValue={currentStoreInformation?.phone}
+          />
+        </Grid>
+        <Grid key={'wifiPassword'} item xs={12} sm={4}>
+          <InputField
+            fullWidth
+            name="wifiPassword"
+            label="Mật khẩu wifi"
+            // defaultValue={currentStoreInformation?.phone}
+          />
+        </Grid>
         <Grid item xs={12} sm={12} display={'flex'} justifyContent={'end'}>
           <Button variant="contained" onClick={onFinish}>
             Cập nhật

@@ -43,6 +43,26 @@ export type TActionCreate = {
   listProduct?: ListProduct[];
 };
 
+export type TActionUpdate = {
+  name: string;
+  brandId: string;
+  actionType: number;
+  discountType: number;
+  discountQuantity: number;
+  discountAmount: number;
+  discountPercentage: number;
+  fixedPrice: number;
+  maxAmount: number;
+  minPriceAfter: number;
+  orderLadderProduct: number;
+  ladderPrice: number;
+  bundlePrice: number;
+  bundleQuantity: number;
+  bundleStrategy: number;
+  bonusPointRate: number;
+  listProduct?: ListProduct[];
+};
+
 export type ListProduct = {
   productId: string;
   quantity: number;
@@ -89,6 +109,10 @@ export const ACTION_TYPE_DATA = () => {
     {
       value: 10,
       label: 'Tặng điểm'
+    },
+    {
+      value: 11,
+      label: 'Giảm phí shíp phan tram'
     }
   ];
 };

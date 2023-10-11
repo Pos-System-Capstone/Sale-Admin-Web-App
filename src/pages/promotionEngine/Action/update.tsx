@@ -2,7 +2,7 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable react/prop-types */
 // import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Box, Card, FormHelperText, Grid, Paper, Stack, Typography } from '@mui/material';
+import { Alert, Box, Card, FormHelperText, Grid, Paper, Stack } from '@mui/material';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import useDashboard from 'hooks/useDashboard';
@@ -18,9 +18,9 @@ import { InputField } from 'components/form';
 // import { storeSchemaBuilder } from 'pages/report/PromotionReport/utils';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TaskComponent from './cartop';
-import { TActionBase, TActionCreate } from 'types/promotion/action';
+import { TActionBase, TActionUpdate } from 'types/promotion/action';
 import actionApi from 'api/promotion/action';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { getUserInfo } from 'utils/utils';
@@ -47,9 +47,14 @@ const UpdateActionPage = () => {
     }
   );
 
-  const [selectedText, setSelectedText] = useState<string | null>(null);
+  const Type = action?.actionType;
+  console.log('ActionType ' + Type);
 
-  const handleTreeItemClick = (text: string) => {
+  const [selectedText, setSelectedText] = useState<string | null>('0');
+  useEffect(() => {
+    setSelectedText(Type?.toString() ?? null);
+  }, [Type]);
+  const handleTreeItemClick = (text: string, actionType: number) => {
     // reset({
     //   brandId: user.brandId,
     //   discountQuantity: 0,
@@ -66,6 +71,7 @@ const UpdateActionPage = () => {
     //   orderLadderProduct: 0,
     //   listProduct: []
     // });
+    setValue('actionType', actionType);
     setSelectedText(text);
   };
 
@@ -74,11 +80,16 @@ const UpdateActionPage = () => {
     // resolver: yupResolver(storeSchemaBuilder(translate))
   });
   const { handleSubmit, setValue, reset } = methods;
-
-  const onSubmit = (values: TActionCreate) => {
+  useEffect(() => {
+    if (id) {
+      // Thực hiện các hành động cần thiết khi `id` thay đổi
+      reset({ ...action });
+    }
+  }, [id, reset, action]);
+  const onSubmit = (values: TActionUpdate) => {
     console.log('action', values);
     values.brandId = user.brandId;
-    const body: TActionCreate = { ...values };
+    const body: TActionUpdate = { ...values };
     body.brandId = user.brandId;
     body.name = values.name;
     body.bonusPointRate = +values.bonusPointRate;
@@ -95,12 +106,12 @@ const UpdateActionPage = () => {
     body.orderLadderProduct = +values.orderLadderProduct;
     body.listProduct = values.listProduct;
     actionApi
-      .createAction(body)
+      .updateAction(id, body)
       .then((res) => {
-        enqueueSnackbar(`Tạo thành công ${values.name}`, {
+        enqueueSnackbar(`Update thành công ${values.name}`, {
           variant: 'success'
         });
-        navigate(`${PATH_PROMOTION_APP.action.root}/${res.data.actionId}`);
+        navigate(`${PATH_PROMOTION_APP.action.root}/`);
         console.log(res);
       })
       .catch((err) => {
@@ -112,16 +123,16 @@ const UpdateActionPage = () => {
 
   return (
     <FormProvider {...methods}>
-      <Page title="ACTION BUILDER">
+      <Page title="Cập nhật Action">
         <Stack sx={{ width: '50%', height: '4rem' }} spacing={2}>
           <Alert severity="warning">
-            Action is the action that affect to the order or add a gift to order.
+            Action là hành động ảnh hưởng đến đơn hàng hoặc thêm quà vào đơn hàng.
           </Alert>
         </Stack>
         <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
           <Stack direction="row" spacing={2} justifyContent="flex-end">
             <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
-              + New Action
+              + Cập nhật Action
             </LoadingAsyncButton>
           </Stack>
         </DashboardNavLayout>
@@ -141,7 +152,7 @@ const UpdateActionPage = () => {
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={4}>
                   <Paper variant="outlined" sx={{ width: '100%' }}>
-                    <h2>Action items</h2>
+                    <h2>Các danh mục Action</h2>
 
                     <TreeView
                       aria-label="file system navigator"
@@ -155,7 +166,7 @@ const UpdateActionPage = () => {
                         m: '20px 0'
                       }}
                     >
-                      <TreeItem
+                      {/* <TreeItem
                         nodeId="1"
                         label={
                           <Typography variant="body2" fontSize="20px">
@@ -163,100 +174,106 @@ const UpdateActionPage = () => {
                           </Typography>
                         }
                         icon=" "
-                      >
-                        <TreeItem
-                          nodeId="2"
-                          label="Discount amount (VNĐ)"
-                          icon=" "
-                          onClick={() => {
-                            handleTreeItemClick('2');
-                            setValue('actionType', 4);
-                          }}
-                          sx={{
-                            border: '1px solid #57d8a1',
-                            m: '10px 0',
-                            width: '190px',
-                            p: '1.1px',
-                            height: '25px',
-                            borderRadius: '4px'
-                          }}
-                        />
-                        <TreeItem
-                          nodeId="3"
-                          label="Discount percentage (%)"
-                          icon=" "
-                          onClick={() => {
-                            handleTreeItemClick('3');
-                            setValue('actionType', 5);
-                          }}
-                          sx={{
-                            border: '1px solid #57d8a1',
-                            m: '10px 0',
-                            width: '190px',
-                            p: '1.1px',
-                            height: '25px',
-                            borderRadius: '4px'
-                          }}
-                        />
-                        <TreeItem
-                          nodeId="4"
-                          label="Discount unit"
-                          icon=" "
-                          onClick={() => handleTreeItemClick('4')}
-                          sx={{
-                            border: '1px solid #57d8a1',
-                            m: '10px 0',
-                            width: '190px',
-                            p: '1.1px',
-                            height: '25px',
-                            borderRadius: '4px'
-                          }}
-                        />
-                        <TreeItem
-                          nodeId="5"
-                          label="Fixed price"
-                          icon=" "
-                          onClick={() => handleTreeItemClick('5')}
-                          sx={{
-                            border: '1px solid #57d8a1',
-                            m: '10px 0',
-                            width: '190px',
-                            p: '1.1px',
-                            height: '25px',
-                            borderRadius: '4px'
-                          }}
-                        />
-                        <TreeItem
-                          nodeId="6"
-                          label="Ladder price"
-                          icon=" "
-                          onClick={() => handleTreeItemClick('6')}
-                          sx={{
-                            border: '1px solid #57d8a1',
-                            m: '10px 0',
-                            width: '190px',
-                            p: '1.1px',
-                            height: '25px',
-                            borderRadius: '4px'
-                          }}
-                        />
-                        <TreeItem
-                          nodeId="7"
-                          label="Bundle price"
-                          icon=" "
-                          onClick={() => handleTreeItemClick('7')}
-                          sx={{
-                            border: '1px solid #57d8a1',
-                            m: '10px 0',
-                            width: '190px',
-                            p: '1.1px',
-                            height: '25px',
-                            borderRadius: '4px'
-                          }}
-                        />
-                      </TreeItem>
-
+                      > */}
                       <TreeItem
+                        nodeId="2"
+                        label="Giảm giá đơn hàng(VNĐ)"
+                        icon=" "
+                        onClick={() => {
+                          handleTreeItemClick('4', 4);
+                          // setValue('actionType', 4);
+                        }}
+                        sx={{
+                          border: '1px solid #57d8a1',
+                          m: '10px 0',
+                          width: '190px',
+                          p: '1.1px',
+                          height: '25px',
+                          borderRadius: '4px',
+                          display: Type === 4 ? 'block' : 'none'
+                        }}
+                      />
+                      <TreeItem
+                        nodeId="3"
+                        label="Giảm giá % đơn hàng(%)"
+                        icon=" "
+                        onClick={() => {
+                          handleTreeItemClick('5', 5);
+                          // setValue('actionType', 5);
+                        }}
+                        sx={{
+                          border: '1px solid #57d8a1',
+                          m: '10px 0',
+                          width: '190px',
+                          p: '1.1px',
+                          height: '25px',
+                          borderRadius: '4px',
+                          display: Type === 5 ? 'block' : 'none'
+                        }}
+                      />
+                      <TreeItem
+                        nodeId="4"
+                        label="Đơn vị giảm giá (Unit)"
+                        icon=" "
+                        onClick={() => handleTreeItemClick('6', 6)}
+                        sx={{
+                          border: '1px solid #57d8a1',
+                          m: '10px 0',
+                          width: '190px',
+                          p: '1.1px',
+                          height: '25px',
+                          borderRadius: '4px',
+                          display: Type === 6 ? 'block' : 'none'
+                        }}
+                      />
+                      <TreeItem
+                        nodeId="5"
+                        label="Giá cố định(Fixed)"
+                        icon=" "
+                        onClick={() => handleTreeItemClick('7', 7)}
+                        sx={{
+                          border: '1px solid #57d8a1',
+                          m: '10px 0',
+                          width: '190px',
+                          p: '1.1px',
+                          height: '25px',
+                          borderRadius: '4px',
+                          display: Type === 7 ? 'block' : 'none'
+                        }}
+                      />
+                      <TreeItem
+                        nodeId="6"
+                        label="Giá bậc thang(Ladder)"
+                        icon=" "
+                        onClick={() => handleTreeItemClick('8', 8)}
+                        sx={{
+                          border: '1px solid #57d8a1',
+                          m: '10px 0',
+                          width: '190px',
+                          p: '1.1px',
+                          height: '25px',
+                          borderRadius: '4px',
+                          display: Type === 8 ? 'block' : 'none'
+                        }}
+                      />
+                      <TreeItem
+                        nodeId="7"
+                        label="Giá trọn gói(Bundle)"
+                        icon=" "
+                        onClick={() => handleTreeItemClick('9', 9)}
+                        sx={{
+                          border: '1px solid #57d8a1',
+                          m: '10px 0',
+                          width: '190px',
+                          p: '1.1px',
+                          height: '25px',
+                          borderRadius: '4px',
+                          display: Type === 9 ? 'block' : 'none'
+                        }}
+                      />
+                      {/* </TreeItem> */}
+
+                      {/* <TreeItem
                         nodeId="8"
                         label={
                           <Typography variant="body2" fontSize="20px">
@@ -265,76 +282,98 @@ const UpdateActionPage = () => {
                         }
                         icon=" "
                         sx={{ mt: '1rem' }}
-                      >
-                        <TreeItem
-                          nodeId="9"
-                          label="Discount amount (VNĐ)"
-                          icon=" "
-                          onClick={() => {
-                            handleTreeItemClick('9');
-                            setValue('actionType', 1);
-                          }}
-                          sx={{
-                            border: '1px solid #57d8a1',
-                            m: '10px 0',
-                            width: '190px',
-                            p: '1.1px',
-                            height: '25px',
-                            borderRadius: '4px'
-                          }}
-                        />
-                        <TreeItem
-                          nodeId="10"
-                          label="Discount percentage (%)"
-                          icon=" "
-                          onClick={() => {
-                            handleTreeItemClick('10');
-                            setValue('actionType', 2);
-                          }}
-                          sx={{
-                            border: '1px solid #57d8a1',
-                            m: '10px 0',
-                            width: '190px',
-                            p: '1.1px',
-                            height: '25px',
-                            borderRadius: '4px'
-                          }}
-                        />
-                        <TreeItem
-                          nodeId="11"
-                          label="Shipping amount (VNĐ)"
-                          icon=" "
-                          onClick={() => {
-                            handleTreeItemClick('11');
-                            setValue('actionType', 3);
-                          }}
-                          sx={{
-                            border: '1px solid #57d8a1',
-                            m: '10px 0',
-                            width: '190px',
-                            p: '1.1px',
-                            height: '25px',
-                            borderRadius: '4px'
-                          }}
-                        />
-                        <TreeItem
-                          nodeId="12"
-                          label="Shipping percentage (%)"
-                          icon=" "
-                          onClick={() => {
-                            handleTreeItemClick('12');
-                            setValue('actionType', 3);
-                          }}
-                          sx={{
-                            border: '1px solid #57d8a1',
-                            m: '10px 0',
-                            width: '190px',
-                            p: '1.1px',
-                            height: '25px',
-                            borderRadius: '4px'
-                          }}
-                        />
-                      </TreeItem>
+                      > */}
+                      <TreeItem
+                        nodeId="9"
+                        label="Giảm giá đơn hàng(VNĐ)"
+                        icon=" "
+                        onClick={() => {
+                          handleTreeItemClick('1', 1);
+                          // setValue('actionType', 1);
+                        }}
+                        sx={{
+                          border: '1px solid #57d8a1',
+                          m: '10px 0',
+                          width: '190px',
+                          p: '1.1px',
+                          height: '25px',
+                          borderRadius: '4px',
+                          display: Type === 1 ? 'block' : 'none'
+                        }}
+                      />
+                      <TreeItem
+                        nodeId="10"
+                        label="Giảm giá % đơn hàng(%)"
+                        icon=" "
+                        onClick={() => {
+                          handleTreeItemClick('2', 2);
+                          // setValue('actionType', 2);
+                        }}
+                        sx={{
+                          border: '1px solid #57d8a1',
+                          m: '10px 0',
+                          width: '190px',
+                          p: '1.1px',
+                          height: '25px',
+                          borderRadius: '4px',
+                          display: Type === 2 ? 'block' : 'none'
+                        }}
+                      />
+                      <TreeItem
+                        nodeId="11"
+                        label="Giảm phí Ship(VND)"
+                        icon=" "
+                        onClick={() => {
+                          handleTreeItemClick('3', 3);
+                          // setValue('actionType', 3);
+                        }}
+                        sx={{
+                          border: '1px solid #57d8a1',
+                          m: '10px 0',
+                          width: '190px',
+                          p: '1.1px',
+                          height: '25px',
+                          borderRadius: '4px',
+                          display: Type === 3 ? 'block' : 'none'
+                        }}
+                      />
+                      <TreeItem
+                        nodeId="12"
+                        label="Giảm phí Ship(VND)"
+                        icon=" "
+                        onClick={() => {
+                          handleTreeItemClick('11', 11);
+                          // setValue('actionType', 3);
+                        }}
+                        sx={{
+                          border: '1px solid #57d8a1',
+                          m: '10px 0',
+                          width: '190px',
+                          p: '1.1px',
+                          height: '25px',
+                          borderRadius: '4px',
+                          display: Type === 11 ? 'block' : 'none'
+                        }}
+                      />
+                      <TreeItem
+                        nodeId="13"
+                        label="Tặng điểm"
+                        icon=" "
+                        onClick={() => {
+                          handleTreeItemClick('10', 10);
+                          // setValue('actionType', 10);
+                        }}
+                        sx={{
+                          border: '1px solid #57d8a1',
+                          m: '10px 0',
+                          width: '190px',
+                          p: '1.1px',
+                          height: '25px',
+                          borderRadius: '4px',
+                          display: Type === 10 ? 'block' : 'none'
+                        }}
+                      />
+                      {/* </TreeItem> */}
                     </TreeView>
                   </Paper>
                 </Grid>

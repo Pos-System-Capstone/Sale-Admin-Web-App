@@ -1,5 +1,5 @@
 import { Stack, Typography } from '@mui/material';
-import ResoTable from 'components/ResoTable/ResoTable';
+import ResoReportTable from 'components/ResoReportTable/ResoReportTable';
 import { useRef } from 'react';
 import { TTableColumn } from 'types/table';
 import { fNumber } from 'utils/formatNumber';
@@ -160,7 +160,7 @@ function TabTwo() {
         <Typography pl={2} variant="h4">
           VI. Top Doanh Thu Sản Phẩm
         </Typography>
-        <ResoTable
+        <ResoReportTable
           showAction={false}
           columns={orderColumns}
           ref={ref}

@@ -13,7 +13,7 @@ import { Box } from '@mui/system';
 // import { TTradingBase } from '@types/report/trading';
 import tradingApi from 'api/report/trading';
 // import ModalForm from 'components/ModalForm/ModalForm';
-import ResoTable from 'components/ResoTable/ResoTable';
+import ResoReportTable from 'components/ResoReportTable/ResoReportTable';
 import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -294,7 +294,7 @@ const MonthReport = () => {
           <TabPanel value="1">
             <Stack spacing={2}>
               <Box sx={{ paddingTop: '40px' }}>
-                <ResoTable
+                <ResoReportTable
                   showAction={false}
                   rowKey="trading_id"
                   ref={tableRef}

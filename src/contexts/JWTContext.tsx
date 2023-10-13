@@ -206,7 +206,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
     navigate('/auth/login', { replace: true });
   };
 
-  const resetPassword = (email: string) => console.log(email);
+  const resetPassword = (email: string) => {};
 
   const updateProfile = () => {};
 

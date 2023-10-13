@@ -158,13 +158,13 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           >
             Sale
           </Button>
-          {/* <Button
+          <Button
             onClick={() => {
               navigate('/report');
             }}
           >
             Report
-          </Button> */}
+          </Button>
 
           <Button
             onClick={() => {

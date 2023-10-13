@@ -21,7 +21,7 @@ const totalSalesRevenue: any = [
   },
   {
     title: 'Giảm giá bán hàng (2.2)',
-    dataIndex: 'totalDiscount',
+    dataIndex: 'totalDiscount2',
     fontSize: 'small'
   },
   {
@@ -80,7 +80,7 @@ const totalRevenue: any = [
 const totalBill: any = [
   {
     title: <WindowIcon />,
-    dataIndex: 'totalOrder'
+    dataIndex: 'totalOrderSeller'
   }
 ];
 const averageBill: any = [
@@ -111,7 +111,7 @@ const atStore: any = [
   {
     title: 'TB hóa đơn',
     unit: 'VNĐ/Hóa đơn',
-    dataIndex: '',
+    dataIndex: 'avgOrderAtStore',
     highlight: true
   },
   {
@@ -135,7 +135,7 @@ const takeAway: any = [
   {
     title: 'TB hóa đơn',
     unit: 'VNĐ/Hóa đơn',
-    dataIndex: '',
+    dataIndex: 'avgOrderTakeAway',
     highlight: true
   },
   {
@@ -159,7 +159,7 @@ const delivery: any = [
   {
     title: 'TB hóa đơn',
     unit: 'VNĐ/Hóa đơn',
-    dataIndex: '',
+    dataIndex: 'avgOrderDelivery',
     highlight: true
   },
   {
@@ -172,7 +172,7 @@ const cancel: any = [
   {
     title: 'Tổng giá trị',
     unit: 'VNĐ',
-    dataIndex: 'totalRevenuePrecancel',
+    dataIndex: 'totalRevenuePreCancel',
     highlight: true
   },
   {
@@ -183,7 +183,7 @@ const cancel: any = [
   {
     title: 'Hủy trước chế biến',
     unit: 'VNĐ/Hóa đơn',
-    dataIndex: '',
+    dataIndex: 'totalRevenueTotalTotalPreCancel',
     highlight: true
   },
   {
@@ -200,7 +200,7 @@ const totalPayment: any = [
     dataIndex: 'totalPayment'
   },
   {
-    title: 'Tiền mặt [bán hàng] (1)',
+    title: 'Tiền mặt[bán hàng] (1)',
     dataIndex: 'totalPaymentForSales',
     highlight: true
   },
@@ -306,7 +306,7 @@ const totalAmountPayment: any = [
   },
   {
     title: 'VN Pay',
-    dataIndex: 'totalTransactionPaymentE_Wallet_VNPay',
+    dataIndex: 'totalTransactionPaymentE_Wallet_VnPay',
     fontSize: 'small'
   },
   {

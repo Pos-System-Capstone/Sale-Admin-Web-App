@@ -78,7 +78,7 @@ const UpdateStorePage = () => {
       });
     }
   };
-  const onDeleteMenu = async (menuId: string) => {
+  const onDeleteMenu = async (menuId: number) => {
     try {
       await menuApi.delete(menuId);
       enqueueSnackbar('Xoá thành công', {

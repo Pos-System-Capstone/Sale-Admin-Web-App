@@ -37,6 +37,7 @@ export const PATH_REPORT_APP = (storeId: string) => {
     timeReport: path(ROOTS_DASHBOARD, `/${storeId}/day-report/time-report`),
     dateReport: path(ROOTS_DASHBOARD, `/${storeId}/day-report/date-report`),
     monthReport: path(ROOTS_DASHBOARD, `/${storeId}/day-report/month-report`),
-    stores: path(ROOTS_DASHBOARD, `/${storeId}/stores`)
+    stores: path(ROOTS_DASHBOARD, `/${storeId}/stores`),
+    category: path(ROOTS_DASHBOARD, `/${storeId}/category-report`)
   };
 };

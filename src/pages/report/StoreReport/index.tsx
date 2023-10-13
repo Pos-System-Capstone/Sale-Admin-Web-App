@@ -2,7 +2,7 @@
 import { Card, Stack } from '@mui/material';
 // import storeApi from 'api/report/store';
 // components
-import ResoTable from 'components/ResoTable/ResoTable';
+import ResoReportTable from 'components/ResoReportTable/ResoReportTable';
 // material
 import { useEffect, useRef, useState } from 'react';
 import { TTableColumn } from 'types/table';
@@ -124,11 +124,18 @@ const StoreReport = () => {
   return (
     <ReportPage
       title="Thống kê báo cáo cửa hàng"
-      actions={[<ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />]}
+      actions={[
+        <ReportBtn
+          key="export-excel"
+          onClick={() => {
+            return console.log('Export excel');
+          }}
+        />
+      ]}
     >
       <Card>
         <Stack spacing={2}>
-          <ResoTable
+          <ResoReportTable
             showAction={false}
             // columns={storeColumns}
             // getData={storeApi.get}

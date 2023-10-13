@@ -12,9 +12,7 @@
     "category": "Danh mục sản phẩm",
     "extra-category": "Danh mục extra",
     "collection": "Bộ sưu tập",
-    "menu": {
-      "root": "Bảng giá"
-    },
+    "menu": { "root": "Bảng giá" },
     "store": "Cửa hàng",
     "log": "Log",
     "menu-list": "Bảng giá",
@@ -37,11 +35,10 @@
     "store-subheader": "Cửa hàng",
     "customer-subheader": "Khách hàng",
     "group-subheader": "Danh mục",
-    "account-subheader": "Tài khoản",
-    "account": "Danh sách tài khoản",
     "log-subheader": "Log",
     "report": {
       "report": "Báo cáo",
+      "reportActivity": "Hoạt động kinh doanh",
       "dashboard": "Bảng điều khiển",
       "home": "Home",
       "insights": "insights",

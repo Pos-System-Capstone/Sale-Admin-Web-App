@@ -6,6 +6,8 @@ export enum StoreStatus {
 }
 
 export type TStore = {
+  store_id: number;
+  store_code?: string;
   id: string;
   brandId: string;
   code: string;

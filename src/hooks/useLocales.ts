@@ -31,7 +31,7 @@ export default function useLocales() {
   const currentLang = LANGS.find((_lang) => _lang.value === langStorage) || LANGS[1];
 
   const handleChangeLanguage = (newlang: string) => {
-    i18n.changeLanguage(newlang, () => console.log('Changed language'));
+    i18n.changeLanguage(newlang, () => {});
   };
 
   return {

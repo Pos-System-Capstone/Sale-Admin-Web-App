@@ -2,7 +2,10 @@ import { Role } from 'utils/role';
 import { TProductInMenuDetail } from './product';
 
 export type Menu = {
-  id: string;
+  id: number;
+  menu_name?: any;
+  menu_id: number;
+
   store_id?: number;
   code: string;
   store_name: string;
@@ -32,19 +35,32 @@ export enum MenuStatus {
 }
 
 export type PosMenu = {
-  id: string;
-  code: string;
-  priority: number;
-  dateFilter: DateFilter[];
-  startTime: string;
-  endTime: string;
-  status: MenuStatus;
-  createdBy: Role;
+  id: number;
+  pos_id: string;
+  dateFilter?: DateFilter[];
+  startTime?: string;
+  endTime?: string;
+  status?: MenuStatus;
+  createdBy?: Role;
   createdAt: string;
   updatedBy: string;
   updatedAt: string;
   products: TProductInMenuDetail[];
   stores: [];
+  menu_name?: any;
+  menu_id: number;
+
+  store_id?: number;
+  code: string;
+  store_name: string;
+  day_filters: number[];
+  is_brand_mode: boolean;
+  start_time?: any;
+  end_time?: any;
+  time_ranges: string[][];
+  priority: number;
+  create_at?: any;
+  store_names: any[];
 };
 
 export type TCreateMenu = {

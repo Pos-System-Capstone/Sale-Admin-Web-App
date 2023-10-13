@@ -3,7 +3,7 @@
 import { DateRangePicker, TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Tab, TextField } from '@mui/material';
 import productApi from 'api/report/products';
-import ResoTable from 'components/ResoTable/ResoTable';
+import ResoReportTable from 'components/ResoReportTable/ResoReportTable';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useEffect, useRef, useState } from 'react';
@@ -86,7 +86,12 @@ const ProductProgressReport = () => {
           }}
           key="date-range"
         />,
-        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
+        <ReportBtn
+          key="export-excel"
+          onClick={() => {
+            return console.log('Export excel');
+          }}
+        />
       ]}
     >
       <Card>
@@ -98,7 +103,7 @@ const ProductProgressReport = () => {
             </TabList>
           </Box>
           <TabPanel value="1">
-            <ResoTable
+            <ResoReportTable
               ref={ref}
               showAction={false}
               columns={productProgressColumns}

@@ -25,7 +25,9 @@ function ProductItem({ column, data }: any) {
                 {data && data[x.dataIndex]?.value
                   ? x.valueType === 'time'
                     ? fTime(data[x.dataIndex]?.value)
-                    : formatCurrency(data[x.dataIndex]?.value)
+                    : x.dataIndex === 'totalOrders' // Check if it's 'totalOrders'
+                    ? data[x.dataIndex]?.value // Use value directly without currency format
+                    : formatCurrency(data[x.dataIndex]?.value) // Apply currency format for other cases
                   : 'N/a'}
               </Typography>
             </Stack>
@@ -49,7 +51,7 @@ function ProductItem({ column, data }: any) {
 
 export default function KeyTrend({ column, data }: any) {
   return (
-    <Card sx={{ height: 'auto' }}>
+    <Card sx={{ height: '100%', alignItems: 'center' }}>
       <CardHeader title="Xu hướng chính" fontWeight="bold" sx={{ textDecoration: 'underline' }} />
       <Scrollbar>
         <Stack spacing={3} sx={{ p: 3 }}>

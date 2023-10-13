@@ -1,4 +1,5 @@
 export type TCategorySaleReportBase = {
+  storeId?: any;
   categoryId?: number;
   categoryName?: string;
   quantity?: number;

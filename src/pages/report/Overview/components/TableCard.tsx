@@ -1,13 +1,14 @@
 import { Box, Card, Typography } from '@mui/material';
 import { ReactElement } from 'react';
 import { fNumber, fShortenNumber } from 'utils/formatNumber';
+import { useMediaQuery } from '@mui/material';
 
 type Size = 'small' | 'medium';
 
 type TableCardProps = {
   title: string | ReactElement;
   unit?: string;
-  dataIndex?: string;
+  dataIndex: string;
   fontSize?: Size;
   highlight?: boolean;
 };
@@ -24,7 +25,25 @@ type CardProps = {
   smallCard?: boolean;
 };
 
+// function to calculator and fotmat data,
+const formatData = (data: any, item: TableCardProps) => {
+  if (!data) {
+    return 'N/a';
+  }
+
+  const dataIndexMapping: any = {
+    totalOrderSeller: data['totalOrder'] - data['totalOrderCard'],
+    totalDiscount2: data['totalDiscount'] - data['totalDiscount100'],
+    totalRevenueTotalTotalPreCancel: data['totalRevenuePreCancel'] / data['totalOrderPreCancel']
+  };
+
+  const dataIndexValue = dataIndexMapping[item.dataIndex] || data[item.dataIndex];
+
+  return data[dataIndexValue] ? fShortenNumber(dataIndexValue) : fNumber(dataIndexValue);
+};
+
 export const MiniTableCard: React.FC<CardProps> = ({ data, column, title, subtitle, bc }) => {
+  const isSmallScreen = useMediaQuery('(max-width:600px)');
   return (
     <Card sx={{ backgroundColor: bc, color: 'grey.0', height: '100%' }}>
       <Box
@@ -35,7 +54,7 @@ export const MiniTableCard: React.FC<CardProps> = ({ data, column, title, subtit
           height: '100%'
         }}
       >
-        <Typography textAlign="left" variant="h6" pb={1}>
+        <Typography textAlign="left" variant={isSmallScreen ? 'h5' : 'h6'} pb={1}>
           {title}
         </Typography>
 
@@ -46,11 +65,7 @@ export const MiniTableCard: React.FC<CardProps> = ({ data, column, title, subtit
 
           {column?.map((item: any) => (
             <Typography key={item.dataIndex} textAlign="right" variant="h5">
-              {data
-                ? data[item.dataIndex] < 100
-                  ? fShortenNumber(data[item.dataIndex])
-                  : fNumber(data[item.dataIndex])
-                : 'N/a'}
+              {formatData(data, item) ? formatData(data, item) : 0}
             </Typography>
           ))}
         </Box>
@@ -100,10 +115,14 @@ const TableCard: React.FC<CardProps> = ({
             sx={{
               display: 'flex',
               justifyContent: 'space-between',
-              alignItems: smallCard ? 'flex-start' : 'center',
+              alignItems: 'center',
               borderRadius: 1,
               p: 1,
-              backgroundColor: hItem
+              backgroundColor: hItem,
+              '@media (max-width:600px)': {
+                display: 'block', // Change to block on mobile screens
+                alignItems: 'flex-start' // Adjust alignment for mobile screens
+              }
             }}
           >
             {smallCard ? (
@@ -123,11 +142,7 @@ const TableCard: React.FC<CardProps> = ({
                   ) : (
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                       <Typography sx={{ fontWeight }} variant={fz} component="div">
-                        {data
-                          ? data[item.dataIndex] < 100
-                            ? fShortenNumber(data[item.dataIndex])
-                            : fNumber(data[item.dataIndex])
-                          : 'N/a'}
+                        {formatData(data, item) ? formatData(data, item) : 0}
                       </Typography>
                     </Box>
                   )}
@@ -143,11 +158,7 @@ const TableCard: React.FC<CardProps> = ({
                   ''
                 ) : (
                   <Typography sx={{ fontWeight }} variant={fz} component="div">
-                    {data
-                      ? data[item.dataIndex] < 100
-                        ? fShortenNumber(data[item.dataIndex])
-                        : fNumber(data[item.dataIndex])
-                      : 'N/a'}
+                    {formatData(data, item) ? formatData(data, item) : 0}
                   </Typography>
                 )}
               </>

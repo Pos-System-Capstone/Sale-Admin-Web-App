@@ -369,22 +369,23 @@ export const reportAppSidebarConfig = () => {
           title: 'report.overviewDate',
           path: PATH_REPORT.overviewDate,
           icon: ICONS.calendar
-        },
-        {
-          title: 'report.overviewMonth',
-          path: PATH_REPORT.overviewMonth,
-          icon: ICONS.calendar
         }
+        // {
+        //   title: 'report.overviewMonth',
+        //   path: PATH_REPORT.overviewMonth,
+        //   icon: ICONS.calendar
+        // }
       ]
     },
+
     {
-      subheader: 'report.report',
+      subheader: 'report.reportActivity',
       items: [
-        {
-          title: 'report.productSale',
-          path: PATH_REPORT.productSale,
-          icon: ICONS.product
-        },
+        // {
+        //   title: 'report.productProgress',
+        //   path: PATH_REPORT.productProgress,
+        //   icon: ICONS.analytics
+        // },
         {
           title: 'report.payment',
           path: PATH_REPORT.payment,
@@ -395,6 +396,92 @@ export const reportAppSidebarConfig = () => {
           path: PATH_REPORT.dayReport,
           icon: ICONS.menu
         }
+        // {
+        //   title: 'report.payment',
+        //   path: PATH_REPORT.payment,
+        //   icon: ICONS.ecommerce
+        // },
+        // {
+        //   title: 'report.trading',
+        //   path: PATH_REPORT.dayReport,
+        //   icon: ICONS.menu
+        // }
+        // {
+        //   title: 'report.promotion',
+        //   path: PATH_REPORT.promotion,
+        //   icon: ICONS.kanban
+        // },
+        // {
+        //   title: 'report.stores',
+        //   path: PATH_REPORT.stores,
+        //   icon: ICONS.store
+        // }
+      ]
+    },
+    {
+      subheader: 'report.report',
+      items: [
+        // {
+        //   title: 'report.productProgress',
+        //   path: PATH_REPORT.productProgress,
+        //   icon: ICONS.analytics
+        // },
+        // {
+        //   title: 'report.productSale',
+        //   path: PATH_REPORT.productSale,
+        //   icon: ICONS.product
+        // },
+
+        {
+          title: 'report.productSale',
+          path: PATH_REPORT.productSale,
+          icon: ICONS.product
+        }
+        // {
+        //   title: 'report.category',
+        //   path: PATH_REPORT.category,
+        //   icon: ICONS.category
+        // }
+        // {
+        //   title: 'report.promotion',
+        //   path: PATH_REPORT.promotion,
+        //   icon: ICONS.kanban
+        // },
+        // {
+        //   title: 'report.stores',
+        //   path: PATH_REPORT.stores,
+        //   icon: ICONS.store
+        // }
+      ]
+    },
+    {
+      subheader: 'report.promotion',
+      items: [
+        // {
+        //   title: 'report.productProgress',
+        //   path: PATH_REPORT.productProgress,
+        //   icon: ICONS.analytics
+        // },
+        {
+          title: 'report.promotion',
+          path: PATH_REPORT.promotion,
+          icon: ICONS.kanban
+        }
+        // {
+        //   title: 'report.payment',
+        //   path: PATH_REPORT.payment,
+        //   icon: ICONS.ecommerce
+        // },
+        // {
+        //   title: 'report.trading',
+        //   path: PATH_REPORT.dayReport,
+        //   icon: ICONS.menu
+        // }
+        // {
+        //   title: 'report.promotion',
+        //   path: PATH_REPORT.promotion,
+        //   icon: ICONS.kanban
+        // },
         // {
         //   title: 'report.stores',
         //   path: PATH_REPORT.stores,

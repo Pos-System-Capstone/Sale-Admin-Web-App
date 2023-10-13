@@ -4,8 +4,6 @@ import { useState } from 'react';
 // icon
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import moment from 'moment';
-
 interface optionsType {
   value: any;
   label: any;
@@ -66,16 +64,6 @@ function SelectDateRange({
   const [dateRange, setDateRange] = useState<any>([yesterday, yesterday]);
   const optionList = options ?? [
     {
-      value: 'TODAY',
-      label: 'Hôm nay',
-      subLabel: `Hôm nay ${moment(moment.now()).format('DD/MM')}`
-    },
-    {
-      value: '7_DAYS',
-      label: '7 ngày trước',
-      subLabel: getDateRangeDateAndMonth([SEVEN_DAY_PREVIOUS, yesterday])
-    },
-    {
       value: 'PREV_WEEK',
       label: 'Tuần trước',
       subLabel: getDateRangeDateAndMonth([firstDateOfLastWeek, lastDateOfLastWeek])
@@ -84,6 +72,11 @@ function SelectDateRange({
       value: 'PREV_MONTH',
       label: 'Tháng trước',
       subLabel: getDateRangeDateAndMonth([getFirstDateOfLastMonth, getLastDateOfLastMonth])
+    },
+    {
+      value: '7_DAYS',
+      label: '7 ngày trước',
+      subLabel: getDateRangeDateAndMonth([SEVEN_DAY_PREVIOUS, yesterday])
     },
     {
       value: '30_DAYS',
@@ -130,7 +123,7 @@ function SelectDateRange({
         <Typography fontWeight={'500'}>
           {value === undefined
             ? 'Chọn khoảng thời gian'
-            : optionList?.find((x) => x.value === value)?.subLabel ||
+            : optionList?.find((x) => x.value === value)?.label ||
               getDateRangeDateAndMonth(dateRange)}
         </Typography>
         <KeyboardArrowDownIcon sx={{ ml: 1 }} />

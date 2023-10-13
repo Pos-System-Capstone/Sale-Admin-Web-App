@@ -131,7 +131,7 @@ const MenusPage = () => {
 
   const onConfirmDelete = async () => {
     try {
-      await menuApi.updateMenuStatus(deleteMenu?.id ?? '', MenuStatus.DEACTIVATE).then(() => {
+      await menuApi.updateMenuStatus(deleteMenu?.pos_id ?? '', MenuStatus.DEACTIVATE).then(() => {
         enqueueSnackbar('Xoá thành công', {
           variant: 'success'
         });

@@ -1,12 +1,15 @@
 import { Stack, Typography } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { useRef } from 'react';
+// import { TEmployeeStatistic } from 'types/report/overview';
 import { TTableColumn } from 'types/table';
 import { formatCurrency } from 'utils/utils';
 
+//TODO
 function EmployeeStatistics() {
   const ref = useRef<any>();
-  type ProductSaleDetail = {
+  //test data
+  type TEmployeeStatistic = {
     name?: any;
     cash?: any;
     memberCard?: any;
@@ -15,7 +18,8 @@ function EmployeeStatistics() {
     other?: any;
     total?: any;
   };
-  const employeeColumns: TTableColumn<ProductSaleDetail>[] = [
+
+  const employeeColumns: TTableColumn<TEmployeeStatistic>[] = [
     {
       title: 'Họ và tên',
       hideInSearch: true,
@@ -56,17 +60,17 @@ function EmployeeStatistics() {
       hideInSearch: true,
       dataIndex: 'total',
       render: (value) => formatCurrency(value)
-    },
-    {
-      title: 'Phiên bản (Version)',
-      hideInSearch: true
-      // dataIndex: 'saleRevenue',
-    },
-    {
-      title: 'Ngày cập nhật (Updated at)',
-      hideInSearch: true
-      // dataIndex: 'saleRevenue',
     }
+    // {
+    //   title: 'Phiên bản (Version)',
+    //   hideInSearch: true
+    //   // dataIndex: 'saleRevenue',
+    // },
+    // {
+    //   title: 'Ngày cập nhật (Updated at)',
+    //   hideInSearch: true
+    //   // dataIndex: 'saleRevenue',
+    // }
   ];
   const data = [
     {

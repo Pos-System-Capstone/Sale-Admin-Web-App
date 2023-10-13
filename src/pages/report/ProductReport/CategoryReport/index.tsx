@@ -2,27 +2,27 @@
 // material
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Tab } from '@mui/material';
-import productApi from 'api/report/products';
+import categorySaleApi from 'api/report/category';
 import AutocompleteStore from 'components/form/common/report/AutocompleteStore';
-import ResoReportTable from 'components/ResoReportTable/ResoReportTable';
+import ResoTable from 'components/ResoTable/ResoTable';
 import moment from 'moment';
-import ReportBtn from 'pages/report/components/ReportBtn';
+// import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
-import { TProductSaleReportBase } from 'types/report/product';
+import { TCategorySaleReportBase } from 'types/report/category';
 import { TTableColumn } from 'types/table';
-import { parseParams } from 'utils/axios';
-import { formatDate } from 'utils/formatTime';
 import { DateRange } from '@mui/lab';
 import SelectDateRange from 'pages/report/components/SelectDateRange';
+// import { parseParams } from 'utils/axios';
+import { formatDate } from 'utils/formatTime';
 interface FetchParams {
   storeId: string | null | undefined;
   FromDate?: string;
   ToDate?: string;
   duration?: string;
 }
-const ProductSaleReport = () => {
+const CategoryReport = () => {
   const defaultFilters = {
     fetchParams: {} as FetchParams
   };
@@ -35,7 +35,7 @@ const ProductSaleReport = () => {
   };
   const [activeTab, setActiveTab] = useState('1');
 
-  const productSaleColumn: TTableColumn<TProductSaleReportBase>[] = [
+  const categorySaleColumn: TTableColumn<TCategorySaleReportBase>[] = [
     {
       title: 'Cửa hàng',
       hideInTable: true,
@@ -52,22 +52,12 @@ const ProductSaleReport = () => {
     {
       title: 'Mã sản phẩm',
       hideInSearch: true,
-      dataIndex: 'productCode'
+      dataIndex: 'categoryId'
     },
     {
       title: 'Tên sản phẩm',
       hideInSearch: true,
-      dataIndex: 'productName'
-    },
-    {
-      title: 'Danh mục',
-      hideInSearch: true,
-      dataIndex: 'cateName'
-    },
-    {
-      title: 'Đơn vị tính',
-      hideInSearch: true,
-      dataIndex: 'unit'
+      dataIndex: 'categoryName'
     },
     {
       title: 'Số lượng bán ra',
@@ -76,16 +66,16 @@ const ProductSaleReport = () => {
       valueType: 'digit'
     },
     {
-      title: 'Đơn giá (Chưa VAT)',
-      hideInSearch: true,
-      dataIndex: 'unitPriceNoVat',
-      valueType: 'money'
-    },
-    {
       title: 'Đơn giá (Đã VAT)',
       hideInSearch: true,
-      dataIndex: 'unitPrice',
-      valueType: 'money'
+      dataIndex: 'percent',
+      valueType: 'digit'
+    },
+    {
+      title: 'discount',
+      hideInSearch: true,
+      dataIndex: 'discount',
+      valueType: 'digit'
     },
     {
       title: 'Doanh thu (Chưa VAT)',
@@ -98,18 +88,6 @@ const ProductSaleReport = () => {
       hideInSearch: true,
       valueType: 'money',
       dataIndex: 'totalAfterDiscount'
-    },
-    {
-      title: 'Phiên bản (Version)',
-      hideInSearch: true,
-      dataIndex: 'version',
-      hideInTable: true
-    },
-    {
-      title: 'Ngày cập nhật (Updated at)',
-      hideInSearch: true,
-      dataIndex: 'updatedAt',
-      hideInTable: true
     }
   ];
 
@@ -231,25 +209,25 @@ const ProductSaleReport = () => {
             </TabList>
           </Box>
           <TabPanel value="1">
-            <ResoReportTable
+            <ResoTable
               ref={ref}
-              columns={productSaleColumn}
-              getData={productApi.getProductSale}
+              columns={categorySaleColumn}
+              getData={categorySaleApi.get}
               showAction={false}
               pagination={true}
               defaultFilters={defaultFilters}
-              toolBarRender={() => [
-                <ReportBtn
-                  key="export-excel"
-                  onClick={() =>
-                    window.open(
-                      `${process.env.REACT_APP_REPORT_BASE_URL}/product-report/export?${parseParams(
-                        ref.current.formControl.getValues()
-                      )}`
-                    )
-                  }
-                />
-              ]}
+              // toolBarRender={() => [
+              //   <ReportBtn
+              //     key="export-excel"
+              //     onClick={() =>
+              //       window.open(
+              //         `${process.env.REACT_APP_REPORT_BASE_URL}/product-report/export?${parseParams(
+              //           ref.current.formControl.getValues()
+              //         )}`
+              //       )
+              //     }
+              //   />
+              // ]}
               scroll={{ y: '500px' }}
             />
           </TabPanel>
@@ -260,4 +238,4 @@ const ProductSaleReport = () => {
   );
 };
 
-export default ProductSaleReport;
+export default CategoryReport;

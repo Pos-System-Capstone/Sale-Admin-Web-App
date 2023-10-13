@@ -60,7 +60,7 @@ const FilterStore: React.FC<Props> = ({ filteredStores, stores, onChangeFilter }
                 >
                   {option.name}
                   <br />
-                  <span>{option.code}</span>
+                  <span>{option.store_code}</span>
                 </Box>
               </li>
             )}
@@ -111,7 +111,7 @@ const FilterStore: React.FC<Props> = ({ filteredStores, stores, onChangeFilter }
                       mt: '2px'
                     }}
                     style={{
-                      backgroundColor: COLOR_OPTIONS[10 % COLOR_OPTIONS.length]
+                      backgroundColor: COLOR_OPTIONS[store.store_id % COLOR_OPTIONS.length]
                     }}
                   />
                   <Typography>{store.name}</Typography>

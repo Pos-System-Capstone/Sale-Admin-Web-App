@@ -23,6 +23,12 @@ export const getStoreApplyMenus = (menuId: string, params?: any): any =>
   request.get<TStoreDetail>(`/menus/${menuId}/stores`, {
     params
   });
+export const getStoreApplyMenusV2 = (menuId: number, params?: any): any =>
+  request.get<TStoreDetail>(`/menus/${menuId}/stores`, {
+    params
+  });
+export const addStoreApplyMenus = (menuId: number, data: any): any =>
+  request.post(`/menus/${menuId}/stores`, data);
 
 export const addOrRemoveStoresApplyMenu = (menuId: string, data: any): any =>
   request.post(`/menus/${menuId}/stores`, { storeIds: data });

@@ -18,7 +18,12 @@ import { CardTitle } from 'pages/Products/components/Card';
 import React, { ReactNode, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
-import { deleteStoreApplyMenus, getStoreApplyMenus, updateStoreApplyMenus } from 'redux/menu/api';
+import {
+  addStoreApplyMenus,
+  deleteStoreApplyMenus,
+  getStoreApplyMenusV2,
+  updateStoreApplyMenus
+} from 'redux/menu/api';
 import { Menu } from 'types/menu';
 import { TTableColumn } from 'types/table';
 import { fDate } from 'utils/formatTime';
@@ -58,7 +63,7 @@ export const menuInStoreColumns: TTableColumn<Menu>[] = [
     dataIndex: 'day_filters',
     valueType: 'select',
     valueEnum: DAY_OF_WEEK,
-    render: (_: any, { day_filters: dayFilters, id }: Menu) =>
+    render: (_: any, { day_filters: dayFilters, menu_id }: Menu) =>
       dayFilters.length === 7 ? (
         <Chip label="Cả tuần" color="info" />
       ) : (
@@ -66,7 +71,7 @@ export const menuInStoreColumns: TTableColumn<Menu>[] = [
           {dayFilters?.map((day) => (
             <Chip
               size="small"
-              key={`${id}-${day}`}
+              key={`${menu_id}-${day}`}
               label={DAY_OF_WEEK.find(({ value }) => value === day)?.label}
             />
           ))}
@@ -102,7 +107,7 @@ const StoreApplyTab = () => {
 
   const handleAddStoreApply = async (values: any) => {
     try {
-      await getStoreApplyMenus(id, transformMenuForm(values));
+      await addStoreApplyMenus(+id, transformMenuForm(values));
       enqueueSnackbar('Tạp bảng giá thành công', {
         variant: 'success'
       });
@@ -191,7 +196,7 @@ const StoreApplyTab = () => {
           <ResoTable
             ref={tableRef}
             pagination={false}
-            getData={(params: any) => getStoreApplyMenus(id, params)}
+            getData={(params: any) => getStoreApplyMenusV2(Number(id), params)}
             columns={menuInStoreColumns}
             rowKey="menu_in_store_id"
             onEdit={(values: any) => {

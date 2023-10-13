@@ -107,7 +107,7 @@ const UpdateMenuPage = () => {
 
   const onConfirmUpdateMenuStatus = async () => {
     try {
-      await menuApi.updateMenuStatus(menu!.id, MenuStatus.ACTIVE).then(() => {
+      await menuApi.updateMenuStatus(menu!.pos_id, MenuStatus.ACTIVE).then(() => {
         enqueueSnackbar('Thay đổi trạng thái thành công', {
           variant: 'success'
         });

@@ -64,7 +64,7 @@ const UpdateStorePage = () => {
         });
       });
 
-  const onDeleteStore = async (storeId: string) => {
+  const onDeleteStore = async (storeId: number) => {
     try {
       await storeApi.delete(storeId);
       enqueueSnackbar('Xoá thành công', {
@@ -78,7 +78,7 @@ const UpdateStorePage = () => {
       });
     }
   };
-  const onDeleteMenu = async (menuId: string) => {
+  const onDeleteMenu = async (menuId: number) => {
     try {
       await menuApi.delete(menuId);
       enqueueSnackbar('Xoá thành công', {
@@ -96,7 +96,7 @@ const UpdateStorePage = () => {
   const onConfirmDeleteMenu = async (menu: Menu) => {
     confirm({
       title: 'Xác nhận xoá',
-      content: `Bạn đồng ý xóa menu "${menu.store_name}"?`,
+      content: `Bạn đồng ý xóa menu "${menu.menu_name}"?`,
       onOk: async () => {
         await onDeleteMenu(menu.id);
       },
@@ -108,7 +108,7 @@ const UpdateStorePage = () => {
       title: 'Xác nhận xoá',
       content: `Bạn đồng ý xóa "${store.name}"?`,
       onOk: async () => {
-        await onDeleteStore(store.id);
+        await onDeleteStore(store.store_id);
       },
       onCancle: () => {}
     });

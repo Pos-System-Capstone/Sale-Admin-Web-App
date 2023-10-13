@@ -3,7 +3,6 @@ import { DateRangePicker } from '@mui/lab';
 import { Box, Card, Stack, TextField } from '@mui/material';
 import paymentApi from 'api/report/payment';
 // components
-import ResoTable from 'components/ResoTable/ResoTable';
 import moment from 'moment';
 // material
 import { useEffect, useRef, useState } from 'react';
@@ -13,6 +12,7 @@ import ReportPage from '../components/ReportPage';
 import { paymentColumns, storePaymentColumns } from './column';
 import { useParams } from 'react-router';
 import { parseParams } from '../../../utils/axios';
+import ResoReportTable from 'components/ResoReportTable/ResoReportTable';
 
 const CollectionListPage = () => {
   const ref = useRef<any>();
@@ -58,7 +58,7 @@ const CollectionListPage = () => {
     >
       <Card>
         <Stack spacing={2}>
-          <ResoTable
+          <ResoReportTable
             showAction={false}
             columns={isSystemRole ? paymentColumns : storePaymentColumns}
             getData={paymentApi.get}

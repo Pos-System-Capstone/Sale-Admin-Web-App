@@ -13,7 +13,7 @@ import { Card, CardTitle } from '../../../Products/components/Card';
 const columns: ResoDescriptionColumnType<Menu>[] = [
   {
     title: 'Tên',
-    dataIndex: 'code'
+    dataIndex: 'menu_name'
   },
   {
     title: 'Áp dụng',
@@ -73,7 +73,7 @@ const columns: ResoDescriptionColumnType<Menu>[] = [
     valueType: 'select',
     valueEnum: DAY_OF_WEEK,
     span: 2,
-    render: (_: any, { day_filters: dayFilters, id }: Menu) => (
+    render: (_: any, { day_filters: dayFilters, menu_id }: Menu) => (
       <Stack direction="row" spacing={1}>
         {dayFilters?.length === 7 ? (
           <Chip size="small" color="success" label="Cả tuần" />
@@ -81,7 +81,7 @@ const columns: ResoDescriptionColumnType<Menu>[] = [
           dayFilters?.map((day) => (
             <Chip
               size="small"
-              key={`${id}-${day}`}
+              key={`${menu_id}-${day}`}
               label={DAY_OF_WEEK.find(({ value }) => value === day)?.label}
             />
           ))
@@ -110,7 +110,7 @@ const MenuInfoTab = ({ onSubmit, menu }: { onSubmit: any; menu: Menu }) => {
           <CardTitle>Thông tin Menu</CardTitle>
           <Box>
             <ModalForm
-              title={`Cập nhật bảng giá ${menu.code}`}
+              title={`Cập nhật bảng giá ${menu.menu_name}`}
               onOk={onSubmit}
               trigger={
                 <LoadingAsyncButton startIcon={<Edit />} size="small" variant="contained">

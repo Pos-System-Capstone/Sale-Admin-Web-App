@@ -39,6 +39,7 @@ import TimeReport from 'pages/report/TradingReport/TimeReport';
 import PromotionReport from 'pages/report/PromotionReport';
 import DayReport from 'pages/report/TradingReport';
 import UpdateActionPage from 'pages/promotionEngine/Action/update';
+import UpdateConditionPage from 'pages/promotionEngine/Condition/update';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -349,7 +350,8 @@ export default function Router() {
           path: 'condition',
           children: [
             { path: '', element: <ConditionPage /> },
-            { path: 'new', element: <NewCondition /> }
+            { path: 'new', element: <NewCondition /> },
+            { path: ':id', element: <UpdateConditionPage /> }
           ]
         },
         {

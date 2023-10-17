@@ -4,6 +4,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import { SelectChangeEvent, TextField, Typography } from '@mui/material';
+
 import ResoTable from 'components/ResoTable/ResoTable';
 import { getAllProduct } from 'redux/product/api';
 import { productColumns } from 'pages/Products/config';
@@ -15,7 +16,10 @@ interface CreateConditionFormProps {
   type?: string | undefined;
 }
 
-const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type = 'checkbox' }) => {
+const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
+  nodeId,
+  type = 'checkbox'
+}) => {
   // Cart Item
   const [quantityOperatorCI, setQuantityOperatorCI] = useState<string>('1');
   const [nextOperatorCI, setNextOperatorCI] = useState<number>(2);
@@ -113,7 +117,7 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
               </Select>
             </FormControl>{' '}
             <InputField
-              name="productQuantity"
+              name="conditionGroups[0].condition[0].quantityOperator"
               sx={{ width: '100px' }}
               InputProps={{
                 style: { height: '30px' }
@@ -502,4 +506,4 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
   );
 };
 
-export default CreateConditionForm;
+export default CreateConditionFormUpdate;

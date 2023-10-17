@@ -18,7 +18,7 @@ import { InputField } from 'components/form';
 // import { storeSchemaBuilder } from 'pages/report/PromotionReport/utils';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TaskComponent from './cartop';
 import { TActionBase, TActionCreate } from 'types/promotion/action';
 import actionApi from 'api/promotion/action';
@@ -70,7 +70,6 @@ const UpdateActionPage = () => {
   };
 
   const methods = useForm<TActionBase>({
-    defaultValues: { ...action }
     // resolver: yupResolver(storeSchemaBuilder(translate))
   });
   const { handleSubmit, setValue, reset } = methods;
@@ -109,6 +108,12 @@ const UpdateActionPage = () => {
         });
       });
   };
+
+  useEffect(() => {
+    if (action !== undefined) {
+      reset({ ...action });
+    }
+  }, [action]);
 
   return (
     <FormProvider {...methods}>

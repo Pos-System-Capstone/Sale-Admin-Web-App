@@ -46,11 +46,6 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
       hideInSearch: true
     },
     {
-      title: 'DESCRIDTION',
-      dataIndex: 'description',
-      hideInSearch: true
-    },
-    {
       title: 'Updated date',
       dataIndex: 'updDate',
       render: (value) => fDateTime(value),
@@ -149,9 +144,9 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
         <Stack spacing={2}>
           <ResoTable
             ref={tableRef}
-            onEdit={() => {
-              console.log('edit');
-            }}
+            onEdit={(stores: any) =>
+              navigate(`${PATH_PROMOTION_APP.condition.root}/${stores.conditionRuleId}`)
+            }
             onDelete={() => {
               console.log('delete');
             }}

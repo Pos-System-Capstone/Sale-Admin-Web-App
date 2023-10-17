@@ -32,3 +32,35 @@ export type TConditionBase = {
   insDate?: any;
   updDate?: any;
 };
+
+export type TConditionCreate = {
+  brandId: string;
+  ruleName: string;
+  description: string;
+  conditionGroup: ConditionGroup[];
+}
+
+export type ConditionGroup = {
+  conditionGroupId: string;
+  groupNo: number;
+  nextOperator: number;
+  orderCondition: OrderCondition[];
+  productCondition: ProductCondition[];
+}
+
+export type OrderCondition = {
+  nextOperator: number;
+  indexGroup: number;
+  quantity: number;
+  quantityOperator: string;
+  amount: number;
+  amountOperator: string;
+}
+
+export type ProductCondition = {
+  indexGroup: number;
+  productConditionType: number;
+  productQuantity: number;
+  quantityOperator: string;
+  nextOperator: number;
+}

@@ -124,7 +124,7 @@ const StoreReport = () => {
   return (
     <ReportPage
       title="Thống kê báo cáo cửa hàng"
-      actions={[<ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />]}
+      actions={[<ReportBtn key="export-excel" onClick={() => {}} />]}
     >
       <Card>
         <Stack spacing={2}>

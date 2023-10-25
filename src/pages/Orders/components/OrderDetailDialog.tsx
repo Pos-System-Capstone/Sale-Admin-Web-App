@@ -13,21 +13,23 @@ import {
   styled,
   Typography
 } from '@mui/material';
+import { Box } from '@mui/system';
 import orderApi from 'api/order';
 import EmptyContent from 'components/EmptyContent';
 import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useAuth from 'hooks/useAuth';
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import {
-  ORDER_STATUS_OPTONS,
+  // ORDER_STATUS_OPTONS,
   ORDER_TYPE_OPTONS,
-  PAYMENT_TYPE_OPTIONS,
+  // PAYMENT_TYPE_OPTIONS,
   TOrderDetail
 } from 'types/order';
 import { TProductInOrderDetail } from 'types/product';
 import { TTableColumn } from 'types/table';
+import OrderCustom from './OrderCustom';
 
 type Props = {
   open: boolean;
@@ -58,6 +60,30 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
       enabled: Boolean(orderId)
     }
   );
+
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [selectedOrderStatus, setSelectedOrderStatus] = useState(order?.orderStatus as string);
+  const [selectedPaymentType, setSelectedPaymentType] = useState(order?.paymentType as string);
+
+  const handleUpdateOrder = async () => {
+    setIsUpdating(true);
+
+    try {
+      const updatedData = {
+        status: selectedOrderStatus,
+        paymentType: selectedPaymentType
+      };
+
+      await orderApi.updateOrder(user?.storeId, orderId!, updatedData);
+
+      onClose();
+      window.location.reload();
+    } catch (error) {
+      console.error('Error updating order:', error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   const orderColumns: ResoDescriptionColumnType<TOrderDetail>[] = [
     {
@@ -112,20 +138,20 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
       dataIndex: 'orderType',
       valueEnum: ORDER_TYPE_OPTONS,
       hideInSearch: true
-    },
-    {
-      title: 'Trạng thái',
-      dataIndex: 'orderStatus',
-      valueEnum: ORDER_STATUS_OPTONS,
-      hideInSearch: true
-    },
-    {
-      title: 'Phương thức thanh toán',
-      dataIndex: 'paymentType',
-      hideInSearch: true,
-      valueEnum: PAYMENT_TYPE_OPTIONS,
-      valueType: 'select'
     }
+    // {
+    //   title: 'Trạng thái',
+    //   dataIndex: 'orderStatus',
+    //   valueEnum: ORDER_STATUS_OPTONS,
+    //   hideInSearch: true
+    // },
+    // {
+    //   title: 'Phương thức thanh toán',
+    //   dataIndex: 'paymentType',
+    //   hideInSearch: true,
+    //   valueEnum: PAYMENT_TYPE_OPTIONS,
+    //   valueType: 'select'
+    // }
   ];
 
   const orderItemColumns: TTableColumn<TProductInOrderDetail>[] = [
@@ -192,7 +218,20 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
                 datasource={order}
                 column={2}
               />
-
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '926px' }}>
+                <OrderCustom
+                  title="Trạng thái"
+                  widthCustom="280px"
+                  data={order.orderStatus}
+                  onValueChange={(newValue) => setSelectedOrderStatus(newValue)}
+                />
+                <OrderCustom
+                  title="Phương thức thanh toán"
+                  widthCustom="360px"
+                  data={order.paymentType}
+                  onValueChange={(newValue) => setSelectedPaymentType(newValue)}
+                />
+              </Box>
               <ResoTable
                 showFilter={false}
                 showSettings={false}
@@ -204,8 +243,8 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
             </Stack>
           </DialogContent>
           <DialogActions>
-            <Button color="error" variant="outlined" onClick={onClose}>
-              Huỷ đơn
+            <Button color="secondary" variant="outlined" onClick={handleUpdateOrder}>
+              Cập nhật
             </Button>
             <Button onClick={onClose}>Đóng</Button>
           </DialogActions>

@@ -114,9 +114,9 @@ export default function Router() {
       children: [
         {
           path: '',
-          element: user?.role.includes(Role.SystemAdmin) ? (
+          element: user?.role.includes(Role.BrandAdmin) ? (
             // <Navigate to="/dashboard/analytics" replace />
-            <Navigate to="/dashboard/brands" replace />
+            <Navigate to="/dashboard/brands/detail" replace />
           ) : (
             <Navigate to="/dashboard/app" replace />
           )

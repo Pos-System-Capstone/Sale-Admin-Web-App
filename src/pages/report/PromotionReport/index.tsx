@@ -147,7 +147,7 @@ const PromotionReport = () => {
           }}
           key="date-range"
         />,
-        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
+        <ReportBtn key="export-excel" onClick={() => {}} />
       ]}
     >
       {/* <Card>

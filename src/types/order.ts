@@ -33,7 +33,7 @@ export type TOrder = {
 };
 
 export type TOrderUpdate = {
-  status: OrderStatus;
+  status: string;
   paymentType: string;
 };
 
@@ -89,7 +89,8 @@ export type TOrderDetail = {
 export const ORDER_STATUS_OPTONS = [
   {
     label: 'Tất cả',
-    value: ``
+    value: ``,
+    color: 'default'
   },
   {
     label: 'Đang xử lý',

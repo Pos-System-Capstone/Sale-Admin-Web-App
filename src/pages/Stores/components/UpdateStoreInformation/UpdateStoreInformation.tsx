@@ -30,7 +30,9 @@ const UpdateStoreInformation = ({ currentStoreInformation, onUpdateFormSuccessfu
       code: values.code,
       email: values.email,
       phone: values.phone,
-      shortName: values.shortName
+      shortName: values.shortName,
+      wifiName: values.wifiName,
+      wifiPassword: values.wifiPassword
     };
     setIsOpenConfirmDialog(!isOpenConfirmDialog);
     return storeApi

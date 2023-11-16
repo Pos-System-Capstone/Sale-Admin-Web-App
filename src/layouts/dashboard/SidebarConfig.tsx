@@ -131,15 +131,20 @@ export const brandAdminSidebarConfig = [
     subheader: 'Dashboard',
     items: [
       {
-        title: 'Chi tiết thương hiệu',
-        path: PATH_DASHBOARD.brand.brandDetail,
-        icon: ICONS.tag
+        title: 'Báo cáo',
+        path: PATH_DASHBOARD.general.app,
+        icon: ICONS.dashboard
       }
     ]
   },
   {
     subheader: 'Quản lý thương hiệu',
     items: [
+      {
+        title: 'Chi tiết thương hiệu',
+        path: PATH_DASHBOARD.brand.brandDetail,
+        icon: ICONS.tag
+      },
       {
         title: 'Danh sách cửa hàng',
         path: PATH_DASHBOARD.brand.storesInBrand,

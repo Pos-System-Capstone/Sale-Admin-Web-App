@@ -51,7 +51,8 @@ export enum ProductTypeEnum {
 export enum ProductSizeEnum {
   Small = 'S',
   Medium = 'M',
-  Large = 'L'
+  Large = 'L',
+  XL = 'XL'
 }
 export enum ProductStatusEnum {
   Active = 'Active',

@@ -43,7 +43,6 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
 
               <Box>
                 <Grid container spacing={2}>
-                  {' '}
                   <Grid
                     display="flex"
                     justifyContent="center"
@@ -60,7 +59,6 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
                   </Grid>
                   <Grid item xs={6}>
                     <InputField
-                      disabled={productType === ProductTypeEnum.CHILD}
                       fullWidth
                       name="name"
                       label="Tên sản phẩm"
@@ -94,46 +92,39 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
                       size="small"
                     />
                   </Grid>
-                  {(productType === ProductTypeEnum.CHILD ||
-                    productType === ProductTypeEnum.SINGLE ||
-                    productType === ProductTypeEnum.EXTRA ||
-                    productType === ProductTypeEnum.COMBO) && (
-                    <>
-                      <Grid item xs={4}>
-                        <InputField
-                          fullWidth
-                          type="number"
-                          name="sellingPrice"
-                          label="Giá bán"
-                          required
-                          size="small"
-                          helperText="Giá bán của sản phẩm"
-                        />
-                      </Grid>
-                      <Grid item xs={4}>
-                        <InputField
-                          fullWidth
-                          type="number"
-                          name="discountPrice"
-                          label="Giá giảm"
-                          required
-                          size="small"
-                          helperText="Giá giảm của sản phẩm"
-                        />
-                      </Grid>
-                      <Grid item xs={4}>
-                        <InputField
-                          fullWidth
-                          type="number"
-                          name="historicalPrice"
-                          label="Giá gốc"
-                          required
-                          size="small"
-                          helperText="Chi phí sản xuất sản phẩm"
-                        />
-                      </Grid>
-                    </>
-                  )}
+                  <Grid item xs={4}>
+                    <InputField
+                      fullWidth
+                      type="number"
+                      name="sellingPrice"
+                      label="Giá bán"
+                      required
+                      size="small"
+                      helperText="Giá bán của sản phẩm"
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <InputField
+                      fullWidth
+                      type="number"
+                      name="discountPrice"
+                      label="Giá giảm"
+                      required
+                      size="small"
+                      helperText="Giá giảm của sản phẩm"
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <InputField
+                      fullWidth
+                      type="number"
+                      name="historicalPrice"
+                      label="Giá gốc"
+                      required
+                      size="small"
+                      helperText="Chi phí sản xuất sản phẩm"
+                    />
+                  </Grid>
                   {(productType === ProductTypeEnum.SINGLE ||
                     productType === ProductTypeEnum.PARENT ||
                     productType === ProductTypeEnum.COMBO) && (

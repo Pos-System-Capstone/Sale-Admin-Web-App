@@ -75,51 +75,114 @@ export default function ComingSoon() {
             Điều khoản sử dụng của ứng dụng Deer Coffee. Ứng dụng đặt đồ và giao đồ ăn và thức uống
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>
-            Chào mừng bạn đến với ứng dụng Deer Coffee. Ứng dụng đặt đồ ăn và tích điểm thành viên
-            Deer Coffee (gọi tắt là "ứng dụng"). Đây là một ứng dụng do Công ty TNHH Deer Coffee
-            phát triển và quản lý, nhằm cung cấp cho thành viên Deer Coffee một giải pháp tiện lợi
-            và nhanh chóng để đặt đồ ăn và hàng hoá từ Deer Coffee. Khi bạn sử dụng ứng dụng, bạn
-            đồng ý tuân thủ các điều khoản sử dụng sau đây: <br /> - Bạn phải cung cấp thông tin
-            chính xác và đầy đủ về tên, số điện thoại, địa chỉ giao hàng và phương thức thanh toán
-            khi đăng ký tài khoản và đặt hàng trên ứng dụng. - Bạn không được sử dụng ứng dụng cho
-            bất kỳ mục đích bất hợp pháp, vi phạm quyền của bên thứ ba, gây rối loạn trật tự công
-            cộng hoặc làm tổn hại đến uy tín của Công ty TNHH Deer Coffee hoặc các nhà cung cấp trên
-            ứng dụng. <br /> - Bạn chịu trách nhiệm về việc bảo mật tài khoản và mật khẩu của mình,
-            và không được chia sẻ hoặc cho phép người khác sử dụng tài khoản của mình. Bạn phải
-            thông báo ngay cho Công ty TNHH Deer Coffee nếu phát hiện bất kỳ hành vi xâm nhập, lạm
-            dụng hoặc vi phạm an ninh của tài khoản của mình. <br /> - Bạn phải thanh toán đầy đủ và
-            kịp thời cho các đơn hàng mà bạn đã đặt trên ứng dụng, theo giá và phí đã được niêm yết
-            trên ứng dụng. Bạn có thể chọn thanh toán bằng tiền mặt, thẻ tín dụng, thẻ ghi nợ hoặc
-            ví điện tử khi đặt hàng. Bạn không được hủy đơn hàng sau khi đã xác nhận hoặc khi hàng
-            đã được giao cho nhân viên vận chuyển.
-            <br /> - Bạn có quyền yêu cầu hoàn trả hoặc đổi trả hàng nếu hàng bị hư hỏng, sai sót
-            hoặc không đúng với mô tả trên ứng dụng. Bạn phải liên hệ với Công ty TNHH VHGP hoặc nhà
-            cung cấp trong vòng 24 giờ kể từ khi nhận hàng để được hỗ trợ. Bạn phải giữ nguyên tình
-            trạng và bao bì của hàng khi yêu cầu hoàn trả hoặc đổi trả.
-            <br /> - Công ty TNHH Deer Coffee có quyền thay đổi, cập nhật hoặc ngừng cung cấp ứng
-            dụng bất kỳ lúc nào mà không cần thông báo trước. Công ty TNHH Deer Coffee không chịu
-            trách nhiệm về bất kỳ thiệt hại nào do việc thay đổi, cập nhật hoặc ngừng cung cấp ứng
-            dụng gây ra cho bạn hoặc bên thứ ba.
-            <br /> - Công ty TNHH Deer Coffee có quyền đình chỉ hoặc xóa tài khoản của bạn nếu bạn
-            vi phạm bất kỳ điều khoản sử dụng nào của ứng dụng. Công ty TNHH Deer Coffee cũng có
-            quyền từ chối cung cấp ứng dụng cho bạn nếu bạn có hành vi gian lận, lừa đảo hoặc làm
-            tổn hại đến uy tín của Công ty TNHH Deer Coffee hoặc các nhà cung cấp trên ứng dụng.
-            <br /> - Khi sử dụng Ứng dụng, Khách hàng sẽ được tích lũy điểm thưởng dựa trên giá trị
-            đơn hàng. Công ty sẽ quy định tỷ lệ quy đổi giữa giá trị đơn hàng và điểm thưởng và có
-            thể thay đổi tỷ lệ này bất cứ lúc nào mà không cần thông báo trước. Công ty sẽ hiển thị
-            số điểm thưởng của Khách hàng trên Ứng dụng.
-            <br /> - Điểm thưởng của Khách hàng sẽ có giá trị trong vòng 12 tháng kể từ ngày tích
-            lũy. Nếu Khách hàng không sử dụng điểm thưởng trong thời hạn này, điểm thưởng sẽ bị hết
-            hạn và không được hoàn lại. Công ty có quyền thu hồi hoặc hủy bỏ điểm thưởng của Khách
-            hàng nếu Khách hàng vi phạm Điều khoản, hoặc có hành vi gian lận, lừa đảo, xâm phạm
-            quyền lợi của Công ty hoặc bất kỳ bên thứ ba nào.
-            <br /> - Khách hàng có thể sử dụng điểm thưởng để đổi lấy các sản phẩm, dịch vụ hoặc ưu
-            đãi của Công ty hoặc các đối tác liên kết của Công ty. Công ty sẽ quy định các điều kiện
-            và hạn mức đổi điểm thưởng và có thể thay đổi chúng bất cứ lúc nào mà không cần thông
-            báo trước. Công ty sẽ hiển thị các sản phẩm, dịch vụ hoặc ưu đãi có thể đổi điểm thưởng
-            trên Ứng dụng.
-            <br /> Cảm ơn bạn đã sử dụng ứng dụng Deer Coffee - Ứng dụng đặt đồ ăn Deer Coffee. Chúc
-            bạn có những trải nghiệm tuyệt vời với ứng dụng!
+            Chính sách quyền riêng tư của ứng dụng tích điểm thành viên Deer Coffee
+            <br />
+            Deer Coffee tôn trọng và bảo vệ quyền riêng tư của khách hàng. Chính sách quyền riêng tư
+            này nhằm giải thích cách chúng tôi thu thập, sử dụng, chia sẻ và bảo vệ thông tin cá
+            nhân của bạn khi bạn sử dụng ứng dụng tích điểm thành viên Deer Coffee (sau đây gọi là
+            "Ứng dụng"). Bằng cách sử dụng Ứng dụng, bạn đồng ý với các điều khoản và điều kiện của
+            chính sách quyền riêng tư này.
+            <br />
+            Thông tin cá nhân mà chúng tôi thu thập
+            <br />
+            Khi bạn đăng ký và sử dụng Ứng dụng, chúng tôi có thể yêu cầu bạn cung cấp một số thông
+            tin cá nhân, bao gồm:
+            <br />
+            - Họ và tên
+            <br />
+            - Số điện thoại
+            <br />
+            - Địa chỉ email
+            <br />
+            - Ngày sinh
+            <br />
+            - Giới tính
+            <br />
+            - Ảnh đại diện
+            <br />
+            Chúng tôi cũng có thể thu thập thông tin về cách bạn sử dụng Ứng dụng, bao gồm:
+            <br />
+            - Lịch sử giao dịch
+            <br />
+            - Số điểm tích lũy
+            <br />
+            - Số phiếu mua hàng
+            <br />
+            - Sở thích và lựa chọn của bạn
+            <br />
+            Mục đích thu thập thông tin cá nhân
+            <br />
+            Chúng tôi thu thập thông tin cá nhân của bạn với các mục đích sau:
+            <br />
+            - Để xác minh danh tính và tài khoản của bạn
+            <br />
+            - Để cung cấp cho bạn các tính năng và dịch vụ của Ứng dụng
+            <br />
+            - Để nâng cao chất lượng và trải nghiệm của bạn khi sử dụng Ứng dụng
+            <br />
+            - Để gửi cho bạn các thông báo, tin tức, khuyến mãi và ưu đãi liên quan đến Ứng dụng và
+            Deer Coffee
+            <br />
+            - Để phân tích hành vi và xu hướng của người dùng để cải thiện Ứng dụng và sản phẩm của
+            Deer Coffee
+            <br />
+            - Để tuân thủ các quy định pháp luật có liên quan
+            <br />
+            Cách chúng tôi chia sẻ thông tin cá nhân
+            <br />
+            Chúng tôi không bán, cho thuê hoặc chuyển nhượng thông tin cá nhân của bạn cho bất kỳ
+            bên thứ ba nào mà không có sự đồng ý của bạn. Chúng tôi chỉ chia sẻ thông tin cá nhân
+            của bạn với các bên sau:
+            <br />
+            - Các đối tác, nhà cung cấp hoặc nhà thầu của chúng tôi, để hỗ trợ chúng tôi trong việc
+            cung cấp Ứng dụng và các dịch vụ liên quan. Các bên này phải tuân thủ các cam kết bảo
+            mật tương đương hoặc cao hơn với chúng tôi.
+            <br />
+            - Các cơ quan nhà nước hoặc pháp luật, khi được yêu cầu theo quy định của pháp luật hoặc
+            để bảo vệ quyền lợi hợp pháp của chúng tôi hoặc người khác.
+            <br />
+            - Các bên liên quan trong trường hợp chúng tôi tham gia vào một giao dịch kinh doanh như
+            sáp nhập, mua bán hoặc thoái vốn.
+            <br />
+            Cách chúng tôi bảo vệ thông tin cá nhân
+            <br />
+            Chúng tôi sử dụng các biện pháp kỹ thuật, hành chính và vật lý hợp lý để bảo vệ thông
+            tin cá nhân của bạn khỏi truy cập, sử dụng hoặc tiết lộ trái phép. Tuy nhiên, bạn cũng
+            nên thực hiện các bước cần thiết để bảo vệ thông tin cá nhân của bạn, bao gồm:
+            <br />
+            - Không chia sẻ mật khẩu hoặc thông tin đăng nhập của bạn với bất kỳ ai
+            <br />
+            - Đăng xuất khỏi Ứng dụng khi không sử dụng
+            <br />
+            - Cập nhật Ứng dụng lên phiên bản mới nhất
+            <br />
+            - Sử dụng các phần mềm chống vi-rút và bảo mật trên thiết bị của bạn
+            <br />
+            Quyền và trách nhiệm của bạn
+            <br />
+            Bạn có quyền truy cập, sửa đổi, xóa hoặc yêu cầu ngừng sử dụng thông tin cá nhân của bạn
+            bằng cách liên hệ với chúng tôi theo địa chỉ email deercoffee@gmail.com. Chúng tôi sẽ xử
+            lý yêu cầu của bạn trong thời gian sớm nhất có thể, trừ khi việc làm đó vi phạm các quy
+            định pháp luật hoặc ảnh hưởng đến quyền lợi hợp pháp của chúng tôi.
+            <br />
+            Bạn có trách nhiệm cung cấp thông tin cá nhân chính xác, đầy đủ và cập nhật khi sử dụng
+            Ứng dụng. Bạn cũng có trách nhiệm tuân thủ các điều khoản và điều kiện sử dụng Ứng dụng
+            và các quy định pháp luật có liên quan.
+            <br />
+            Thay đổi chính sách quyền riêng tư
+            <br />
+            Chúng tôi có thể thay đổi chính sách quyền riêng tư này theo thời gian để phù hợp với
+            các hoạt động kinh doanh và yêu cầu pháp luật. Khi có thay đổi, chúng tôi sẽ thông báo
+            cho bạn qua Ứng dụng hoặc email. Bằng cách tiếp tục sử dụng Ứng dụng sau khi có thông
+            báo, bạn đồng ý với các thay đổi đó.
+            <br />
+            Liên hệ với chúng tôi
+            <br />
+            Nếu bạn có bất kỳ câu hỏi, ý kiến hoặc khiếu nại về chính sách quyền riêng tư này hoặc
+            cách chúng tôi xử lý thông tin cá nhân của bạn, vui lòng liên hệ với chúng tôi theo địa
+            chỉ email deercoffee@gmail.com. Chúng tôi sẽ cố gắng giải quyết mọi vấn đề một cách
+            nhanh chóng và hiệu quả.
+            <br />
           </Typography>
 
           <ComingSoonIllustration sx={{ my: 10, height: 240 }} />

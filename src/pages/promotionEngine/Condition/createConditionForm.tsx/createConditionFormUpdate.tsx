@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import { SelectChangeEvent, TextField, Typography } from '@mui/material';
@@ -8,7 +7,7 @@ import { SelectChangeEvent, TextField, Typography } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { getAllProduct } from 'redux/product/api';
 import { productColumns } from 'pages/Products/config';
-import { InputField } from 'components/form';
+import { InputField, SelectField } from 'components/form';
 
 interface CreateConditionFormProps {
   nodeId: string;
@@ -96,25 +95,27 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
             </a>{' '}
             has quantity{' '}
             <FormControl>
-              <Select
+              <SelectField
                 style={{ height: '30px', width: '60px' }}
                 value={quantityOperatorCI}
                 onChange={hanldeQuantityOperatorCI}
+                name="conditionGroups[0].conditions[0].quantityOperator"
+                label={undefined}
               >
-                <MenuItem value="1">
+                <MenuItem value=">">
                   <span>&gt;</span>
                 </MenuItem>
-                <MenuItem value="2">
+                <MenuItem value=">=">
                   <span>&#8805;</span>
                 </MenuItem>
-                <MenuItem value="5"> = </MenuItem>
-                <MenuItem value="3">
+                <MenuItem value="="> = </MenuItem>
+                <MenuItem value="<">
                   <span>&lt;</span>
                 </MenuItem>
-                <MenuItem value="4">
+                <MenuItem value="<=">
                   <span>&#8804;</span>
                 </MenuItem>
-              </Select>
+              </SelectField>
             </FormControl>{' '}
             <InputField
               name="conditionGroups[0].conditions[0].productQuantity"
@@ -127,14 +128,16 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
         </p>
 
         <div> </div>
-        <Select
+        <SelectField
           style={{ height: '50px', width: '90px', marginTop: '14px', marginBottom: '12px' }}
           value={nextOperatorCI}
           onChange={handleNextOperatorCI}
+          name="conditionGroups[0].conditions[0].quantityOperator"
+          label={undefined}
         >
           <MenuItem value={2}>AND</MenuItem>
           <MenuItem value={1}>OR</MenuItem>
-        </Select>
+        </SelectField>
         <div> </div>
         <div>
           <div style={{ position: 'relative', marginTop: '18px' }}>
@@ -155,15 +158,16 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
 
           <p style={{ marginLeft: '8px' }}>
             order{' '}
-            <Select
+            <SelectField
               name="productConditionType"
               style={{ height: '35px', width: '120px' }}
               value={productConditionTypeCI}
               onChange={handleProductConditionTypeCI}
+              label={undefined}
             >
               <MenuItem value={2}>Include</MenuItem>
               <MenuItem value={1}>Exclude</MenuItem>
-            </Select>{' '}
+            </SelectField>{' '}
             all products in{' '}
             <a onClick={toggleDrawer} style={{ color: '#57d8a1' }}>
               selection list({selectedProductCount})
@@ -194,13 +198,14 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
           <p style={{ marginLeft: '8px' }}>
             quantity of product in order is{' '}
             <FormControl>
-              <Select
-                name="conditionGroups[0].conditions[0]"
+              <SelectField
+                name="conditionGroups[0].conditions[0].quantityOperator"
                 style={{ height: '30px', width: '60px' }}
                 value={quantityOperator}
                 onChange={handleQuantity}
+                label={undefined}
               >
-                <MenuItem value="conditionGroups[0].conditions[0].quantityOperator">
+                <MenuItem value=">">
                   <span>&gt;</span>
                 </MenuItem>
                 <MenuItem value=">=">
@@ -213,7 +218,7 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
                 <MenuItem value="<=">
                   <span>&#8804;</span>
                 </MenuItem>
-              </Select>
+              </SelectField>
             </FormControl>{' '}
             <InputField
               name="conditionGroups[0].conditions[0].quantity"
@@ -225,15 +230,16 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
           </p>
         </p>
         <div />
-        <Select
+        <SelectField
           name="conditionGroups[0].conditions[0].nextOperator"
           style={{ height: '50px', width: '90px', marginTop: '14px', marginBottom: '12px' }}
           value={nextOperator}
           onChange={handleNextOperator}
+          label={undefined}
         >
           <MenuItem value={2}>AND</MenuItem>
           <MenuItem value={1}>OR</MenuItem>
-        </Select>
+        </SelectField>
         <div />
         <div>
           <div style={{ position: 'relative', marginTop: '8px' }}>
@@ -254,26 +260,27 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
           <p style={{ marginLeft: '8px' }}>
             order has total amount{' '}
             <FormControl>
-              <Select
-                name="amountOperator"
+              <SelectField
+                name="conditionGroups[0].conditions[0].amountOperator"
                 style={{ height: '30px', width: '60px' }}
                 value={amountOperator}
                 onChange={handleAmountOperator}
+                label={undefined}
               >
-                <MenuItem value="1">
+                <MenuItem value=">">
                   <span>&gt;</span>
                 </MenuItem>
-                <MenuItem value="2">
+                <MenuItem value=">=">
                   <span>&#8805;</span>
                 </MenuItem>
-                <MenuItem value="5"> = </MenuItem>
-                <MenuItem value="3">
+                <MenuItem value="="> = </MenuItem>
+                <MenuItem value="<">
                   <span>&lt;</span>
                 </MenuItem>
-                <MenuItem value="4">
+                <MenuItem value="<=">
                   <span>&#8804;</span>
                 </MenuItem>
-              </Select>
+              </SelectField>
             </FormControl>{' '}
             <InputField
               name="conditionGroups[0].conditions[0].amount"
@@ -311,10 +318,12 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
           </a>{' '}
           has quantity{' '}
           <FormControl>
-            <Select
+            <SelectField
               style={{ height: '30px', width: '60px' }}
               value={quantityOperatorCI}
               onChange={hanldeQuantityOperatorCI}
+              name={undefined}
+              label={undefined}
             >
               <MenuItem value="1">
                 <span>&gt;</span>
@@ -329,7 +338,7 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
               <MenuItem value="4">
                 <span>&#8804;</span>
               </MenuItem>
-            </Select>
+            </SelectField>
           </FormControl>{' '}
           <TextField
             sx={{ width: '100px' }}
@@ -361,15 +370,16 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
 
         <p style={{ marginLeft: '8px' }}>
           order{' '}
-          <Select
+          <SelectField
             name="productConditionType"
             style={{ height: '30px', width: '120px' }}
             value={productConditionTypeCI}
             onChange={handleProductConditionTypeCI}
+            label={undefined}
           >
             <MenuItem value={2}>Include</MenuItem>
             <MenuItem value={1}>Exclude</MenuItem>
-          </Select>{' '}
+          </SelectField>{' '}
           all products in{' '}
           <a onClick={toggleDrawer} style={{ color: '#57d8a1' }}>
             selection list({selectedProductCount})
@@ -398,10 +408,12 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
         <p style={{ marginLeft: '8px' }}>
           quantity of product in order is{' '}
           <FormControl>
-            <Select
+            <SelectField
               style={{ height: '30px', width: '60px' }}
               value={quantityOperator}
               onChange={handleQuantity}
+              name={undefined}
+              label={undefined}
             >
               <MenuItem value="1">
                 <span>&gt;</span>
@@ -416,7 +428,7 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
               <MenuItem value="4">
                 <span>&#8804;</span>
               </MenuItem>
-            </Select>
+            </SelectField>
           </FormControl>{' '}
           <InputField
             name="conditionGroups[0].conditions[0].quantity"
@@ -449,11 +461,12 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
         <p style={{ marginLeft: '8px' }}>
           order has total amount{' '}
           <FormControl>
-            <Select
+            <SelectField
               name="amountOperator"
               style={{ height: '30px', width: '60px' }}
               value={amountOperator}
               onChange={handleAmountOperator}
+              label={undefined}
             >
               <MenuItem value="1">
                 <span>&gt;</span>
@@ -468,7 +481,7 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
               <MenuItem value="4">
                 <span>&#8804;</span>
               </MenuItem>
-            </Select>
+            </SelectField>
           </FormControl>{' '}
           <InputField
             name="conditionGroups[0].conditions[0].amount"

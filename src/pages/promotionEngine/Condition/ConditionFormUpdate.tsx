@@ -79,7 +79,7 @@ const ConditionForm = ({ updateMode }: Props) => {
       <Grid container spacing={2}>
         <Grid item xs={6} sm={4}>
           <Paper variant="outlined" sx={{ width: '100%' }}>
-            <h3>Condition</h3>
+            <h3>ĐIỀU KIỆN</h3>
 
             <TreeView
               aria-label="file system navigator"

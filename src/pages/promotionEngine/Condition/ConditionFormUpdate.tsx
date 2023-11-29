@@ -1,15 +1,13 @@
 import { Box, Grid, Paper } from '@mui/material';
 import { InputField } from 'components/form';
 // import TreeViewField, { RenderTree } from 'components/form/TreeViewField/TreeViewField';
-
-import * as React from 'react';
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
-import CreateConditionForm from './createConditionForm.tsx/createConditionForm';
+import CreateConditionFormUpdate from './createConditionForm.tsx/createConditionFormUpdate';
 // import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 interface Props {
@@ -70,17 +68,18 @@ const ConditionForm = ({ updateMode }: Props) => {
     <>
       <Grid container spacing={2}>
         <Grid item xs={6} sm={6} style={{ height: '100px' }}>
-          <InputField fullWidth name="ruleName" label="Tên Điều kiện" maxlength="200px" />
+          <InputField fullWidth name="ruleName" label="Tên " maxlength="200px" />
+          {/* <FormHelperText error>Please input name</FormHelperText> */}
         </Grid>
 
         <Grid item xs={6} sm={6}>
-          <InputField name="description" label="Mô tả Điều Kiện" fullWidth multiline></InputField>
+          <InputField name="description" label="Mô tả" fullWidth multiline></InputField>
         </Grid>
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={6} sm={4}>
           <Paper variant="outlined" sx={{ width: '100%' }}>
-            <h3>Điều Kiện</h3>
+            <h3>Condition</h3>
 
             <TreeView
               aria-label="file system navigator"
@@ -92,13 +91,13 @@ const ConditionForm = ({ updateMode }: Props) => {
                 nodeId="1"
                 label="Cart item"
                 icon=" "
-                onClick={() => handleTreeItemClick('1', 'Cart item content')}
+                onClick={() => handleTreeItemClick('1', 'productCondition')}
               >
                 <TreeItem
                   nodeId="2"
                   label="Quantity"
                   icon=" "
-                  onClick={() => handleTreeItemClick('2', 'Cart item content')}
+                  onClick={() => handleTreeItemClick('2', 'quantity')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -123,41 +122,12 @@ const ConditionForm = ({ updateMode }: Props) => {
                   }}
                 />
               </TreeItem>
-              {/* <TreeItem nodeId="1" label="Cart item" icon=" ">
-                <TreeItem
-                  nodeId="2"
-                  label="Quantity"
-                  // icon=" "
-                  sx={{
-                    border: '1px solid #57d8a1',
-                    m: '10px 0',
-                    width: '160px',
-                    p: '1.1px',
-                    height: '25px',
-                    borderRadius: 0.5
-                  }}
-                />
-                <TreeItem
-                  nodeId="3"
-                  label="Product code"
-                  icon=" "
-                  sx={{
-                    border: '1px solid #57d8a1',
-                    m: '10px 0',
-                    // mb: '0.5rem',
-                    width: '160px',
-                    height: '25px',
-                    p: '1.1px',
-                    borderRadius: 0.5
-                  }}
-                />
-              </TreeItem> */}
 
               <TreeItem
                 nodeId="4"
                 label="Cart"
                 icon=" "
-                onClick={() => handleTreeItemClick('4', 'Cart item content')}
+                onClick={() => handleTreeItemClick('4', 'orderCondition')}
                 sx={{
                   mb: '0.5rem',
                   mt: '1rem'
@@ -231,7 +201,7 @@ const ConditionForm = ({ updateMode }: Props) => {
           >
             <Paper variant="outlined" sx={{ width: '100%' }}>
               {selectedNodeId !== null && (
-                <CreateConditionForm nodeId={selectedNodeId} content={currentContent} />
+                <CreateConditionFormUpdate nodeId={selectedNodeId} content={currentContent} />
               )}
             </Paper>
           </Box>

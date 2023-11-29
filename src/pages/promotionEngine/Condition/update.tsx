@@ -11,7 +11,7 @@ import { useNavigate, useParams } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import * as yup from 'yup';
-import ConditionFormUpdate from 'components/form/common/Category/ConditionFormUpdate';
+import ConditionFormUpdate from 'pages/promotionEngine/Condition/ConditionFormUpdate';
 import { TConditionBase, TConditionCreate } from 'types/promotion/condition';
 import { getUserInfo } from 'utils/utils';
 import conditionApi from 'api/promotion/condition';
@@ -66,11 +66,11 @@ const UpdateConditionPage = (props: Props) => {
     body.brandId = user.brandId;
     body.ruleName = values.ruleName;
     body.description = values.description;
-    body.conditionGroup = values.conditionGroup;
+    body.conditionGroups = values.conditionGroups;
     conditionApi
       .createCondition(body)
       .then((res) => {
-        enqueueSnackbar(`Tạo thành công`, {
+        enqueueSnackbar(`Cập nhật thành công`, {
           variant: 'success'
         });
         navigate(`${PATH_PROMOTION_APP.condition.root}/${res.data}`);

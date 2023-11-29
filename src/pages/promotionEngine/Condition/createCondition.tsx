@@ -6,7 +6,7 @@ import useDashboard from 'hooks/useDashboard';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 import Alert from '@mui/material/Alert';
-import ConditionForm from 'components/form/common/Category/ConditionForm';
+import ConditionForm from 'pages/promotionEngine/Condition/ConditionForm';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
@@ -44,7 +44,7 @@ const NewCondition = (props: Props) => {
     body.brandId = user.brandId;
     body.ruleName = values.ruleName;
     body.description = values.description;
-    body.conditionGroup = values.conditionGroup;
+    body.conditionGroups = values.conditionGroups;
     conditionApi
       .createCondition(body)
       .then((res) => {
@@ -69,11 +69,11 @@ const NewCondition = (props: Props) => {
             type="submit"
             variant="contained"
           >
-            + New Rule
+            + Tạo
           </LoadingAsyncButton>
         </Stack>
       </DashboardNavLayout>
-      <Page title="CONDITION BUILDER">
+      <Page title="TẠO ĐIỀU KIỆN MỚI">
         <Stack spacing={2}>
           <Stack sx={{ width: '680px' }} spacing={2}>
             <Alert severity="warning">

@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import { SelectChangeEvent, TextField, Typography } from '@mui/material';
-
 import ResoTable from 'components/ResoTable/ResoTable';
-import { getAllProduct } from 'redux/product/api';
-import { productColumns } from 'pages/Products/config';
+import { getUserInfo } from 'utils/utils';
 import { InputField } from 'components/form';
+import productPromotionApi from 'api/promotion/product';
+import { productPromotionColumns } from 'pages/promotionEngine/Products/config';
 
 interface CreateConditionFormProps {
   nodeId: string;
@@ -16,10 +16,7 @@ interface CreateConditionFormProps {
   type?: string | undefined;
 }
 
-const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
-  nodeId,
-  type = 'checkbox'
-}) => {
+const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type = 'checkbox' }) => {
   // Cart Item
   const [quantityOperatorCI, setQuantityOperatorCI] = useState<string>('1');
   const [nextOperatorCI, setNextOperatorCI] = useState<number>(2);
@@ -37,6 +34,16 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
     setSelectedProductIds(ids);
     setSelectedProductCount(ids.length);
   }, []);
+
+  const tableRef = useRef<any>();
+
+  const userRaw = getUserInfo();
+  const user: any = JSON.parse(userRaw ?? '{}');
+  useEffect(() => {
+    if (tableRef.current) {
+      tableRef.current.formControl.setValue('brandId', user.brandId!);
+    }
+  }, [user]);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -90,11 +97,11 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
             ></span>
           </div>
           <p style={{ marginLeft: '8px' }}>
-            each product in the{' '}
+            mỗi sản phẩm trong{' '}
             <a onClick={toggleDrawer} style={{ color: '#57d8a1' }}>
-              selection list({selectedProductCount})
+              danh sách lựa chọn({selectedProductCount})
             </a>{' '}
-            has quantity{' '}
+            đều có số lượng{' '}
             <FormControl>
               <Select
                 style={{ height: '30px', width: '60px' }}
@@ -117,7 +124,7 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
               </Select>
             </FormControl>{' '}
             <InputField
-              name="conditionGroups[0].condition[0].quantityOperator"
+              name="productQuantity"
               sx={{ width: '100px' }}
               InputProps={{
                 style: { height: '30px' }
@@ -128,12 +135,12 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
 
         <div> </div>
         <Select
-          style={{ height: '50px', width: '90px', marginTop: '14px', marginBottom: '12px' }}
+          style={{ height: '50px', width: '100px', marginTop: '14px', marginBottom: '12px' }}
           value={nextOperatorCI}
           onChange={handleNextOperatorCI}
         >
-          <MenuItem value={2}>AND</MenuItem>
-          <MenuItem value={1}>OR</MenuItem>
+          <MenuItem value={2}> VÀ</MenuItem>
+          <MenuItem value={1}>HOẶC</MenuItem>
         </Select>
         <div> </div>
         <div>
@@ -154,19 +161,19 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
           </div>
 
           <p style={{ marginLeft: '8px' }}>
-            order{' '}
+            đặt hàng{' '}
             <Select
               name="productConditionType"
               style={{ height: '35px', width: '120px' }}
               value={productConditionTypeCI}
               onChange={handleProductConditionTypeCI}
             >
-              <MenuItem value={2}>Include</MenuItem>
-              <MenuItem value={1}>Exclude</MenuItem>
+              <MenuItem value={2}>Bao gồm</MenuItem>
+              <MenuItem value={1}>Ngoại trừ</MenuItem>
             </Select>{' '}
-            all products in{' '}
+            tất cả các sản phẩm trong{' '}
             <a onClick={toggleDrawer} style={{ color: '#57d8a1' }}>
-              selection list({selectedProductCount})
+              danh sách lựa chọn({selectedProductCount})
             </a>
           </p>
         </div>
@@ -192,7 +199,7 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
             ></span>
           </div>
           <p style={{ marginLeft: '8px' }}>
-            quantity of product in order is{' '}
+            số lượng sản phẩm đặt hàng là{' '}
             <FormControl>
               <Select
                 name="quantityOperator"
@@ -227,12 +234,12 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
         <div />
         <Select
           name="nextOperator"
-          style={{ height: '50px', width: '90px', marginTop: '14px', marginBottom: '12px' }}
+          style={{ height: '50px', width: '100px', marginTop: '14px', marginBottom: '12px' }}
           value={nextOperator}
           onChange={handleNextOperator}
         >
-          <MenuItem value={2}>AND</MenuItem>
-          <MenuItem value={1}>OR</MenuItem>
+          <MenuItem value={2}>VÀ</MenuItem>
+          <MenuItem value={1}>HOẶC</MenuItem>
         </Select>
         <div />
         <div>
@@ -252,7 +259,7 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
             ></span>
           </div>
           <p style={{ marginLeft: '8px' }}>
-            order has total amount{' '}
+            đơn hàng có tổng số tiền{' '}
             <FormControl>
               <Select
                 name="amountOperator"
@@ -305,11 +312,11 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
           ></span>
         </div>
         <p style={{ marginLeft: '8px' }}>
-          each product in the{' '}
+          mỗi sản phẩm trong{' '}
           <a onClick={toggleDrawer} style={{ color: '#57d8a1' }}>
-            selection list({selectedProductCount})
+            danh sách lựa chọn({selectedProductCount})
           </a>{' '}
-          has quantity{' '}
+          đều có số lượng{' '}
           <FormControl>
             <Select
               style={{ height: '30px', width: '60px' }}
@@ -360,19 +367,19 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
         </div>
 
         <p style={{ marginLeft: '8px' }}>
-          order{' '}
+          đặt hàng{' '}
           <Select
             name="productConditionType"
             style={{ height: '30px', width: '120px' }}
             value={productConditionTypeCI}
             onChange={handleProductConditionTypeCI}
           >
-            <MenuItem value={2}>Include</MenuItem>
-            <MenuItem value={1}>Exclude</MenuItem>
+            <MenuItem value={2}>Bao gồm</MenuItem>
+            <MenuItem value={1}>Ngoại trừ</MenuItem>
           </Select>{' '}
-          all products in{' '}
+          tất cả các sản phẩm trong{' '}
           <a onClick={toggleDrawer} style={{ color: '#57d8a1' }}>
-            selection list({selectedProductCount})
+            danh sách lựa chọn({selectedProductCount})
           </a>
         </p>
       </div>
@@ -396,7 +403,7 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
           ></span>
         </div>
         <p style={{ marginLeft: '8px' }}>
-          quantity of product in order is{' '}
+          số lượng sản phẩm đặt hàng là{' '}
           <FormControl>
             <Select
               style={{ height: '30px', width: '60px' }}
@@ -447,7 +454,7 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
           ></span>
         </div>
         <p style={{ marginLeft: '8px' }}>
-          order has total amount{' '}
+          Đơn hàng có tổng số tiền{' '}
           <FormControl>
             <Select
               name="amountOperator"
@@ -496,9 +503,10 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
           showAction={false}
           scroll={{ y: '50%', x: '100%' }}
           rowKey="id"
-          getData={getAllProduct}
+          ref={tableRef}
+          getData={(param: any) => productPromotionApi.getProduct(param)}
           onChangeSelection={handleChangeSelection}
-          columns={productColumns}
+          columns={productPromotionColumns}
         />
       </Drawer>
       {formContent}
@@ -506,4 +514,4 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
   );
 };
 
-export default CreateConditionFormUpdate;
+export default CreateConditionForm;

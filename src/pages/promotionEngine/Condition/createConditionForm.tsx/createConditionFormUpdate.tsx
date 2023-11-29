@@ -4,6 +4,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import { SelectChangeEvent, TextField, Typography } from '@mui/material';
+
 import ResoTable from 'components/ResoTable/ResoTable';
 import { getAllProduct } from 'redux/product/api';
 import { productColumns } from 'pages/Products/config';
@@ -15,7 +16,10 @@ interface CreateConditionFormProps {
   type?: string | undefined;
 }
 
-const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type = 'checkbox' }) => {
+const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
+  nodeId,
+  type = 'checkbox'
+}) => {
   // Cart Item
   const [quantityOperatorCI, setQuantityOperatorCI] = useState<string>('1');
   const [nextOperatorCI, setNextOperatorCI] = useState<number>(2);
@@ -113,7 +117,7 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
               </Select>
             </FormControl>{' '}
             <InputField
-              name="productQuantity"
+              name="conditionGroups[0].conditions[0].productQuantity"
               sx={{ width: '100px' }}
               InputProps={{
                 style: { height: '30px' }
@@ -191,28 +195,28 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
             quantity of product in order is{' '}
             <FormControl>
               <Select
-                name="quantityOperator"
+                name="conditionGroups[0].conditions[0]"
                 style={{ height: '30px', width: '60px' }}
                 value={quantityOperator}
                 onChange={handleQuantity}
               >
-                <MenuItem value="1">
+                <MenuItem value="conditionGroups[0].conditions[0].quantityOperator">
                   <span>&gt;</span>
                 </MenuItem>
-                <MenuItem value="2">
+                <MenuItem value=">=">
                   <span>&#8805;</span>
                 </MenuItem>
-                <MenuItem value="5"> = </MenuItem>
-                <MenuItem value="3">
+                <MenuItem value="="> = </MenuItem>
+                <MenuItem value="<">
                   <span>&lt;</span>
                 </MenuItem>
-                <MenuItem value="4">
+                <MenuItem value="<=">
                   <span>&#8804;</span>
                 </MenuItem>
               </Select>
             </FormControl>{' '}
             <InputField
-              name="quantity"
+              name="conditionGroups[0].conditions[0].quantity"
               sx={{ width: '100px' }}
               InputProps={{
                 style: { height: '30px' }
@@ -222,7 +226,7 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
         </p>
         <div />
         <Select
-          name="nextOperator"
+          name="conditionGroups[0].conditions[0].nextOperator"
           style={{ height: '50px', width: '90px', marginTop: '14px', marginBottom: '12px' }}
           value={nextOperator}
           onChange={handleNextOperator}
@@ -272,7 +276,7 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
               </Select>
             </FormControl>{' '}
             <InputField
-              name="amount"
+              name="conditionGroups[0].conditions[0].amount"
               sx={{ width: '100px' }}
               InputProps={{
                 style: { height: '30px' }
@@ -415,7 +419,7 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
             </Select>
           </FormControl>{' '}
           <InputField
-            name="quantity"
+            name="conditionGroups[0].conditions[0].quantity"
             sx={{ width: '100px' }}
             InputProps={{
               style: { height: '30px' }
@@ -467,7 +471,7 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
             </Select>
           </FormControl>{' '}
           <InputField
-            name="amount"
+            name="conditionGroups[0].conditions[0].amount"
             sx={{ width: '100px' }}
             InputProps={{
               style: { height: '30px' }
@@ -502,4 +506,4 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
   );
 };
 
-export default CreateConditionForm;
+export default CreateConditionFormUpdate;

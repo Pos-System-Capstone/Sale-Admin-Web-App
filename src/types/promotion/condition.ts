@@ -34,33 +34,36 @@ export type TConditionBase = {
 };
 
 export type TConditionCreate = {
+  conditionRuleId: string;
   brandId: string;
   ruleName: string;
   description: string;
-  conditionGroup: ConditionGroup[];
-}
+  conditionGroups: ConditionGroup[];
+  promotionId: any;
+  promotionName: any;
+  insDate: string;
+  updDate: string;
+};
 
 export type ConditionGroup = {
   conditionGroupId: string;
+  conditionRuleId: string;
   groupNo: number;
   nextOperator: number;
-  orderCondition: OrderCondition[];
-  productCondition: ProductCondition[];
-}
+  conditions: Condition[];
+  summary: string;
+};
 
-export type OrderCondition = {
+export type Condition = {
+  orderConditionId: string;
+  conditionGroupId: string;
   nextOperator: number;
   indexGroup: number;
   quantity: number;
   quantityOperator: string;
   amount: number;
   amountOperator: string;
-}
-
-export type ProductCondition = {
-  indexGroup: number;
-  productConditionType: number;
-  productQuantity: number;
-  quantityOperator: string;
-  nextOperator: number;
-}
+  delFlg: boolean;
+  insDate: string;
+  updDate: string;
+};

@@ -138,21 +138,25 @@ export type StoreReport = {
   totalRevenue: number;
   inStoreAmount: number;
   deliAmount: number;
+  topUpAmount: number;
   takeAwayAmount: number;
   totalProduct: number;
   totalOrder: number;
   totalOrderInStore: number;
   totalOrderTakeAway: number;
   totalOrderDeli: number;
+  totalOrderTopUp: number;
   averageBill: number;
   totalCash: number;
   totalMomo: number;
   totalBanking: number;
   totalVisa: number;
+  totalPointify: number;
   cashAmount: number;
   momoAmount: number;
   bankingAmount: number;
   visaAmount: number;
+  pointifyAmount: number;
   timeLine: number[];
   totalOrderTimeLine: number[];
   totalAmountTimeLine: number[];
@@ -196,10 +200,12 @@ export type SessionReport = {
   totalBanking: number;
   totalMomo: number;
   totalVisa: number;
+  totalPointify: number;
   cashAmount: number;
   momoAmount: number;
   bankingAmount: number;
   visaAmount: number;
+  pointifyAmount: number;
 };
 
 export type PromotionReport = {

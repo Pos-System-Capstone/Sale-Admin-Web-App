@@ -182,14 +182,16 @@ export default function GeneralApp() {
                 totalOrder={[
                   report?.totalOrderInStore ?? 0,
                   report?.totalOrderTakeAway ?? 0,
-                  report?.totalOrderDeli ?? 0
+                  report?.totalOrderDeli ?? 0,
+                  report?.totalOrderTopUp ?? 0
                 ]}
                 totalOrderAmount={[
                   report?.inStoreAmount ?? 0,
                   report?.takeAwayAmount ?? 0,
-                  report?.deliAmount ?? 0
+                  report?.deliAmount ?? 0,
+                  report?.topUpAmount ?? 0
                 ]}
-                listName={['Tại quán', 'Mang đi', 'Giao hàng']}
+                listName={['Tại quán', 'Mang đi', 'Giao hàng', 'Nạp thẻ']}
                 filterTitle={['Số lượng đơn', 'Doanh thu']}
               />
             </Grid>
@@ -200,15 +202,17 @@ export default function GeneralApp() {
                   report?.totalCash ?? 0,
                   report?.totalMomo ?? 0,
                   report?.totalBanking ?? 0,
+                  report?.totalPointify ?? 0,
                   report?.totalVisa ?? 0
                 ]}
                 totalOrderAmount={[
                   report?.cashAmount ?? 0,
                   report?.momoAmount ?? 0,
                   report?.bankingAmount ?? 0,
+                  report?.pointifyAmount ?? 0,
                   report?.visaAmount ?? 0
                 ]}
-                listName={['Tiền mặt', 'Momo', 'Ngân hàng', 'Visa/MasterCard']}
+                listName={['Tiền mặt', 'Momo', 'Ngân hàng', 'Ví thành viên', 'Visa/MasterCard']}
                 filterTitle={['Số lượng đơn', 'Doanh thu']}
               />
             </Grid>

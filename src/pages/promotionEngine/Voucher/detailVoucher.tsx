@@ -91,7 +91,7 @@ const DetailVoucher = () => {
 
   return (
     <FormProvider {...updateVoucherForm}>
-      <Page title="Tạo voucher code">
+      <Page title="Chi tiết Voucher code">
         <Box display="flex">
           <FormDetail />
         </Box>

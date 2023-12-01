@@ -126,7 +126,7 @@ const FormDetailInformation = (props: Props) => {
         <CustomTabPanel value={value} index={0}>
           <Grid container spacing={2}>
             <Grid item xs={7}>
-              <Card>
+              <Card sx={{ height: '112.95px' }}>
                 <TextField
                   label="Nhập mã voucher cần tìm"
                   variant="outlined"
@@ -143,20 +143,22 @@ const FormDetailInformation = (props: Props) => {
             </Grid>
             <Grid item xs={4.5}>
               <Card>
-                <TextField variant="outlined" sx={{ width: '180px', pb: '20px' }} />
-                <Button variant="contained" sx={{ height: '56px', ml: '20px' }} startIcon={<Add />}>
+                <TextField variant="outlined" sx={{ width: '180px', pb: '2px' }} />
+                <Button variant="contained" sx={{ height: '53px', ml: '10px' }} startIcon={<Add />}>
                   Thêm voucher
                 </Button>
                 <Typography
-                  variant="subtitle1"
+                  variant="subtitle2"
                   color="textSecondary"
                   fontWeight="bold"
-                  sx={{ pb: '17px' }}
+                  sx={{ pb: '1px' }}
                 >
-                  Số lượng tối đa của voucher là 9999 voucher
+                  Số lượng tối đa của voucher là 999 voucher
                 </Typography>
               </Card>
             </Grid>
+          </Grid>
+          <Box sx={{ pt: '5px' }}>
             <TabContext value={activeTab}>
               <ResoTable
                 ref={ref}
@@ -171,7 +173,7 @@ const FormDetailInformation = (props: Props) => {
                 rowKey="voucher_id"
               />
             </TabContext>
-          </Grid>
+          </Box>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           Item Two

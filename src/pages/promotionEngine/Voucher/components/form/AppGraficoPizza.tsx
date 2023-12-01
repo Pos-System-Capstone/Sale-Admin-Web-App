@@ -2,7 +2,7 @@ import { merge } from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 // material
 import { useTheme, styled } from '@mui/material/styles';
-import { Card, CardHeader } from '@mui/material';
+import { Card } from '@mui/material';
 // utils
 import { fNumber } from 'utils/formatNumber';
 //
@@ -10,12 +10,12 @@ import { BaseOptionChart } from 'components/charts';
 
 // ----------------------------------------------------------------------
 
-const CHART_HEIGHT = 390;
-const LEGEND_HEIGHT = 72;
+const CHART_HEIGHT = 270;
+const LEGEND_HEIGHT = 40;
 
 const ChartWrapperStyle = styled('div')(({ theme }) => ({
   height: CHART_HEIGHT,
-  marginTop: theme.spacing(5),
+  marginTop: theme.spacing(3),
   '& .apexcharts-canvas svg': { height: CHART_HEIGHT },
   '& .apexcharts-canvas svg,.apexcharts-canvas foreignObject': {
     overflow: 'visible'
@@ -31,7 +31,6 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 
 interface AppGraficoPizzaProps {
   chartData: {
-    title: string;
     labelsData: string[];
     series: number[];
   };
@@ -41,12 +40,7 @@ const AppGraficoPizza: React.FC<AppGraficoPizzaProps> = ({ chartData }) => {
   const theme = useTheme();
 
   const chartOptions = merge(BaseOptionChart(), {
-    colors: [
-      theme.palette.primary.main,
-      theme.palette.info.main,
-      theme.palette.warning.main,
-      theme.palette.error.main
-    ],
+    colors: [theme.palette.error.main, theme.palette.primary.main, theme.palette.warning.main],
     labels: chartData.labelsData,
     stroke: { colors: [theme.palette.background.paper] },
     legend: { floating: true, horizontalAlign: 'center' },
@@ -54,10 +48,7 @@ const AppGraficoPizza: React.FC<AppGraficoPizzaProps> = ({ chartData }) => {
     tooltip: {
       fillSeriesColor: false,
       y: {
-        formatter: (seriesName: number) => fNumber(seriesName),
-        title: {
-          formatter: (seriesName: number) => `#${seriesName}`
-        }
+        formatter: (seriesName: number) => fNumber(seriesName)
       }
     },
     plotOptions: {
@@ -67,9 +58,8 @@ const AppGraficoPizza: React.FC<AppGraficoPizzaProps> = ({ chartData }) => {
 
   return (
     <Card>
-      <CardHeader title={chartData.title} />
       <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={chartData.series} options={chartOptions} height={300} />
+        <ReactApexChart type="pie" series={chartData.series} options={chartOptions} height={250} />
       </ChartWrapperStyle>
     </Card>
   );

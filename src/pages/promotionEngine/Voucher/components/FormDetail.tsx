@@ -49,7 +49,7 @@ const FormDetail: React.FC<Props> = ({ updateMode }) => {
     <Box>
       <Card id="product-detail">
         <Box sx={{ width: '100%' }}>
-          <Stack sx={{ pb: '15px' }} spacing={1}>
+          <Stack sx={{ pb: '5px' }} spacing={1}>
             <BasicProductInfoForm2 />
           </Stack>
         </Box>

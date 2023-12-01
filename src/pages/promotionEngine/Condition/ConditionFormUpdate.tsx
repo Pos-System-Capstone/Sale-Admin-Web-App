@@ -89,15 +89,15 @@ const ConditionForm = ({ updateMode }: Props) => {
             >
               <TreeItem
                 nodeId="1"
-                label="Cart item"
+                label="Sản Phẩm"
                 icon=" "
-                onClick={() => handleTreeItemClick('1', '1')}
+                onClick={() => handleTreeItemClick('1', 'productCondition')}
               >
                 <TreeItem
                   nodeId="2"
-                  label="Quantity"
+                  label="Số lượng"
                   icon=" "
-                  onClick={() => handleTreeItemClick('2', '2')}
+                  onClick={() => handleTreeItemClick('2', 'quantity')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -109,9 +109,9 @@ const ConditionForm = ({ updateMode }: Props) => {
                 />
                 <TreeItem
                   nodeId="3"
-                  label="Product code"
+                  label="Mã sản phẩm"
                   icon=" "
-                  onClick={() => handleTreeItemClick('3', '3')}
+                  onClick={() => handleTreeItemClick('3', 'Cart item content')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -125,9 +125,9 @@ const ConditionForm = ({ updateMode }: Props) => {
 
               <TreeItem
                 nodeId="4"
-                label="Cart"
+                label="Đơn Hàng"
                 icon=" "
-                onClick={() => handleTreeItemClick('4', '4')}
+                onClick={() => handleTreeItemClick('4', 'orderCondition')}
                 sx={{
                   mb: '0.5rem',
                   mt: '1rem'
@@ -135,9 +135,9 @@ const ConditionForm = ({ updateMode }: Props) => {
               >
                 <TreeItem
                   nodeId="5"
-                  label="Quantity"
+                  label="Số lượng"
                   icon=" "
-                  onClick={() => handleTreeItemClick('5', '5')}
+                  onClick={() => handleTreeItemClick('5', 'Cart item content')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -149,9 +149,9 @@ const ConditionForm = ({ updateMode }: Props) => {
                 />
                 <TreeItem
                   nodeId="6"
-                  label="Amount"
+                  label="Tổng số"
                   icon=" "
-                  onClick={() => handleTreeItemClick('6', '6')}
+                  onClick={() => handleTreeItemClick('6', 'Cart item content')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',

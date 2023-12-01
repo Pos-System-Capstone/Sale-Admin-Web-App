@@ -493,7 +493,7 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
     <div>
       <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer}>
         <Typography variant="h3" component="h3" style={{ marginTop: '8px', marginBottom: '8px' }}>
-          SELECTION LIST
+          DANH SÁCH SẢN PHẨM
         </Typography>
         <ResoTable
           checkboxSelection={{

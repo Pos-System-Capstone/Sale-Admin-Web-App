@@ -87,15 +87,15 @@ const UpdateConditionPage = (props: Props) => {
       <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
         <Stack direction="row" spacing={2}>
           <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
-            + New Rule
+            + Cập Nhật
           </LoadingAsyncButton>
         </Stack>
       </DashboardNavLayout>
-      <Page title="CONDITION BUILDER">
+      <Page title="CẬP NHẬT ĐIỀU KIỆN">
         <Stack spacing={2}>
           <Stack sx={{ width: '630px' }} spacing={2}>
             <Alert severity="warning">
-              Condition is the constraint of the order when Customer check or apply for a promotion.
+              Điều kiện là ràng buộc của đơn hàng khi Khách hàng kiểm tra hoặc đăng ký khuyến mãi.{' '}
             </Alert>
           </Stack>
           <Card>

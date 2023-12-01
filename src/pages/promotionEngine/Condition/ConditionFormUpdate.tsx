@@ -91,13 +91,13 @@ const ConditionForm = ({ updateMode }: Props) => {
                 nodeId="1"
                 label="Cart item"
                 icon=" "
-                onClick={() => handleTreeItemClick('1', 'productCondition')}
+                onClick={() => handleTreeItemClick('1', '1')}
               >
                 <TreeItem
                   nodeId="2"
                   label="Quantity"
                   icon=" "
-                  onClick={() => handleTreeItemClick('2', 'quantity')}
+                  onClick={() => handleTreeItemClick('2', '2')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -111,7 +111,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                   nodeId="3"
                   label="Product code"
                   icon=" "
-                  onClick={() => handleTreeItemClick('3', 'Cart item content')}
+                  onClick={() => handleTreeItemClick('3', '3')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -127,7 +127,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                 nodeId="4"
                 label="Cart"
                 icon=" "
-                onClick={() => handleTreeItemClick('4', 'orderCondition')}
+                onClick={() => handleTreeItemClick('4', '4')}
                 sx={{
                   mb: '0.5rem',
                   mt: '1rem'
@@ -137,7 +137,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                   nodeId="5"
                   label="Quantity"
                   icon=" "
-                  onClick={() => handleTreeItemClick('5', 'Cart item content')}
+                  onClick={() => handleTreeItemClick('5', '5')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -151,7 +151,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                   nodeId="6"
                   label="Amount"
                   icon=" "
-                  onClick={() => handleTreeItemClick('6', 'Cart item content')}
+                  onClick={() => handleTreeItemClick('6', '6')}
                   sx={{
                     border: '1px solid #57d8a1',
                     m: '10px 0',
@@ -163,7 +163,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                 />
               </TreeItem>
 
-              <TreeItem
+              {/* <TreeItem
                 nodeId="7"
                 label="Group"
                 icon=" "
@@ -185,7 +185,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                     borderRadius: '4px'
                   }}
                 ></TreeItem>
-              </TreeItem>
+              </TreeItem> */}
             </TreeView>
           </Paper>
         </Grid>

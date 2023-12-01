@@ -23,7 +23,8 @@ interface Props {
 }
 
 const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
-  const [count, setCount] = useState(0);
+  const [countPrefix, setCountPrefix] = useState(0);
+  const [countPostfix, setCountPostfix] = useState(0);
 
   const [charset, setCharset] = React.useState('');
 
@@ -42,7 +43,7 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
           <CardTitle variant="subtitle1">{`${t(
             'promotionSystem.voucher.addVoucher.advancedSettings'
           )}`}</CardTitle>
-          <Stack sx={{ width: '100%', pb: '25px', pt: '20px' }} spacing={1}>
+          <Stack sx={{ width: '100%', pb: '15px', pt: '20px' }} spacing={1}>
             <Alert severity="warning">
               <AlertTitle>{`${t('promotionSystem.voucher.addVoucher.warning')}`}</AlertTitle>
               {`${t('promotionSystem.voucher.addVoucher.helperWarning')}`}
@@ -115,7 +116,7 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
                   autoComplete="off"
                   inputProps={{ maxLength: 10 }}
                   // helperText={`${count}/10`}
-                  onChange={(e) => setCount(e.target.value.length)}
+                  onChange={(e) => setCountPrefix(e.target.value.length)}
                 />
                 <Typography
                   variant={'caption'}
@@ -127,7 +128,7 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
                     transform: 'translateY(-50%)'
                   }}
                 >
-                  {`${count}/10`}
+                  {`${countPrefix}/10`}
                 </Typography>
               </Box>
             </Grid>
@@ -146,7 +147,7 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
                   autoComplete="off"
                   inputProps={{ maxLength: 10 }}
                   // helperText={`${count}/10`}
-                  onChange={(e) => setCount(e.target.value.length)}
+                  onChange={(e) => setCountPostfix(e.target.value.length)}
                 />
                 <Typography
                   variant={'caption'}
@@ -158,7 +159,7 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
                     transform: 'translateY(-50%)'
                   }}
                 >
-                  {`${count}/10`}
+                  {`${countPostfix}/10`}
                 </Typography>
               </Box>
             </Grid>

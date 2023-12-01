@@ -1,7 +1,5 @@
 // import { Info } from '@mui/icons-material';
 import { Box, Stack } from '@mui/material';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
 // import SeoForm from 'components/form/Seo/SeoForm';
 // import Label from 'components/Label';
 // import ModalForm from 'components/ModalForm/ModalForm';
@@ -12,16 +10,16 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CreateProductForm, ProductTypeEnum, TProductBase } from 'types/product';
 import { TTableColumn } from 'types/table';
-import { Card, CardTitle } from './Card';
-import BasicProductInfoForm from './form/BasicProductInfoForm';
-import SubMiddleForm from './form/SubMiddleForm';
+import { Card } from './Card';
+import BasicProductInfoForm2 from './form/FormDetailVoucher';
+import BasicProductInfoForm3 from './form/FormDetailInformation';
 
 type Props = {
   updateMode?: boolean;
 };
 
 // eslint-disable-next-line arrow-body-style
-const MiddleForm: React.FC<Props> = ({ updateMode }) => {
+const FormDetail: React.FC<Props> = ({ updateMode }) => {
   const { watch } = useFormContext<CreateProductForm>();
   const { t } = useLocales();
   const [hasExtra, hasVariant] = watch(['has_extra', 'hasVariant']);
@@ -49,25 +47,22 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
 
   return (
     <Box>
-      <Stack spacing={2}>
-        <Card id="product-detail">
-          <Box sx={{ width: '100%' }}>
-            <CardTitle mb={2} variant="subtitle1">
-              {`${t('promotionSystem.voucher.addVoucher.voucherGroupBuilder')}`}
-            </CardTitle>
-            <Stack sx={{ width: '100%', pb: '15px', pt: '20px' }} spacing={1}>
-              <Alert severity="warning">
-                <AlertTitle>{`${t('promotionSystem.voucher.addVoucher.warning')}`}</AlertTitle>
-                {`${t('promotionSystem.voucher.addVoucher.helperWarning')}`}
-              </Alert>
-            </Stack>
-            <BasicProductInfoForm />
-          </Box>
-        </Card>
-        {!isExtraProduct && <SubMiddleForm hasVariant={hasVariant} />}
-      </Stack>
+      <Card id="product-detail">
+        <Box sx={{ width: '100%' }}>
+          <Stack sx={{ pb: '15px' }} spacing={1}>
+            <BasicProductInfoForm2 />
+          </Stack>
+        </Box>
+      </Card>
+      <Card id="product-detail">
+        <Box sx={{ width: '100%' }}>
+          <Stack sx={{ pt: '20px' }} spacing={1}>
+            <BasicProductInfoForm3 />
+          </Stack>
+        </Box>
+      </Card>
     </Box>
   );
 };
 
-export default MiddleForm;
+export default FormDetail;

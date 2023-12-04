@@ -6,24 +6,25 @@ import useDashboard from 'hooks/useDashboard';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 import Alert from '@mui/material/Alert';
-import ConditionForm from 'pages/promotionEngine/Condition/ConditionForm';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import * as yup from 'yup';
-import { TConditionCreate } from 'types/promotion/condition';
-import conditionApi from 'api/promotion/condition';
+import ConditionFormUpdate from 'pages/promotionEngine/Condition/ConditionFormUpdate';
+import { TConditionBase, TConditionCreate } from 'types/promotion/condition';
 import { getUserInfo } from 'utils/utils';
+import conditionApi from 'api/promotion/condition';
+import { useQuery } from 'react-query';
+import { useEffect } from 'react';
 
 interface Props {}
 
 const schema = yup.object({
-  ruleName: yup.string().required('Vui lòng nhập tên'),
-  description: yup.string().required('Vui lòng nhập điều kiện')
+  cate_name: yup.string().required('Please input name')
 });
 
-const NewCondition = (props: Props) => {
+const UpdateConditionPage = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
@@ -32,10 +33,31 @@ const NewCondition = (props: Props) => {
   const user: any = JSON.parse(userRaw ?? '{}');
   const isExtra: boolean = searchParams.get('isExtra') === 'true';
 
-  const createConditionForm = useForm<TConditionCreate>({
+  const { id } = useParams();
+  const { data: conditionUpdate } = useQuery(
+    ['condition', user.brandId],
+    async () => {
+      return conditionApi.getConditionRuleId(id).then((res) => res.data);
+    },
+    {
+      enabled: Boolean(id)
+    }
+  );
+
+  const updateConditionForm = useForm<TConditionBase>({
+    defaultValues: { ...conditionUpdate },
     resolver: yupResolver(schema)
+    // defaultValues: {},
     // shouldUnregister: false
   });
+
+  const { handleSubmit, reset } = updateConditionForm;
+
+  useEffect(() => {
+    if (conditionUpdate !== undefined) {
+      reset({ ...conditionUpdate });
+    }
+  }, [conditionUpdate]);
 
   const onSubmit = (values: TConditionCreate) => {
     console.log(`data`, values);
@@ -48,10 +70,10 @@ const NewCondition = (props: Props) => {
     conditionApi
       .createCondition(body)
       .then((res) => {
-        enqueueSnackbar(`Tạo thành công`, {
+        enqueueSnackbar(`Cập nhật thành công`, {
           variant: 'success'
         });
-        navigate(`${PATH_PROMOTION_APP.condition.root}`);
+        navigate(`${PATH_PROMOTION_APP.condition.root}/${res.data}`);
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
@@ -61,28 +83,24 @@ const NewCondition = (props: Props) => {
   };
 
   return (
-    <FormProvider {...createConditionForm}>
+    <FormProvider {...updateConditionForm}>
       <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
         <Stack direction="row" spacing={2}>
-          <LoadingAsyncButton
-            onClick={createConditionForm.handleSubmit(onSubmit)}
-            type="submit"
-            variant="contained"
-          >
-            + Tạo
+          <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
+            + Cập Nhật
           </LoadingAsyncButton>
         </Stack>
       </DashboardNavLayout>
-      <Page title="TẠO ĐIỀU KIỆN MỚI">
+      <Page title="CẬP NHẬT ĐIỀU KIỆN">
         <Stack spacing={2}>
-          <Stack sx={{ width: '680px' }} spacing={2}>
+          <Stack sx={{ width: '630px' }} spacing={2}>
             <Alert severity="warning">
-              Điều kiện là ràng buộc của đơn hàng khi Khách hàng kiểm tra hoặc đăng ký khuyến mãi.
+              Điều kiện là ràng buộc của đơn hàng khi Khách hàng kiểm tra hoặc đăng ký khuyến mãi.{' '}
             </Alert>
           </Stack>
           <Card>
             <Box>
-              <ConditionForm />
+              <ConditionFormUpdate />
             </Box>
             <Box></Box>
           </Card>
@@ -92,4 +110,4 @@ const NewCondition = (props: Props) => {
   );
 };
 
-export default NewCondition;
+export default UpdateConditionPage;

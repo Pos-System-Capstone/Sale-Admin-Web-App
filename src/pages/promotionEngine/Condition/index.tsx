@@ -36,22 +36,17 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
   const user: any = JSON.parse(userRaw ?? '{}');
   const columns: TTableColumn<TConditionBase>[] = [
     {
-      title: 'NO',
+      title: 'STT',
       dataIndex: 'index',
       hideInSearch: true
     },
     {
-      title: 'NAME',
+      title: 'TÊN',
       dataIndex: 'ruleName',
       hideInSearch: true
     },
     {
-      title: 'DESCRIDTION',
-      dataIndex: 'description',
-      hideInSearch: true
-    },
-    {
-      title: 'Updated date',
+      title: 'Ngày chỉnh sửa',
       dataIndex: 'updDate',
       render: (value) => fDateTime(value),
       hideInSearch: true
@@ -114,7 +109,7 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
 
   return (
     <Page
-      title={isExtra ? 'Manage Action' : 'Manage Condition'}
+      title={isExtra ? 'Manage Action' : 'Quản lý Điều Kiện'}
       actions={() => [
         <Button
           key="add-category"
@@ -124,7 +119,7 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
           variant="contained"
           startIcon={<Icon icon={plusFill} />}
         >
-          New Condition
+          Thêm Điều Kiện Mới
         </Button>
       ]}
     >
@@ -149,9 +144,9 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
         <Stack spacing={2}>
           <ResoTable
             ref={tableRef}
-            onEdit={() => {
-              console.log('edit');
-            }}
+            onEdit={(stores: any) =>
+              navigate(`${PATH_PROMOTION_APP.condition.root}/${stores.conditionRuleId}`)
+            }
             onDelete={() => {
               console.log('delete');
             }}

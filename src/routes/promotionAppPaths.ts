@@ -35,7 +35,8 @@ export const PATH_PROMOTION_APP = {
   },
   condition: {
     root: path(ROOTS_DASHBOARD, '/condition'),
-    new: path(ROOTS_DASHBOARD, '/condition/new')
+    new: path(ROOTS_DASHBOARD, '/condition/new'),
+    editById: (id: any) => path(ROOTS_DASHBOARD, `/condition/${id}`)
   },
   action: {
     root: path(ROOTS_DASHBOARD, '/action'),

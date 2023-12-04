@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import { SelectChangeEvent, TextField, Typography } from '@mui/material';
-
 import ResoTable from 'components/ResoTable/ResoTable';
-import { getAllProduct } from 'redux/product/api';
-import { productColumns } from 'pages/Products/config';
+import { getUserInfo } from 'utils/utils';
+import { InputField } from 'components/form';
+import productPromotionApi from 'api/promotion/product';
+import { productPromotionColumns } from 'pages/promotionEngine/Products/config';
 
 interface CreateConditionFormProps {
   nodeId: string;
@@ -16,10 +17,15 @@ interface CreateConditionFormProps {
 }
 
 const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type = 'checkbox' }) => {
-  const [selectedOperator1, setSelectedOperator1] = useState<string>('>');
-  const [selectedOperator2, setSelectedOperator2] = useState<string>('AND');
-  const [selectedOperator3, setSelectedOperator3] = useState<string>('Include');
-  const [selectedOperator4, setSelectedOperator4] = useState<string>('>');
+  // Cart Item
+  const [quantityOperatorCI, setQuantityOperatorCI] = useState<string>('1');
+  const [nextOperatorCI, setNextOperatorCI] = useState<number>(2);
+  const [productConditionTypeCI, setProductConditionTypeCI] = useState<number>(2);
+  // Cart
+  const [quantityOperator, setQuantityOperator] = useState<string>('1');
+  const [nextOperator, setNextOperator] = useState<number>(2);
+  const [amountOperator, setAmountOperator] = useState<string>('1');
+
   const [selectedProductIds, setSelectedProductIds] = useState<string[]>();
   const [selectedProductCount, setSelectedProductCount] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -29,29 +35,50 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
     setSelectedProductCount(ids.length);
   }, []);
 
+  const tableRef = useRef<any>();
+
+  const userRaw = getUserInfo();
+  const user: any = JSON.parse(userRaw ?? '{}');
+  useEffect(() => {
+    if (tableRef.current) {
+      tableRef.current.formControl.setValue('brandId', user.brandId!);
+    }
+  }, [user]);
+
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  const handleOperatorChange1 = (event: SelectChangeEvent<string>) => {
-    setSelectedOperator1(event.target.value);
+  // Cart Item
+  const hanldeQuantityOperatorCI = (event: SelectChangeEvent<string>) => {
+    setQuantityOperatorCI(event.target.value);
   };
 
-  const handleOperatorChange2 = (event: SelectChangeEvent<string>) => {
-    setSelectedOperator2(event.target.value);
+  const handleNextOperatorCI = (event: SelectChangeEvent<any>) => {
+    setNextOperatorCI(event.target.value);
   };
 
-  const handleOperatorChange3 = (event: SelectChangeEvent<string>) => {
-    setSelectedOperator3(event.target.value);
+  const handleProductConditionTypeCI = (event: SelectChangeEvent<any>) => {
+    setProductConditionTypeCI(event.target.value);
   };
 
-  const handleOperatorChange4 = (event: SelectChangeEvent<string>) => {
-    setSelectedOperator4(event.target.value);
+  // Cart
+  const handleQuantity = (event: SelectChangeEvent<string>) => {
+    setQuantityOperator(event.target.value);
+  };
+
+  const handleNextOperator = (event: SelectChangeEvent<any>) => {
+    setNextOperator(event.target.value);
+  };
+
+  const handleAmountOperator = (event: SelectChangeEvent<string>) => {
+    setAmountOperator(event.target.value);
   };
 
   let formContent = null;
 
   if (nodeId === '1') {
+    // Cart Item
     formContent = (
       <div>
         <p style={{ position: 'relative' }}>
@@ -70,33 +97,34 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
             ></span>
           </div>
           <p style={{ marginLeft: '8px' }}>
-            each product in the{' '}
+            mỗi sản phẩm trong{' '}
             <a onClick={toggleDrawer} style={{ color: '#57d8a1' }}>
-              selection list({selectedProductCount})
+              danh sách lựa chọn({selectedProductCount})
             </a>{' '}
-            has quantity{' '}
+            đều có số lượng{' '}
             <FormControl>
               <Select
                 style={{ height: '30px', width: '60px' }}
-                value={selectedOperator1}
-                onChange={handleOperatorChange1}
+                value={quantityOperatorCI}
+                onChange={hanldeQuantityOperatorCI}
               >
-                <MenuItem value=">">
+                <MenuItem value="1">
                   <span>&gt;</span>
                 </MenuItem>
-                <MenuItem value=">=">
+                <MenuItem value="2">
                   <span>&#8805;</span>
                 </MenuItem>
-                <MenuItem value="="> = </MenuItem>
-                <MenuItem value="<">
+                <MenuItem value="5"> = </MenuItem>
+                <MenuItem value="3">
                   <span>&lt;</span>
                 </MenuItem>
-                <MenuItem value="<=">
+                <MenuItem value="4">
                   <span>&#8804;</span>
                 </MenuItem>
               </Select>
             </FormControl>{' '}
-            <TextField
+            <InputField
+              name="productQuantity"
               sx={{ width: '100px' }}
               InputProps={{
                 style: { height: '30px' }
@@ -107,12 +135,12 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
 
         <div> </div>
         <Select
-          style={{ height: '50px', width: '90px', marginTop: '14px', marginBottom: '12px' }}
-          value={selectedOperator2}
-          onChange={handleOperatorChange2}
+          style={{ height: '50px', width: '100px', marginTop: '14px', marginBottom: '12px' }}
+          value={nextOperatorCI}
+          onChange={handleNextOperatorCI}
         >
-          <MenuItem value="AND">AND</MenuItem>
-          <MenuItem value="OR">OR</MenuItem>
+          <MenuItem value={2}> VÀ</MenuItem>
+          <MenuItem value={1}>HOẶC</MenuItem>
         </Select>
         <div> </div>
         <div>
@@ -133,24 +161,26 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
           </div>
 
           <p style={{ marginLeft: '8px' }}>
-            order{' '}
+            đặt hàng{' '}
             <Select
+              name="productConditionType"
               style={{ height: '35px', width: '120px' }}
-              value={selectedOperator3}
-              onChange={handleOperatorChange3}
+              value={productConditionTypeCI}
+              onChange={handleProductConditionTypeCI}
             >
-              <MenuItem value="Include">Include</MenuItem>
-              <MenuItem value="Exclude">Exclude</MenuItem>
+              <MenuItem value={2}>Bao gồm</MenuItem>
+              <MenuItem value={1}>Ngoại trừ</MenuItem>
             </Select>{' '}
-            all products in{' '}
+            tất cả các sản phẩm trong{' '}
             <a onClick={toggleDrawer} style={{ color: '#57d8a1' }}>
-              selection list({selectedProductCount})
+              danh sách lựa chọn({selectedProductCount})
             </a>
           </p>
         </div>
       </div>
     );
   } else if (nodeId === '4') {
+    // Cart
     formContent = (
       <div>
         <p style={{ position: 'relative' }}>
@@ -169,29 +199,31 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
             ></span>
           </div>
           <p style={{ marginLeft: '8px' }}>
-            quantity of product in order is{' '}
+            số lượng sản phẩm đặt hàng là{' '}
             <FormControl>
               <Select
+                name="quantityOperator"
                 style={{ height: '30px', width: '60px' }}
-                value={selectedOperator1}
-                onChange={handleOperatorChange1}
+                value={quantityOperator}
+                onChange={handleQuantity}
               >
-                <MenuItem value=">">
+                <MenuItem value="1">
                   <span>&gt;</span>
                 </MenuItem>
-                <MenuItem value=">=">
+                <MenuItem value="2">
                   <span>&#8805;</span>
                 </MenuItem>
-                <MenuItem value="="> = </MenuItem>
-                <MenuItem value="<">
+                <MenuItem value="5"> = </MenuItem>
+                <MenuItem value="3">
                   <span>&lt;</span>
                 </MenuItem>
-                <MenuItem value="<=">
+                <MenuItem value="4">
                   <span>&#8804;</span>
                 </MenuItem>
               </Select>
             </FormControl>{' '}
-            <TextField
+            <InputField
+              name="quantity"
               sx={{ width: '100px' }}
               InputProps={{
                 style: { height: '30px' }
@@ -201,12 +233,13 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
         </p>
         <div />
         <Select
-          style={{ height: '50px', width: '90px', marginTop: '14px', marginBottom: '12px' }}
-          value={selectedOperator2}
-          onChange={handleOperatorChange2}
+          name="nextOperator"
+          style={{ height: '50px', width: '100px', marginTop: '14px', marginBottom: '12px' }}
+          value={nextOperator}
+          onChange={handleNextOperator}
         >
-          <MenuItem value="AND">AND</MenuItem>
-          <MenuItem value="OR">OR</MenuItem>
+          <MenuItem value={2}>VÀ</MenuItem>
+          <MenuItem value={1}>HOẶC</MenuItem>
         </Select>
         <div />
         <div>
@@ -226,29 +259,31 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
             ></span>
           </div>
           <p style={{ marginLeft: '8px' }}>
-            order has total amount{' '}
+            đơn hàng có tổng số tiền{' '}
             <FormControl>
               <Select
+                name="amountOperator"
                 style={{ height: '30px', width: '60px' }}
-                value={selectedOperator4}
-                onChange={handleOperatorChange4}
+                value={amountOperator}
+                onChange={handleAmountOperator}
               >
-                <MenuItem value=">">
+                <MenuItem value="1">
                   <span>&gt;</span>
                 </MenuItem>
-                <MenuItem value=">=">
+                <MenuItem value="2">
                   <span>&#8805;</span>
                 </MenuItem>
-                <MenuItem value="="> = </MenuItem>
-                <MenuItem value="<">
+                <MenuItem value="5"> = </MenuItem>
+                <MenuItem value="3">
                   <span>&lt;</span>
                 </MenuItem>
-                <MenuItem value="<=">
+                <MenuItem value="4">
                   <span>&#8804;</span>
                 </MenuItem>
               </Select>
             </FormControl>{' '}
-            <TextField
+            <InputField
+              name="amount"
               sx={{ width: '100px' }}
               InputProps={{
                 style: { height: '30px' }
@@ -259,6 +294,7 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
       </div>
     );
   } else if (nodeId === '2') {
+    // Quantity (Cart Item)
     formContent = (
       <p style={{ position: 'relative' }}>
         <div>
@@ -276,28 +312,28 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
           ></span>
         </div>
         <p style={{ marginLeft: '8px' }}>
-          each product in the{' '}
+          mỗi sản phẩm trong{' '}
           <a onClick={toggleDrawer} style={{ color: '#57d8a1' }}>
-            selection list({selectedProductCount})
+            danh sách lựa chọn({selectedProductCount})
           </a>{' '}
-          has quantity{' '}
+          đều có số lượng{' '}
           <FormControl>
             <Select
               style={{ height: '30px', width: '60px' }}
-              value={selectedOperator1}
-              onChange={handleOperatorChange1}
+              value={quantityOperatorCI}
+              onChange={hanldeQuantityOperatorCI}
             >
-              <MenuItem value=">">
+              <MenuItem value="1">
                 <span>&gt;</span>
               </MenuItem>
-              <MenuItem value=">=">
+              <MenuItem value="2">
                 <span>&#8805;</span>
               </MenuItem>
-              <MenuItem value="="> = </MenuItem>
-              <MenuItem value="<">
+              <MenuItem value="5"> = </MenuItem>
+              <MenuItem value="3">
                 <span>&lt;</span>
               </MenuItem>
-              <MenuItem value="<=">
+              <MenuItem value="4">
                 <span>&#8804;</span>
               </MenuItem>
             </Select>
@@ -312,6 +348,7 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
       </p>
     );
   } else if (nodeId === '3') {
+    // Product Code (Cart Item)
     formContent = (
       <div>
         <div style={{ position: 'relative' }}>
@@ -323,44 +360,32 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
               top: 0,
               bottom: 0,
               width: '4px',
-              height: '24px',
+              height: '26px',
               background: '#57d8a1'
             }}
           ></span>
         </div>
+
         <p style={{ marginLeft: '8px' }}>
-          order has total amount{' '}
-          <FormControl>
-            <Select
-              style={{ height: '30px', width: '60px' }}
-              value={selectedOperator4}
-              onChange={handleOperatorChange4}
-            >
-              <MenuItem value=">">
-                <span>&gt;</span>
-              </MenuItem>
-              <MenuItem value=">=">
-                <span>&#8805;</span>
-              </MenuItem>
-              <MenuItem value="="> = </MenuItem>
-              <MenuItem value="<">
-                <span>&lt;</span>
-              </MenuItem>
-              <MenuItem value="<=">
-                <span>&#8804;</span>
-              </MenuItem>
-            </Select>
-          </FormControl>{' '}
-          <TextField
-            sx={{ width: '100px' }}
-            InputProps={{
-              style: { height: '30px' }
-            }}
-          />
+          đặt hàng{' '}
+          <Select
+            name="productConditionType"
+            style={{ height: '30px', width: '120px' }}
+            value={productConditionTypeCI}
+            onChange={handleProductConditionTypeCI}
+          >
+            <MenuItem value={2}>Bao gồm</MenuItem>
+            <MenuItem value={1}>Ngoại trừ</MenuItem>
+          </Select>{' '}
+          tất cả các sản phẩm trong{' '}
+          <a onClick={toggleDrawer} style={{ color: '#57d8a1' }}>
+            danh sách lựa chọn({selectedProductCount})
+          </a>
         </p>
       </div>
     );
   } else if (nodeId === '5') {
+    // Quantity (Cart)
     formContent = (
       <p style={{ position: 'relative' }}>
         <div>
@@ -378,29 +403,30 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
           ></span>
         </div>
         <p style={{ marginLeft: '8px' }}>
-          quantity of product in order is{' '}
+          số lượng sản phẩm đặt hàng là{' '}
           <FormControl>
             <Select
               style={{ height: '30px', width: '60px' }}
-              value={selectedOperator1}
-              onChange={handleOperatorChange1}
+              value={quantityOperator}
+              onChange={handleQuantity}
             >
-              <MenuItem value=">">
+              <MenuItem value="1">
                 <span>&gt;</span>
               </MenuItem>
-              <MenuItem value=">=">
+              <MenuItem value="2">
                 <span>&#8805;</span>
               </MenuItem>
-              <MenuItem value="="> = </MenuItem>
-              <MenuItem value="<">
+              <MenuItem value="5"> = </MenuItem>
+              <MenuItem value="3">
                 <span>&lt;</span>
               </MenuItem>
-              <MenuItem value="<=">
+              <MenuItem value="4">
                 <span>&#8804;</span>
               </MenuItem>
             </Select>
           </FormControl>{' '}
-          <TextField
+          <InputField
+            name="quantity"
             sx={{ width: '100px' }}
             InputProps={{
               style: { height: '30px' }
@@ -410,6 +436,7 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
       </p>
     );
   } else if (nodeId === '6') {
+    // Amount (Cart)
     formContent = (
       <div>
         <div style={{ position: 'relative' }}>
@@ -427,29 +454,31 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
           ></span>
         </div>
         <p style={{ marginLeft: '8px' }}>
-          order has total amount{' '}
+          Đơn hàng có tổng số tiền{' '}
           <FormControl>
             <Select
+              name="amountOperator"
               style={{ height: '30px', width: '60px' }}
-              value={selectedOperator4}
-              onChange={handleOperatorChange4}
+              value={amountOperator}
+              onChange={handleAmountOperator}
             >
-              <MenuItem value=">">
+              <MenuItem value="1">
                 <span>&gt;</span>
               </MenuItem>
-              <MenuItem value=">=">
+              <MenuItem value="2">
                 <span>&#8805;</span>
               </MenuItem>
-              <MenuItem value="="> = </MenuItem>
-              <MenuItem value="<">
+              <MenuItem value="5"> = </MenuItem>
+              <MenuItem value="3">
                 <span>&lt;</span>
               </MenuItem>
-              <MenuItem value="<=">
+              <MenuItem value="4">
                 <span>&#8804;</span>
               </MenuItem>
             </Select>
           </FormControl>{' '}
-          <TextField
+          <InputField
+            name="amount"
             sx={{ width: '100px' }}
             InputProps={{
               style: { height: '30px' }
@@ -464,7 +493,7 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
     <div>
       <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer}>
         <Typography variant="h3" component="h3" style={{ marginTop: '8px', marginBottom: '8px' }}>
-          SELECTION LIST
+          DANH SÁCH SẢN PHẨM
         </Typography>
         <ResoTable
           checkboxSelection={{
@@ -474,9 +503,10 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
           showAction={false}
           scroll={{ y: '50%', x: '100%' }}
           rowKey="id"
-          getData={getAllProduct}
+          ref={tableRef}
+          getData={(param: any) => productPromotionApi.getProduct(param)}
           onChangeSelection={handleChangeSelection}
-          columns={productColumns}
+          columns={productPromotionColumns}
         />
       </Drawer>
       {formContent}

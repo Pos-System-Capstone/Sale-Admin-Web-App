@@ -1,15 +1,10 @@
-import { Box, Grid, Paper, TextField } from '@mui/material';
-import FormHelperText from '@mui/material/FormHelperText';
+import { Box, Grid, Paper } from '@mui/material';
 import { InputField } from 'components/form';
 // import TreeViewField, { RenderTree } from 'components/form/TreeViewField/TreeViewField';
-import useCategories from 'hooks/categories/useCategories';
-
-import useLocales from 'hooks/useLocales';
 
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { TCategory } from 'types/category';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -22,9 +17,7 @@ interface Props {
 }
 
 const ConditionForm = ({ updateMode }: Props) => {
-  const { translate } = useLocales();
   const { watch } = useFormContext();
-  const [categories, setCategories] = useState<TCategory[]>([]);
   const [currentContent, setCurrentContent] = useState<string | null>(null);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
 
@@ -32,12 +25,6 @@ const ConditionForm = ({ updateMode }: Props) => {
     setSelectedNodeId(nodeId);
     setCurrentContent(content);
   };
-
-  const { data } = useCategories({ page: 1, size: 100 });
-
-  useEffect(() => {
-    setCategories(data ?? []);
-  }, [data]);
 
   // const getChilds = async (cateId?: number) => {
   //   let results = await getCategoryChilds(Number(cateId));
@@ -82,30 +69,18 @@ const ConditionForm = ({ updateMode }: Props) => {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={6} sm={8} style={{ height: '100px' }}>
-          <InputField
-            fullWidth
-            name="cate_name"
-            label={translate('categories.table.cateName')}
-            maxlength="200px"
-          />
-          {/* <FormHelperText error>Please input name</FormHelperText> */}
+        <Grid item xs={6} sm={6} style={{ height: '100px' }}>
+          <InputField fullWidth name="ruleName" label="Tên Điều kiện" maxlength="200px" />
         </Grid>
 
-        <Grid item xs={6} sm={4}>
-          <TextField
-            label={translate('categories.table.cateNameEn')}
-            fullWidth
-            multiline
-            rows={5}
-          ></TextField>
-          <FormHelperText error>Please input description</FormHelperText>
+        <Grid item xs={6} sm={6}>
+          <InputField name="description" label="Mô tả Điều Kiện" fullWidth multiline></InputField>
         </Grid>
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={6} sm={4}>
           <Paper variant="outlined" sx={{ width: '100%' }}>
-            <h3>Condition</h3>
+            <h3>Điều Kiện</h3>
 
             <TreeView
               aria-label="file system navigator"
@@ -115,13 +90,13 @@ const ConditionForm = ({ updateMode }: Props) => {
             >
               <TreeItem
                 nodeId="1"
-                label="Cart item"
+                label="Sản Phẩm"
                 icon=" "
                 onClick={() => handleTreeItemClick('1', 'Cart item content')}
               >
                 <TreeItem
                   nodeId="2"
-                  label="Quantity"
+                  label="Số lượng"
                   icon=" "
                   onClick={() => handleTreeItemClick('2', 'Cart item content')}
                   sx={{
@@ -135,7 +110,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                 />
                 <TreeItem
                   nodeId="3"
-                  label="Product code"
+                  label="Mã sản phẩm"
                   icon=" "
                   onClick={() => handleTreeItemClick('3', 'Cart item content')}
                   sx={{
@@ -180,7 +155,7 @@ const ConditionForm = ({ updateMode }: Props) => {
 
               <TreeItem
                 nodeId="4"
-                label="Cart"
+                label="Đơn Hàng"
                 icon=" "
                 onClick={() => handleTreeItemClick('4', 'Cart item content')}
                 sx={{
@@ -190,7 +165,7 @@ const ConditionForm = ({ updateMode }: Props) => {
               >
                 <TreeItem
                   nodeId="5"
-                  label="Quantity"
+                  label="Số lượng"
                   icon=" "
                   onClick={() => handleTreeItemClick('5', 'Cart item content')}
                   sx={{
@@ -204,7 +179,7 @@ const ConditionForm = ({ updateMode }: Props) => {
                 />
                 <TreeItem
                   nodeId="6"
-                  label="Amount"
+                  label="Tổng số"
                   icon=" "
                   onClick={() => handleTreeItemClick('6', 'Cart item content')}
                   sx={{
@@ -220,7 +195,7 @@ const ConditionForm = ({ updateMode }: Props) => {
 
               <TreeItem
                 nodeId="7"
-                label="Group"
+                label="Nhóm"
                 icon=" "
                 sx={{
                   mb: '0.5rem',
@@ -229,7 +204,7 @@ const ConditionForm = ({ updateMode }: Props) => {
               >
                 <TreeItem
                   nodeId="8"
-                  label="Group"
+                  label="Nhóm"
                   icon=" "
                   sx={{
                     border: '1px solid #57d8a1',

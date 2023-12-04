@@ -58,5 +58,11 @@ export const PATH_PROMOTION_APP = {
   },
   profile: {
     root: path(ROOTS_DASHBOARD, '/profile')
+  },
+  product: {
+    root: path(ROOTS_DASHBOARD, '/product-promotion')
+  },
+  category: {
+    root: path(ROOTS_DASHBOARD, '/product-category')
   }
 };

@@ -7,6 +7,7 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import productPromotionApi from 'api/promotion/product';
 import { getUserInfo } from 'utils/utils';
 import { productPromotionColumns } from '../Products/config';
+import { Box, Button, Paper, Stack } from '@mui/material';
 
 interface TaskComponentProps {
   selectedText: string | null;
@@ -14,9 +15,9 @@ interface TaskComponentProps {
 }
 
 const options = [
-  { label: 'DEFAULT', value: 'DEFAULT' },
-  { label: 'CHEAPEST', value: 'CHEAPEST' },
-  { label: 'MOST EXPENSIVE', value: 'MOST EXPENSIVE' }
+  { label: 'DEFAULT', value: 1 },
+  { label: 'CHEAPEST', value: 2 },
+  { label: 'MOST EXPENSIVE', value: 3 }
 ];
 
 const TaskComponent = ({
@@ -24,12 +25,12 @@ const TaskComponent = ({
   type = 'checkbox'
 }: TaskComponentProps): ReactElement | null => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedProductIds, setSelectedProductIds] = useState<string[]>();
+  const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
-  const handleChangeSelection = React.useCallback((ids) => {
-    setSelectedProductIds(ids);
+  const handleChangeSelection = React.useCallback((productId) => {
+    setSelectedProductIds(productId);
   }, []);
   let content = null;
   const tableRef = useRef<any>();
@@ -43,14 +44,14 @@ const TaskComponent = ({
   }, [user]);
 
   switch (selectedText) {
-    case '2':
+    case '4':
       content = (
         <List>
           <ListItem sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography>discount</Typography>
+            <Typography>Giảm giá</Typography>
             <InputField
               name="discountAmount"
-              sx={{ width: '100px' }}
+              sx={{ width: '120px' }}
               type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
@@ -59,11 +60,11 @@ const TaskComponent = ({
             <Typography>VND</Typography>
           </ListItem>
           <ListItem sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography>minimum price of product after discount is</Typography>
+            <Typography>Giá tối thiểu của sản phẩm sau khi giảm giá là</Typography>
             {/* <InputField name="minimumPrice" /> */}
             <InputField
               name="minPriceAfter"
-              sx={{ width: '100px' }}
+              sx={{ width: '120px' }}
               type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
@@ -72,23 +73,24 @@ const TaskComponent = ({
             <Typography>VND</Typography>
           </ListItem>
           <ListItem sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography>for Products in </Typography>
+            <Typography>Cho mặt hàng trong </Typography>
             <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
-              selection list(0)
+              danh sách mặt hàng đã chọn(
+              {selectedProductIds === undefined ? 0 : selectedProductIds.length})
             </a>
           </ListItem>
         </List>
       );
       break;
 
-    case '3':
+    case '5':
       content = (
         <List>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>discount</p>
+            <p>Giảm giá</p>
             {/* <InputField name="discountPercent" /> */}
             <InputField
-              sx={{ width: '100px' }}
+              sx={{ width: '120px' }}
               type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
@@ -98,11 +100,11 @@ const TaskComponent = ({
             <p>%</p>
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>and maximum discount price is </p>
+            <p>và giá chiết khấu tối đa là </p>
             {/* <InputField name="maximunDiscount" /> */}
             <InputField
               name="maxAmount"
-              sx={{ width: '100px' }}
+              sx={{ width: '120px' }}
               type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
@@ -111,57 +113,10 @@ const TaskComponent = ({
             <p>VND</p>
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>for Products in </p>
+            <Typography>Cho mặt hàng trong </Typography>
             <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
-              selection list(0)
-            </a>
-          </ListItem>
-        </List>
-      );
-      break;
-    case '4':
-      content = (
-        <List>
-          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>discount</p>
-            <InputField
-              name="discountAmount"
-              sx={{ width: '100px' }}
-              type="number"
-              InputProps={{
-                style: { height: '25px', margin: '0 5px' }
-              }}
-            />
-            <p>until of Products in cart</p>
-          </ListItem>
-          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>for Products in </p>
-            <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
-              selection list(0)
-            </a>
-          </ListItem>
-        </List>
-      );
-      break;
-    case '5':
-      content = (
-        <List>
-          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>fixed price</p>
-            <InputField
-              name="fixedPrice"
-              sx={{ width: '100px' }}
-              type="number"
-              InputProps={{
-                style: { height: '25px', margin: '0 5px' }
-              }}
-            />
-            <p>VND</p>
-          </ListItem>
-          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>for Products in </p>
-            <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
-              selection list(0)
+              danh sách mặt hàng đã chọn(
+              {selectedProductIds === undefined ? 0 : selectedProductIds.length})
             </a>
           </ListItem>
         </List>
@@ -171,32 +126,22 @@ const TaskComponent = ({
       content = (
         <List>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>buy product at the price</p>
+            <p>Giảm giá</p>
             <InputField
-              name="fixedPrice"
-              sx={{ width: '100px' }}
+              name="discountAmount"
+              sx={{ width: '120px' }}
               type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
             />
-            <p>VND</p>
+            <p>cho đến sản phẩm trong giỏ hàng</p>
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>since the product</p>
-            <InputField
-              name="discountQuantity"
-              sx={{ width: '100px' }}
-              type="number"
-              InputProps={{
-                style: { height: '25px', margin: '0 5px' }
-              }}
-            />
-          </ListItem>
-          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>for Products in </p>
+            <Typography>Cho mặt hàng trong </Typography>
             <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
-              selection list(0)
+              danh sách mặt hàng đã chọn(
+              {selectedProductIds === undefined ? 0 : selectedProductIds.length})
             </a>
           </ListItem>
         </List>
@@ -206,22 +151,10 @@ const TaskComponent = ({
       content = (
         <List>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>buy</p>
-            <InputField
-              name="discountQuantity"
-              sx={{ width: '100px' }}
-              type="number"
-              InputProps={{
-                style: { height: '25px', margin: '0 5px' }
-              }}
-            />
-            <p>product(s)</p>
-          </ListItem>
-          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>with the price</p>
+            <p>Giá cố định</p>
             <InputField
               name="fixedPrice"
-              sx={{ width: '100px' }}
+              sx={{ width: '120px' }}
               type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
@@ -230,9 +163,82 @@ const TaskComponent = ({
             <p>VND</p>
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>apply fot product(s) that are follow by </p>
+            <Typography>Cho mặt hàng trong </Typography>
+            <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
+              danh sách mặt hàng đã chọn(
+              {selectedProductIds === undefined ? 0 : selectedProductIds.length})
+            </a>
+          </ListItem>
+        </List>
+      );
+      break;
+    case '8':
+      content = (
+        <List>
+          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
+            <p>Mua sản phẩm với giá</p>
+            <InputField
+              name="fixedPrice"
+              sx={{ width: '120px' }}
+              type="number"
+              InputProps={{
+                style: { height: '25px', margin: '0 5px' }
+              }}
+            />
+            <p>VND</p>
+          </ListItem>
+          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
+            <p>Kể từ sản phẩm</p>
+            <InputField
+              name="discountQuantity"
+              sx={{ width: '120px' }}
+              type="number"
+              InputProps={{
+                style: { height: '25px', margin: '0 5px' }
+              }}
+            />
+          </ListItem>
+          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography>Cho mặt hàng trong </Typography>
+            <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
+              danh sách mặt hàng đã chọn(
+              {selectedProductIds === undefined ? 0 : selectedProductIds.length})
+            </a>
+          </ListItem>
+        </List>
+      );
+      break;
+    case '9':
+      content = (
+        <List>
+          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
+            <p>Mua</p>
+            <InputField
+              name="discountQuantity"
+              sx={{ width: '120px' }}
+              type="number"
+              InputProps={{
+                style: { height: '25px', margin: '0 5px' }
+              }}
+            />
+            <p>(các) sản phẩm</p>
+          </ListItem>
+          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
+            <p>Với giá tiền</p>
+            <InputField
+              name="fixedPrice"
+              sx={{ width: '120px' }}
+              type="number"
+              InputProps={{
+                style: { height: '25px', margin: '0 5px' }
+              }}
+            />
+            <p>VND</p>
+          </ListItem>
+          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
+            <p>áp dụng cho (các) sản phẩm theo sau </p>
             <SelectField
-              name="selectField"
+              name="bundleStrategy"
               label="Select an Option"
               fullWidth
               options={options}
@@ -243,35 +249,114 @@ const TaskComponent = ({
             />
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>for Products in </p>
+            <Typography>Cho mặt hàng trong </Typography>
             <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
-              selection list(0)
+              danh sách mặt hàng đã chọn(
+              {selectedProductIds === undefined ? 0 : selectedProductIds.length})
             </a>
           </ListItem>
         </List>
       );
       break;
-    case '9':
+    case '1':
       content = (
         <List>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>discount</p>
+            <p>Giảm giá</p>
             <InputField
               name="discountAmount"
-              sx={{ width: '100px' }}
+              sx={{ width: '120px' }}
               type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
             />
-            <p>VND for Cart</p>
+            <p>VND cho giỏ hàng</p>
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>minimum price of cart after discount is</p>
+            <p>Giá tối thiểu của giỏ hàng sau khi giảm giá là</p>
             <InputField
               name="minPriceAfter"
-              sx={{ width: '100px' }}
+              sx={{ width: '120px' }}
               type="number"
+              InputProps={{
+                style: { height: '25px', margin: '0 5px' }
+              }}
+            />
+            <p>VND</p>
+          </ListItem>
+        </List>
+      );
+      break;
+    case '2':
+      content = (
+        <List>
+          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
+            <p>Giảm giá</p>
+            <InputField
+              name="discountPercentage"
+              type="number"
+              sx={{ width: '120px' }}
+              InputProps={{
+                style: { height: '25px', margin: '0 5px' }
+              }}
+            />
+            <p>% cho giỏ hàng</p>
+          </ListItem>
+          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
+            <p>giá chiết khấu tối đa là</p>
+            <InputField
+              name="minPriceAfter"
+              type="number"
+              sx={{ width: '120px' }}
+              InputProps={{
+                style: { height: '25px', margin: '0 5px' }
+              }}
+            />
+            <p>VND</p>
+          </ListItem>
+        </List>
+      );
+      break;
+    case '3':
+      content = (
+        <List>
+          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
+            <p>Giảm giá</p>
+            <InputField
+              name="discountAmount"
+              sx={{ width: '120px' }}
+              type="number"
+              InputProps={{
+                style: { height: '25px', margin: '0 5px' }
+              }}
+            />
+            <p>VND phí vận chuyển cho giỏ hàng</p>
+          </ListItem>
+        </List>
+      );
+      break;
+    case '11':
+      content = (
+        <List>
+          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
+            <p>Giảm giá</p>
+            <InputField
+              name="discountPercentage"
+              sx={{ width: '120px' }}
+              type="number"
+              InputProps={{
+                style: { height: '25px', margin: '0 5px' }
+              }}
+            />
+            <p>% tính phí cho giỏ hàng</p>
+          </ListItem>
+          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
+            <p>giá chiết khấu tối đa là</p>
+            <InputField
+              name="maxAmount"
+              type="number"
+              sx={{ width: '120px' }}
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
               }}
@@ -285,88 +370,10 @@ const TaskComponent = ({
       content = (
         <List>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>discount</p>
-            <InputField
-              name="discountPercentage"
-              type="number"
-              sx={{ width: '100px' }}
-              InputProps={{
-                style: { height: '25px', margin: '0 5px' }
-              }}
-            />
-            <p>% for cart</p>
-          </ListItem>
-          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>maximun discount price is</p>
-            <InputField
-              name="minPriceAfter"
-              type="number"
-              sx={{ width: '100px' }}
-              InputProps={{
-                style: { height: '25px', margin: '0 5px' }
-              }}
-            />
-            <p>VND</p>
-          </ListItem>
-        </List>
-      );
-      break;
-    case '11':
-      content = (
-        <List>
-          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>discount</p>
-            <InputField
-              name="discountAmount"
-              sx={{ width: '100px' }}
-              type="number"
-              InputProps={{
-                style: { height: '25px', margin: '0 5px' }
-              }}
-            />
-            <p>VND for shipping fee for cart</p>
-          </ListItem>
-        </List>
-      );
-      break;
-    case '12':
-      content = (
-        <List>
-          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>discount</p>
-            <InputField
-              name="discountPercentage"
-              sx={{ width: '100px' }}
-              type="number"
-              InputProps={{
-                style: { height: '25px', margin: '0 5px' }
-              }}
-            />
-            <p>% for fee for cart</p>
-          </ListItem>
-          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>maximum discount price is</p>
-            <InputField
-              name="maxAmount"
-              type="number"
-              sx={{ width: '100px' }}
-              InputProps={{
-                style: { height: '25px', margin: '0 5px' }
-              }}
-            />
-            <p>VND</p>
-          </ListItem>
-        </List>
-      );
-      break;
-    case '13':
-      content = (
-        <List>
-          <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <p>Chuyển đổi từ tổng tiền đơn hàng thành điểm theo tỷ lệ</p>
             <InputField
               name="bonusPointRate"
-              sx={{ width: '100px' }}
+              sx={{ width: '120px' }}
               type="number"
               InputProps={{
                 style: { height: '25px', margin: '0 5px' }
@@ -384,19 +391,56 @@ const TaskComponent = ({
   const drawer = isDrawerOpen && (
     <div>
       <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer}>
+        <Paper>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            p={2}
+            pt={0}
+            borderBottom={1}
+            borderColor="grey.300"
+            textAlign="right"
+          >
+            <Typography variant="h6">Chọn sản phẩm</Typography>
+            {/* <IconButton aria-label="close" onClick={() => setOpen(false)} size="large">
+              <Icon icon={closeFill} />
+            </IconButton> */}
+          </Box>
+        </Paper>
         <ResoTable
           checkboxSelection={{
             selection: selectedProductIds,
             type: type
           }}
           showAction={false}
-          scroll={{ y: '50%', x: '100%' }}
+          scroll={{ y: '80%', x: '100%' }}
           rowKey="id"
           ref={tableRef}
           getData={(param: any) => productPromotionApi.getProduct(param)}
           onChangeSelection={handleChangeSelection}
           columns={productPromotionColumns}
         />
+        <Box
+          p={2}
+          borderTop={1}
+          borderColor="grey.300"
+          component={Paper}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography variant="body1">
+            Đã chọn{' '}
+            <strong>{selectedProductIds === undefined ? 0 : selectedProductIds.length}</strong> sản
+            phẩm
+          </Typography>
+          <Stack direction="row" spacing={2} justifyContent="flex-end">
+            <Button variant="outlined" onClick={() => setIsDrawerOpen(false)}>
+              Hủy
+            </Button>
+          </Stack>
+        </Box>
       </Drawer>
     </div>
   );

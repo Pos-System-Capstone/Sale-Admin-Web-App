@@ -340,6 +340,16 @@ export const promotionAppSidebarConfig = [
         title: 'promotion.profile',
         path: PATH_PROMOTION_APP.profile.root,
         icon: ICONS.user
+      },
+      {
+        title: 'promotion.product',
+        path: PATH_PROMOTION_APP.product.root,
+        icon: ICONS.user
+      },
+      {
+        title: 'promotion.product-category',
+        path: PATH_PROMOTION_APP.category.root,
+        icon: ICONS.user
       }
     ]
   }

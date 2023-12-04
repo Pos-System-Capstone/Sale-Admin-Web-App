@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 import { Button, Card, Stack } from '@mui/material';
 import actionApi from 'api/promotion/action';
 
-import storeApi from 'api/store';
+// import storeApi from 'api/store';
 import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 
 import Page from 'components/Page';
@@ -18,7 +18,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { ACTION_TYPE_DATA } from 'types/promotion/action';
-import { TStore } from 'types/store';
+// import { TStore } from 'types/store';
+import { TActionBase } from 'types/promotion/action';
 import { fDateTime } from 'utils/formatTime';
 import { getUserInfo } from 'utils/utils';
 const ActionPage = () => {
@@ -27,7 +28,7 @@ const ActionPage = () => {
   const navigate = useNavigate();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
-  const [currentDeleteItem, setCurrentDeleteItem] = useState<TStore | null>(null);
+  const [currentDeleteItem, setCurrentDeleteItem] = useState<TActionBase | null>(null);
   const tableRef = useRef<any>();
   // const brandId = useSelector((state: RootState) => state.brand);
 
@@ -35,8 +36,8 @@ const ActionPage = () => {
   const user: any = JSON.parse(userRaw ?? '{}');
 
   const deleteStoreHandler = () =>
-    storeApi
-      .delete(currentDeleteItem?.id!)
+    actionApi
+      .deleteAction(currentDeleteItem?.actionId)
       .then(() => setCurrentDeleteItem(null))
       .then(tableRef.current?.reload)
       .then(() =>
@@ -90,7 +91,8 @@ const ActionPage = () => {
 
   return (
     <Page
-      title={`${translate('pages.stores.listTitle')}`}
+      // title={`${translate('pages.stores.listTitle')}`}
+      title="Danh sách Action"
       actions={() => [
         <Button
           key="create-store"

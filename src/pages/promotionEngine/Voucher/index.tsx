@@ -42,6 +42,10 @@ export default function Voucher() {
       dataIndex: 'voucherName'
     },
     {
+      title: `Voucher Group Id`,
+      dataIndex: 'voucherGroupId'
+    },
+    {
       title: `${t('promotionSystem.voucher.table.actionName')}`,
       dataIndex: ['action', 'name'],
       // renderFormItem: () => <AutocompleteCategory name="cat-id" label="Danh mục" />
@@ -85,13 +89,26 @@ export default function Voucher() {
         </Button>
       ]}
     >
+      {/* <Button
+        key="add-product"
+        onClick={() => {
+          navigate(PATH_PROMOTION_APP.voucher.detail);
+        }}
+        variant="contained"
+        startIcon={<Icon icon={plusFill} />}
+      >
+        Trang Detail Voucher
+      </Button> */}
       <Card>
         <TabContext value={activeTab}>
           <ResoTable
             ref={ref}
             pagination
             getData={(params: any) => voucherApi.getVoucher(params)}
-            onEdit={() => console.log('edit')}
+            // onEdit={() => console.log('edit')}
+            onEdit={(params: any) =>
+              navigate(`${PATH_PROMOTION_APP.voucher.root}/${params.voucherGroupId}`)
+            }
             onDelete={() => console.log('delete')}
             columns={productColumns}
             rowKey="voucher_id"

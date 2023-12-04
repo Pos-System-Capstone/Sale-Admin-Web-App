@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import Typography from '@mui/material/Typography';
 import {
   Box,
   FormControl,
@@ -10,7 +11,7 @@ import {
   ToggleButton,
   ToggleButtonGroup
 } from '@mui/material';
-import { AutoCompleteField, InputField } from 'components/form';
+import { InputField } from 'components/form';
 import useLocales from 'hooks/useLocales';
 import React, { useState } from 'react';
 
@@ -25,6 +26,7 @@ const BasicProductInfoForm = (props: Props) => {
     width: '50%',
     height: '55.8px',
     paddingRight: '10px',
+    fontSize: '16px',
     pb: '20px',
     '&.Mui-selected, &.Mui-selected:hover': {
       color: 'white',
@@ -36,20 +38,46 @@ const BasicProductInfoForm = (props: Props) => {
   return (
     <Grid container flexWrap="nowrap" gap={2}>
       <Grid item xs={6}>
-        <Stack spacing={2} direction="column">
+        <Stack direction="column">
           <Box>
             <InputField
               fullWidth
               name="product_name"
               label={`${t('promotionSystem.voucher.addVoucher.groupName')}`}
               required
-              sx={{ height: '30px', pb: '50px' }}
+              InputProps={{
+                style: { height: '55.8px', pt: '10px' }
+              }}
             />
           </Box>
           <Box>
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
               <Grid item xs={6}>
-                <AutoCompleteField
+                <InputField
+                  fullWidth
+                  type="number"
+                  name="price"
+                  label={`${t('promotionSystem.voucher.addVoucher.length')}`}
+                  required
+                  InputProps={{
+                    style: { height: '55.8px', pt: '10px' }
+                  }}
+                  // sx={{ pb: '70px' }} // Thay đổi giá trị height thành '30px'
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <InputField
+                  fullWidth
+                  type="number"
+                  name="quantity"
+                  label={`${t('promotionSystem.voucher.addVoucher.quantity')}`}
+                  required
+                  InputProps={{
+                    style: { height: '55.8px', pt: '10px' }
+                  }}
+                  // sx={{ pb: '70px' }} // Thay đổi giá trị height thành '30px'
+                />
+                {/* <AutoCompleteField
                   name="tags"
                   label={`${t('promotionSystem.voucher.addVoucher.quantity')}`}
                   required
@@ -59,19 +87,16 @@ const BasicProductInfoForm = (props: Props) => {
                   options={[]}
                   limitTags={2}
                   fullWidth
-                  sx={{ height: '30px', pb: '70px' }}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <InputField
-                  fullWidth
-                  type="number"
-                  name="price"
-                  label={`${t('promotionSystem.voucher.addVoucher.length')}`}
-                  required
-                  helperText={`${t('promotionSystem.voucher.addVoucher.helperLength')}: 62`}
-                  sx={{ height: '30px', pb: '70px' }}
-                />
+                  sx={{
+                    height: '50px', // chỉnh sửa chiều cao
+                    pb: '65px', // chỉnh sửa padding-bottom
+                    fontSize: '16px', // thêm thuộc tính fontSize
+                    color: 'red' // thêm thuộc tính color
+                  }}
+                /> */}
+                <Typography variant="body2" color="textSecondary" fontWeight="bold">
+                  {t('promotionSystem.voucher.addVoucher.helperLength')}: 1000
+                </Typography>
               </Grid>
             </Grid>
           </Box>
@@ -107,11 +132,11 @@ const BasicProductInfoForm = (props: Props) => {
                     label={`${t('promotionSystem.voucher.addVoucher.discountAction')}`}
                     sx={{ mb: '10px' }}
                   >
-                    <MenuItem value="">
+                    {/* <MenuItem value="">
                       <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>Giảm 5k cho phí ship</MenuItem>
-                    <MenuItem value={10}>Action. tests</MenuItem>
+                    </MenuItem> */}
+                    <MenuItem value={1}>Giảm 5k cho phí ship</MenuItem>
+                    <MenuItem value={2}>Giảm 20% hóa đơn</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -128,10 +153,11 @@ const BasicProductInfoForm = (props: Props) => {
                     label={`${t('promotionSystem.voucher.addVoucher.giftAction')}`}
                     sx={{ mb: '10px' }}
                   >
-                    <MenuItem value="">
+                    {/* <MenuItem value="">
                       <em>No data</em>
-                    </MenuItem>
-                    <MenuItem value={10}></MenuItem>
+                    </MenuItem> */}
+                    <MenuItem value={1}>Quà tặng A</MenuItem>
+                    <MenuItem value={2}>Quà tặng B</MenuItem>
                   </Select>
                 </FormControl>
               </Box>

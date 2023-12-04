@@ -41,6 +41,7 @@ import DayReport from 'pages/report/TradingReport';
 import UpdateActionPage from 'pages/promotionEngine/Action/update';
 import UpdatePromotion from 'pages/promotionEngine/Promotion/PromotionDetail/update';
 import UpdateConditionPage from 'pages/promotionEngine/Condition/update';
+import DetailVoucher from 'pages/promotionEngine/Voucher/detailVoucher';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -342,10 +343,13 @@ export default function Router() {
           ]
         },
         {
-          path: 'voucher',
+          path: 'voucher-groups',
           children: [
             { path: '', element: <Voucher /> },
-            { path: 'new', element: <CreateVoucher /> }
+            { path: 'new', element: <CreateVoucher /> },
+            // { path: 'detail', element: <DetailVoucher /> },
+            { path: ':id', element: <DetailVoucher /> }
+            // { path: ':id', element: <DetailVoucher /> }
           ]
         },
         {
@@ -360,8 +364,8 @@ export default function Router() {
           path: 'action',
           children: [
             { path: '', element: <ActionPage /> },
-            { path: 'new', element: <NewActionPage /> },
-            { path: ':id', element: <UpdateActionPage /> }
+            { path: 'new', element: <NewActionPage /> }
+            // { path: ':id', element: <UpdateActionPage /> }
           ]
         },
         {

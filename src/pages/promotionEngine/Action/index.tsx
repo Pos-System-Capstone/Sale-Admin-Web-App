@@ -91,7 +91,8 @@ const ActionPage = () => {
 
   return (
     <Page
-      title={`${translate('pages.stores.listTitle')}`}
+      // title={`${translate('pages.stores.listTitle')}`}
+      title="Danh sách Action"
       actions={() => [
         <Button
           key="create-store"

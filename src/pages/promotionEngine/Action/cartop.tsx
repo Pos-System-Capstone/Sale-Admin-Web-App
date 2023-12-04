@@ -7,7 +7,6 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import productPromotionApi from 'api/promotion/product';
 import { getUserInfo } from 'utils/utils';
 import { productPromotionColumns } from '../Products/config';
-// import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import { Box, Button, Paper, Stack } from '@mui/material';
 
 interface TaskComponentProps {
@@ -26,12 +25,12 @@ const TaskComponent = ({
   type = 'checkbox'
 }: TaskComponentProps): ReactElement | null => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedProductIds, setSelectedProductIds] = useState<string[]>();
+  const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
-  const handleChangeSelection = React.useCallback((ids) => {
-    setSelectedProductIds(ids);
+  const handleChangeSelection = React.useCallback((productId) => {
+    setSelectedProductIds(productId);
   }, []);
   let content = null;
   const tableRef = useRef<any>();
@@ -76,7 +75,8 @@ const TaskComponent = ({
           <ListItem sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography>Cho mặt hàng trong </Typography>
             <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
-              danh sách mặt hàng đã chọn(0)
+              danh sách mặt hàng đã chọn(
+              {selectedProductIds === undefined ? 0 : selectedProductIds.length})
             </a>
           </ListItem>
         </List>
@@ -115,7 +115,8 @@ const TaskComponent = ({
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <Typography>Cho mặt hàng trong </Typography>
             <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
-              danh sách mặt hàng đã chọn(0)
+              danh sách mặt hàng đã chọn(
+              {selectedProductIds === undefined ? 0 : selectedProductIds.length})
             </a>
           </ListItem>
         </List>
@@ -139,7 +140,8 @@ const TaskComponent = ({
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <Typography>Cho mặt hàng trong </Typography>
             <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
-              danh sách mặt hàng đã chọn(0)
+              danh sách mặt hàng đã chọn(
+              {selectedProductIds === undefined ? 0 : selectedProductIds.length})
             </a>
           </ListItem>
         </List>
@@ -163,7 +165,8 @@ const TaskComponent = ({
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <Typography>Cho mặt hàng trong </Typography>
             <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
-              danh sách mặt hàng đã chọn(0)
+              danh sách mặt hàng đã chọn(
+              {selectedProductIds === undefined ? 0 : selectedProductIds.length})
             </a>
           </ListItem>
         </List>
@@ -198,7 +201,8 @@ const TaskComponent = ({
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <Typography>Cho mặt hàng trong </Typography>
             <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
-              danh sách mặt hàng đã chọn(0)
+              danh sách mặt hàng đã chọn(
+              {selectedProductIds === undefined ? 0 : selectedProductIds.length})
             </a>
           </ListItem>
         </List>
@@ -247,7 +251,8 @@ const TaskComponent = ({
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
             <Typography>Cho mặt hàng trong </Typography>
             <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
-              danh sách mặt hàng đã chọn(0)
+              danh sách mặt hàng đã chọn(
+              {selectedProductIds === undefined ? 0 : selectedProductIds.length})
             </a>
           </ListItem>
         </List>
@@ -434,9 +439,6 @@ const TaskComponent = ({
             <Button variant="outlined" onClick={() => setIsDrawerOpen(false)}>
               Hủy
             </Button>
-            {/* <LoadingAsyncButton onClick={handleSubmit} variant="contained">
-                Thêm
-              </LoadingAsyncButton> */}
           </Stack>
         </Box>
       </Drawer>

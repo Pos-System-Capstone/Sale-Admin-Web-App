@@ -50,6 +50,15 @@ const UpdateActionPage = () => {
   const Type = action?.actionType;
   console.log('ActionType ' + Type);
 
+  const [listProduct, setlistProduct] = useState<string[]>([]);
+
+  console.log('check list', listProduct);
+
+  // Hàm callback để nhận dữ liệu từ component con
+  const handleDataFromChild = (data: string[]) => {
+    setlistProduct(data);
+  };
+
   const [selectedText, setSelectedText] = useState<string | null>('0');
   useEffect(() => {
     setSelectedText(Type?.toString() ?? null);

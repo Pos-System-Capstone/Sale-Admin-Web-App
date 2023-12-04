@@ -39,6 +39,8 @@ import TimeReport from 'pages/report/TradingReport/TimeReport';
 import PromotionReport from 'pages/report/PromotionReport';
 import DayReport from 'pages/report/TradingReport';
 import UpdateActionPage from 'pages/promotionEngine/Action/update';
+import ProductPromotion from 'pages/promotionEngine/Products';
+import ProductCategory from 'pages/promotionEngine/Category';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -374,6 +376,14 @@ export default function Router() {
         {
           path: 'profile',
           children: [{ path: '', element: <ProfilePage /> }]
+        },
+        {
+          path: 'product-promotion',
+          children: [{ path: '', element: <ProductPromotion /> }]
+        },
+        {
+          path: 'product-category',
+          children: [{ path: '', element: <ProductCategory /> }]
         }
       ]
     },

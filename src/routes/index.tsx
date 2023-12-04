@@ -364,8 +364,8 @@ export default function Router() {
           path: 'action',
           children: [
             { path: '', element: <ActionPage /> },
-            { path: 'new', element: <NewActionPage /> }
-            // { path: ':id', element: <UpdateActionPage /> }
+            { path: 'new', element: <NewActionPage /> },
+            { path: ':id', element: <UpdateActionPage /> }
           ]
         },
         {

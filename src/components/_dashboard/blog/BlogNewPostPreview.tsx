@@ -7,7 +7,6 @@ import { Box, Button, Container, Typography, DialogActions } from '@mui/material
 import { NewPostViewFormikInstance } from '../../../@types/blog';
 //
 import { DialogAnimate } from '../../animate';
-import Markdown from '../../Markdown';
 import Scrollbar from '../../Scrollbar';
 import EmptyContent from '../../EmptyContent';
 
@@ -33,12 +32,12 @@ const HeroStyle = styled('div')(({ theme }) => ({
 
 type PreviewHeroProps = {
   title: string;
-  cover?: string | null;
+  image?: string | null;
 };
 
-function PreviewHero({ title, cover }: PreviewHeroProps) {
+function PreviewHero({ title, image }: PreviewHeroProps) {
   return (
-    <HeroStyle sx={{ backgroundImage: `url(${cover})` }}>
+    <HeroStyle sx={{ backgroundImage: `url(${image})` }}>
       <Container
         sx={{
           top: 0,
@@ -70,10 +69,10 @@ export default function BlogNewPostPreview({
   onClosePreview
 }: BlogNewPostPreviewProps) {
   const { values, handleSubmit, isSubmitting, isValid } = formik;
-  const { title, description, content } = values;
-  const cover = isString(values.cover) ? values.cover : values.cover?.preview;
-  const hasContent = title || description || content || cover;
-  const hasHero = title || cover;
+  const { title, blogContent } = values;
+  const image = isString(values.image) ? values.image : values.image?.preview;
+  const hasContent = title || blogContent || image;
+  const hasHero = title || image;
 
   return (
     <DialogAnimate fullScreen open={isOpenPreview} onClose={onClosePreview}>
@@ -95,13 +94,12 @@ export default function BlogNewPostPreview({
 
       {hasContent ? (
         <Scrollbar>
-          {hasHero && <PreviewHero title={title} cover={cover} />}
+          {hasHero && <PreviewHero title={title} image={image} />}
           <Container>
             <Box sx={{ mt: 5, mb: 10 }}>
               <Typography variant="h6" sx={{ mb: 5 }}>
-                {description}
+                {blogContent}
               </Typography>
-              <Markdown children={content} />
             </Box>
           </Container>
         </Scrollbar>

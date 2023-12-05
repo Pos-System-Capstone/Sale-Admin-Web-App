@@ -91,8 +91,8 @@ export default function Voucher() {
             ref={ref}
             pagination
             getData={(params: any) => voucherApi.getVoucher(params)}
-            onEdit={() => console.log('edit')}
-            onDelete={() => console.log('delete')}
+            onEdit={() => console.log()}
+            onDelete={() => console.log()}
             columns={productColumns}
             rowKey="voucher_id"
           />

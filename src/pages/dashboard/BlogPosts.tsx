@@ -1,4 +1,4 @@
-import { orderBy } from 'lodash';
+// import { orderBy } from 'lodash';
 import { Icon } from '@iconify/react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Link as RouterLink } from 'react-router-dom';
@@ -14,7 +14,7 @@ import useSettings from '../../hooks/useSettings';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // @types
-import { Post, BlogState } from '../../@types/blog';
+import { BlogState } from '../../@types/blog';
 // components
 import Page from '../../components/Page';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
@@ -30,18 +30,18 @@ const SORT_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-const applySort = (posts: Post[], sortBy: string) => {
-  if (sortBy === 'latest') {
-    return orderBy(posts, ['createdAt'], ['desc']);
-  }
-  if (sortBy === 'oldest') {
-    return orderBy(posts, ['createdAt'], ['asc']);
-  }
-  if (sortBy === 'popular') {
-    return orderBy(posts, ['view'], ['desc']);
-  }
-  return posts;
-};
+// const applySort = (posts: Post[], sortBy: string) => {
+//   if (sortBy === 'latest') {
+//     return orderBy(posts, ['createdAt'], ['desc']);
+//   }
+//   if (sortBy === 'oldest') {
+//     return orderBy(posts, ['createdAt'], ['asc']);
+//   }
+//   if (sortBy === 'popular') {
+//     return orderBy(posts, ['view'], ['desc']);
+//   }
+//   return posts;
+// };
 
 const SkeletonLoad = (
   <Grid container spacing={3} sx={{ mt: 2 }}>
@@ -61,9 +61,9 @@ export default function BlogPosts() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const [filters, setFilters] = useState('latest');
-  const { posts, hasMore, index, step } = useSelector((state: { blog: BlogState }) => state.blog);
+  const { hasMore, index, step, posts } = useSelector((state: { blog: BlogState }) => state.blog);
 
-  const sortedPosts = applySort(posts, filters);
+  // const sortedPosts = applySort(posts, filters);
   const onScroll = useCallback(() => dispatch(getMorePosts()), [dispatch]);
 
   useEffect(() => {
@@ -111,7 +111,7 @@ export default function BlogPosts() {
           style={{ overflow: 'inherit' }}
         >
           <Grid container spacing={3}>
-            {sortedPosts.map((post, index) => (
+            {posts.map((post, index) => (
               <BlogPostCard key={post.id} post={post} index={index} />
             ))}
           </Grid>

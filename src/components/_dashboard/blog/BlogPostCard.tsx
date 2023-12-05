@@ -1,19 +1,19 @@
-import { Icon } from '@iconify/react';
-import { paramCase } from 'change-case';
-import eyeFill from '@iconify/icons-eva/eye-fill';
+// import { Icon } from '@iconify/react';
+// import { paramCase } from 'change-case';
+// import eyeFill from '@iconify/icons-eva/eye-fill';
 import { Link as RouterLink } from 'react-router-dom';
-import shareFill from '@iconify/icons-eva/share-fill';
-import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
+// import shareFill from '@iconify/icons-eva/share-fill';
+// import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Card, Grid, Avatar, Typography, CardContent } from '@mui/material';
+import { Card, Grid, Avatar, Typography, CardContent } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // utils
-import { fDate } from '../../../utils/formatTime';
-import { fShortenNumber } from '../../../utils/formatNumber';
+// import { fDate } from '../../../utils/formatTime';
+// import { fShortenNumber } from '../../../utils/formatNumber';
 // @types
-import { Post } from '../../../@types/blog';
+import { IBlog } from '../../../@types/blog';
 //
 import SvgIconStyle from '../../SvgIconStyle';
 
@@ -64,21 +64,22 @@ const CoverImgStyle = styled('img')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 type BlogPostCardProps = {
-  post: Post;
+  post: IBlog;
   index: number;
 };
 
 export default function BlogPostCard({ post, index }: BlogPostCardProps) {
-  const { cover, title, view, comment, share, author, createdAt } = post;
-  const linkTo = `${PATH_DASHBOARD.blog.root}/post/${paramCase(title)}`;
+  const { blogContent, image, title, id } = post;
+
+  const linkTo = `${PATH_DASHBOARD.blog.root}/post/${id}`;
   const latestPostLarge = index === 0;
   const latestPost = index === 1 || index === 2;
 
-  const POST_INFO = [
-    { number: comment, icon: messageCircleFill },
-    { number: view, icon: eyeFill },
-    { number: share, icon: shareFill }
-  ];
+  // const POST_INFO = [
+  //   { number: comment, icon: messageCircleFill },
+  //   { number: view, icon: eyeFill },
+  //   { number: share, icon: shareFill }
+  // ];
 
   return (
     <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
@@ -116,7 +117,7 @@ export default function BlogPostCard({ post, index }: BlogPostCardProps) {
               ...((latestPostLarge || latestPost) && { display: 'none' })
             }}
           />
-          <AvatarStyle
+          {/* <AvatarStyle
             alt={author.name}
             src={author.avatarUrl}
             sx={{
@@ -128,9 +129,9 @@ export default function BlogPostCard({ post, index }: BlogPostCardProps) {
                 height: 40
               })
             }}
-          />
+          /> */}
 
-          <CoverImgStyle alt={title} src={cover} />
+          <CoverImgStyle alt={title} src={image} />
         </CardMediaStyle>
 
         <CardContent
@@ -148,7 +149,8 @@ export default function BlogPostCard({ post, index }: BlogPostCardProps) {
             variant="caption"
             sx={{ color: 'text.disabled', display: 'block' }}
           >
-            {fDate(createdAt)}
+            Test
+            {/* {fDate(createdAt)} */}
           </Typography>
 
           <TitleStyle
@@ -168,7 +170,7 @@ export default function BlogPostCard({ post, index }: BlogPostCardProps) {
             {title}
           </TitleStyle>
 
-          <InfoStyle>
+          {/* <InfoStyle>
             {POST_INFO.map((info, index) => (
               <Box
                 key={index}
@@ -185,7 +187,7 @@ export default function BlogPostCard({ post, index }: BlogPostCardProps) {
                 <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
               </Box>
             ))}
-          </InfoStyle>
+          </InfoStyle> */}
         </CardContent>
       </Card>
     </Grid>

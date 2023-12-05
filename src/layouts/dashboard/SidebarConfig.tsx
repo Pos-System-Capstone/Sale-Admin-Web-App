@@ -203,6 +203,17 @@ export const brandAdminSidebarConfig = [
         icon: ICONS.collection
       }
     ]
+  },
+  {
+    subheader: 'Blog',
+    path: PATH_DASHBOARD.blog.root,
+    items: [
+      {
+        title: 'Bài viết',
+        path: PATH_DASHBOARD.blog.posts,
+        icon: ICONS.blog
+      }
+    ]
   }
 ];
 

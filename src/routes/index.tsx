@@ -41,6 +41,8 @@ import DayReport from 'pages/report/TradingReport';
 import UpdateActionPage from 'pages/promotionEngine/Action/update';
 import ProductPromotion from 'pages/promotionEngine/Products';
 import ProductCategory from 'pages/promotionEngine/Category';
+import UpdateProductCategory from 'pages/promotionEngine/Category/update';
+import UpdateProductPromotion from 'pages/promotionEngine/Products/update';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -379,11 +381,17 @@ export default function Router() {
         },
         {
           path: 'product-promotion',
-          children: [{ path: '', element: <ProductPromotion /> }]
+          children: [
+            { path: '', element: <ProductPromotion /> },
+            { path: ':id', element: <UpdateProductPromotion /> }
+          ]
         },
         {
           path: 'product-category',
-          children: [{ path: '', element: <ProductCategory /> }]
+          children: [
+            { path: '', element: <ProductCategory /> },
+            { path: ':id', element: <UpdateProductCategory /> }
+          ]
         }
       ]
     },

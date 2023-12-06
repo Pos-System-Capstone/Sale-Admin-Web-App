@@ -15,12 +15,23 @@ export type NewPostFormValues = {
   metaKeywords: String[];
 };
 
-export type NewPostViewFormikInstance = FormikProps<NewPostFormValues>;
+export type PostBlogFormValues = {
+  title: string;
+  blogContent: string;
+  image: File | any;
+  isDialog: boolean;
+  status: string;
+  metaData: string;
+  priority: number;
+  brandId: string;
+};
+
+export type NewPostViewFormikInstance = FormikProps<PostBlogFormValues>;
 
 export type BlogState = {
   isLoading: boolean;
   error: boolean;
-  posts: Post[];
+  posts: IBlog[];
   post: Post | null;
   recentPosts: Post[];
   hasMore: boolean;
@@ -74,3 +85,15 @@ export type Post = {
   }[];
   comments: PostComment[];
 };
+
+export interface IBlog {
+  blogContent?: string;
+  id?: string;
+  brandId?: string;
+  image?: string;
+  isDialog?: string;
+  metaData?: string;
+  priority?: number;
+  status?: string;
+  title?: string;
+}

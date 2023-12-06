@@ -1,11 +1,19 @@
 import { useEffect } from 'react';
-import { sentenceCase } from 'change-case';
+// import { sentenceCase } from 'change-case';
 import { useParams } from 'react-router-dom';
 // material
-import { Box, Card, Divider, Skeleton, Container, Typography, Pagination } from '@mui/material';
+import {
+  Box,
+  Card,
+  Divider,
+  Skeleton,
+  Container,
+  Typography
+  // , Pagination
+} from '@mui/material';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
-import { getPost, getRecentPosts } from '../../redux/slices/blog';
+import { getPost } from '../../redux/slices/blog';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
@@ -17,11 +25,11 @@ import Page from '../../components/Page';
 import Markdown from '../../components/Markdown';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import {
-  BlogPostHero,
-  BlogPostTags,
-  BlogPostRecent,
-  BlogPostCommentList,
-  BlogPostCommentForm
+  BlogPostHero
+  // BlogPostTags,
+  // BlogPostRecent,
+  // BlogPostCommentList,
+  // BlogPostCommentForm
 } from '../../components/_dashboard/blog';
 
 // ----------------------------------------------------------------------
@@ -43,13 +51,12 @@ const SkeletonLoad = (
 export default function BlogPost() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
-  const { title } = useParams();
+  const { id } = useParams();
   const { post, error, recentPosts } = useSelector((state: { blog: BlogState }) => state.blog);
 
   useEffect(() => {
-    dispatch(getPost(title!));
-    dispatch(getRecentPosts(title!));
-  }, [dispatch, title]);
+    dispatch(getPost(id!));
+  }, [dispatch, id]);
 
   return (
     <Page title="Blog: Post Details | Minimal-UI">
@@ -58,8 +65,7 @@ export default function BlogPost() {
           heading="Post Details"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'Blog', href: PATH_DASHBOARD.blog.root },
-            { name: sentenceCase(title!) }
+            { name: 'Blog', href: PATH_DASHBOARD.blog.root }
           ]}
         />
 
@@ -76,24 +82,24 @@ export default function BlogPost() {
 
               <Box sx={{ my: 5 }}>
                 <Divider />
-                <BlogPostTags post={post} />
+                {/* <BlogPostTags post={post} /> */}
                 <Divider />
               </Box>
 
-              <Box sx={{ display: 'flex', mb: 2 }}>
+              {/* <Box sx={{ display: 'flex', mb: 2 }}>
                 <Typography variant="h4">Comments</Typography>
                 <Typography variant="subtitle2" sx={{ color: 'text.disabled' }}>
                   ({post.comments.length})
                 </Typography>
-              </Box>
+              </Box> */}
 
-              <BlogPostCommentList post={post} />
+              {/* <BlogPostCommentList post={post} /> */}
 
-              <Box sx={{ mb: 5, mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
+              {/* <Box sx={{ mb: 5, mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
                 <Pagination count={8} color="primary" />
               </Box>
 
-              <BlogPostCommentForm />
+              <BlogPostCommentForm /> */}
             </Box>
           </Card>
         )}
@@ -102,7 +108,7 @@ export default function BlogPost() {
 
         {error && <Typography variant="h6">404 Post not found</Typography>}
 
-        {recentPosts.length > 0 && <BlogPostRecent posts={recentPosts} />}
+        {/* {recentPosts.length > 0 && <BlogPostRecent posts={recentPosts} />} */}
       </Container>
     </Page>
   );

@@ -46,7 +46,7 @@ const UpdateStorePage = () => {
   const { data: menuInStores, refresh } = useRequest(
     () => storeApi.getMenusByStoreId(Number(id)).then((res) => res.data),
     {
-      onError: (error) => console.log(error)
+      onError: (error) => console.log()
     }
   );
   const onUpdateStore = (storeData: any) =>

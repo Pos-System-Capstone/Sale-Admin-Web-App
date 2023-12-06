@@ -8,26 +8,28 @@ import { styled } from '@mui/material/styles';
 import {
   Grid,
   Card,
-  Chip,
+  // Chip,
   Stack,
   Switch,
   Button,
   TextField,
   Typography,
-  Autocomplete,
+  // Autocomplete,
   FormHelperText,
   FormControlLabel
 } from '@mui/material';
 // theme
 import typography from '../../../theme/typography';
 // utils
-import fakeRequest from '../../../utils/fakeRequest';
+// import fakeRequest from '../../../utils/fakeRequest';
 // @types
-import { NewPostFormValues } from '../../../@types/blog';
+import { PostBlogFormValues } from '../../../@types/blog';
 //
-import { QuillEditor } from '../../editor';
+// import { QuillEditor } from '../../editor';
 import { UploadSingleFile } from '../../upload';
 import BlogNewPostPreview from './BlogNewPostPreview';
+import { dispatch } from 'redux/store';
+import { postBlog } from 'redux/slices/blog';
 
 // ----------------------------------------------------------------------
 
@@ -69,28 +71,27 @@ export default function BlogNewPostForm() {
 
   const NewBlogSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
-    description: Yup.string().required('Description is required'),
-    content: Yup.string().min(1000).required('Content is required'),
-    cover: Yup.mixed().required('Cover is required')
+    blogContent: Yup.string().required('blogContent is required'),
+    metaData: Yup.string().min(3).required('Content is required'),
+    image: Yup.mixed().required('Cover is required')
   });
 
-  const formik = useFormik<NewPostFormValues>({
+  const formik = useFormik<PostBlogFormValues>({
     initialValues: {
       title: '',
-      description: '',
-      content: '',
-      cover: null,
-      tags: ['Logan'],
-      publish: true,
-      comments: true,
-      metaTitle: '',
-      metaDescription: '',
-      metaKeywords: ['Logan']
+      blogContent: '',
+      image: null,
+      isDialog: true,
+      status: 'Active',
+      metaData: '',
+      priority: 1,
+      brandId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
     },
     validationSchema: NewBlogSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
+      console.log(values);
       try {
-        await fakeRequest(500);
+        await dispatch(postBlog(values));
         resetForm();
         handleClosePreview();
         setSubmitting(false);
@@ -109,10 +110,7 @@ export default function BlogNewPostForm() {
     (acceptedFiles) => {
       const file = acceptedFiles[0];
       if (file) {
-        setFieldValue('cover', {
-          ...file,
-          preview: URL.createObjectURL(file)
-        });
+        setFieldValue('image', URL.createObjectURL(file));
       }
     },
     [setFieldValue]
@@ -140,12 +138,12 @@ export default function BlogNewPostForm() {
                     minRows={3}
                     maxRows={5}
                     label="Description"
-                    {...getFieldProps('description')}
-                    error={Boolean(touched.description && errors.description)}
-                    helperText={touched.description && errors.description}
+                    {...getFieldProps('blogContent')}
+                    error={Boolean(touched.blogContent && errors.blogContent)}
+                    helperText={touched.blogContent && errors.blogContent}
                   />
 
-                  <div>
+                  {/* <div>
                     <LabelStyle>Content</LabelStyle>
                     <QuillEditor
                       id="post-content"
@@ -158,20 +156,20 @@ export default function BlogNewPostForm() {
                         {touched.content && errors.content}
                       </FormHelperText>
                     )}
-                  </div>
+                  </div> */}
 
                   <div>
                     <LabelStyle>Cover</LabelStyle>
                     <UploadSingleFile
                       maxSize={3145728}
                       accept="image/*"
-                      file={values.cover}
+                      file={values.image}
                       onDrop={handleDrop}
-                      error={Boolean(touched.cover && errors.cover)}
+                      error={Boolean(touched.image && errors.image)}
                     />
-                    {touched.cover && errors.cover && (
+                    {touched.image && errors.image && (
                       <FormHelperText error sx={{ px: 2 }}>
-                        {touched.cover && errors.cover}
+                        {touched.image && errors.image}
                       </FormHelperText>
                     )}
                   </div>
@@ -184,21 +182,30 @@ export default function BlogNewPostForm() {
                 <Stack spacing={3}>
                   <div>
                     <FormControlLabel
-                      control={<Switch {...getFieldProps('publish')} checked={values.publish} />}
+                      control={
+                        <Switch
+                          {...getFieldProps('status')}
+                          onChange={() => {
+                            const newStatus = values.status === 'Active' ? 'unActive' : 'Active';
+                            setFieldValue('status', newStatus);
+                          }}
+                          checked={values.status === 'Active'}
+                        />
+                      }
                       label="Publish"
                       labelPlacement="start"
                       sx={{ mb: 1, mx: 0, width: '100%', justifyContent: 'space-between' }}
                     />
 
                     <FormControlLabel
-                      control={<Switch {...getFieldProps('comments')} checked={values.comments} />}
+                      control={<Switch {...getFieldProps('isDialog')} checked={values.isDialog} />}
                       label="Enable comments"
                       labelPlacement="start"
                       sx={{ mx: 0, width: '100%', justifyContent: 'space-between' }}
                     />
                   </div>
 
-                  <Autocomplete
+                  {/* <Autocomplete
                     multiple
                     freeSolo
                     value={values.tags}
@@ -213,9 +220,9 @@ export default function BlogNewPostForm() {
                       ))
                     }
                     renderInput={(params) => <TextField {...params} label="Tags" />}
-                  />
+                  /> */}
 
-                  <TextField fullWidth label="Meta title" {...getFieldProps('metaTitle')} />
+                  {/* <TextField fullWidth label="Meta title" {...getFieldProps('metaTitle')} /> */}
 
                   <TextField
                     fullWidth
@@ -223,10 +230,10 @@ export default function BlogNewPostForm() {
                     minRows={3}
                     maxRows={5}
                     label="Meta description"
-                    {...getFieldProps('metaDescription')}
+                    {...getFieldProps('metaData')}
                   />
 
-                  <Autocomplete
+                  {/* <Autocomplete
                     multiple
                     freeSolo
                     value={values.tags}
@@ -241,7 +248,7 @@ export default function BlogNewPostForm() {
                       ))
                     }
                     renderInput={(params) => <TextField {...params} label="Meta keywords" />}
-                  />
+                  /> */}
                 </Stack>
               </Card>
 

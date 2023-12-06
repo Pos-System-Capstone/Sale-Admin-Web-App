@@ -1,7 +1,6 @@
 import trash2Fill from '@iconify/icons-eva/trash-2-fill';
 import { StoreInMenu } from 'types/store';
 import { Icon } from '@iconify/react';
-import { useEffect } from 'react';
 import {
   Box,
   Button,
@@ -136,7 +135,7 @@ export default function StoreInMenuForm({
     resolver: yupResolver(schema)
   });
 
-  useEffect(() => () => console.log('Unmount'), []);
+  // useEffect(() => () => console.log('Unmount'), []);
 
   const onSubmit = (values: Partial<StoreInMenuForm>) => {
     try {

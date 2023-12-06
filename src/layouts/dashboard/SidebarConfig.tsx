@@ -205,42 +205,13 @@ export const brandAdminSidebarConfig = [
     ]
   },
   {
-    subheader: 'Tổng quan khuyến mãi',
+    subheader: 'Blog',
+    path: PATH_DASHBOARD.blog.root,
     items: [
       {
-        title: 'Bảng điều khiển khuyến mãi',
-        path: PATH_PROMOTION_APP.general.app,
-        icon: ICONS.dashboard
-      }
-    ]
-  },
-  {
-    subheader: 'Chiến dịch khuyến mãi',
-    items: [
-      {
-        title: 'promotion.promotion',
-        path: PATH_PROMOTION_APP.promotion.root,
-        icon: ICONS.category
-      },
-      {
-        title: 'promotion.voucher',
-        path: PATH_PROMOTION_APP.voucher.root,
-        icon: ICONS.tag
-      },
-      {
-        title: 'promotion.condition',
-        path: PATH_PROMOTION_APP.condition.root,
-        icon: ICONS.extraCategory
-      },
-      {
-        title: 'promotion.action',
-        path: PATH_PROMOTION_APP.action.root,
-        icon: ICONS.storeApply
-      },
-      {
-        title: 'promotion.gift',
-        path: PATH_PROMOTION_APP.gift.root,
-        icon: ICONS.ecommerce
+        title: 'Bài viết',
+        path: PATH_DASHBOARD.blog.posts,
+        icon: ICONS.blog
       }
     ]
   }

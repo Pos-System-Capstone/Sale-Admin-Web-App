@@ -244,6 +244,15 @@ export default function Router() {
           ]
         },
         {
+          path: 'blog',
+          children: [
+            { path: '', element: <Navigate to="/dashboard/blog/posts" replace /> },
+            { path: 'posts', element: <BlogPosts /> },
+            { path: 'post/:id', element: <BlogPost /> },
+            { path: 'new-post', element: <BlogNewPost /> }
+          ]
+        },
+        {
           path: 'menus',
           children: [
             { path: '', element: <MenusPage /> },

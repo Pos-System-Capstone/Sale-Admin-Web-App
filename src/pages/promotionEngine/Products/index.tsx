@@ -1,17 +1,19 @@
 /* eslint-disable camelcase */
-import plusFill from '@iconify/icons-eva/plus-fill';
-import { Icon } from '@iconify/react';
+// import plusFill from '@iconify/icons-eva/plus-fill';
+// import { Icon } from '@iconify/react';
 // import { TabContext, TabList } from '@mui/lab';
 // material
-import { Button, Card } from '@mui/material';
+import { Card } from '@mui/material';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import React, { useRef, useState, useEffect } from 'react';
+import { useParams } from 'react-router';
 // components
 import { useNavigate } from 'react-router-dom';
-import { PATH_DASHBOARD } from 'routes/paths';
-import { TProduct } from 'types/product';
+import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
+// import { PATH_DASHBOARD } from 'routes/paths';
+// import { TProduct } from 'types/product';
 // import confirm from 'components/Modal/confirm';
 // import { deleteProdById } from '../../redux/product/api';
 import { TProductPromotionAPI } from 'types/promotion/productPromotion';
@@ -34,9 +36,6 @@ export default function ProductPromotion() {
   const [currentDeleteItem, setCurrentDeleteItem] = useState<TProductPromotionAPI | null>(null);
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
-  const editProduct = (data: TProduct) => {
-    navigate(`${PATH_DASHBOARD.products.root}/${data.id}`);
-  };
   const deleteProductHandler = () =>
     productApi
       .deleteProduct(currentDeleteItem?.productId)
@@ -60,58 +59,48 @@ export default function ProductPromotion() {
       hideInSearch: true
     },
     {
-      title: 'Code',
+      title: 'Mã sản phẩm',
       dataIndex: 'code',
       hideInSearch: true
     },
     {
-      title: 'Name',
+      title: 'Tên sản phẩm',
       dataIndex: 'name',
       hideInSearch: true
     },
     {
-      title: 'Created date',
+      title: 'Ngày tạo',
       dataIndex: 'insDate',
       render: (values: any) => fDateTime(values),
       hideInSearch: true
     },
     {
-      title: 'Updated date',
+      title: 'Ngày cập nhật',
       dataIndex: 'updDate',
       render: (values: any) => fDateTime(values),
       hideInSearch: true
     }
   ];
+  const { id } = useParams();
   useEffect(() => {
     if (ref.current) {
       // ref.current.formControl.setValue('productCateId', user.productCateId!);
-      ref.current.formControl.setValue('productCateId', '46ca741a-7aab-484e-ba88-2199d40814f8');
+      ref.current.formControl.setValue('productCateId', id);
     }
   }, [user]);
   return (
     <Page
-      title="Quản lý Product"
       actions={() => [
         // <Button
-        //   key="add-product-extra"
+        //   key="add-product"
         //   onClick={() => {
-        //     navigate(`${PATH_DASHBOARD.products.newProduct}?productType=${ProductTypeEnum.EXTRA}`);
+        //     navigate(PATH_DASHBOARD.products.newProduct);
         //   }}
-        //   variant="outlined"
+        //   variant="contained"
         //   startIcon={<Icon icon={plusFill} />}
         // >
-        //   Thêm extra
-        // </Button>,
-        <Button
-          key="add-product"
-          onClick={() => {
-            navigate(PATH_DASHBOARD.products.newProduct);
-          }}
-          variant="contained"
-          startIcon={<Icon icon={plusFill} />}
-        >
-          Thêm sản phẩm
-        </Button>
+        //   Thêm sản phẩm
+        // </Button>
       ]}
     >
       <Card>
@@ -119,7 +108,9 @@ export default function ProductPromotion() {
           ref={ref}
           pagination
           getData={(params: any) => productApi.getProduct(params)}
-          onEdit={editProduct}
+          onEdit={(product: TProductPromotionAPI) => {
+            navigate(`${PATH_PROMOTION_APP.product.editById(product.productId)}`);
+          }}
           columns={columns}
           onDelete={setCurrentDeleteItem}
           rowKey="id"
@@ -128,12 +119,7 @@ export default function ProductPromotion() {
           open={Boolean(currentDeleteItem)}
           onClose={() => setCurrentDeleteItem(null)}
           onDelete={deleteProductHandler}
-          title={
-            'Xác nhận xoá sản phẩm'
-            // <>
-            //   {translate('common.confirmDeleteTitle')} <strong>{currentDeleteItem?.name}</strong>
-            // </>
-          }
+          title={'Xác nhận xoá sản phẩm'}
         />
       </Card>
     </Page>

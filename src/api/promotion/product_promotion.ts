@@ -10,6 +10,12 @@ const getProduct = (params?: any) =>
 const deleteProduct = (id: string | undefined, data?: TProductPromotionAPI) =>
   request.delete<TProductPromotionAPI>(`/product/${id}`);
 
-const productPromotion = { getProduct, deleteProduct };
+const getProductById = (id: string | undefined) =>
+  request.get<TProductPromotionAPI>(`/product/${id}`);
+
+const updateProduct = (id: string | undefined, data?: TProductPromotionAPI) =>
+  request.put<TProductPromotionAPI>(`/product/${id}`, data);
+
+const productPromotion = { getProduct, deleteProduct, updateProduct, getProductById };
 
 export default productPromotion;

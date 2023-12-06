@@ -1,20 +1,21 @@
 /* eslint-disable camelcase */
-import plusFill from '@iconify/icons-eva/plus-fill';
-import { Icon } from '@iconify/react';
+// import plusFill from '@iconify/icons-eva/plus-fill';
+// import { Icon } from '@iconify/react';
 // import { TabContext, TabList } from '@mui/lab';
 // material
-import { Button, Card } from '@mui/material';
+import { Card } from '@mui/material';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import React, { useRef, useEffect } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
-import { PATH_DASHBOARD } from 'routes/paths';
+import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
+// import { PATH_DASHBOARD } from 'routes/paths';
 // import { TProduct } from 'types/product';
 // import confirm from 'components/Modal/confirm';
 // import { deleteProdById } from '../../redux/product/api';
-// import { TProductCategory } from 'types/promotion/productCategory';
+import { TProductCategory } from 'types/promotion/productCategory';
 import productCategory from 'api/promotion/category';
 // import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 import { fDateTime } from 'utils/formatTime';
@@ -66,18 +67,18 @@ export default function ProductPromotion() {
       hideInSearch: true
     },
     {
-      title: 'Name',
+      title: 'Tên danh mục',
       dataIndex: 'name',
       hideInSearch: true
     },
     {
-      title: 'Created date',
+      title: 'Ngày tạo',
       dataIndex: 'insDate',
       render: (values: any) => fDateTime(values),
       hideInSearch: true
     },
     {
-      title: 'Updated date',
+      title: 'Ngày cập nhật',
       dataIndex: 'updDate',
       render: (values: any) => fDateTime(values),
       hideInSearch: true
@@ -91,7 +92,7 @@ export default function ProductPromotion() {
   }, [user]);
   return (
     <Page
-      title="Quản lý Category"
+      title="Quản lý danh mục sản phẩm"
       actions={() => [
         // <Button
         //   key="add-product-extra"
@@ -103,16 +104,16 @@ export default function ProductPromotion() {
         // >
         //   Thêm extra
         // </Button>,
-        <Button
-          key="add-product"
-          onClick={() => {
-            navigate(PATH_DASHBOARD.products.newProduct);
-          }}
-          variant="contained"
-          startIcon={<Icon icon={plusFill} />}
-        >
-          Thêm sản phẩm
-        </Button>
+        // <Button
+        //   key="add-product"
+        //   onClick={() => {
+        //     navigate(PATH_DASHBOARD.products.newProduct);
+        //   }}
+        //   variant="contained"
+        //   startIcon={<Icon icon={plusFill} />}
+        // >
+        //   Thêm sản phẩm
+        // </Button>
       ]}
     >
       <Card>
@@ -127,7 +128,9 @@ export default function ProductPromotion() {
           //   })
           // }
           getData={(params: any) => productCategory.getCategory(params)}
-          // onEdit={editProduct}
+          onEdit={(cate: TProductCategory) => {
+            navigate(`${PATH_PROMOTION_APP.category.editById(cate.productCateId)}`);
+          }}
           columns={columns}
           // onDelete={setCurrentDeleteItem}
           rowKey="id"

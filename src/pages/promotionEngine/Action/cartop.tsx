@@ -415,7 +415,7 @@ const TaskComponent = ({
           }}
           showAction={false}
           scroll={{ y: '80%', x: '100%' }}
-          rowKey="id"
+          rowKey="productId"
           ref={tableRef}
           getData={(param: any) => productPromotionApi.getProduct(param)}
           onChangeSelection={handleChangeSelection}

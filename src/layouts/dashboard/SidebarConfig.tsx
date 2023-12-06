@@ -203,6 +203,46 @@ export const brandAdminSidebarConfig = [
         icon: ICONS.collection
       }
     ]
+  },
+  {
+    subheader: 'Tổng quan khuyến mãi',
+    items: [
+      {
+        title: 'Bảng điều khiển khuyến mãi',
+        path: PATH_PROMOTION_APP.general.app,
+        icon: ICONS.dashboard
+      }
+    ]
+  },
+  {
+    subheader: 'Chiến dịch khuyến mãi',
+    items: [
+      {
+        title: 'promotion.promotion',
+        path: PATH_PROMOTION_APP.promotion.root,
+        icon: ICONS.category
+      },
+      {
+        title: 'promotion.voucher',
+        path: PATH_PROMOTION_APP.voucher.root,
+        icon: ICONS.tag
+      },
+      {
+        title: 'promotion.condition',
+        path: PATH_PROMOTION_APP.condition.root,
+        icon: ICONS.extraCategory
+      },
+      {
+        title: 'promotion.action',
+        path: PATH_PROMOTION_APP.action.root,
+        icon: ICONS.storeApply
+      },
+      {
+        title: 'promotion.gift',
+        path: PATH_PROMOTION_APP.gift.root,
+        icon: ICONS.ecommerce
+      }
+    ]
   }
 ];
 
@@ -289,67 +329,62 @@ export const promotionAppSidebarConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
-    subheader: 'promotion.general',
+    subheader: 'Tổng quan khuyến mãi',
     items: [
       {
-        title: 'promotion.dashboard',
+        title: 'Bảng điều khiển',
         path: PATH_PROMOTION_APP.general.app,
         icon: ICONS.dashboard
       }
     ]
   },
   {
-    subheader: 'promotion.campaign',
+    subheader: 'Chiến dịch khuyến mãi',
     items: [
       {
-        title: 'promotion.promotion',
+        title: 'Khuyến mãi',
         path: PATH_PROMOTION_APP.promotion.root,
         icon: ICONS.category
       },
       {
-        title: 'promotion.voucher',
+        title: 'Voucher',
         path: PATH_PROMOTION_APP.voucher.root,
         icon: ICONS.tag
       },
       {
-        title: 'promotion.condition',
+        title: 'Điều kiện',
         path: PATH_PROMOTION_APP.condition.root,
         icon: ICONS.extraCategory
       },
       {
-        title: 'promotion.action',
+        title: 'Hành động',
         path: PATH_PROMOTION_APP.action.root,
         icon: ICONS.storeApply
       },
       {
-        title: 'promotion.gift',
+        title: 'Quà',
         path: PATH_PROMOTION_APP.gift.root,
         icon: ICONS.ecommerce
       }
     ]
   },
   {
-    subheader: 'promotion.configuration',
+    subheader: 'Cấu hình khuyến mãi',
     items: [
       {
-        title: 'promotion.setting',
+        title: 'Cài đặt',
         path: PATH_PROMOTION_APP.setting.root,
         icon: ICONS.menu
       },
       {
-        title: 'promotion.profile',
+        title: 'hồ sơ',
         path: PATH_PROMOTION_APP.profile.root,
         icon: ICONS.user
       },
       {
-        title: 'promotion.product',
-        path: PATH_PROMOTION_APP.product.root,
-        icon: ICONS.user
-      },
-      {
-        title: 'promotion.product-category',
+        title: 'Danh mục',
         path: PATH_PROMOTION_APP.category.root,
-        icon: ICONS.user
+        icon: ICONS.category
       }
     ]
   }

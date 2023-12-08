@@ -15,7 +15,7 @@ export enum OrderType {
 
 export enum OrderStatus {
   PENDING = 'PENDING',
-  CANCEL = 'CANCELED',
+  CANCELED = 'CANCELED',
   PAID = 'PAID'
 }
 
@@ -87,11 +87,11 @@ export type TOrderDetail = {
 };
 
 export const ORDER_STATUS_OPTONS = [
-  {
-    label: 'Tất cả',
-    value: ``,
-    color: 'default'
-  },
+  // {
+  //   label: 'Tất cả',
+  //   value: ``,
+  //   color: 'default'
+  // },
   {
     label: 'Đang xử lý',
     value: `${OrderStatus.PENDING}`,
@@ -101,19 +101,19 @@ export const ORDER_STATUS_OPTONS = [
     label: 'Hoàn thành',
     value: OrderStatus.PAID,
     color: 'success'
+  },
+  {
+    label: 'Huỷ',
+    value: OrderStatus.CANCELED,
+    color: 'error'
   }
-  // {
-  //   label: 'Huỷ',
-  //   value: OrderStatus.CANCEL,
-  //   color: 'error'
-  // }
 ];
 
 export const ORDER_TYPE_OPTONS = [
-  {
-    label: 'Tất cả',
-    value: ``
-  },
+  // {
+  //   label: 'Tất cả',
+  //   value: ``
+  // },
   {
     label: 'Dùng ngay',
     value: OrderType.EATIN,

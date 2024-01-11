@@ -46,7 +46,7 @@ const getListOrder = (storeId: string, params: any) => {
 };
 
 const updateOrder = (storeId: string, orderId: string, orderUpdate: TOrderUpdate) =>
-  request.put<TOrderDetail>(`stores/${storeId}/orders/${orderId}`, orderUpdate);
+  request.patch<TOrderDetail>(`stores/${storeId}/orders/${orderId}`, orderUpdate);
 const orderApi = {
   getOrderDetail,
   getOrderList,

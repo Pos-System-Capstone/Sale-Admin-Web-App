@@ -34,7 +34,7 @@ const ModalAddOrRemoveProductInMenu = ({
 
   const { data: productsInMenu } = useQuery(
     ['product', menuId ?? id],
-    () => getProductInMenus(id!, { page: 1, size: 200 }),
+    () => getProductInMenus(id!, { page: 1, size: 1000 }),
     {
       enabled: Boolean(id)
     }

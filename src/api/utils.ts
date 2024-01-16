@@ -29,7 +29,7 @@ export function generateAPI<T>(resource: string): BaseApi<T> {
       }),
     delete: (id) => requestWebAdmin.delete<any>(`/${resource}/${id}`),
     create: (data) => requestWebAdmin.post<T>(`/${resource}`, data),
-    update: (id, data) => requestWebAdmin.put<T>(`/${resource}/${id}`, data)
+    update: (id, data) => requestWebAdmin.patch<T>(`/${resource}/${id}`, data)
   };
 }
 
@@ -47,7 +47,7 @@ export function generateAPIWithPaging<T, Q extends TRequestPaging = TRequestPagi
       }),
     delete: (id) => requestWebAdmin.delete<any>(`/${resource}/${id}`),
     create: (data) => requestWebAdmin.post<BaseReponse<T>>(`/${resource}`, data),
-    update: (id, data) => requestWebAdmin.put<T>(`/${resource}/${id}`, data)
+    update: (id, data) => requestWebAdmin.patch<T>(`/${resource}/${id}`, data)
   };
 }
 

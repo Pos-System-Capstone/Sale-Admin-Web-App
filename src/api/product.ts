@@ -10,10 +10,10 @@ const getListGroupProductOfCombo = (brandId: string, productId: string, params?:
     params
   });
 const updateGroupProductOfComBos = (brandId: string, groupId: string, payload: any) =>
-  request.put<TGroupProduct>(`/brands/${brandId}/groupProducts/${groupId}`, payload);
+  request.patch<TGroupProduct>(`/brands/${brandId}/groupProducts/${groupId}`, payload);
 
 const updateProductInGroup = (productInGroupId: string, groupId: string, payload: any) =>
-  request.put<ProductsInGroup>(
+  request.patch<ProductsInGroup>(
     `/groupProducts/${groupId}/productInGroup/${productInGroupId}`,
     payload
   );

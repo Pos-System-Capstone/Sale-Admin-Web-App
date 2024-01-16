@@ -28,7 +28,7 @@ export const addOrRemoveStoresApplyMenu = (menuId: string, data: any): any =>
   request.post(`/menus/${menuId}/stores`, { storeIds: data });
 
 export const updateStoreApplyMenus = (menuId: number, storeId: number, data: any): any =>
-  request.put(`/menus/${menuId}/stores/${storeId}`, data);
+  request.patch(`/menus/${menuId}/stores/${storeId}`, data);
 
 export const deleteStoreApplyMenus = (menuId: number, storeId: number): any =>
   request.delete(`/menus/${menuId}/stores/${storeId}`);
@@ -42,10 +42,10 @@ export const addOrRemoveProductsInMenu = (menuId: string, data: any) =>
   request.post(`/menus/${menuId}/products`, data);
 
 export const updateMenuInfo = (menuId: number, updateInfo: any) =>
-  request.put(`/menus/${menuId}`, updateInfo);
+  request.patch(`/menus/${menuId}`, updateInfo);
 
 export const updateProdInMenuInfo = (menuId: number, productId: number, updateInfo: any) =>
-  request.put(`/menus/${menuId}/products/${productId}`, updateInfo);
+  request.patch(`/menus/${menuId}/products/${productId}`, updateInfo);
 
 export const deleteProductInMenu = (menuId: number, prodId: number) =>
   request.delete(`/menus/${menuId}/products/${prodId}`);

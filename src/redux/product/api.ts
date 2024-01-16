@@ -5,7 +5,7 @@ export const createMasterProd = (data: any) => request.post<number>(`/products`,
 
 export const getProdById = (id: number) => request.get(`/products/${id}`);
 
-export const updateProdById = (id: string, data: any) => request.put(`/products/${id}`, data);
+export const updateProdById = (id: string, data: any) => request.patch(`/products/${id}`, data);
 
 export const deleteProdById = (id: number) => request.delete(`/products/${id}`);
 

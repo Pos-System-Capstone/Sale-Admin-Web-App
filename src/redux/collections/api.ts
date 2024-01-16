@@ -12,7 +12,7 @@ export const deleteCollection = (collectionId: string) =>
   request.delete<any>(`/collections/${collectionId}`);
 
 export const updateCollection = (collectionId: string, data: TCollection) =>
-  request.put<any>(`/collections/${collectionId}`, data);
+  request.patch<any>(`/collections/${collectionId}`, data);
 
 export const productCollectionApi = (collectionId: string) =>
   generateAPIWithPaging<TProductBase>(`admin/collections/${collectionId}/products`);

@@ -9,7 +9,9 @@ export type TUser = {
   role: UserRole;
   status: UserStatus;
   brandId?: string;
+  brandCode?: string;
   storeId?: string;
+  storeCode?: string;
 };
 export enum UserRole {
   SystemAdmin = 'SysAdmin',

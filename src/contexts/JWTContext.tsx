@@ -154,7 +154,18 @@ function AuthProvider({ children }: { children: ReactNode }) {
       username,
       password
     });
-    const { accessToken, id, name, role, status, brandId, storeId, brandPicUrl } = response.data;
+    const {
+      accessToken,
+      id,
+      name,
+      role,
+      status,
+      brandId,
+      storeId,
+      brandPicUrl,
+      brandCode,
+      storeCode
+    } = response.data;
     if (role === Role.StoreStaff) {
       setSession(null);
       setUserInfo({});
@@ -168,7 +179,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
       role: role,
       brandId: brandId,
       storeId: storeId,
-      brandPicUrl: brandPicUrl
+      brandPicUrl: brandPicUrl,
+      brandCode: brandCode,
+      storeCode: storeCode
     };
     setSession(accessToken);
     setUserInfo(user);

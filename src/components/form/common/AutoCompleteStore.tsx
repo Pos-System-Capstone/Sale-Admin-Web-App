@@ -7,7 +7,6 @@ interface Props {
   name: string;
   label?: string;
   [key: string]: any;
-  isExtra: boolean;
 }
 const userRaw = getUserInfo();
 const user: any = JSON.parse(userRaw ?? '{}');
@@ -24,8 +23,10 @@ const AutocompleteStore = (props: Props) => {
     }
   );
   console.log('categories', listStore);
+  const storeOptions = [{ label: 'Toàn hệ thống', value: 'ALL' }];
+  listStore?.map((c) => storeOptions.push({ label: c.name, value: c.code }));
+  // const storeOptions = listStore?.map((c) => ({ label: c.name, value: c.code }));
 
-  const storeOptions = listStore?.map((c) => ({ label: c.name, value: c.id }));
   const getOpObj = (option: any) => {
     if (!option) return option;
     if (!option.value) return storeOptions?.find((opt) => opt.value === option);

@@ -122,7 +122,7 @@ export default function Router() {
           path: '',
           element: user?.role.includes(Role.BrandAdmin) ? (
             // <Navigate to="/dashboard/analytics" replace />
-            <Navigate to="/dashboard/brands/detail" replace />
+            <Navigate to="/dashboard/app" replace />
           ) : (
             <Navigate to="/dashboard/app" replace />
           )

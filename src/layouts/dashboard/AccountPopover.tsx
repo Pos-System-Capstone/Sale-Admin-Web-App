@@ -33,7 +33,7 @@ export default function AccountPopover() {
     {
       label: 'Profile',
       icon: personFill,
-      linkTo: PATH_DASHBOARD.user.profileById(userInfoFromLocalStorage.id.toString())
+      linkTo: PATH_DASHBOARD.user.profileById(userInfoFromLocalStorage?.id?.toString())
     },
     {
       label: 'Trang chủ',

@@ -31,7 +31,6 @@ export default function Profile({ updateMode }: Props) {
     await userApi
       .getById(accountId ?? '')
       .then((res) => {
-        console.log('userLogin', res.data);
         setUserInfo(res.data);
         setIsLoading(false);
       })

@@ -160,7 +160,7 @@ export default function MenuInStorePage() {
 
   const filteredStore = filterForm.watch();
   const selectedStoreId = filteredStore.store_id;
-  console.log(`selectedStoreId`, selectedStoreId);
+
   const { data } = useQuery(
     ['stores', selectedStoreId, 'currentMenu'],
     () => getCurrentMenuByStoreId(selectedStoreId).then((res) => res.data),
@@ -168,8 +168,6 @@ export default function MenuInStorePage() {
       enabled: Boolean(selectedStoreId)
     }
   );
-
-  console.log(`data`, data);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedStoreInMenu, setselectedStoreInMenu] = useState<StoreInMenu | null | undefined>(
@@ -181,7 +179,6 @@ export default function MenuInStorePage() {
   );
 
   const handleMouseEnter = (info: EventHoveringArg) => {
-    console.log(`info.event`, info.event);
     setPopoverStoreInMenu(data!);
   };
 

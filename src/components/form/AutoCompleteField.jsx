@@ -22,7 +22,6 @@ const AutoCompleteField = ({
           value={field.value ? field.value : multiple ? [] : null}
           label={label}
           onChange={(event, newValue) => {
-            console.log(newValue);
             const updateValue = transformValue ? transformValue(newValue) : newValue;
             field.onChange(updateValue);
           }}

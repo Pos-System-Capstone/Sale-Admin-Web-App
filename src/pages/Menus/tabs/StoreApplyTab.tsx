@@ -266,7 +266,6 @@ const StoreApplyTab = () => {
                         return handleUpdate(data);
                       },
                       (e) => {
-                        console.log(`e`, e);
                         throw e;
                       }
                     )();

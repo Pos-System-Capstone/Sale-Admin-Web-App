@@ -60,13 +60,12 @@ const UploadImageField = ({ name, label, defaultValue = '' }) => {
       enqueueSnackbar(err.message ?? 'Có lỗi', {
         variant: 'error'
       });
-      console.log(`err`, err);
     }
     setIsUploading(false);
   };
   const onUploadFile = (e, onFormChange) => {
     setIsUploading(true);
-    console.log('e', e);
+
     const file = e.target.files[0];
     const storageRef = ref(storage, `/files/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
@@ -82,12 +81,10 @@ const UploadImageField = ({ name, label, defaultValue = '' }) => {
         enqueueSnackbar(err.message ?? 'Có lỗi', {
           variant: 'error'
         });
-        console.log(`err`, err);
       },
       () => {
         // download url
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          console.log(url);
           onFormChange(url);
         });
       }

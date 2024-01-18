@@ -44,7 +44,6 @@ export default function GeneralApp() {
   const { user } = useAuth();
   const userRaw = getUserInfo();
   const userInfo: any = JSON.parse(userRaw ?? '{}');
-  console.log('userInfo', userInfo);
   const filterForm = useForm({
     defaultValues: {
       startDate: moment.now(),
@@ -73,8 +72,6 @@ export default function GeneralApp() {
       refetchOnWindowFocus: false
     }
   );
-  console.log('dateRange', filterForm.watch());
-  console.log('report', report);
   return (
     <Page
       title={

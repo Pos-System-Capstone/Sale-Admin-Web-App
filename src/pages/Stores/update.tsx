@@ -72,7 +72,6 @@ const UpdateStorePage = () => {
       });
       navigate(`${PATH_DASHBOARD.promotion.root}`);
     } catch (error) {
-      console.log(`error`, error);
       enqueueSnackbar((error as any).message, {
         variant: 'error'
       });
@@ -86,7 +85,6 @@ const UpdateStorePage = () => {
       });
       refresh();
     } catch (error) {
-      console.log(`error`, error);
       enqueueSnackbar((error as any).message, {
         variant: 'error'
       });

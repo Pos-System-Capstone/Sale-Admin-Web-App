@@ -89,7 +89,6 @@ export default function BlogNewPostForm() {
     },
     validationSchema: NewBlogSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
-      console.log(values);
       try {
         await dispatch(postBlog(values));
         resetForm();

@@ -49,7 +49,6 @@ const CategoryInfoTab = ({ updateMode, category, isLoading }: Props) => {
   }, [category, updateCategoryForm]);
 
   const onSubmit = (values: TProductCategory) => {
-    console.log(`data`, values);
     return productCategory
       .updateCategory(category?.productCateId, transformDraftToStr(values))
       .then((res) => {

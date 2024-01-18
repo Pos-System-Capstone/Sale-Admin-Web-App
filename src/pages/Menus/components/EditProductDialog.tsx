@@ -63,7 +63,6 @@ const ProductInMenuDialog = ({ open, onClose, onSubmit, data, updateMode = false
   //   }
   //   return inputs;
   // }, []);
-  console.log('data ne: ', data);
 
   return (
     <FormProvider {...form}>

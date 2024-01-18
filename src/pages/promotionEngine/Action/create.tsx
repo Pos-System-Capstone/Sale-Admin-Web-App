@@ -32,13 +32,9 @@ const NewActionPage = () => {
   const { translate } = useLocales();
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
-  // const brandId = useSelector((state: RootState) => state.brand);
-  // console.log('user', user.brandId);
 
   const [selectedText, setSelectedText] = useState<string | null>(null);
   const [listProduct, setlistProduct] = useState<string[]>([]);
-
-  // console.log('check list', listProduct);
 
   // Hàm callback để nhận dữ liệu từ component con
   const handleDataFromChild = (data: string[]) => {

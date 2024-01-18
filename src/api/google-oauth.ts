@@ -18,7 +18,6 @@ export const exchangeToken = (code: string) => {
 
 export const refreshToken = async () => {
   const refreshGoogleToken = getGoogleRefreshToken();
-  console.log(`refreshGoogleToken`, refreshGoogleToken);
   return axios.post(`https://oauth2.googleapis.com/token`, {
     client_id: CONFIG.ClientId,
     client_secret: CONFIG.ClientSecret,

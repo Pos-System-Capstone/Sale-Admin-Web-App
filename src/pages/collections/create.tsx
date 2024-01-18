@@ -79,7 +79,6 @@ const CreateCollectionPage = () => {
   // };
 
   const onSubmit = (values: TCollection) => {
-    console.log('collecttionCreate ', values);
     collectionApi
       .create(values)
       .then((res) => {
@@ -127,7 +126,7 @@ const CreateCollectionPage = () => {
             </Button>
             <LoadingAsyncButton
               disabled={!isDirty}
-              onClick={handleSubmit(onSubmit, console.log)}
+              onClick={handleSubmit(onSubmit)}
               type="submit"
               variant="contained"
             >

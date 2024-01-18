@@ -134,7 +134,6 @@ export default function StoreInMenuForm({
       }
       onCancel();
     } catch (error) {
-      console.log(error);
       enqueueSnackbar(get(error, 'message', 'Some thing wrong'), {
         variant: 'error'
       });

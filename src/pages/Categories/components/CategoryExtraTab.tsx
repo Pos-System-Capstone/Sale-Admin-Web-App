@@ -90,7 +90,6 @@ const CategoryExtraTab = (props: Props) => {
           });
           tableRef.current?.reload();
         } catch (error) {
-          console.log(`error`, error);
           enqueueSnackbar((error as any).message, {
             variant: 'error'
           });

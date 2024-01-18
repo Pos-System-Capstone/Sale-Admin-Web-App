@@ -32,7 +32,6 @@ const CreateCombo = (props: Props) => {
   const { data, isLoading } = useProduct(Number(cloneProductId), {
     select: (res) => normalizeProductCombo(res as any),
     onSuccess: (res) => {
-      console.log(`res`, res);
       createComboForm.reset(res as CreateComboForm);
     },
     enabled: Boolean(cloneProductId),
@@ -68,7 +67,7 @@ const CreateCombo = (props: Props) => {
               variant="contained"
               onClick={async () => {
                 const valid = await createComboForm.trigger();
-                console.log(`valid`, valid);
+
                 if (valid) setActiveStep((prev) => prev + 1);
               }}
             >

@@ -119,10 +119,8 @@ const MenusPage = () => {
       enqueueSnackbar('Xoá thành công', {
         variant: 'success'
       });
-      console.log(`tableRef.current`, tableRef.current);
       tableRef.current?.reload();
     } catch (error) {
-      console.log(`error`, error);
       enqueueSnackbar((error as any).message, {
         variant: 'error'
       });

@@ -106,7 +106,6 @@ const MenuInStoreCalendar: React.FC<Props & CalendarOptions> = ({
     plugins: [listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin /* interactionPlugin */]
   };
 
-  console.log(`events`, events);
   return (
     <CalendarStyle>
       <Popover

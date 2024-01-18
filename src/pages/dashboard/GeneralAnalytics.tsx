@@ -31,7 +31,6 @@ export default function GeneralAnalytics() {
     brandApi.get(params).then((res) => res.data.items)
   );
 
-  console.log('brands', brands);
   return (
     <Page title="Báo cáo tổng hợp">
       <Container maxWidth={themeStretch ? false : 'xl'}>

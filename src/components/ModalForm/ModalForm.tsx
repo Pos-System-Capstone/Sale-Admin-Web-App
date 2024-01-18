@@ -26,7 +26,6 @@ const ModalForm = ({ trigger, onOk: onSubmit, title, children, ...others }: Prop
     <>
       <span
         onClick={() => {
-          console.log(`TRIGGER`);
           setOpen(true);
         }}
       >

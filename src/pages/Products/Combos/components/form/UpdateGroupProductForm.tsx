@@ -184,7 +184,7 @@ export const ProductGroupTable = (props: ProductsInGroupProps) => {
       quantity: values.quantity,
       status: ProductInGroupStatusEnum.DEACTIVE
     };
-    console.log('updateProductInGroupPayload', payload);
+
     return productApi
       .updateProductInGroup(props.productInGroup.id, props.productInGroup.groupProductId, payload)
       .then((res) => {
@@ -208,7 +208,7 @@ export const ProductGroupTable = (props: ProductsInGroupProps) => {
       quantity: values.quantity,
       status: ProductInGroupStatusEnum.ACTIVE
     };
-    console.log('updateProductInGroupPayload', payload);
+
     return productApi
       .updateProductInGroup(props.productInGroup.id, props.productInGroup.groupProductId, payload)
       .then((res) => {

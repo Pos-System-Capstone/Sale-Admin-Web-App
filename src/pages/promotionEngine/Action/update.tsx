@@ -33,8 +33,6 @@ const UpdateActionPage = () => {
   const { translate } = useLocales();
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
-  // const brandId = useSelector((state: RootState) => state.brand);
-  console.log('user', user.brandId);
 
   const { id } = useParams();
   const { data: action } = useQuery(
@@ -95,7 +93,6 @@ const UpdateActionPage = () => {
     }
   }, [id, reset, action]);
   const onSubmit = (values: TActionUpdate) => {
-    console.log('action', values);
     values.brandId = user.brandId;
     const body: TActionUpdate = { ...values };
     body.brandId = user.brandId;

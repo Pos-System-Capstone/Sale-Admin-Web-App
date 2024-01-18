@@ -113,7 +113,7 @@ const UpdateMenuPage = () => {
         });
         refetch();
         setIsShowConfirmUpdateDialog(!isShowConfirmUpdateDialog);
-        // console.log(`tableRef.current`, tableRef.current);
+
         tableRef.current?.reload();
       });
     } catch (error) {
@@ -158,11 +158,9 @@ const UpdateMenuPage = () => {
                 await form.handleSubmit(async (values) => {
                   const dataToUpdate = handleMenuInformationToUpdate(values);
                   return onUpdateMenu(dataToUpdate);
-                }, console.log)();
+                })();
                 return true;
-              } catch (error) {
-                console.log(`errror`, error);
-              }
+              } catch (error) {}
             }}
           />
           <ProductInMenuTab

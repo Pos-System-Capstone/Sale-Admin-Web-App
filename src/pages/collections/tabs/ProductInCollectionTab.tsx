@@ -48,7 +48,6 @@ const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
       });
       tableRef.current?.reload();
     } catch (err) {
-      console.log(`err.response`, err as any);
       const errMsg = get(err as any, ['message'], `Có lỗi xảy ra. Vui lòng thử lại`);
       enqueueSnackbar(errMsg, {
         variant: 'error'

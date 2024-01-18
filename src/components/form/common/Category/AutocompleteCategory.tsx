@@ -11,7 +11,7 @@ interface Props {
 
 const AutocompleteCategory = (props: Props) => {
   const { data: categories } = useCategories({ page: 1, size: 1000 });
-  console.log('categories', categories);
+
   const extraCategories = categories?.filter((cate) => cate.categoryType === CategoryType.EXTRA);
 
   const cateOptions =

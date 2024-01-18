@@ -22,9 +22,8 @@ const AutocompleteStore = (props: Props) => {
       enabled: Boolean(user.brandId)
     }
   );
-  console.log('categories', listStore);
   const storeOptions = [{ label: 'Toàn hệ thống', value: 'ALL' }];
-  listStore?.map((c) => storeOptions.push({ label: c.name, value: c.code }));
+  listStore?.map((c) => storeOptions.push({ label: c.shortName, value: c.code }));
   // const storeOptions = listStore?.map((c) => ({ label: c.name, value: c.code }));
 
   const getOpObj = (option: any) => {

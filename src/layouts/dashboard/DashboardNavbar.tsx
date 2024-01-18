@@ -10,8 +10,6 @@ import { MHidden } from '../../components/@material-extend';
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 import AccountPopover from './AccountPopover';
 import { useState } from 'react';
-import brandApi from 'api/brand';
-import { useQuery } from 'react-query';
 import { getAppToken, getUserInfo } from 'utils/utils';
 import StoreNavigationDialog from 'components/StoreNavigationDialog';
 import { TStore } from 'types/store';
@@ -105,17 +103,17 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
 
-  const { data: listStore } = useQuery(
-    ['stores', user.brandId],
-    async () => {
-      return brandApi
-        .getStoreOfBrand(user.brandId, { page: 1, size: 100 })
-        .then((res) => res.data.items);
-    },
-    {
-      enabled: Boolean(user.brandId)
-    }
-  );
+  // const { data: listStore } = useQuery(
+  //   ['stores', user.brandId],
+  //   async () => {
+  //     return brandApi
+  //       .getStoreOfBrand(user.brandId, { page: 1, size: 100 })
+  //       .then((res) => res.data.items);
+  //   },
+  //   {
+  //     enabled: Boolean(user.brandId)
+  //   }
+  // );
   const handleSelectStore = (store: TStore) => {
     const token = getAppToken();
     window.open(

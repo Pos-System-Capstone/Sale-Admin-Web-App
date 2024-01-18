@@ -36,7 +36,7 @@ const ModalExtraCategoryForm = ({
       setSelectedExtraCategoryIds(selectedIds);
     }
   }, [extras]);
-  console.log('selectedExtraCategoryIds', selectedExtraCategoryIds);
+
   const handleClick = () => {
     setOpen((o) => !o);
   };

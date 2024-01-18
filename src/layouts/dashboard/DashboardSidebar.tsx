@@ -117,15 +117,12 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
 
   const sidebarConfig = useMemo(() => {
     if (user?.role.includes(Role.SystemAdmin)) {
-      console.log('Sysadmin');
       return systemAdminSidebarConfig;
     }
     if (user?.role.includes(Role.BrandManager)) {
-      console.log('BrandManager');
       return brandManagerSidebarConfig;
     }
     if (user?.role.includes(Role.BrandAdmin)) {
-      console.log('BrandAdmin');
       const firstElementOfPath = pathname.split('/')[1];
       if (firstElementOfPath === ROOTS_DASHBOARD_SALE.split('/')[1]) return brandAdminSidebarConfig;
       if (firstElementOfPath === ROOTS_DASHBOARD_REPORT.split('/')[1]) {

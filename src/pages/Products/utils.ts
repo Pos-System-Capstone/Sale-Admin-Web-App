@@ -93,8 +93,6 @@ export const normalizeProductData = (values: TProductMaster) => {
 
   transformData.hasVariant = Boolean(transformData.child_products?.length);
 
-  console.log(`transformData`, transformData);
-
   return transformData;
 };
 
@@ -110,8 +108,5 @@ export const normalizeProductCombo = (values: TProductCombo): CreateComboForm =>
   data.fixedProducts = values.groups
     .filter((g) => g.combination_mode === CombinationModeEnum.ChoiceCombo)
     .reduce((current, g) => [...current, ...g.products], [] as ComboProductType[]);
-
-  // console.log(`data`, data);
-
   return data as CreateComboForm;
 };

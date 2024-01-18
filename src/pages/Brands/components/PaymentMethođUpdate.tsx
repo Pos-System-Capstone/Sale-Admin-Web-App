@@ -39,7 +39,6 @@ export const PaymentProviderConfig = (props: Props) => {
     }
   );
 
-  console.log('repaymentInBrands', paymentInBrand);
   const [selectZalopay, setSelectZalopay] = useState<boolean>(false);
   const [selectVNpay, setSelectVNpay] = useState<boolean>(false);
   const [selectVietQR, setSelectVietQR] = useState<boolean>(false);
@@ -70,8 +69,7 @@ export const PaymentProviderConfig = (props: Props) => {
   }, [paymentInBrand, paymentMapping]);
 
   const value = paymentMapping.watch();
-  console.log('paymentMaping', value);
-  console.log('listStore', listStore);
+
   const handleCreate = async (data: TPaymentMapping) => {
     const dataRequest = {
       brandId: props.brand?.id,
@@ -91,7 +89,7 @@ export const PaymentProviderConfig = (props: Props) => {
       vietQrConfigRequest: selectVietQR ? data.vietQrConfigRequest : null,
       vnPayConfigRequest: selectVNpay ? data.vnPayConfigRequest : null
     };
-    console.log('data', dataRequest);
+
     await paymentProviderMapping(props.brand?.id ?? '', dataRequest)
       .then((res) => {
         refetch();

@@ -109,7 +109,6 @@ const StoreApplyTab = () => {
       tableRef.current?.reload();
       return true;
     } catch (error) {
-      console.log(`error`, error);
       enqueueSnackbar((error as any).message, {
         variant: 'error'
       });
@@ -207,7 +206,6 @@ const StoreApplyTab = () => {
                         return handleUpdate(data);
                       },
                       (e) => {
-                        console.log(`e`, e);
                         throw e;
                       }
                     )();

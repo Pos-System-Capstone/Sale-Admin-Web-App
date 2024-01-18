@@ -10,7 +10,7 @@ interface Props {
 
 const AutocompleteTrading = (props: Props) => {
   const { data: extras = [] } = useTrading();
-  console.log(extras);
+
   const extraOptions = extras.map((c: any) => ({ label: c.storeName, value: c.storeName }));
   const getOpObj = (option: any) => {
     if (!option) return option;

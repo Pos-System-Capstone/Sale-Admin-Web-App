@@ -31,7 +31,7 @@ export const normalizeMenuData = (values: any) => {
 
 export const transformMenuForm = (values: any) => {
   const data = { ...values };
-  console.log(`values`, values);
+
   data.time_ranges = values?.time_ranges?.map((t: TimeRangeForm) => [
     moment(t.from).format('HH:mm'),
     moment(t.to).format('HH:mm')

@@ -14,13 +14,11 @@ interface OrderCustomProps {
 const OrderCustom = ({ title, widthCustom, data, onValueChange }: OrderCustomProps) => {
   const options = title === 'Trạng thái' ? ORDER_STATUS_OPTONS : PAYMENT_TYPE_OPTIONS;
 
-  console.log(options);
-
   const [data1, setData1] = useState(data);
 
   const handleChange = (event: SelectChangeEvent) => {
     const newValue = event.target.value as string;
-    console.log(newValue);
+
     setData1(newValue);
 
     onValueChange(newValue);

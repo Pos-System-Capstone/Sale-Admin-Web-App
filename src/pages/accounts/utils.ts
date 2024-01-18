@@ -93,7 +93,7 @@ export const normalizeProductData = (values: TProductMaster) => {
 
   transformData.hasVariant = Boolean(transformData.child_products?.length);
 
-  console.log(`transformData`, transformData);
+
 
   return transformData;
 };

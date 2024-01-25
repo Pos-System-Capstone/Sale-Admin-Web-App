@@ -43,6 +43,7 @@ const CreateProduct = () => {
         .getById(data.parentProductId)
         .then((res) => {
           data.categoryId = res.data.categoryId !== undefined ? res.data.categoryId : '';
+          res.data.picUrl !== undefined && (data.picUrl = res.data.picUrl);
         })
         .catch(() => {
           enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại!', {

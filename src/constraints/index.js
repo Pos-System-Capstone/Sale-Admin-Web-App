@@ -1,3 +1,4 @@
+import { CategoryType } from 'types/category';
 import { ProductTypeEnum } from 'types/product';
 
 export const PRODUCT_MASTER = 6;
@@ -32,6 +33,36 @@ export const PRODUCT_TYPE_DATA = [
     value: ProductTypeEnum.COMBO,
     typeCode: 'COMBO',
     label: 'Sản phẩm  Combo'
+  }
+];
+
+export const CATEGORY_TYPE_OPTION = [
+  {
+    value: CategoryType.NORMAL,
+    typeCode: 'Normal',
+    label: 'Danh mục thường'
+  },
+  {
+    value: CategoryType.CHILD,
+    typeCode: 'Child',
+    label: 'Danh mục con'
+  },
+  {
+    value: CategoryType.EXTRA,
+    typeCode: 'Extra',
+    label: 'Danh mục extra'
+  }
+];
+export const SUB_CATEGORY_TYPE_OPTION = [
+  {
+    value: CategoryType.CHILD,
+    typeCode: 'Child',
+    label: 'Danh mục con'
+  },
+  {
+    value: CategoryType.EXTRA,
+    typeCode: 'Extra',
+    label: 'Danh mục extra'
   }
 ];
 

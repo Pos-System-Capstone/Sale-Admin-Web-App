@@ -1,13 +1,14 @@
-import { Avatar, Box, Button, Card, Stack } from '@mui/material';
+import { Box, Button, Card, Stack } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { TTableColumn } from 'types/table';
-import { CategoryStatus, TCategory } from 'types/category';
+import { CategoryStatus, CategoryType, TCategory } from 'types/category';
 import { PATH_DASHBOARD } from 'routes/paths';
 import categoryApi from 'api/category';
 import Label from 'components/Label';
 import ModalExtraCategoryForm from './ModalExtraCategoryForm';
+import { CATEGORY_TYPE_OPTION } from 'constraints';
 interface Props {}
 
 const ExtraCategoriesInCategoryTab = (props: Props) => {
@@ -21,19 +22,6 @@ const ExtraCategoriesInCategoryTab = (props: Props) => {
       hideInSearch: true
     },
     {
-      title: 'Hình ảnh',
-      dataIndex: 'picUrl',
-      hideInSearch: true,
-      render: (src, { product_name }: any) => (
-        <Avatar
-          alt={product_name}
-          src={src}
-          variant="square"
-          style={{ width: '54px', height: '54px' }}
-        />
-      )
-    },
-    {
       title: 'Tên danh mục',
       dataIndex: 'name'
     },
@@ -41,6 +29,22 @@ const ExtraCategoriesInCategoryTab = (props: Props) => {
       title: 'Mã danh mục',
       dataIndex: 'code',
       hideInSearch: true
+    },
+    {
+      title: 'Loại',
+      valueType: 'select',
+      hideInSearch: true,
+      valueEnum: CATEGORY_TYPE_OPTION,
+      dataIndex: 'type',
+      render: (status) => {
+        return status === CategoryType.NORMAL ? (
+          <Label color="primary">Danh mục thường</Label>
+        ) : status === CategoryType.CHILD ? (
+          <Label color="secondary"> Danh mục con</Label>
+        ) : (
+          <Label color="warning"> Danh mục extra</Label>
+        );
+      }
     },
     {
       title: 'Trạng thái',
@@ -61,7 +65,7 @@ const ExtraCategoriesInCategoryTab = (props: Props) => {
       <Stack justifyContent="flex-end" mb={2} direction="row" spacing={2}>
         <ModalExtraCategoryForm
           cateId={id}
-          trigger={<Button variant="outlined">Thêm danh mục extra</Button>}
+          trigger={<Button variant="outlined">Thêm danh mục con hoặc extra</Button>}
           onReload={() => tableRef.current?.reload()}
         />
       </Stack>

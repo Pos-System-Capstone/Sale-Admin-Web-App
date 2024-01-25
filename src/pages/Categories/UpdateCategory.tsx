@@ -35,8 +35,8 @@ const UpdateCategory = (props: Props) => {
             <TabList onChange={handleChangeTab}>
               <Tab label="Thông tin chung" value="1" />
               <Tab label="Sản phẩm trong danh mục" value="2" />
-              {category?.categoryType == CategoryType.NORMAL && (
-                <Tab label="Danh sách Extra trong danh mục" value="3" />
+              {category?.type == CategoryType.NORMAL && (
+                <Tab label="Danh sách Extra hoặc con trong danh mục" value="3" />
               )}
             </TabList>
           </Box>
@@ -52,7 +52,7 @@ const UpdateCategory = (props: Props) => {
                 <CategoryExtraTab />
               </Stack>
             </TabPanel>
-            {category?.categoryType === CategoryType.NORMAL && (
+            {category?.type === CategoryType.NORMAL && (
               <TabPanel value="3">
                 <Stack spacing={2}>
                   <ExtraCategoriesInCategoryTab />

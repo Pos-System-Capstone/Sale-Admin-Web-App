@@ -1,10 +1,12 @@
 import closeFill from '@iconify/icons-eva/close-fill';
 import { Icon } from '@iconify/react';
-import { Avatar, Box, Button, Dialog, IconButton, Paper, Stack, Typography } from '@mui/material';
+
+import { Box, Button, Dialog, IconButton, Paper, Stack, Typography } from '@mui/material';
 import categoryApi from 'api/category';
 import Label from 'components/Label';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import ResoTable from 'components/ResoTable/ResoTable';
+import { SUB_CATEGORY_TYPE_OPTION } from 'constraints';
 import useExtraCategoriesInProductCategory from 'hooks/categories/useCategoryChild';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
@@ -69,19 +71,6 @@ const ModalExtraCategoryForm = ({
       hideInSearch: true
     },
     {
-      title: 'Hình ảnh',
-      dataIndex: 'picUrl',
-      hideInSearch: true,
-      render: (src, { product_name }: any) => (
-        <Avatar
-          alt={product_name}
-          src={src}
-          variant="square"
-          style={{ width: '54px', height: '54px' }}
-        />
-      )
-    },
-    {
       title: 'Tên danh mục',
       dataIndex: 'name'
     },
@@ -89,6 +78,21 @@ const ModalExtraCategoryForm = ({
       title: 'Mã danh mục',
       dataIndex: 'code',
       hideInSearch: true
+    },
+    {
+      title: 'Loại',
+      valueType: 'select',
+      valueEnum: SUB_CATEGORY_TYPE_OPTION,
+      dataIndex: 'type',
+      render: (status) => {
+        return status === CategoryType.NORMAL ? (
+          <Label color="primary">Danh mục thường</Label>
+        ) : status === CategoryType.CHILD ? (
+          <Label color="secondary"> Danh mục con</Label>
+        ) : (
+          <Label color="warning"> Danh mục extra</Label>
+        );
+      }
     },
     {
       title: 'Trạng thái',
@@ -102,6 +106,34 @@ const ModalExtraCategoryForm = ({
         );
       }
     }
+    // {
+    //   title: 'Chi tiết',
+    //   fixed: 'right',
+    //   hideInSearch: true,
+    //   render: (_: any, cate: TCategory) => (
+    //     <Tooltip title="Chi tiết">
+    //       <IconButton
+    //         onClick={() => navigate(`${PATH_DASHBOARD.categories.editById(cate.id)}`)}
+    //         size="large"
+    //       >
+    //         <Visibility />
+    //       </IconButton>
+    //     </Tooltip>
+    //   )
+    // }
+    // {
+    //   title: 'Hình ảnh',
+    //   dataIndex: 'picUrl',
+    //   hideInSearch: true,
+    //   render: (src, { product_name }: any) => (
+    //     <Avatar
+    //       alt={product_name}
+    //       src={src}
+    //       variant="square"
+    //       style={{ width: '54px', height: '54px' }}
+    //     />
+    //   )
+    // },
   ];
   return (
     <>
@@ -119,7 +151,9 @@ const ModalExtraCategoryForm = ({
               borderColor="grey.300"
               textAlign="right"
             >
-              <Typography variant="h6">Thêm danh mục extra vào danh mục sản phẩm</Typography>
+              <Typography variant="h6">
+                Thêm danh mục extra hoặc con vào danh mục sản phẩm
+              </Typography>
               <IconButton aria-label="close" onClick={() => setOpen(false)} size="large">
                 <Icon icon={closeFill} />
               </IconButton>

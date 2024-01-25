@@ -4,7 +4,7 @@ export type TCategory = {
   id: string;
   code: string;
   name: string;
-  categoryType: CategoryType;
+  type: CategoryType;
   displayOrder: number;
   description: string;
   picUrl: string;
@@ -21,7 +21,8 @@ export interface TCategoryCreate {
 }
 export enum CategoryType {
   NORMAL = 'Normal',
-  EXTRA = 'Extra'
+  EXTRA = 'Extra',
+  CHILD = 'Child'
 }
 export enum CategoryStatus {
   ACTIVE = 'Active',
@@ -50,10 +51,14 @@ export interface CategoryExtraCate {
 export const CREATE_CATEGORY_TYPE_OPTIONS = [
   {
     value: CategoryType.NORMAL,
-    label: 'Normal'
+    label: 'Danh mục thường'
+  },
+  {
+    value: CategoryType.CHILD,
+    label: 'Danh mục con'
   },
   {
     value: CategoryType.EXTRA,
-    label: 'Extra'
+    label: 'Danh mục extra'
   }
 ];

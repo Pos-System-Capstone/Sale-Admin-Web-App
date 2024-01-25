@@ -12,7 +12,7 @@ const userRaw = getUserInfo();
 const user: any = JSON.parse(userRaw ?? '{}');
 const AutocompleteStore = (props: Props) => {
   const { data: listStore } = useQuery(
-    ['stores', user.brandId],
+    ['stores', user],
     async () => {
       return brandApi
         .getStoreOfBrand(user.brandId, { page: 1, size: 100 })

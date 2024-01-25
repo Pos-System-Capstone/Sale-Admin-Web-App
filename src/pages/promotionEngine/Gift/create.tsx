@@ -86,7 +86,7 @@ const NewGiftPage = () => {
               type="submit"
               variant="contained"
             >
-              + New Action
+              + Tạo hành động mới
             </LoadingAsyncButton>
           </Stack>
         </DashboardNavLayout>

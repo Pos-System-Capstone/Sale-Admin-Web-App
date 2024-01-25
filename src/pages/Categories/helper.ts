@@ -1,5 +1,5 @@
 import { TCategoryExtra } from 'types/category';
-import { ModifierForm, TModifier } from 'types/Modifier';
+import { ModifierForm } from 'types/Modifier';
 
 export const transformModifier = (values: ModifierForm) => {
   const data = { ...values };
@@ -9,21 +9,22 @@ export const transformModifier = (values: ModifierForm) => {
   return data;
 };
 
-export const normalizeModifier = (values: TModifier) => {
-  const data: Partial<ModifierForm> = { ...values };
-  let modifiers = [];
+// export const normalizeModifier = (values: TModifier) => {
+//   const data: Partial<ModifierForm> = { ...values };
+//   let modifiers = [];
 
-  try {
-    const parseModifiers = JSON.parse(values.json_value);
-    if (Array.isArray(parseModifiers)) {
-      modifiers = parseModifiers;
-    }
-  } catch (error) {}
+//   try {
+//     const parseModifiers = JSON.parse(values.json_value);
+//     if (Array.isArray(parseModifiers)) {
+//       modifiers = parseModifiers;
+//     }
+//   } catch (error) {
+//   }
 
-  data.modifiers = modifiers;
+//   data.modifiers = modifiers;
 
-  return data;
-};
+//   return data;
+// };
 
 export const normalizeExtra = (values: TCategoryExtra) => {
   const data: any = { ...values };

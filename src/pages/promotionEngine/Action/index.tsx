@@ -92,7 +92,7 @@ const ActionPage = () => {
   return (
     <Page
       // title={`${translate('pages.stores.listTitle')}`}
-      title="Danh sách Action"
+      title="Danh sách hành động"
       actions={() => [
         <Button
           key="create-store"

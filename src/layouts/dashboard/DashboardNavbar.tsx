@@ -151,10 +151,10 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           )}
           <Button
             onClick={() => {
-              navigate('/dashboard/brands/detail');
+              navigate('/dashboard/app');
             }}
           >
-            Sale
+            Quản lý bán hàng
           </Button>
           {/* <Button
             onClick={() => {
@@ -169,7 +169,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
               navigate('/promotion-system');
             }}
           >
-            Promotion
+            Quản lý khuyến mãi
           </Button>
           {/* <Button
             onClick={handleClickOpen}

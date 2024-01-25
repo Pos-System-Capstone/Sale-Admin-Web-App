@@ -12,11 +12,12 @@ import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
+import { CATEGORY_TYPE_OPTION } from 'constraints';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { transformDraftToStr } from 'pages/Products/utils';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
 import { addCategoy, deleteCategoyById, editCategory } from 'redux/category/api';
@@ -48,6 +49,21 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
       title: 'Mã danh mục',
       dataIndex: 'code',
       hideInSearch: true
+    },
+    {
+      title: 'Loại',
+      valueType: 'select',
+      valueEnum: CATEGORY_TYPE_OPTION,
+      dataIndex: 'type',
+      render: (status) => {
+        return status === CategoryType.NORMAL ? (
+          <Label color="primary">Danh mục thường</Label>
+        ) : status === CategoryType.CHILD ? (
+          <Label color="secondary"> Danh mục con</Label>
+        ) : (
+          <Label color="warning"> Danh mục extra</Label>
+        );
+      }
     },
     {
       title: 'Trạng thái',
@@ -91,12 +107,12 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
     // },
   ];
 
-  useEffect(() => {
-    const form = tableRef.current?.formControl;
-    if (form) {
-      form.setValue('type', isExtra ? CategoryType.EXTRA : CategoryType.NORMAL);
-    }
-  }, [isExtra, tableRef]);
+  // useEffect(() => {
+  //   const form = tableRef.current?.formControl;
+  //   if (form) {
+  //     form.setValue('type', isExtra ? CategoryType.EXTRA : CategoryType.NORMAL);
+  //   }
+  // }, [isExtra, tableRef]);
 
   const addCategoryHander = (values: TCategory) =>
     addCategoy(values)
@@ -207,9 +223,9 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
             }}
             onDelete={(cate: TCategory) => setCurrentDeleteItem(cate)}
             showAction={false}
-            defaultFilters={{
-              type: isExtra ? CategoryType.EXTRA : CategoryType.NORMAL
-            }}
+            // defaultFilters={{
+            //   type: isExtra ? CategoryType.EXTRA : CategoryType.NORMAL
+            // }}
             ref={tableRef}
             rowKey="id"
             getData={categoryApi.get}

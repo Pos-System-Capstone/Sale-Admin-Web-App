@@ -61,7 +61,8 @@ export enum TOrderPaymentType {
   CASH = 'CASH',
   MOMO = 'MOMO',
   BANKING = 'BANKING',
-  VISA = 'VISA'
+  VISA = 'VISA',
+  POINTIFY = 'POINTIFY'
 }
 
 export type TOrderPayment = {
@@ -139,6 +140,10 @@ export const PAYMENT_TYPE_OPTIONS = [
   {
     label: 'Momo',
     value: TOrderPaymentType.MOMO
+  },
+  {
+    label: 'Ví thành viên',
+    value: TOrderPaymentType.POINTIFY
   },
   {
     label: 'Ngân hàng',

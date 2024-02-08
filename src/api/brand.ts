@@ -32,7 +32,7 @@ const createNewBrand = (data: TNewBrandCreate) => {
 };
 
 const updateBrandInformation = (brandId: string, values: TBrandUpdate) => {
-  return requestWebAdmin.put<BaseReponse<TBrandDetail>>(`brands/${brandId}`, values);
+  return requestWebAdmin.patch<BaseReponse<TBrandDetail>>(`brands/${brandId}`, values);
 };
 
 const createNewBrandStore = (data: TStoreCreate) => {

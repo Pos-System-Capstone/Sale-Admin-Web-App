@@ -30,7 +30,7 @@ const getStoreSessionDetail = (storeId: string, sessionId: string) =>
 const getStoreSessionReport = (sessionId: string) =>
   requestWebAdmin.get<SessionReport>(`report/session-report/${sessionId}`);
 const updateStoreSessionDetail = (storeId: string, sessionId: string, data: TSessionDetailUpdate) =>
-  requestWebAdmin.put<TSessionDetail>(`stores/${storeId}/sessions/${sessionId}`, data);
+  requestWebAdmin.patch<TSessionDetail>(`stores/${storeId}/sessions/${sessionId}`, data);
 const updateStoreStatus = (storeId: string, storeStatus: string) => {
   const payload = {
     op: '/update',

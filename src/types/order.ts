@@ -26,6 +26,7 @@ export type TOrder = {
   staffName: string;
   startDate: string;
   endDate: string;
+  orderDate: string;
   finalAmount: number;
   orderType: OrderType;
   status: OrderStatus;

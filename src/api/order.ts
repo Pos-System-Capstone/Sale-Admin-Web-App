@@ -7,20 +7,20 @@ const getOrderDetail = (storeId: string, orderId: string) =>
   request.get<TOrderDetail>(`stores/${storeId}/orders/${orderId}`);
 
 const getOrderList = (storeId: string, params: any) => {
-  const { size, page, startDate, endDate } = params;
-  if (startDate != undefined && endDate != undefined) {
+  const { size, page, orderDate } = params;
+  // if (startDate != undefined && endDate != undefined) {
+  //   return request.get<TOrder>(
+  //     `stores/${storeId}/orders?page=${page}&size=${size}&startDate=${moment(
+  //       startDate,
+  //       'YYYY-MM-DD'
+  //     ).format('YYYY-MM-DD')}&endDate=${moment(endDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}`,
+  //     { params }
+  //   );
+  // }
+  if (orderDate !== undefined) {
     return request.get<TOrder>(
       `stores/${storeId}/orders?page=${page}&size=${size}&startDate=${moment(
-        startDate,
-        'YYYY-MM-DD'
-      ).format('YYYY-MM-DD')}&endDate=${moment(endDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}`,
-      { params }
-    );
-  }
-  if (startDate !== undefined) {
-    return request.get<TOrder>(
-      `stores/${storeId}/orders?page=${page}&size=${size}&startDate=${moment(
-        startDate,
+        orderDate,
         'YYYY-MM-DD'
       ).format('YYYY-MM-DD')}`,
       {
@@ -28,19 +28,55 @@ const getOrderList = (storeId: string, params: any) => {
       }
     );
   }
-  if (endDate !== undefined) {
-    return request.get<TOrder>(
-      `stores/${storeId}/orders?page=${page}&size=${size}&endDate=${moment(
-        endDate,
-        'YYYY-MM-DD'
-      ).format('YYYY-MM-DD')}`,
-      {
-        params
-      }
-    );
-  } else return request.get<TOrder>(`stores/${storeId}/orders`, { params });
+  // if (endDate !== undefined) {
+  //   return request.get<TOrder>(
+  //     `stores/${storeId}/orders?page=${page}&size=${size}&endDate=${moment(
+  //       endDate,
+  //       'YYYY-MM-DD'
+  //     ).format('YYYY-MM-DD')}`,
+  //     {
+  //       params
+  //     }
+  //   );
+  // }
+  else return request.get<TOrder>(`stores/${storeId}/orders`, { params });
 };
 
+const getOrderListInBrand = (brandId: string, params: any) => {
+  const { size, page, orderDate } = params;
+  // if (orderDate !== undefined) {
+  //   return request.get<TOrder>(
+  //     `brands/${brandId}/orders?page=${page}&size=${size}&startDate=${moment(
+  //       orderDate,
+  //       'YYYY-MM-DD'
+  //     ).format('YYYY-MM-DD')}&endDate=${moment(orderDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}`,
+  //     { params }
+  //   );
+  // }
+  if (orderDate !== undefined) {
+    return request.get<TOrder>(
+      `brands/${brandId}/orders?page=${page}&size=${size}&startDate=${moment(
+        orderDate,
+        'YYYY-MM-DD'
+      ).format('YYYY-MM-DD')}`,
+      {
+        params
+      }
+    );
+  }
+  // if (endDate !== undefined) {
+  //   return request.get<TOrder>(
+  //     `brands/${brandId}/orders?page=${page}&size=${size}&endDate=${moment(
+  //       endDate,
+  //       'YYYY-MM-DD'
+  //     ).format('YYYY-MM-DD')}`,
+  //     {
+  //       params
+  //     }
+  //   );
+  // }
+  else return request.get<TOrder>(`brands/${brandId}/orders`, { params });
+};
 const getListOrder = (storeId: string, params: any) => {
   return request.get<TOrder>(`stores/${storeId}/orders`, { params });
 };
@@ -51,6 +87,7 @@ const orderApi = {
   getOrderDetail,
   getOrderList,
   getListOrder,
+  getOrderListInBrand,
   updateOrder,
   ...generateAPIWithPaging<TOrder>('orders')
 };

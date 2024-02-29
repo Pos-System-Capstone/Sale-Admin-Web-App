@@ -41,10 +41,10 @@ export default function Voucher() {
       title: `${t('promotionSystem.voucher.table.name')}`,
       dataIndex: 'voucherName'
     },
-    {
-      title: `Voucher Group Id`,
-      dataIndex: 'voucherGroupId'
-    },
+    // {
+    //   title: `Voucher Group Id`,
+    //   dataIndex: 'voucherGroupId'
+    // },
     {
       title: `${t('promotionSystem.voucher.table.actionName')}`,
       dataIndex: ['action', 'name'],

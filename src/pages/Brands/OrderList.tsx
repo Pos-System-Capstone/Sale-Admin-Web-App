@@ -26,6 +26,12 @@ const OrderListBrandPage = () => {
       hideInSearch: true
     },
     {
+      title: 'Cửa hàng',
+      dataIndex: 'storeName',
+      hideInSearch: true,
+      fixed: 'left'
+    },
+    {
       title: 'Mã hoá đơn',
       dataIndex: 'invoiceId',
       hideInSearch: true,

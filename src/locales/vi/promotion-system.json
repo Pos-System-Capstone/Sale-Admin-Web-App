@@ -52,6 +52,7 @@
       "discountActionType": {
         "discountAmountOfOrder": "Giảm giá số tiền đơn hàng",
         "discountPercentageOfOrder": "Giảm giá phần trăm đơn hàng",
+        "getPointMember": "Tích điểm thành viên",
         "discountShippingFeeOfOrder": "Giảm giá phí vận chuyển đơn hàng",
         "discountAmountOfItem": "Giảm giá số tiền sản phẩm",
         "discountPercentOfItem": "Giảm giá phần trăm sản phẩm",

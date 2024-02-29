@@ -10,7 +10,8 @@ export enum PaymentType {
 export enum OrderType {
   EATIN = 'EAT_IN',
   TAKE_AWAY = 'TAKE_AWAY',
-  DELIVERY = 'DELIVERY'
+  DELIVERY = 'DELIVERY',
+  TOP_UP = 'TOP_UP'
 }
 
 export enum OrderStatus {
@@ -24,6 +25,7 @@ export type TOrder = {
   id: string;
   invoiceId: string;
   staffName: string;
+  storeName: string;
   startDate: string;
   endDate: string;
   orderDate: string;
@@ -119,36 +121,45 @@ export const ORDER_TYPE_OPTONS = [
   {
     label: 'Dùng ngay',
     value: OrderType.EATIN,
-    color: 'warning'
+    color: 'primary'
   },
   {
     label: 'Mang đi',
     value: OrderType.TAKE_AWAY,
-    color: 'warning'
+    color: 'secondary'
   },
   {
     label: 'Đặt hàng',
     value: OrderType.DELIVERY,
     color: 'warning'
+  },
+  {
+    label: 'Nạp thẻ',
+    value: OrderType.TOP_UP,
+    color: 'error'
   }
 ];
 
 export const PAYMENT_TYPE_OPTIONS = [
   {
     label: 'Tiền mặt',
-    value: TOrderPaymentType.CASH
+    value: TOrderPaymentType.CASH,
+    color: 'primary'
   },
   {
     label: 'Momo',
-    value: TOrderPaymentType.MOMO
+    value: TOrderPaymentType.MOMO,
+    color: 'error'
   },
   {
     label: 'Ví thành viên',
-    value: TOrderPaymentType.POINTIFY
+    value: TOrderPaymentType.POINTIFY,
+    color: 'warning'
   },
   {
     label: 'Ngân hàng',
-    value: TOrderPaymentType.BANKING
+    value: TOrderPaymentType.BANKING,
+    color: 'secondary'
   },
   {
     label: 'Visa/MasterCard',

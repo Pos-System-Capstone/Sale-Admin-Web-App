@@ -69,7 +69,7 @@ const NewActionPage = () => {
   const { handleSubmit, setValue, reset } = methods;
 
   const onSubmit = (values: TActionCreate) => {
-    // console.log('action', values);
+    console.log('action', values);
     values.brandId = user.brandId;
     const body: TActionCreate = { ...values };
     body.brandId = user.brandId;

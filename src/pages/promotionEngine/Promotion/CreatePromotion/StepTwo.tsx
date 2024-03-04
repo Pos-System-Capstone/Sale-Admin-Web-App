@@ -15,10 +15,16 @@ import {
   targetCustomerList
 } from 'pages/promotionEngine/Promotion/components/config';
 import FormBox from 'pages/promotionEngine/Promotion/components/FormBox';
+import { useForm } from 'react-hook-form';
+import { TPromotionBase } from 'types/promotion/promotion';
 
 export default function StepTwo({ watch }: any) {
   const { translate } = useLocales();
+  const methods = useForm<TPromotionBase>({
+    // resolver: yupResolver(storeSchemaBuilder(translate))
+  });
 
+  const { handleSubmit, setValue, reset } = methods;
   const targetCustomer = targetCustomerList();
   const paymentMethod = paymentMethodList();
   const gender = genderList();
@@ -30,7 +36,7 @@ export default function StepTwo({ watch }: any) {
   const [isMember] = watch(['membership']);
   console.log(watch('paymentMethod'));
   return (
-    <Stack p={1} spacing={3} width="100%">
+    <Stack p={1} spacing={3} width="100%" {...methods}>
       <Typography px={2} variant="h3" sx={{ textTransform: 'uppercase' }} textAlign={'left'}>
         {translate('promotionSystem.promotion.settings.constraint')}
       </Typography>

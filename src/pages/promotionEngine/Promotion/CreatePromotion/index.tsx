@@ -1,9 +1,9 @@
-import { Box, Button, Stack, Step, StepLabel, Stepper } from '@mui/material';
+import { Box } from '@mui/material';
 // import promotionApi from 'api/promotion/promotion';
-import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+// import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import useLocales from 'hooks/useLocales';
-import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
+
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 // import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import * as Yup from 'yup';
 import StepOne from './StepOne';
-import StepThree from './StepThree';
+// import StepThree from './StepThree';
 import StepTwo from './StepTwo';
 import { TPromotionBase } from 'types/promotion/promotion';
 
@@ -141,35 +141,35 @@ const CreatePromotion = (props: Props) => {
   // targetCustomer[1] = member
   return (
     <FormProvider {...createPromotionForm}>
-      <DashboardNavLayout>
-        <Stack direction="row" spacing={2}>
-          {activeStep !== 0 && (
-            <Button onClick={() => setActiveStep(activeStep - 1)}>
-              {translate('promotionSystem.promotion.back')}
-            </Button>
-          )}
-          {activeStep !== STEPS.length - 1 && (
-            <Button
-              variant="contained"
-              onClick={async () => {
-                // const valid = await createPromotionForm.trigger();
-                // console.log(`valid`, valid);
-                const valid = true;
-                if (valid) setActiveStep((prev) => prev + 1);
-              }}
-            >
-              {translate('promotionSystem.promotion.next')}
-            </Button>
-          )}
-          {activeStep === STEPS.length - 1 && (
-            <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
+      <Page title={`${translate('promotionSystem.promotion.createPromotion.createPromotion')}`}>
+        {/* <DashboardNavLayout>
+          <Stack direction="row" spacing={2}> */}
+        {/* {activeStep !== 0 && (
+              <Button onClick={() => setActiveStep(activeStep - 1)}>
+                {translate('promotionSystem.promotion.back')}
+              </Button>
+            )}
+            {activeStep !== STEPS.length - 1 && (
+              <Button
+                variant="contained"
+                onClick={async () => {
+                  // const valid = await createPromotionForm.trigger();
+                  // console.log(`valid`, valid);
+                  const valid = true;
+                  if (valid) setActiveStep((prev) => prev + 1);
+                }}
+              >
+                {translate('promotionSystem.promotion.next')}
+              </Button>
+            )} */}
+
+        {/* <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
               {translate('promotionSystem.promotion.save')}
             </LoadingAsyncButton>
-          )}
-        </Stack>
-      </DashboardNavLayout>
-      <Page title={`${translate('promotionSystem.promotion.createPromotion.createPromotion')}`}>
-        <Box py={2}>
+          </Stack>
+        </DashboardNavLayout> */}
+
+        {/* <Box py={2}>
           <Stepper alternativeLabel activeStep={activeStep}>
             {STEPS.map((label) => (
               <Step key={label}>
@@ -186,12 +186,12 @@ const CreatePromotion = (props: Props) => {
               </Step>
             ))}
           </Stepper>
-        </Box>
+        </Box> */}
 
-        <Box display="flex">
-          {activeStep === 0 && <StepOne watch={watch} />}
-          {activeStep === 1 && <StepTwo watch={watch} />}
-          {activeStep === 2 && <StepThree watch={watch} />}
+        <Box>
+          {<StepOne watch={watch} handleSubmit={handleSubmit} />}
+          {<StepTwo watch={watch} handleSubmit={handleSubmit} />}
+          {/* {activeStep === 2 && <StepThree watch={watch} />} */}
         </Box>
       </Page>
     </FormProvider>

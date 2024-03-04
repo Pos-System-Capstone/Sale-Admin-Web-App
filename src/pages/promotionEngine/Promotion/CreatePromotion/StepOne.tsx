@@ -1,4 +1,4 @@
-import { Box, Grid, Stack, Switch, Typography } from '@mui/material';
+import { Box, Button, Grid, Stack, Switch, Typography } from '@mui/material';
 import {
   CheckBoxField,
   DraftEditorField,
@@ -11,8 +11,8 @@ import DateTimePickerField from 'components/form/DateTimePickerField';
 import useLocales from 'hooks/useLocales';
 import { Card, CardTitle } from 'pages/promotionEngine/Promotion/components/Card';
 import { useState } from 'react';
-import { Controller } from 'react-hook-form';
-
+import { Controller, FormProvider, useForm } from 'react-hook-form';
+// import actionApi from 'api/promotion/action';
 import {
   discountActionList,
   giftActionList,
@@ -22,8 +22,16 @@ import {
   timeFrameList
 } from 'pages/promotionEngine/Promotion/components/config';
 import FormBox from 'pages/promotionEngine/Promotion/components/FormBox';
+import { getUserInfo } from 'utils/utils';
+import { TPromotionBase } from 'types/promotion/promotion';
+import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
+import { useNavigate } from 'react-router';
+import useDashboard from 'hooks/useDashboard';
 
 export default function StepOne({ watch }: any) {
+  const { setNavOpen } = useDashboard();
+  const navigate = useNavigate();
   const { translate } = useLocales();
   const giftAction = giftActionList();
   const discountAction = discountActionList();
@@ -31,6 +39,7 @@ export default function StepOne({ watch }: any) {
   const kindAction = kindActionList();
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
   const hourFilterList = timeFrameList();
+  const [selectedText, setSelectedText] = useState<string | null>(null);
 
   // const [timeFrameChecked, setTimeFrameChecked] = useState(false);
   // const handleTimeFrameChecked = () => {
@@ -38,59 +47,86 @@ export default function StepOne({ watch }: any) {
   // };
   const timeFrameChecked = watch('timeframeCheck');
   const particularDays = particularDayList();
+  const userRaw = getUserInfo();
+  const user: any = JSON.parse(userRaw ?? '{}');
+
+  const methods = useForm<TPromotionBase>({
+    // resolver: yupResolver(storeSchemaBuilder(translate))
+  });
+  const onSubmit = (values: TPromotionBase) => {
+    values.brandId = user.brandId;
+    const body: TPromotionBase = { ...values };
+    body.brandId = user.brandId;
+    body.promotionType = +values.promotionType;
+    console.log(values);
+  };
+  const { handleSubmit, setValue, reset } = methods;
 
   const [particularDay, setParticularDay] = useState(false);
+
   const handleParticularDay = () => {
     setParticularDay((prev) => !prev);
   };
+
   return (
     <Stack p={1} spacing={3}>
-      <Typography px={2} variant="h3" textAlign="left" sx={{ textTransform: 'uppercase' }}>
-        {translate('promotionSystem.promotion.createPromotion.promotionType')}
-      </Typography>
-      <Card>
-        <Stack spacing={4} px={2} py={1} textAlign="left" direction="row">
-          <FormBox
-            title={`${translate(
-              'promotionSystem.promotion.createPromotion.questionPromotionType'
-            )}`}
-          >
-            <Stack spacing={2} direction="column" width={'100%'}>
-              <RadioGroupField
-                sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
-                fullWidth
-                options={promotionType}
-                name="promotionType"
-                defaultValue="usingVoucher"
-              />
-              <Grid container gap={2}>
-                <Grid item xs={12}>
-                  <InputField
-                    fullWidth
-                    size="small"
-                    name="promotionName"
-                    label={`${translate(
-                      'promotionSystem.promotion.createPromotion.promotionName'
-                    )}`}
-                    color="primary"
-                  />
+      <FormProvider {...methods}>
+        <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
+          <Stack direction="row" spacing={2}>
+            <Button onClick={() => navigate(-1)} variant="outlined">
+              Hủy
+            </Button>
+            <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
+              Tạo
+            </LoadingAsyncButton>
+          </Stack>
+        </DashboardNavLayout>
+        <Typography px={2} variant="h3" textAlign="left" sx={{ textTransform: 'uppercase' }}>
+          {translate('promotionSystem.promotion.createPromotion.promotionType')}
+        </Typography>
+        <Card>
+          <Stack spacing={4} px={2} py={1} textAlign="left" direction="row">
+            <FormBox
+              title={`${translate(
+                'promotionSystem.promotion.createPromotion.questionPromotionType'
+              )}`}
+            >
+              <Stack spacing={2} direction="column" width={'100%'}>
+                <RadioGroupField
+                  sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+                  fullWidth
+                  options={promotionType}
+                  name="promotionType"
+                  defaultValue="usingVoucher"
+                />
+                <Grid container gap={2}>
+                  <Grid item xs={12}>
+                    <InputField
+                      fullWidth
+                      size="small"
+                      name="promotionName"
+                      label={`${translate(
+                        'promotionSystem.promotion.createPromotion.promotionName'
+                      )}`}
+                      color="primary"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <InputField
+                      fullWidth
+                      size="small"
+                      color="primary"
+                      name="promotionCode"
+                      label={`${translate(
+                        'promotionSystem.promotion.createPromotion.promotionCode'
+                      )}`}
+                      disabled={watch('promotionType') === 0}
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <InputField
-                    fullWidth
-                    size="small"
-                    color="primary"
-                    name="promotionCode"
-                    label={`${translate(
-                      'promotionSystem.promotion.createPromotion.promotionCode'
-                    )}`}
-                    disabled={watch('promotionType') === 0}
-                  />
-                </Grid>
-              </Grid>
-            </Stack>
-          </FormBox>
-          {/* <FormBox
+              </Stack>
+            </FormBox>
+            {/* <FormBox
             title={`${translate('promotionSystem.promotion.createPromotion.questionActionType')}`}
           >
             <Stack spacing={2} direction="column" width={'100%'}>
@@ -119,44 +155,46 @@ export default function StepOne({ watch }: any) {
               )}
             </Stack>
           </FormBox> */}
-        </Stack>
-      </Card>
-      <Card>
-        <Stack spacing={3} px={2} py={1}>
-          <FormBox title={`${translate('promotionSystem.promotion.createPromotion.timeFrame')}`}>
-            <Stack direction={'row'} spacing={2} alignItems={'center'}>
-              <Stack direction={'row'} spacing={2}>
-                <DateTimePickerField
-                  fullWidth
-                  name="startDate"
-                  label={translate('promotionSystem.common.start')}
-                  inputFormat="yyyy/MM/dd hh:mm a"
-                  minDate={new Date()}
-                />
-                <DateTimePickerField
-                  disabled={watch('unlimitedDate')}
-                  fullWidth
-                  name="endDate"
-                  label={translate('promotionSystem.common.end')}
-                  inputFormat="yyyy/MM/dd hh:mm a"
-                  minDate={new Date()}
-                />
-              </Stack>
+          </Stack>
+        </Card>
+        <Card>
+          <Stack spacing={3} px={2} py={1}>
+            <FormBox title={`${translate('promotionSystem.promotion.createPromotion.timeFrame')}`}>
+              <Stack direction={'row'} spacing={2} alignItems={'center'}>
+                <Stack direction={'row'} spacing={2}>
+                  <DateTimePickerField
+                    fullWidth
+                    name="startDate"
+                    label={translate('promotionSystem.common.start')}
+                    inputFormat="yyyy/MM/dd hh:mm a"
+                    minDate={new Date()}
+                  />
+                  <DateTimePickerField
+                    disabled={watch('unlimitedDate')}
+                    fullWidth
+                    name="endDate"
+                    label={translate('promotionSystem.common.end')}
+                    inputFormat="yyyy/MM/dd hh:mm a"
+                    minDate={new Date()}
+                  />
+                </Stack>
 
-              <Stack direction={'row'} alignItems={'center'}>
-                <CheckBoxField
-                  name="unlimited"
-                  label={`${translate('promotionSystem.promotion.createPromotion.unlimited')}`}
-                />
+                <Stack direction={'row'} alignItems={'center'}>
+                  <CheckBoxField
+                    name="unlimited"
+                    label={`${translate('promotionSystem.promotion.createPromotion.unlimited')}`}
+                  />
+                </Stack>
               </Stack>
-            </Stack>
-          </FormBox>
-          <Box>
-            <Typography>
-              {`${translate('promotionSystem.promotion.createPromotion.validInThisTimeFrameOnly')}`}
-              <SwitchField name="timeframeCheck" label="" />
-            </Typography>
-            {/* {timeFrameChecked && (
+            </FormBox>
+            <Box>
+              <Typography>
+                {`${translate(
+                  'promotionSystem.promotion.createPromotion.validInThisTimeFrameOnly'
+                )}`}
+                <SwitchField name="timeframeCheck" label="" />
+              </Typography>
+              {/* {timeFrameChecked && (
               <Grid container spacing={2} width={'100%'} py={1}>
                 {timeFrameList?.map((timeFrame, index) => (
                   <Grid xs={3} md={2} item key={index}>
@@ -165,17 +203,19 @@ export default function StepOne({ watch }: any) {
                 ))}
               </Grid>
             )} */}
-            {timeFrameChecked && (
-              <CheckBoxGroupField name={'timeFrameList'} options={hourFilterList} />
-            )}
-          </Box>
+              {timeFrameChecked && (
+                <CheckBoxGroupField name={'timeFrameList'} options={hourFilterList} />
+              )}
+            </Box>
 
-          <Box>
-            <Typography>
-              {`${translate('promotionSystem.promotion.createPromotion.validOnParticularDayOnly')}`}
-              <Switch checked={particularDay} onChange={handleParticularDay} />
-            </Typography>
-            {/* {particularDay && (
+            <Box>
+              <Typography>
+                {`${translate(
+                  'promotionSystem.promotion.createPromotion.validOnParticularDayOnly'
+                )}`}
+                <Switch checked={particularDay} onChange={handleParticularDay} />
+              </Typography>
+              {/* {particularDay && (
               <Grid container spacing={2} columns={7} width={'100%'} py={1}>
                 {particularDays?.map((item, index) => (
                   <Grid xs={3} md={1} item key={index}>
@@ -184,22 +224,28 @@ export default function StepOne({ watch }: any) {
                 ))}
               </Grid>
             )} */}
-            {particularDay && (
-              <CheckBoxGroupField name={'particularDays'} options={particularDays} />
-            )}
-          </Box>
-        </Stack>
-      </Card>
+              {particularDay && (
+                <CheckBoxGroupField name={'particularDays'} options={particularDays} />
+              )}
+            </Box>
+          </Stack>
+        </Card>
 
-      <Card>
-        <CardTitle mb={2} variant="subtitle1">
-          {`${translate('promotionSystem.promotion.description')}`}
-        </CardTitle>
-        <Controller
-          name="description"
-          render={({ field }) => <DraftEditorField value={field.value} onChange={field.onChange} />}
-        />
-      </Card>
+        <Card>
+          <CardTitle mb={2} variant="subtitle1">
+            {`${translate('promotionSystem.promotion.description')}`}
+          </CardTitle>
+          <Controller
+            name="description"
+            render={({ field }) => (
+              <DraftEditorField value={field.value} onChange={field.onChange} />
+            )}
+          />
+        </Card>
+      </FormProvider>
     </Stack>
   );
+}
+function enqueueSnackbar(arg0: string, arg1: { variant: string }) {
+  throw new Error('Function not implemented.');
 }

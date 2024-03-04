@@ -191,7 +191,7 @@ const CreatePromotion = (props: Props) => {
         <Box display="flex">
           {activeStep === 0 && <StepOne watch={watch} />}
           {activeStep === 1 && <StepTwo watch={watch} />}
-          {activeStep === 2 && <StepThree watch={watch} />}
+          {activeStep === 2 && <StepThree watch={watch} handleSubmit={handleSubmit} />}
         </Box>
       </Page>
     </FormProvider>

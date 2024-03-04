@@ -164,6 +164,19 @@ const timeFrameList = () => {
   return houserFilter;
 };
 
+const forHolidayList = () => {
+  return [
+    {
+      label: `Có`,
+      value: 1
+    },
+    {
+      label: `Không`,
+      value: 2
+    }
+  ];
+};
+
 const particularDayList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
@@ -242,6 +255,10 @@ const targetCustomerList = () => {
     {
       label: translate('promotionSystem.promotion.settings.targetCustomerType.membership'),
       value: 1
+    },
+    {
+      label: translate('promotionSystem.promotion.settings.targetCustomerType.membership'),
+      value: 0
     }
   ];
 };
@@ -249,7 +266,8 @@ const genderList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
     { label: translate('promotionSystem.promotion.settings.genderType.male'), value: 1 },
-    { label: translate('promotionSystem.promotion.settings.genderType.female'), value: 2 }
+    { label: translate('promotionSystem.promotion.settings.genderType.female'), value: 2 },
+    { label: `Tất cả`, value: 3 }
   ];
 };
 
@@ -264,6 +282,10 @@ const saleModeList = () => {
     {
       label: translate('promotionSystem.promotion.settings.saleModeType.delivery'),
       value: 4
+    },
+    {
+      label: 'Tất cả',
+      value: 7
     }
   ];
 };
@@ -278,6 +300,10 @@ const applyByList = () => {
     {
       label: translate('promotionSystem.promotion.settings.applyByType.online'),
       value: 2
+    },
+    {
+      label: `Tất cả`,
+      value: 3
     }
   ];
 };
@@ -312,6 +338,7 @@ const memberLevelList = () => {
   ];
 };
 export {
+  forHolidayList,
   promotionTypeList,
   particularDayList,
   paymentMethodList,

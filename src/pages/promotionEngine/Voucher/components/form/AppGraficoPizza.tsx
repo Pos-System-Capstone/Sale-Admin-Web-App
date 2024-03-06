@@ -31,8 +31,8 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 
 interface AppGraficoPizzaProps {
   chartData: {
+    series: any[];
     labelsData: string[];
-    series: number[];
   };
 }
 

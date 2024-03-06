@@ -1,12 +1,21 @@
 import styled from '@emotion/styled';
-import { Button, Card, Grid, TextField, ToggleButton } from '@mui/material';
+import {
+  Button,
+  Card,
+  Grid,
+  TableBody,
+  TableHead,
+  TableRow,
+  TextField,
+  ToggleButton
+} from '@mui/material';
 import useLocales from 'hooks/useLocales';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { Add, Search } from '@mui/icons-material';
+import { Add } from '@mui/icons-material';
 import { TabContext } from '@mui/lab';
 import ResoTable from 'components/ResoTable/ResoTable';
 import voucherApi from 'api/promotion/voucher';
@@ -14,47 +23,83 @@ import voucherApi from 'api/promotion/voucher';
 import { useNavigate } from 'react-router-dom';
 //
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
-import { TVoucherBase } from 'types/promotion/voucher';
+import { TVoucher } from 'types/promotion/voucher';
 import { TTableColumn } from 'types/table';
+import { Stack } from '@mui/material';
+import { TableContainer } from '@mui/material';
+import { Paper } from '@mui/material';
+import { Table } from '@mui/material';
+import { TableCell } from '@mui/material';
+import EmptyContent from 'components/EmptyContent';
+import { getUserInfo } from 'utils/utils';
+import Label from 'components/Label';
 //
 
-interface Props {}
+interface Props {
+  watch?: any;
+}
 interface PercentageChartProps {
   percentage: number;
 }
-const FormDetailInformation = (props: Props) => {
+const FormDetailInformation = ({ watch }: Props) => {
   const [value, setValue] = React.useState(0);
   const { t } = useLocales();
   const [activeTab, setActiveTab] = useState('1');
   const ref = useRef<any>();
   const navigate = useNavigate();
+  const userRaw = getUserInfo();
+  const user: any = JSON.parse(userRaw ?? '{}');
 
-  const productColumns: TTableColumn<TVoucherBase>[] = [
+  const productColumns: TTableColumn<TVoucher>[] = [
     {
       title: `${t('promotionSystem.voucher.table.no')}`,
       dataIndex: 'index',
       hideInSearch: true
     },
     {
-      title: `${t('promotionSystem.voucher.table.actionName')}`,
-      dataIndex: ['action', 'name'],
-      // renderFormItem: () => <AutocompleteCategory name="cat-id" label="Danh mục" />
+      title: 'Mã',
+      dataIndex: 'voucherCode'
+    },
+    {
+      title: `Ngày tạo`,
+      dataIndex: 'insDate',
       hideInSearch: true
     },
     {
-      title: `${t('promotionSystem.voucher.table.total')}`,
-      dataIndex: 'quantity',
-      hideInSearch: true
+      title: `Đã sử dụng`,
+      dataIndex: 'isUsed',
+      hideInSearch: true,
+      render: (value) => (
+        <Label color={value === true ? 'success' : value === false ? 'error' : 'default'}>
+          {value === true ? 'đã sử dụng' : value === false ? 'chưa sử dụng' : 'không rõ'}
+        </Label>
+      )
     },
     {
-      title: `${t('promotionSystem.voucher.table.redeemed')}`,
-      dataIndex: 'redempedQuantity',
-      hideInSearch: true
+      title: `Thu thập`,
+      dataIndex: 'isRedemped',
+      hideInSearch: true,
+      render: (value) => (
+        <Label color={value === true ? 'success' : value === false ? 'error' : 'default'}>
+          {value === true ? 'đã thu thập' : value === false ? 'chưa thu thập' : 'không rõ'}
+        </Label>
+      )
+    }
+  ];
+
+  const promoList = watch('promoList') !== undefined && watch('promoList')[0];
+
+  const promoName = promoList !== undefined ? promoList.promoName : '';
+  const promoCode = promoList !== undefined ? promoList.promoCode : '';
+
+  const promotionColumns = [
+    {
+      title: `Tên`,
+      data: promoName
     },
     {
-      title: `${t('promotionSystem.voucher.table.used')}`,
-      dataIndex: 'usedQuantity',
-      hideInSearch: true
+      title: `Code`,
+      data: promoCode
     }
   ];
 
@@ -84,6 +129,11 @@ const FormDetailInformation = (props: Props) => {
     value: number;
   }
 
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.formControl.setValue('VoucherGroupId', watch('voucherGroupId'));
+    }
+  }, [user]);
   function CustomTabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
 
@@ -115,33 +165,18 @@ const FormDetailInformation = (props: Props) => {
     <Grid container spacing={2} sx={{ ml: '20px' }}>
       <Typography variant="h4">THÔNG TIN CHI TIẾT</Typography>
       <hr style={{ border: '1px solid #000', margin: '20px 0' }} />
-      <Box sx={{ width: '100%' }}>
+      <Stack sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChangeTab} aria-label="basic tabs example">
             <Tab label="Danh sách voucher" {...a11yProps(0)} />
-            <Tab label="Promotions" {...a11yProps(1)} />
+            <Tab label="Khuyến mãi" {...a11yProps(1)} />
             <Tab label="Distribution" {...a11yProps(2)} />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
           <Grid container spacing={2}>
-            <Grid item xs={7}>
-              <Card sx={{ height: '112.95px' }}>
-                <TextField
-                  label="Nhập mã voucher cần tìm"
-                  variant="outlined"
-                  sx={{ width: '500px', pb: '5px', borderRadius: '250px 0 0px 250px' }}
-                />
-                <Button
-                  variant="outlined"
-                  sx={{ height: '56px', width: '96px' }}
-                  startIcon={<Search />}
-                >
-                  Tìm
-                </Button>
-              </Card>
-            </Grid>
-            <Grid item xs={4.5}>
+            <Grid item xs={7}></Grid>
+            <Grid item xs={5}>
               <Card>
                 <TextField variant="outlined" sx={{ width: '180px', pb: '2px' }} />
                 <Button variant="contained" sx={{ height: '53px', ml: '10px' }} startIcon={<Add />}>
@@ -163,7 +198,7 @@ const FormDetailInformation = (props: Props) => {
               <ResoTable
                 ref={ref}
                 pagination
-                getData={(params: any) => voucherApi.getVoucher(params)}
+                getData={(params: any) => voucherApi.getVouchers(params)}
                 // onEdit={() => console.log('edit')}
                 onEdit={(params: any) =>
                   navigate(`${PATH_PROMOTION_APP.voucher.root}/${params.voucherGroupId}`)
@@ -175,13 +210,50 @@ const FormDetailInformation = (props: Props) => {
             </TabContext>
           </Box>
         </CustomTabPanel>
+        {/* Promotion */}
         <CustomTabPanel value={value} index={1}>
-          Item Two
+          <Box height={'40vh'} display={'flex'} justifyContent={'center'}>
+            <TabContext value={activeTab}>
+              {promoList !== undefined ? (
+                <TableContainer component={Paper}>
+                  <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                    <TableHead>
+                      <TableRow>
+                        {promotionColumns.map((e: any, index: any) => (
+                          <TableCell key={index} align="left">
+                            {e.title}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {promotionColumns.map((e: any, index: any) => (
+                        <TableCell key={index} align="left">
+                          {e.data}
+                        </TableCell>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              ) : (
+                <TableBody>
+                  <Box width="100%">
+                    <EmptyContent
+                      title="Trống"
+                      sx={{
+                        width: '100%'
+                      }}
+                    />
+                  </Box>
+                </TableBody>
+              )}
+            </TabContext>
+          </Box>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
           Item Three
         </CustomTabPanel>
-      </Box>
+      </Stack>
     </Grid>
   );
 };

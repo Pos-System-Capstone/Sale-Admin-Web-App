@@ -1,27 +1,14 @@
 import styled from '@emotion/styled';
-import {
-  Button,
-  Paper,
-  Grid,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  ToggleButton,
-  Stack
-} from '@mui/material';
+import { Paper, Grid, FormControl, InputLabel, MenuItem, ToggleButton, Stack } from '@mui/material';
 import React, { useState } from 'react';
-import Typography from '@mui/material/Typography';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import AppGraficoPizza from './AppGraficoPizza';
 import { Box } from '@mui/system';
-import { DataSaverOn } from '@mui/icons-material';
+import { InputField } from 'components/form';
 
-interface Props {}
-
-const PIZZA_CHART = {
-  series: [4344, 5435, 1443],
-  labelsData: ['Đã sử dụng', 'Chưa sử dụng', 'Còn lại']
-};
+interface Props {
+  watch?: any;
+}
 
 const TYPE_OPTIONS = [
   {
@@ -34,7 +21,7 @@ const TYPE_OPTIONS = [
   }
 ];
 
-const FormDetailVoucher = (props: Props) => {
+const FormDetailVoucher = ({ watch }: Props) => {
   const [age, setAge] = React.useState('');
   const handleChangeSelect = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
@@ -55,23 +42,27 @@ const FormDetailVoucher = (props: Props) => {
       backgroundColor: '#00AB55'
     }
   });
+  const used = watch('usedQuantity') !== undefined && watch('usedQuantity');
+  const remain = watch('remain') !== undefined && watch('remain');
+  const redemped = watch('redempedQuantity') !== undefined && watch('redempedQuantity');
+
+  const PIZZA_CHART = {
+    series: [used, remain, redemped],
+    labelsData: ['Đã sử dụng', 'Còn lại', 'Đã thu thập']
+  };
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={6} spacing={1}>
         <Paper elevation={3} sx={{ height: '325.98px' }}>
           <Stack direction="row" justifyContent="space-between" sx={{ gap: 2 }}>
-            <Typography variant="h6">Giảm 100% cho sản phẩm Bông lan trứng muối</Typography>
-            <Box>
-              <Button
-                startIcon={<DataSaverOn />}
-                size="small"
-                variant="contained"
-                sx={{ width: '120px', height: '40px', fontSize: 15 }}
-              >
-                Cập nhật
-              </Button>
-            </Box>
+            <InputField
+              fullWidth
+              size="small"
+              name="voucherName"
+              label="Tên voucher"
+              color="primary"
+            />
           </Stack>
           <Box sx={{ pt: '15px' }}>
             <FormControl fullWidth>

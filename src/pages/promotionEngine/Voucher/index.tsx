@@ -104,7 +104,7 @@ export default function Voucher() {
           <ResoTable
             ref={ref}
             pagination
-            getData={(params: any) => voucherApi.getVoucher(params)}
+            getData={(params: any) => voucherApi.getVoucherGroup(params)}
             // onEdit={() => console.log('edit')}
             onEdit={(params: any) =>
               navigate(`${PATH_PROMOTION_APP.voucher.root}/${params.voucherGroupId}`)

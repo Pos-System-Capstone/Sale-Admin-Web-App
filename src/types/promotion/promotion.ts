@@ -5,7 +5,7 @@ export type TPromotionBase = {
   promotionId: string;
   brandId: string;
   promotionCode: string;
-  promotionName: string;
+  promotionName?: string;
   actionType: number;
   postActionType: number;
   imgUrl: any;

@@ -7,13 +7,13 @@ import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useAuth from 'hooks/useAuth';
 import useLocales from 'hooks/useLocales';
+import OrderDetailDialog from 'pages/Orders/components/OrderDetailDialog';
 import { useState } from 'react';
 // components
 import { ORDER_STATUS_OPTONS, ORDER_TYPE_OPTONS, PAYMENT_TYPE_OPTIONS, TOrder } from 'types/order';
 import { TTableColumn } from 'types/table';
-import OrderDetailDialog from './components/OrderDetailDialog';
 
-const OrderListPage = () => {
+const OrderListBrandPage = () => {
   const { translate } = useLocales();
   const { user } = useAuth();
 
@@ -26,16 +26,17 @@ const OrderListPage = () => {
       hideInSearch: true
     },
     {
+      title: 'Cửa hàng',
+      dataIndex: 'storeName',
+      hideInSearch: true,
+      fixed: 'left'
+    },
+    {
       title: 'Mã hoá đơn',
       dataIndex: 'invoiceId',
       hideInSearch: true,
       fixed: 'left'
     },
-    // {
-    //   title: 'Người tạo',
-    //   dataIndex: 'staffName',
-    //   hideInSearch: true
-    // },
     {
       title: 'Ngày tạo',
       dataIndex: 'orderDate',
@@ -66,7 +67,7 @@ const OrderListPage = () => {
       dataIndex: 'paymentType',
       valueEnum: PAYMENT_TYPE_OPTIONS,
       valueType: 'select',
-      // hideInSearch: true,
+      //   hideInSearch: true,
       fixed: 'left'
     },
     {
@@ -89,9 +90,10 @@ const OrderListPage = () => {
       )
     }
   ];
+
   return (
     <Page
-      title="Danh sách đơn hàng"
+      title="Danh sách đơn hàng trong thương hiệu"
       // actions={() => [
       //   <Button
       //     key="export-file"
@@ -116,7 +118,7 @@ const OrderListPage = () => {
             showAction={false}
             rowKey="menu_id"
             getData={(params: any) => {
-              return orderApi.getOrderList(user?.storeId ?? '', params);
+              return orderApi.getOrderListInBrand(user?.brandId ?? '', params);
             }}
             columns={orderColumns}
           />
@@ -126,4 +128,4 @@ const OrderListPage = () => {
   );
 };
 
-export default OrderListPage;
+export default OrderListBrandPage;

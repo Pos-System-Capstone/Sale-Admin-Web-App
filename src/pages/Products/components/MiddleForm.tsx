@@ -23,7 +23,7 @@ type Props = {
 const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
   const { watch } = useFormContext<TProduct>();
   const productType = watch('type');
-  console.log('productType', productType);
+  console.log('productType', watch());
   return (
     <Box>
       <Stack spacing={3}>

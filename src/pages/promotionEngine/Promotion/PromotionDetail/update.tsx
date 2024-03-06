@@ -60,7 +60,7 @@ const UpdatePromotion = () => {
     if (!promotion) return;
     updatePromotionForm.reset({ ...transformValue(promotion!) });
   }, [promotion, updatePromotionForm]);
-  const { watch } = updatePromotionForm;
+  const { watch, handleSubmit } = updatePromotionForm;
   console.log('watch', watch());
 
   if (isLoading) {
@@ -105,7 +105,7 @@ const UpdatePromotion = () => {
     <FormProvider {...updatePromotionForm}>
       <Page>
         <Box display="flex">
-          <StepThree watch={watch} />
+          <StepThree watch={watch} handleSubmit={handleSubmit} />
         </Box>
       </Page>
     </FormProvider>

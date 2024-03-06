@@ -118,7 +118,20 @@ const giftActionList = () => {
     }
   ];
 };
-
+const actionType = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    { label: 'Số lượng đơn', value: 1 },
+    { label: 'Phần trăm đơn', value: 2 },
+    { label: 'Đang vận chuyển ', value: 3 },
+    { label: 'Số lượng sản phẩm ', value: 4 },
+    { label: 'Phần trăm sản phẩm ', value: 5 },
+    { label: 'Unit ', value: 6 },
+    { label: 'Fixed ', value: 7 },
+    { label: 'Ladder ', value: 8 },
+    { label: 'Bundle', value: 9 }
+  ];
+};
 const timeFrameList = () => {
   const houserFilter = [];
   for (let index = 0; index < 24; index++) {
@@ -135,6 +148,50 @@ const timeFrameList = () => {
     }
   }
   return houserFilter;
+};
+const statusMap = () => {
+  return [
+    {
+      value: 1,
+      label: 'Nháp'
+    },
+    {
+      value: 2,
+      label: 'Công khai'
+    },
+    {
+      value: 3,
+      label: 'Không công khai'
+    },
+    {
+      value: 4,
+      label: 'Hết hiệu lực'
+    }
+  ];
+};
+const hasVoucher = () => {
+  return [
+    {
+      value: true,
+      label: 'Có'
+    },
+    {
+      value: false,
+      label: 'Không'
+    }
+  ];
+};
+const forHolidayList = () => {
+  return [
+    {
+      label: `Có`,
+      value: 1
+    },
+    {
+      label: `Không`,
+      value: 2
+    }
+  ];
 };
 
 const particularDayList = () => {
@@ -222,6 +279,18 @@ const targetCustomerList = () => {
     }
   ];
 };
+const isAuto = () => {
+  return [
+    {
+      value: true,
+      label: 'Có'
+    },
+    {
+      value: false,
+      label: 'Không'
+    }
+  ];
+};
 const genderList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
@@ -239,13 +308,6 @@ const applyList = () => {
   ];
 };
 
-const forHolidayList = () => {
-  const { translate } = useLocales(); // eslint-disable-line
-  return [
-    { label: 'Có', value: 1 },
-    { label: 'Không', value: 2 }
-  ];
-};
 const saleModeList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
@@ -257,6 +319,10 @@ const saleModeList = () => {
     {
       label: translate('promotionSystem.promotion.settings.saleModeType.delivery'),
       value: 4
+    },
+    {
+      label: 'Tất cả',
+      value: 7
     }
   ];
 };
@@ -271,6 +337,10 @@ const applyByList = () => {
     {
       label: translate('promotionSystem.promotion.settings.applyByType.online'),
       value: 2
+    },
+    {
+      label: `Tất cả`,
+      value: 3
     }
   ];
 };
@@ -291,6 +361,7 @@ const exclusiveList = () => {
     }
   ];
 };
+
 const memberLevelList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
@@ -304,7 +375,9 @@ const memberLevelList = () => {
     }
   ];
 };
+
 export {
+  actionType,
   applyList,
   promotionTypeList,
   particularDayList,
@@ -319,5 +392,8 @@ export {
   applyByList,
   exclusiveList,
   memberLevelList,
-  forHolidayList
+  forHolidayList,
+  hasVoucher,
+  isAuto,
+  statusMap
 };

@@ -154,6 +154,11 @@ export const brandAdminSidebarConfig = [
         title: 'Danh sách tài khoản',
         path: PATH_DASHBOARD.accounts.root,
         icon: ICONS.user
+      },
+      {
+        title: 'Danh sách đơn hàng',
+        path: PATH_DASHBOARD.brand.orders,
+        icon: ICONS.order
       }
     ]
   },

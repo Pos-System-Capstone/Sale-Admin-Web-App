@@ -38,7 +38,7 @@
       }
     },
     "createPromotion": {
-      "createPromotion": "Thêm khuyến mãi",
+      "createPromotion": "Tạo khuyến mãi",
       "promotionType": "Loại khuyến mãi",
       "questionPromotionType": "Loại khuyến mãi",
       "usingVoucher": "Sử dụng Voucher",
@@ -52,6 +52,7 @@
       "discountActionType": {
         "discountAmountOfOrder": "Giảm giá số tiền đơn hàng",
         "discountPercentageOfOrder": "Giảm giá phần trăm đơn hàng",
+        "getPointMember": "Tích điểm thành viên",
         "discountShippingFeeOfOrder": "Giảm giá phí vận chuyển đơn hàng",
         "discountAmountOfItem": "Giảm giá số tiền sản phẩm",
         "discountPercentOfItem": "Giảm giá phần trăm sản phẩm",
@@ -128,7 +129,7 @@
       }
     },
     "preview": {
-      "title": "Xem trước",
+      "title": "Thông tin tổng quan",
       "name": "Tên khuyến mãi",
       "startDate": "Ngày bắt đầu",
       "endDate": "Ngày kết thúc",
@@ -138,6 +139,7 @@
       "uploadFile": "Tải lên tệp",
       "saleMode": "Chế độ bán hàng",
       "applyBy": "Áp dụng theo",
+      "promotionCode":"Mã code",
       "availableOnHoliday": "Có hiệu lực trên ngày lễ",
       "customerType": "Loại khách hàng",
       "customerGender": "Giới tính khách hàng"

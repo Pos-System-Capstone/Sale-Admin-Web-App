@@ -61,6 +61,12 @@ export const DISCOUNT_TYPE_DATA = () => {
       label: `${translate(
         'promotionSystem.promotion.createPromotion.discountActionType.bundlePriceOfItem'
       )}`
+    },
+    {
+      value: 10,
+      label: `${translate(
+        'promotionSystem.promotion.createPromotion.discountActionType.getPointMember'
+      )}`
     }
   ];
 };

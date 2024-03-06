@@ -55,7 +55,7 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
   const { user } = useAuth();
   const { data: order, isLoading } = useQuery(
     ['orders', orderId],
-    () => orderApi.getOrderDetail(user?.storeId, orderId!).then((res) => res.data),
+    () => orderApi.getOrderDetail(orderId!).then((res) => res.data),
     {
       enabled: Boolean(orderId)
     }
@@ -74,7 +74,7 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
         paymentType: selectedPaymentType
       };
 
-      await orderApi.updateOrder(user?.storeId, orderId!, updatedData);
+      await orderApi.updateOrder(orderId!, updatedData);
 
       onClose();
       window.location.reload();

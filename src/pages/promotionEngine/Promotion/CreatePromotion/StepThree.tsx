@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Checkbox,
   FormControlLabel,
   FormGroup,
@@ -12,21 +13,36 @@ import {
 import { styled } from '@mui/material/styles';
 import useLocales from 'hooks/useLocales';
 import { Card } from 'pages/promotionEngine/Promotion/components/Card';
-import { fDateTime } from 'utils/formatTime';
 import {
-  applyList,
+  memberLevelList,
+  applyByList,
   forHolidayList,
   genderList,
   particularDayList,
   paymentMethodList,
   targetCustomerList,
-  timeFrameList
+  timeFrameList,
+  saleModeList
 } from '../components/config';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { useState } from 'react';
+import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
+import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+import { InputField, RadioGroupField, SelectField } from 'components/form';
+import DateTimePickerField from 'components/form/DateTimePickerField';
+import useDashboard from 'hooks/useDashboard';
+import { TPromotionBase } from 'types/promotion/promotion';
+import { useNavigate } from 'react-router';
 
-function StepThree({ watch }: any) {
+interface Props {
+  watch: any;
+  handleSubmit: any;
+}
+
+function StepThree({ watch, handleSubmit }: Props) {
   const { translate } = useLocales();
+  const { setNavOpen } = useDashboard();
+  const navigate = useNavigate();
   const StyleWidthTypography = styled(Typography)((props) => ({
     marginTop: `${props.marginTop || '16px'}`,
     width: `${props.width || '50%'}`
@@ -50,160 +66,213 @@ function StepThree({ watch }: any) {
     return `${outputDate} ${outputTime}`;
   }
 
-  const statusMap: any = {
-    1: 'Nháp',
-    2: 'Công khai',
-    3: 'Không công khai',
-    4: 'Hết hiệu lực'
+  const statusMap: any = [
+    {
+      value: 1,
+      label: 'Nháp'
+    },
+    {
+      value: 2,
+      label: 'Công khai'
+    },
+    {
+      value: 3,
+      label: 'Không công khai'
+    },
+    {
+      value: 4,
+      label: 'Hết hiệu lực'
+    }
+  ];
+
+  const forHolidayMap: any = {
+    1: 'Có',
+    2: 'Không'
   };
 
-  const statusLabel = statusMap[watch('status')] || '';
+  const isAuto: any = [
+    {
+      value: true,
+      label: 'Có'
+    },
+    {
+      value: false,
+      label: 'Không'
+    }
+  ];
 
+  const hasVoucher: any = [
+    {
+      value: true,
+      label: 'Có'
+    },
+    {
+      value: false,
+      label: 'Không'
+    }
+  ];
+
+  const promotionTier = watch('promotionTier');
+  const memberList = memberLevelList();
+
+  const forHolidayLabel = forHolidayMap[watch('forHoliday')] || '';
+
+  const statusLabel = statusMap[watch('status')] || '';
+  const saleTypes = saleModeList();
   const paymentList = paymentMethodList();
   const genders = genderList();
   const customerTypes = targetCustomerList();
-  const applyByList = applyList();
+  const applyList = applyByList();
   const forHolidayStatuss = forHolidayList();
   const dayList = particularDayList();
   const timeList = timeFrameList();
 
-  const [value, setValue] = useState<string>('1'); // Initialize state with default value
-  console.log(watch('dayFilter'));
+  const [value, setValue] = useState<string>('1');
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
   };
 
-  return (
-    <Stack p={1} spacing={3} width={'100%'}>
-      <Typography px={2} variant="h3" sx={{ textTransform: 'uppercase' }}>
-        {translate('promotionSystem.promotion.preview.title')}
-      </Typography>
-      <Card>
-        <Stack spacing={2000} p={6} textAlign="left">
-          <Box>
-            <Grid container spacing={5}>
-              <Grid display="flex" item xs={12}>
-                <StyleWidthTypography
-                  sx={{
-                    color: 'rgb(110,110,140)'
-                  }}
-                  width={'100%'}
-                  textAlign="left"
-                  variant="h4"
-                >
-                  Thông tin tổng quát
-                </StyleWidthTypography>
-                <StyleWidthTypography width={'100%'} textAlign="right">
-                  <Typography style={{ display: 'inline-block' }}>Cập nhật gần đây: </Typography>
-                  <Typography style={{ display: 'inline-block', fontWeight: 'bold' }}>
-                    {convertToCustomFormat(watch('updDate'))}
-                  </Typography>
-                </StyleWidthTypography>
-              </Grid>
-              <Grid item xs={4}>
-                <Box textAlign="start" display="flex" alignItems="start">
-                  <StyleWidthTypography variant="h6">
-                    {translate('promotionSystem.promotion.preview.name')}：
-                  </StyleWidthTypography>
-                  <StyleWidthTypography variant="body1">
-                    {watch('promotionName')}
-                  </StyleWidthTypography>
-                </Box>
-                <Box display="flex" alignItems="center">
-                  <StyleWidthTypography variant="h6">
-                    {translate('promotionSystem.promotion.preview.startDate')}：
-                  </StyleWidthTypography>
-                  <StyleWidthTypography variant="body1">
-                    {watch('startDate') ? fDateTime(watch('startDate')) : '-'}
-                  </StyleWidthTypography>
-                </Box>
-                <Box display="flex" alignItems="center">
-                  <StyleWidthTypography variant="h6">
-                    {translate('promotionSystem.promotion.preview.endDate')}：
-                  </StyleWidthTypography>
-                  <StyleWidthTypography variant="body1">
-                    {watch('endDate') ? fDateTime(watch('endDate')) : '-'}
-                  </StyleWidthTypography>
-                </Box>
-                <Box display="flex" alignItems="center">
-                  <StyleWidthTypography variant="h6">Có voucher: </StyleWidthTypography>
-                  <StyleWidthTypography sx={{ marginTop: '16px' }} variant="body1">
-                    {watch('hasVoucher') ? 'Có' : 'Không'}
-                  </StyleWidthTypography>
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box display="flex" alignItems="center">
-                  <StyleWidthTypography sx={{ marginTop: '16px' }} variant="h6">
-                    {translate('promotionSystem.promotion.preview.status')}：
-                  </StyleWidthTypography>
-                  <StyleWidthTypography sx={{ marginTop: '16px' }} variant="body1">
-                    {statusLabel}
-                  </StyleWidthTypography>
-                </Box>
-                <Box display="flex" alignItems="center">
-                  <StyleWidthTypography sx={{ marginTop: '32px' }} variant="h6">
-                    Mã khuyến mãi：
-                  </StyleWidthTypography>
-                  <StyleWidthTypography sx={{ marginTop: '32px' }} variant="body1">
-                    {watch('promotionCode')}
-                  </StyleWidthTypography>
-                </Box>
-                <Box display="flex" alignItems="center">
-                  <StyleWidthTypography variant="h6">Tự động: </StyleWidthTypography>
-                  <StyleWidthTypography sx={{ marginTop: '16px' }} variant="body1">
-                    {watch('isAuto') ? 'Có' : 'Không'}
-                  </StyleWidthTypography>
-                </Box>
-                <Box display="flex" alignItems="center">
-                  <StyleWidthTypography variant="h6">
-                    {translate('promotionSystem.promotion.preview.exclusive')}：
-                  </StyleWidthTypography>
-                  <StyleWidthTypography variant="body1">{watch('exclusive')}</StyleWidthTypography>
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box sx={{ marginTop: '0px' }} alignItems="center">
-                  <StyleWidthTypography variant="h6">Hình ảnh:</StyleWidthTypography>
-                  {watch('imgUrl') ? (
-                    <Avatar sx={{ width: '60%', height: '60%' }} src={watch('imgUrl')} />
-                  ) : (
-                    <StyleWidthTypography variant="h6">No Data</StyleWidthTypography>
-                  )}
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-        </Stack>
-      </Card>
+  const onSubmit = (values: TPromotionBase) => {
+    console.log(`data`, values);
+  };
 
-      <TabContext value={value}>
-        <StyleWidthTypography
-          sx={{
-            color: 'rgb(110,110,140)'
-          }}
-          width={'100%'}
-          textAlign="left"
-          variant="h4"
-        >
-          THÔNG TIN CHI TIẾT
-        </StyleWidthTypography>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Cấu hình" value="1" />
-            <Tab label="Thời gian" value="2" />
-            <Tab label="Distribution" value="3" />
-          </TabList>
-        </Box>
-        {/* Cái này là chỗ để tab nè */}
-        <TabPanel value="1">
-          <Card spacing={6} p={6}>
-            <Card>
-              <Stack p={6} textAlign="left">
+  return (
+    <>
+      <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
+        <Stack direction="row" spacing={2}>
+          <Button variant="outlined" onClick={() => navigate(-1)}>
+            Hủy
+          </Button>
+          <LoadingAsyncButton type="submit" variant="contained" onClick={handleSubmit(onSubmit)}>
+            Lưu
+          </LoadingAsyncButton>
+        </Stack>
+      </DashboardNavLayout>
+      <Card>
+        <Stack p={1} spacing={3} width={'100%'}>
+          <TabContext value={value}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <TabList onChange={handleChange} aria-label="lab API tabs example">
+                <Tab label="Tổng quan" value="1" />
+                <Tab label="Cấu hình" value="2" />
+                <Tab label="Thời gian" value="3" />
+                <Tab label="Bậc" value="4" />
+              </TabList>
+            </Box>
+            {/* Cái này là chỗ để tab nè */}
+            <TabPanel value="1">
+              <Stack width="100%">
+                <Box>
+                  <Grid container spacing={3}>
+                    <Grid display="flex" item xs={12}>
+                      <StyleWidthTypography width={'100%'} textAlign="left" variant="h4">
+                        Thông tin tổng quát
+                      </StyleWidthTypography>
+                    </Grid>
+                    <Grid container item xs={4} spacing={2}>
+                      <Grid item xs={12}>
+                        <InputField
+                          fullWidth
+                          name="promotionName"
+                          label={translate('promotionSystem.promotion.preview.name')}
+                          required
+                          defaultValue="promotionName"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <InputField fullWidth name="promotionCode" label="Mã khuyến mãi" required />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <DateTimePickerField
+                          fullWidth
+                          name="startDate"
+                          label={translate('promotionSystem.promotion.preview.startDate')}
+                          inputFormat="yyyy/MM/dd hh:mm a"
+                          minDate={new Date()}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <DateTimePickerField
+                          fullWidth
+                          name="endDate"
+                          label={translate('promotionSystem.promotion.preview.endDate')}
+                          inputFormat="yyyy/MM/dd hh:mm a"
+                          minDate={new Date()}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid container item xs={4}>
+                      <Grid item xs={12}>
+                        <SelectField
+                          fullWidth
+                          options={statusMap}
+                          name="status"
+                          label={translate('promotionSystem.promotion.preview.status')}
+                        ></SelectField>
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <InputField
+                          fullWidth
+                          name="exclusive"
+                          label={translate('promotionSystem.promotion.preview.exclusive')}
+                          required
+                        />
+                      </Grid>
+                      <Grid container item xs={12}>
+                        <StyleWidthTypography variant="h6">Có Voucher</StyleWidthTypography>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <RadioGroupField
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'row'
+                          }}
+                          fullWidth
+                          options={hasVoucher}
+                          name="hasVoucher"
+                          defaultValue={hasVoucher}
+                        />
+                      </Grid>
+                      <Grid container item xs={12}>
+                        <StyleWidthTypography variant="h6">Tự động</StyleWidthTypography>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <RadioGroupField
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'row'
+                          }}
+                          fullWidth
+                          options={isAuto}
+                          name="isAuto"
+                          defaultValue={isAuto}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Box sx={{ marginTop: '0px' }} display={'flex'} justifyContent={'center'}>
+                        {watch('imgUrl') ? (
+                          <Avatar
+                            variant="rounded"
+                            sx={{ width: '80%', height: '80%' }}
+                            src={watch('imgUrl')}
+                          />
+                        ) : (
+                          <StyleWidthTypography variant="h6">No Data</StyleWidthTypography>
+                        )}
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Stack>
+            </TabPanel>
+            <TabPanel value="2">
+              <Stack textAlign="left">
                 <Box>
                   <Grid container spacing={2}>
-                    <Grid display="flex" item xs={12}>
+                    <Grid item xs={12}>
                       <StyleWidthTypography
                         sx={{
                           color: 'rgb(110,110,140)'
@@ -211,12 +280,8 @@ function StepThree({ watch }: any) {
                         width={'100%'}
                         textAlign="left"
                         variant="h4"
-                      ></StyleWidthTypography>
-                      <StyleWidthTypography width={'100%'} textAlign="end">
-                        <Typography sx={{ display: 'inline-block' }}>Cập nhật gần đây:</Typography>{' '}
-                        <Typography sx={{ display: 'inline-block', fontWeight: 'bold' }}>
-                          {convertToCustomFormat(watch('updDate'))}
-                        </Typography>
+                      >
+                        Cấu hình chi tiết
                       </StyleWidthTypography>
                     </Grid>
                     <Grid p={0} item xs={6}>
@@ -224,12 +289,26 @@ function StepThree({ watch }: any) {
                         <StyleWidthTypography variant="h6">
                           {translate('promotionSystem.promotion.preview.saleMode')}：
                         </StyleWidthTypography>
-                        <StyleWidthTypography variant="body1">saleMode</StyleWidthTypography>
                       </Box>
-
-                      <Box display="flex" alignItems="center">
-                        <StyleWidthTypography variant="h6">Member Levels:</StyleWidthTypography>
-                        <StyleWidthTypography variant="body1"></StyleWidthTypography>
+                      <Box alignItems="center">
+                        <StyleWidthTypography variant="h6" width={'100%'}>
+                          <Grid container xs={12} spacing={0}>
+                            {saleTypes.map((e: any, index: number) => (
+                              <Grid item key={index} xs={12 / 4}>
+                                <FormGroup>
+                                  <FormControlLabel
+                                    control={
+                                      <Checkbox
+                                        defaultChecked={Boolean(watch('saleMode') == e.value)}
+                                      />
+                                    }
+                                    label={e.label}
+                                  />
+                                </FormGroup>
+                              </Grid>
+                            ))}
+                          </Grid>
+                        </StyleWidthTypography>
                       </Box>
                       <Box alignItems="center" display={'flex'}>
                         <StyleWidthTypography variant="h6" sx={{ width: '35%' }}>
@@ -260,7 +339,7 @@ function StepThree({ watch }: any) {
                         </StyleWidthTypography>
                         <StyleWidthTypography variant="body1" sx={{ width: '65%' }}>
                           <Grid container xs={12}>
-                            {applyByList.map((e: any, index: number) => (
+                            {applyList.map((e: any, index: number) => (
                               <Grid item key={index} xs={12 / 3}>
                                 <FormGroup>
                                   <FormControlLabel
@@ -355,16 +434,89 @@ function StepThree({ watch }: any) {
                   </Grid>
                 </Box>
               </Stack>
-            </Card>
-          </Card>
-        </TabPanel>
+            </TabPanel>
 
-        <TabPanel value="2">
-          <Card>
-            <Stack spacing={6} p={6} textAlign="left">
-              <Box>
-                <Grid container spacing={2}>
-                  <Grid display="flex" item xs={12}>
+            <TabPanel value="3">
+              <Stack textAlign="left">
+                <Box>
+                  <Grid container spacing={2}>
+                    <Grid display="flex" item xs={12}>
+                      <StyleWidthTypography
+                        sx={{
+                          color: 'rgb(110,110,140)'
+                        }}
+                        width={'100%'}
+                        textAlign="left"
+                        variant="h4"
+                      >
+                        Khung thời gian
+                      </StyleWidthTypography>
+                    </Grid>
+                    <Grid p={0} item xs={12}>
+                      <Box>
+                        <StyleWidthTypography variant="h6">Khung Ngày:</StyleWidthTypography>
+                      </Box>
+                      <Box>
+                        {watch('dayFilter') !== undefined && (
+                          <Grid container spacing={2} xs={12}>
+                            {dayList.map((e: any, index: number) => (
+                              <Grid item key={index} xs={12 / 7}>
+                                <FormGroup>
+                                  <FormControlLabel
+                                    control={
+                                      <Checkbox
+                                        defaultChecked={watch('dayFilter').some(
+                                          (item: any) => (e.value = item)
+                                        )}
+                                      />
+                                    }
+                                    label={e.label}
+                                  />
+                                </FormGroup>
+                              </Grid>
+                            ))}
+                          </Grid>
+                        )}
+                      </Box>
+                    </Grid>
+
+                    <Grid p={0} item xs={12}>
+                      <Box alignItems="center" width="100%">
+                        <StyleWidthTypography variant="h6">Khung Giờ:</StyleWidthTypography>
+                      </Box>
+                      <Box>
+                        <Card>
+                          {watch('hourFilter') !== undefined && (
+                            <Grid container spacing={2} xs={12}>
+                              {timeList.map((e: any, index: number) => (
+                                <Grid item key={index} xs={2}>
+                                  <FormGroup>
+                                    <FormControlLabel
+                                      control={
+                                        <Checkbox
+                                          defaultChecked={watch('hourFilter').some(
+                                            (item: any) => item == e.value
+                                          )}
+                                        />
+                                      }
+                                      label={e.label}
+                                    />
+                                  </FormGroup>
+                                </Grid>
+                              ))}
+                            </Grid>
+                          )}
+                        </Card>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Stack>
+            </TabPanel>
+            <TabPanel value="4">
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Box alignItems="center" width={'100%'}>
                     <StyleWidthTypography
                       sx={{
                         color: 'rgb(110,110,140)'
@@ -372,71 +524,121 @@ function StepThree({ watch }: any) {
                       width={'100%'}
                       textAlign="left"
                       variant="h4"
-                    ></StyleWidthTypography>
-                  </Grid>
-                  <Grid p={0} item xs={12}>
-                    <Box alignItems="center">
-                      <StyleWidthTypography variant="h6">Khung Ngày:</StyleWidthTypography>
-                    </Box>
-                    <Box>
-                      {watch('dayFilter') !== undefined && (
-                        <Grid container spacing={2} xs={12}>
-                          {dayList.map((e: any, index: number) => (
-                            <Grid item key={index} xs={12 / 7}>
-                              <FormGroup>
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      defaultChecked={watch('dayFilter').some(
-                                        (item: any) => (e.value = item)
-                                      )}
-                                    />
-                                  }
-                                  label={e.label}
-                                />
-                              </FormGroup>
-                            </Grid>
-                          ))}
-                        </Grid>
-                      )}
-                    </Box>
-                  </Grid>
-
-                  <Grid p={0} item xs={12}>
-                    <Box alignItems="center">
-                      <StyleWidthTypography variant="h6">Khung Giờ:</StyleWidthTypography>
-                    </Box>
-                    <Box>
-                      {watch('hourFilter') !== undefined && (
-                        <Grid container spacing={2} xs={12}>
-                          {timeList.map((e: any, index: number) => (
-                            <Grid item key={index} xs={2}>
-                              <FormGroup>
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      defaultChecked={watch('hourFilter').some(
-                                        (item: any) => item == e.value
-                                      )}
-                                    />
-                                  }
-                                  label={e.label}
-                                />
-                              </FormGroup>
-                            </Grid>
-                          ))}
-                        </Grid>
-                      )}
-                    </Box>
-                  </Grid>
+                    >
+                      Bậc Khuyến Mãi
+                    </StyleWidthTypography>
+                  </Box>
                 </Grid>
-              </Box>
-            </Stack>
-          </Card>
-        </TabPanel>
-        <TabPanel value="3"></TabPanel>
-      </TabContext>
-    </Stack>
+
+                <Grid item xs={12}>
+                  {promotionTier !== undefined && (
+                    <Grid container spacing={2}>
+                      <Grid item xs={8}>
+                        <StyleWidthTypography width={'100%'}>
+                          <Typography variant="h6" style={{ display: 'inline-block' }}>
+                            Loại hành động :
+                          </Typography>{' '}
+                          <Typography style={{ display: 'inline-block' }} variant="body1">
+                            {promotionTier[0].action.name}
+                          </Typography>
+                        </StyleWidthTypography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <StyleWidthTypography width={'100%'}>
+                          <Typography variant="h6" style={{ display: 'inline-block' }}>
+                            Ưu tiên :
+                          </Typography>{' '}
+                          <Typography style={{ display: 'inline-block' }} variant="body1">
+                            {promotionTier[0].priority}
+                          </Typography>
+                        </StyleWidthTypography>
+                      </Grid>
+                    </Grid>
+                  )}
+                </Grid>
+                <Grid item xs={12}>
+                  <Box>
+                    <Card>
+                      {promotionTier !== undefined && (
+                        <Grid container spacing={2}>
+                          <Grid item xs={4}>
+                            <Box alignItems="center">
+                              <StyleWidthTypography style={{ marginTop: '0rem' }} variant="h6">
+                                Nhóm Voucher
+                              </StyleWidthTypography>
+                            </Box>
+
+                            <Box alignItems="center">
+                              {promotionTier[0].voucherGroup !== null ? (
+                                <StyleWidthTypography variant="caption" style={{ color: 'blue' }}>
+                                  {promotionTier[0].voucherGroup.name}
+                                </StyleWidthTypography>
+                              ) : (
+                                <StyleWidthTypography variant="caption">
+                                  {' '}
+                                  Không có Voucher{' '}
+                                </StyleWidthTypography>
+                              )}
+                            </Box>
+                          </Grid>
+                          <Grid item xs={4}>
+                            <Box alignItems="center">
+                              <StyleWidthTypography style={{ marginTop: '0rem' }} variant="h6">
+                                Điều kiện
+                              </StyleWidthTypography>
+                            </Box>
+                            <Box alignItems="center">
+                              {promotionTier[0].conditionRule !== null ? (
+                                <StyleWidthTypography variant="caption" style={{ color: 'blue' }}>
+                                  {promotionTier[0].conditionRule.ruleName}
+                                </StyleWidthTypography>
+                              ) : (
+                                <StyleWidthTypography variant="caption">
+                                  {' '}
+                                  Không có điều kiện{' '}
+                                </StyleWidthTypography>
+                              )}
+                            </Box>
+                          </Grid>
+                          <Grid item xs={4}>
+                            <Box alignItems="center">
+                              <StyleWidthTypography style={{ marginTop: '0rem' }} variant="h6">
+                                Hành động
+                              </StyleWidthTypography>
+                            </Box>
+                            <Box alignItems="center">
+                              {promotionTier[0].action !== null ? (
+                                <StyleWidthTypography
+                                  variant="caption"
+                                  style={{ color: 'blue', marginTop: '1rem' }}
+                                >
+                                  {promotionTier[0].action.name}
+                                </StyleWidthTypography>
+                              ) : (
+                                <StyleWidthTypography variant="caption">
+                                  {' '}
+                                  Không có hành động
+                                </StyleWidthTypography>
+                              )}
+                            </Box>
+                          </Grid>
+                        </Grid>
+                      )}
+                    </Card>
+                  </Box>
+                </Grid>
+              </Grid>
+            </TabPanel>
+          </TabContext>
+          <StyleWidthTypography width={'100%'} textAlign="right">
+            <Typography style={{ display: 'inline-block' }}>Cập nhật gần đây: </Typography>{' '}
+            <Typography style={{ display: 'inline-block', fontWeight: 'bold' }}>
+              {convertToCustomFormat(watch('updDate'))}
+            </Typography>{' '}
+          </StyleWidthTypography>
+        </Stack>
+      </Card>
+    </>
   );
 }
 

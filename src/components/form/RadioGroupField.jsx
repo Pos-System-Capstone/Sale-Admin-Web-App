@@ -4,6 +4,7 @@ import {
   FormControlLabel,
   FormHelperText,
   FormLabel,
+  Grid,
   Radio,
   RadioGroup
 } from '@mui/material';
@@ -12,6 +13,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 const RadioGroupField = (props) => {
   const {
+    xs,
     name,
     label,
     size,
@@ -41,12 +43,14 @@ const RadioGroupField = (props) => {
           <RadioGroup name={name} {...field} value={`${field.value}`} {...others}>
             {children ??
               options?.map(({ label, value, id }) => (
-                <FormControlLabel
-                  key={`${name}-radio-${value}`}
-                  value={value}
-                  control={<Radio size="small" />}
-                  label={label}
-                />
+                <Grid item xs={xs} key={id}>
+                  <FormControlLabel
+                    key={`${name}-radio-${value}`}
+                    value={value}
+                    control={<Radio size="small" />}
+                    label={label}
+                  />
+                </Grid>
               ))}
           </RadioGroup>
           <FormHelperText>{fieldState.error && fieldState.error.message}</FormHelperText>

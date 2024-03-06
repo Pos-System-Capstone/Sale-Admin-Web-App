@@ -103,7 +103,7 @@ const UpdatePromotion = () => {
   }
   return (
     <FormProvider {...updatePromotionForm}>
-      <Page title={`${translate('promotionSystem.promotion.createPromotion.createPromotion')}`}>
+      <Page>
         <Box display="flex">
           <StepThree watch={watch} handleSubmit={handleSubmit} />
         </Box>

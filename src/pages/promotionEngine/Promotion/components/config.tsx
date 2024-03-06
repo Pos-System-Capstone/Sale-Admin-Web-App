@@ -118,34 +118,20 @@ const giftActionList = () => {
     }
   ];
 };
-
-// const timeFrameList: string[] = [
-//   '00:00',
-//   '01:00',
-//   '02:00',
-//   '03:00',
-//   '04:00',
-//   '05:00',
-//   '06:00',
-//   '07:00',
-//   '08:00',
-//   '09:00',
-//   '10:00',
-//   '11:00',
-//   '12:00',
-//   '13:00',
-//   '14:00',
-//   '15:00',
-//   '16:00',
-//   '17:00',
-//   '18:00',
-//   '19:00',
-//   '20:00',
-//   '21:00',
-//   '22:00',
-//   '23:00'
-// ];
-
+const actionType = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    { label: 'Số lượng đơn', value: 1 },
+    { label: 'Phần trăm đơn', value: 2 },
+    { label: 'Đang vận chuyển ', value: 3 },
+    { label: 'Số lượng sản phẩm ', value: 4 },
+    { label: 'Phần trăm sản phẩm ', value: 5 },
+    { label: 'Unit ', value: 6 },
+    { label: 'Fixed ', value: 7 },
+    { label: 'Ladder ', value: 8 },
+    { label: 'Bundle', value: 9 }
+  ];
+};
 const timeFrameList = () => {
   const houserFilter = [];
   for (let index = 0; index < 24; index++) {
@@ -163,7 +149,38 @@ const timeFrameList = () => {
   }
   return houserFilter;
 };
-
+const statusMap = () => {
+  return [
+    {
+      value: 1,
+      label: 'Nháp'
+    },
+    {
+      value: 2,
+      label: 'Công khai'
+    },
+    {
+      value: 3,
+      label: 'Không công khai'
+    },
+    {
+      value: 4,
+      label: 'Hết hiệu lực'
+    }
+  ];
+};
+const hasVoucher = () => {
+  return [
+    {
+      value: true,
+      label: 'Có'
+    },
+    {
+      value: false,
+      label: 'Không'
+    }
+  ];
+};
 const forHolidayList = () => {
   return [
     {
@@ -249,16 +266,28 @@ const targetCustomerList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
     {
-      label: translate('promotionSystem.promotion.settings.targetCustomerType.guest'),
-      value: 2
+      label: translate('Tất cả'),
+      value: 0
     },
     {
       label: translate('promotionSystem.promotion.settings.targetCustomerType.membership'),
       value: 1
     },
     {
-      label: translate('promotionSystem.promotion.settings.targetCustomerType.membership'),
-      value: 0
+      label: translate('promotionSystem.promotion.settings.targetCustomerType.guest'),
+      value: 2
+    }
+  ];
+};
+const isAuto = () => {
+  return [
+    {
+      value: true,
+      label: 'Có'
+    },
+    {
+      value: false,
+      label: 'Không'
     }
   ];
 };
@@ -267,7 +296,15 @@ const genderList = () => {
   return [
     { label: translate('promotionSystem.promotion.settings.genderType.male'), value: 1 },
     { label: translate('promotionSystem.promotion.settings.genderType.female'), value: 2 },
-    { label: `Tất cả`, value: 3 }
+    { label: 'Tất cả', value: 3 }
+  ];
+};
+const applyList = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    { label: 'Cửa hàng', value: 1 },
+    { label: 'Trực tuyến', value: 2 },
+    { label: 'Tất cả', value: 3 }
   ];
 };
 
@@ -324,6 +361,7 @@ const exclusiveList = () => {
     }
   ];
 };
+
 const memberLevelList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
@@ -337,8 +375,10 @@ const memberLevelList = () => {
     }
   ];
 };
+
 export {
-  forHolidayList,
+  actionType,
+  applyList,
   promotionTypeList,
   particularDayList,
   paymentMethodList,
@@ -351,5 +391,9 @@ export {
   saleModeList,
   applyByList,
   exclusiveList,
-  memberLevelList
+  memberLevelList,
+  forHolidayList,
+  hasVoucher,
+  isAuto,
+  statusMap
 };

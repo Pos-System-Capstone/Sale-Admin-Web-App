@@ -38,7 +38,7 @@
       }
     },
     "createPromotion": {
-      "createPromotion": "Thông tin khuyến mãi",
+      "createPromotion": "Tạo khuyến mãi",
       "promotionType": "Loại khuyến mãi",
       "questionPromotionType": "Loại khuyến mãi",
       "usingVoucher": "Sử dụng Voucher",

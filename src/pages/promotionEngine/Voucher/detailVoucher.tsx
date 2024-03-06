@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 // import productApi from 'api/product';
 import Page from 'components/Page';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -10,12 +10,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import voucherApi from 'api/promotion/voucher';
 import * as yup from 'yup';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
+import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
+import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+import useDashboard from 'hooks/useDashboard';
+import { Button } from '@mui/material';
 
 const DetailVoucher = () => {
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
-
+  const { setNavOpen } = useDashboard();
+  const navigate = useNavigate();
   const schema = yup.object({
     cate_name: yup.string().required('Please input name')
   });
@@ -28,7 +33,7 @@ const DetailVoucher = () => {
   const { data: voucherUpdate } = useQuery(
     ['voucher-groups', user.brandId],
     async () => {
-      return voucherApi.getVoucherId(id).then((res) => res.data);
+      return voucherApi.getVoucherGroupId(id).then((res) => res.data);
     },
     {
       enabled: Boolean(id)
@@ -58,42 +63,27 @@ const DetailVoucher = () => {
   //     product_type: productType
   //   }
   // });
-  const { handleSubmit, reset } = updateVoucherForm;
+  const { watch, handleSubmit, reset } = updateVoucherForm;
 
-  // const { data, isLoading } = useQuery(
-  //   ['products', Number(cloneProductId)],
-  //   () => productApi.getById(cloneProductId).then((res) => res.data),
-  //   {
-  //     enabled: Boolean(cloneProductId),
-  //     staleTime: Infinity
-  //   }
-  // );
-
-  // if (isLoading) {
-  //   return (
-  //     <Box
-  //       sx={{
-  //         width: '100%',
-  //         height: '100%'
-  //       }}
-  //       minHeight="40vh"
-  //       borderRadius="1px"
-  //       flexDirection="column"
-  //       zIndex={999}
-  //       justifyContent="center"
-  //       alignItems="center"
-  //       display="flex"
-  //     >
-  //       <CircularProgress />
-  //     </Box>
-  //   );
-  // }
+  const onSubmit = (values: TVoucherBase) => {
+    console.log(`data`, values);
+  };
 
   return (
     <FormProvider {...updateVoucherForm}>
+      <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
+        <Stack direction="row" spacing={2}>
+          <Button variant="outlined" onClick={() => navigate(-1)}>
+            Hủy
+          </Button>
+          <LoadingAsyncButton type="submit" variant="contained" onClick={handleSubmit(onSubmit)}>
+            Lưu
+          </LoadingAsyncButton>
+        </Stack>
+      </DashboardNavLayout>
       <Page title="Chi tiết Voucher code">
         <Box display="flex">
-          <FormDetail />
+          <FormDetail watch={watch} />
         </Box>
       </Page>
     </FormProvider>

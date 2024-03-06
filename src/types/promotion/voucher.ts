@@ -122,3 +122,29 @@ export type VoucherChannel = {
   promotionId: string;
   channelId: string;
 };
+
+export type TVoucher = {
+  voucherId?: any;
+  voucherCode?: any;
+  channelId?: any;
+  storeId?: any;
+  voucherGroupId?: any;
+  membershipId?: any;
+  isUsed?: any;
+  isRedemped?: any;
+  usedDate?: any;
+  redempedDate?: any;
+  insDate?: any;
+  updDate?: any;
+  promotionId?: any;
+  index?: any;
+  gameCampaignId?: any;
+  promotionTierId?: any;
+  orderId?: any;
+  transactionId?: any;
+  channel?: any;
+  gameCampaign?: any;
+  promotion?: any;
+  store?: any;
+  voucherGroup?: any;
+};

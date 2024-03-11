@@ -1,4 +1,9 @@
-import { TVoucherBase, TVoucherCreate } from 'types/promotion/voucher';
+import {
+  TVoucher,
+  TVoucherBase,
+  TVoucherCreate,
+  TVoucherGroupMoreCreate
+} from 'types/promotion/voucher';
 import { BaseReponse } from 'types/response';
 import { axiosInstances } from 'utils/axios';
 
@@ -12,9 +17,17 @@ const createVoucherGroup = (data?: TVoucherCreate) =>
 
 const getVoucherGroupId = (id?: string) => request.get<TVoucherBase>(`/voucher-groups/${id}`);
 
-const getVouchers = (params?: any) =>
-  request.get<BaseReponse<TVoucherBase>>(`/vouchers`, { params });
+const getVouchers = (params?: any) => request.get<BaseReponse<TVoucher>>(`/vouchers`, { params });
 
-const voucherApi = { getVoucherGroup, getVoucherGroupId, createVoucherGroup, getVouchers };
+const createVoucherGroupMore = (params?: TVoucherGroupMoreCreate) =>
+  request.post<TVoucherGroupMoreCreate>(`/voucher-groups/add-more`, null, { params });
+
+const voucherApi = {
+  getVoucherGroup,
+  getVoucherGroupId,
+  createVoucherGroup,
+  getVouchers,
+  createVoucherGroupMore
+};
 
 export default voucherApi;

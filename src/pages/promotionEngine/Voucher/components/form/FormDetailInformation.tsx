@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import {
   Button,
-  Card,
   Grid,
   TableBody,
   TableHead,
@@ -20,10 +19,10 @@ import { TabContext } from '@mui/lab';
 import ResoTable from 'components/ResoTable/ResoTable';
 import voucherApi from 'api/promotion/voucher';
 // components
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 //
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
-import { TVoucher } from 'types/promotion/voucher';
+import { TVoucher, TVoucherGroupMoreCreate } from 'types/promotion/voucher';
 import { TTableColumn } from 'types/table';
 import { Stack } from '@mui/material';
 import { TableContainer } from '@mui/material';
@@ -49,6 +48,8 @@ const FormDetailInformation = ({ watch }: Props) => {
   const navigate = useNavigate();
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
+  const [quantity, setQuantity] = React.useState<number>(0);
+  const { id } = useParams();
 
   const productColumns: TTableColumn<TVoucher>[] = [
     {
@@ -89,19 +90,21 @@ const FormDetailInformation = ({ watch }: Props) => {
 
   const promoList = watch('promoList') !== undefined && watch('promoList')[0];
 
-  const promoName = promoList !== undefined ? promoList.promoName : '';
-  const promoCode = promoList !== undefined ? promoList.promoCode : '';
-
   const promotionColumns = [
     {
       title: `Tên`,
-      data: promoName
+      data: promoList !== undefined ? promoList.promoName : ''
     },
     {
       title: `Code`,
-      data: promoCode
+      data: promoList !== undefined ? promoList.promoCode : ''
     }
   ];
+
+  const handleQuantityChange = (event: any) => {
+    const value = parseInt(event.target.value, 10);
+    setQuantity(isNaN(value) ? 0 : value);
+  };
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -129,11 +132,26 @@ const FormDetailInformation = ({ watch }: Props) => {
     value: number;
   }
 
+  const paramsData: TVoucherGroupMoreCreate = {
+    voucherGroupId: id,
+    quantity: quantity
+  };
+
+  const performPostRequest = async () => {
+    try {
+      const response = await voucherApi.createVoucherGroupMore(paramsData);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (ref.current) {
-      ref.current.formControl.setValue('VoucherGroupId', watch('voucherGroupId'));
+      ref.current.formControl.setValue('VoucherGroupId', id);
     }
   }, [user]);
+
   function CustomTabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
 
@@ -161,6 +179,7 @@ const FormDetailInformation = ({ watch }: Props) => {
     };
   }
 
+  console.log(quantity);
   return (
     <Grid container spacing={2} sx={{ ml: '20px' }}>
       <Typography variant="h4">THÔNG TIN CHI TIẾT</Typography>
@@ -177,20 +196,30 @@ const FormDetailInformation = ({ watch }: Props) => {
           <Grid container spacing={2}>
             <Grid item xs={7}></Grid>
             <Grid item xs={5}>
-              <Card>
-                <TextField variant="outlined" sx={{ width: '180px', pb: '2px' }} />
-                <Button variant="contained" sx={{ height: '53px', ml: '10px' }} startIcon={<Add />}>
-                  Thêm voucher
-                </Button>
-                <Typography
+              <TextField
+                id="outlined-helperText"
+                variant="outlined"
+                sx={{ width: '180px', pb: '2px' }}
+                value={quantity === 0 ? '' : quantity}
+                label="Nhập số lượng Voucher"
+                onChange={handleQuantityChange}
+              />
+              <Button
+                variant="contained"
+                sx={{ height: '53px', ml: '10px' }}
+                startIcon={<Add />}
+                onClick={performPostRequest}
+              >
+                Thêm voucher
+              </Button>
+              {/* <Typography
                   variant="subtitle2"
                   color="textSecondary"
                   fontWeight="bold"
                   sx={{ pb: '1px' }}
                 >
                   Số lượng tối đa của voucher là 999 voucher
-                </Typography>
-              </Card>
+                </Typography> */}
             </Grid>
           </Grid>
           <Box sx={{ pt: '5px' }}>

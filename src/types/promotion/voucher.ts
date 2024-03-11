@@ -90,6 +90,11 @@ export type TVoucherBase = {
   voucherChannel?: VoucherChannel[];
 };
 
+export type TVoucherGroupMoreCreate = {
+  voucherGroupId?: string;
+  quantity: number;
+} 
+
 export type TVoucherCreate = {
   delFlg: boolean;
   insDate: string;

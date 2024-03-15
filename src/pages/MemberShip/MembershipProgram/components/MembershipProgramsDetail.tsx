@@ -18,16 +18,18 @@ export default function MembershipProgramsDetail() {
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
 
+  const apiKey = user.brandId;
   const { id } = useParams();
   const { data: membershipUpdate } = useQuery(
-    ['memberships', user.brandId],
+    ['membership-programs'],
     async () => {
-      return membershipsApi.getMembershipProgramsById(id).then((res) => res.data);
+      return membershipsApi.getMembershipProgramsById(id, { apiKey }).then((res) => res.data);
     },
-    {
-      enabled: Boolean(id)
-    }
+    {}
   );
+
+  console.log(membershipUpdate);
+  console.log(user.brandId);
 
   const updateMembershipForm = useForm<TMembershipProgram>({
     defaultValues: { ...membershipUpdate }
@@ -57,7 +59,7 @@ export default function MembershipProgramsDetail() {
           </LoadingAsyncButton>
         </Stack>
       </DashboardNavLayout>
-      <Page title="Thông tin khách hàng">
+      <Page title="Thông tin chuơng trình thành viên">
         <Box display="flex">
           <FormDetail watch={watch} />
         </Box>

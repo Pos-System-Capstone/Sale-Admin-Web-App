@@ -1,16 +1,15 @@
 import Page from 'components/Page';
 import React, { useEffect, useRef, useState } from 'react';
-import plusFill from '@iconify/icons-eva/plus-fill';
-import { Button, Card } from '@mui/material';
-import { useNavigate } from 'react-router';
+import { Card } from '@mui/material';
+import { useNavigate, useParams } from 'react-router';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
-import { Icon } from '@iconify/react';
 import { TabContext } from '@mui/lab';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { getUserInfo } from 'utils/utils';
 import membershipsApi from 'api/promotion/membership';
 import { TMembershipProgram } from 'types/promotion/membership';
 import { TTableColumn } from 'types/table';
+import Label from 'components/Label';
 
 export default function MemberShipProgramsList() {
   const [activeTab, setActiveTab] = useState('1');
@@ -18,6 +17,7 @@ export default function MemberShipProgramsList() {
   const navigate = useNavigate();
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
+  const { id } = useParams();
 
   const membershipProgramColumns: TTableColumn<TMembershipProgram>[] = [
     {
@@ -33,19 +33,24 @@ export default function MemberShipProgramsList() {
     {
       title: 'Ngày bắt đầu',
       dataIndex: 'startDay',
-      valueType: 'date',
+      valueType: 'datetime',
       hideInSearch: true
     },
     {
       title: 'Ngày kết thúc',
       dataIndex: 'endDay',
-      valueType: 'date',
+      valueType: 'datetime',
       hideInSearch: true
     },
     {
       title: 'Trạng thái',
       dataIndex: 'status',
-      hideInSearch: true
+      hideInSearch: true,
+      render: (value: any, transaction: TMembershipProgram) => (
+        <Label color={transaction.status == 'ACTIVE' ? 'success' : 'default'}>
+          {transaction.status == 'ACTIVE' ? 'Hoạt động' : 'Dừng hoạt động'}
+        </Label>
+      )
     }
   ];
 
@@ -56,21 +61,7 @@ export default function MemberShipProgramsList() {
   }, [user]);
 
   return (
-    <Page
-      title="Danh sách chương trình thành viên"
-      actions={() => [
-        <Button
-          key="add-product"
-          onClick={() => {
-            navigate(PATH_PROMOTION_APP.membershipProgram.new);
-          }}
-          variant="contained"
-          startIcon={<Icon icon={plusFill} />}
-        >
-          Thêm thành viên
-        </Button>
-      ]}
-    >
+    <Page title="Danh sách chương trình thành viên" actions={() => []}>
       <Card>
         <TabContext value={activeTab}>
           <ResoTable

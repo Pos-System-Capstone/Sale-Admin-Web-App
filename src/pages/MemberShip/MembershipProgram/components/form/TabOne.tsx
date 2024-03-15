@@ -6,6 +6,7 @@ type Props = {
   watch?: any;
 };
 export default function TabOne({ watch }: Props) {
+  console.log(watch('nameOfProgram'));
   return (
     <>
       <Stack width="100%">
@@ -13,10 +14,7 @@ export default function TabOne({ watch }: Props) {
           <Grid container spacing={2}>
             <Grid container item xs={6} spacing={2}>
               <Grid item xs={12}>
-                <InputField fullWidth name="nameOfProgram" label="Tên chương trình thành viên" />
-              </Grid>
-              <Grid item xs={12}>
-                <InputField fullWidth name="status" label="Email" />
+                <InputField fullWidth name="nameOfProgram" label="Tên chương trình" disabled />
               </Grid>
             </Grid>
             <Grid container item xs={6} spacing={2}>
@@ -27,6 +25,7 @@ export default function TabOne({ watch }: Props) {
                   label="Ngày bắt đầu"
                   inputFormat="yyyy/MM/dd hh:mm a"
                   minDate={new Date()}
+                  disabled
                 />
               </Grid>
               <Grid item xs={12}>
@@ -36,6 +35,7 @@ export default function TabOne({ watch }: Props) {
                   label="Ngày kết thúc"
                   inputFormat="yyyy/MM/dd hh:mm a"
                   minDate={new Date()}
+                  disabled
                 />
               </Grid>
               {/* <Grid item xs={12}>

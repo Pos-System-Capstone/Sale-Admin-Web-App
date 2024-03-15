@@ -346,6 +346,11 @@ export const promotionAppSidebarConfig = [
         title: 'Quà',
         path: PATH_PROMOTION_APP.gift.root,
         icon: ICONS.ecommerce
+      },
+      {
+        title: 'Danh mục',
+        path: PATH_PROMOTION_APP.category.root,
+        icon: ICONS.category
       }
     ]
   },
@@ -376,11 +381,6 @@ export const promotionAppSidebarConfig = [
         title: 'hồ sơ',
         path: PATH_PROMOTION_APP.profile.root,
         icon: ICONS.user
-      },
-      {
-        title: 'Danh mục',
-        path: PATH_PROMOTION_APP.category.root,
-        icon: ICONS.category
       }
     ]
   }

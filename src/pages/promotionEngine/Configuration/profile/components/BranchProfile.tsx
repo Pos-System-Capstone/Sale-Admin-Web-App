@@ -99,7 +99,7 @@ export default function BranchProfile() {
             <Tab
               disableRipple
               key={tab.value}
-              label={`${translate(tab.title)}`}
+              label="{`${translate(tab.title)}`}"
               icon={tab.icon}
               value={tab.value}
             />

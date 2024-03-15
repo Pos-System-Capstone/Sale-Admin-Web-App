@@ -34,6 +34,16 @@ export const PATH_PROMOTION_APP = {
     new: path(ROOTS_DASHBOARD, '/voucher-groups/new'),
     editById: (id: any) => path(ROOTS_DASHBOARD, `/voucher-groups/${id}`)
   },
+  membership: {
+    root: path(ROOTS_DASHBOARD, '/membership'),
+    new: path(ROOTS_DASHBOARD, '/membership/new'),
+    editById: (id: any) => path(ROOTS_DASHBOARD, `/membership/${id}`)
+  },
+  membershipProgram: {
+    root: path(ROOTS_DASHBOARD, '/membership-programs'),
+    new: path(ROOTS_DASHBOARD, '/membership-programs/new'),
+    editById: (id: any) => path(ROOTS_DASHBOARD, `/membership-programs/${id}`)
+  },
   condition: {
     root: path(ROOTS_DASHBOARD, '/condition'),
     new: path(ROOTS_DASHBOARD, '/condition/new'),

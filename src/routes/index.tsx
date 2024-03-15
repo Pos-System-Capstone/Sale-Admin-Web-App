@@ -46,6 +46,12 @@ import ProductPromotion from 'pages/promotionEngine/Products';
 import ProductCategory from 'pages/promotionEngine/Category';
 import UpdateProductCategory from 'pages/promotionEngine/Category/update';
 import UpdateProductPromotion from 'pages/promotionEngine/Products/update';
+import MemberShipList from 'pages/MemberShip/components';
+import CreateMembership from 'pages/MemberShip/CreateMembership/CreateMembership';
+import MembershipDetail from 'pages/MemberShip/components/MembershipDetail';
+import MemberShipProgramsList from 'pages/MemberShip/MembershipProgram/components';
+import MembershipProgramsDetail from 'pages/MemberShip/MembershipProgram/components/MembershipProgramsDetail';
+import TransactionList from 'pages/Brands/TransactionList';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -138,6 +144,7 @@ export default function Router() {
           children: [
             { path: '', element: <BrandListPage /> },
             { path: 'orders', element: <OrderListBrandPage /> },
+            { path: 'transactions', element: <TransactionList /> },
             { path: ':brandId', element: <BrandDetail /> },
             {
               path: 'detail',
@@ -396,6 +403,22 @@ export default function Router() {
         {
           path: 'profile',
           children: [{ path: '', element: <ProfilePage /> }]
+        },
+        {
+          path: 'membership',
+          children: [
+            { path: '', element: <MemberShipList /> },
+            { path: 'new', element: <CreateMembership /> },
+            { path: ':id', element: <MembershipDetail /> }
+          ]
+        },
+        {
+          path: 'membership-programs',
+          children: [
+            { path: '', element: <MemberShipProgramsList /> },
+            { path: 'new', element: <CreateMembership /> },
+            { path: ':id', element: <MembershipProgramsDetail /> }
+          ]
         },
         {
           path: 'product-promotion',

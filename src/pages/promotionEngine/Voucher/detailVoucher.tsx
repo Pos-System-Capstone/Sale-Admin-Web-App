@@ -55,14 +55,6 @@ const DetailVoucher = () => {
     }
   }, [voucherUpdate]);
 
-  // const methods = useForm<any>({
-  //   resolver: undefined,
-  //   defaultValues: {
-  //     tags: [],
-  //     description: '',
-  //     product_type: productType
-  //   }
-  // });
   const { watch, handleSubmit, reset } = updateVoucherForm;
 
   const onSubmit = (values: TVoucherBase) => {

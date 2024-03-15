@@ -43,6 +43,7 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/brands'),
     list: path(ROOTS_DASHBOARD, '/brands/'),
     orders: path(ROOTS_DASHBOARD, `/brands/orders`),
+    transaction: path(ROOTS_DASHBOARD, `/brands/transactions`),
     brandDetail: path(ROOTS_DASHBOARD, `/brands/detail`),
     storesInBrand: path(ROOTS_DASHBOARD, `/brands/detail/stores`),
     newStore: path(ROOTS_DASHBOARD, `/brands/detail/stores/new`)

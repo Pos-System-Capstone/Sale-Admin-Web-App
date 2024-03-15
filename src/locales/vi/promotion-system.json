@@ -181,6 +181,9 @@
       "postfix": "Hậu tố"
     }
   },
+  "member" :{
+    "title": "Danh sách thành viên"
+  },
   "profile": {
     "title": "Hồ sơ"
   },

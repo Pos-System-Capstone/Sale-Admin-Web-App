@@ -159,6 +159,11 @@ export const brandAdminSidebarConfig = [
         title: 'Danh sách đơn hàng',
         path: PATH_DASHBOARD.brand.orders,
         icon: ICONS.order
+      },
+      {
+        title: 'Danh sách giao dịch',
+        path: PATH_DASHBOARD.brand.transaction,
+        icon: ICONS.order
       }
     ]
   },
@@ -341,6 +346,21 @@ export const promotionAppSidebarConfig = [
         title: 'Quà',
         path: PATH_PROMOTION_APP.gift.root,
         icon: ICONS.ecommerce
+      }
+    ]
+  },
+  {
+    subheader: 'Ưu đãi thành viên',
+    items: [
+      {
+        title: 'Danh sách thành viên',
+        path: PATH_PROMOTION_APP.membership.root,
+        icon: ICONS.user
+      },
+      {
+        title: 'Chương trình thành viên',
+        path: PATH_PROMOTION_APP.membershipProgram.root,
+        icon: ICONS.user
       }
     ]
   },

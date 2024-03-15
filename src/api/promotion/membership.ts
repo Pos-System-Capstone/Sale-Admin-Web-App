@@ -28,8 +28,8 @@ const updateMembership = (id: string | undefined, data?: TMembership) =>
 const getMembershipPrograms = (params?: any) =>
   request.get<BaseReponse<TMembershipProgram>>(`v1/membership-programs`, { params });
 
-const getMembershipProgramsById = (id: string | undefined) =>
-  request.get<TMembershipProgram>(`v1/membership-programs/${id}`);
+const getMembershipProgramsById = (id: string | undefined, params?: any) =>
+  request.get<TMembershipProgram>(`v1/membership-programs/${id}`, { params });
 
 const membershipsApi = {
   getMemberships,

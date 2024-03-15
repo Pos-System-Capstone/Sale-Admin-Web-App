@@ -2,7 +2,7 @@ import { Box, Card, Tab, Tabs } from '@mui/material';
 import { Stack, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import TabOne from './TabOne';
-import TabTwo from './TabTwo';
+// import TabTwo from './TabTwo';
 import { TabContext } from '@mui/lab';
 
 type Props = {
@@ -50,13 +50,13 @@ export default function FormDetail({ watch }: Props) {
   }
 
   return (
-    <Card>
+    <Card sx={{ width: '100%' }}>
       <Box sx={{ width: '100%' }}>
         <Stack sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChangeTab} aria-label="basic tabs example">
               <Tab label="Thông tin chương trình thành viên" {...a11yProps(0)} />
-              <Tab label="Lịch sử giao dịch" {...a11yProps(1)} />
+              {/* <Tab label="Lịch sử giao dịch" {...a11yProps(1)} /> */}
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
@@ -65,11 +65,11 @@ export default function FormDetail({ watch }: Props) {
             </TabContext>
           </CustomTabPanel>
 
-          <CustomTabPanel value={value} index={1}>
+          {/* <CustomTabPanel value={value} index={1}>
             <TabContext value={activeTab}>
               <TabTwo watch={watch}></TabTwo>
             </TabContext>
-          </CustomTabPanel>
+          </CustomTabPanel> */}
         </Stack>
       </Box>
     </Card>

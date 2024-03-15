@@ -1,5 +1,6 @@
 import { Card, Stack } from '@mui/material';
 import transactionApi from 'api/report/transaction';
+import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useAuth from 'hooks/useAuth';
@@ -23,7 +24,20 @@ export default function TransactionList() {
       title: 'Giá trị',
       dataIndex: 'amount',
       hideInSearch: true,
-      valueType: 'money'
+      render: (value: any, transaction: TTransaction) => (
+        <Label
+          color={
+            transaction.status == 'SUCCESS'
+              ? 'success'
+              : transaction.status == 'FAIL'
+              ? 'error'
+              : 'default'
+          }
+        >
+          {transaction.status == 'SUCCESS' ? '+' : transaction.status == 'FAIL' ? '-' : ''} {value}{' '}
+          {transaction.currency}
+        </Label>
+      )
     },
     {
       title: 'Đơn vị',
@@ -40,7 +54,20 @@ export default function TransactionList() {
     {
       title: 'Trạng thái',
       dataIndex: 'status',
-      hideInSearch: true
+      hideInSearch: true,
+      render: (value: any, transaction: TTransaction) => (
+        <Label
+          color={
+            transaction.status == 'SUCCESS'
+              ? 'success'
+              : transaction.status == 'FAIL'
+              ? 'error'
+              : 'default'
+          }
+        >
+          {value}
+        </Label>
+      )
     }
   ];
 

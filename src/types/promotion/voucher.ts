@@ -93,7 +93,13 @@ export type TVoucherBase = {
 export type TVoucherGroupMoreCreate = {
   voucherGroupId?: string;
   quantity: number;
-} 
+};
+
+export type TApplyVoucher = {
+  voucherGroupId?: any;
+  membershipId?: any;
+  quantity?: any;
+};
 
 export type TVoucherCreate = {
   delFlg: boolean;

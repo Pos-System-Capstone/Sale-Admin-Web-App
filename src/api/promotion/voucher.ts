@@ -1,4 +1,5 @@
 import {
+  TApplyVoucher,
   TVoucher,
   TVoucherBase,
   TVoucherCreate,
@@ -15,6 +16,9 @@ const getVoucherGroup = (params?: any) =>
 const createVoucherGroup = (data?: TVoucherCreate) =>
   request.post<TVoucherBase>(`/voucher-groups`, data);
 
+const createApplyVoucher = (data?: TApplyVoucher) =>
+  request.post<TApplyVoucher>(`/vouchers/applyVoucher`, data);
+
 const getVoucherGroupId = (id?: string) => request.get<TVoucherBase>(`/voucher-groups/${id}`);
 
 const getVouchers = (params?: any) => request.get<BaseReponse<TVoucher>>(`/vouchers`, { params });
@@ -26,6 +30,7 @@ const voucherApi = {
   getVoucherGroup,
   getVoucherGroupId,
   createVoucherGroup,
+  createApplyVoucher,
   getVouchers,
   createVoucherGroupMore
 };

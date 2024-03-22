@@ -17,7 +17,6 @@ import MiddleForm from './components/MiddleForm';
 
 const CreateVoucher = () => {
   const { t } = useLocales();
-  const { enqueueSnackbar } = useSnackbar();
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
 

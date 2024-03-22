@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import TabOne from './TabOne';
 import TabTwo from './TabTwo';
 import { TabContext } from '@mui/lab';
+import TabThree from './TabThree';
 
 type Props = {
   watch?: any;
@@ -56,6 +57,7 @@ export default function FormDetail({ watch }: Props) {
           <Tabs value={value} onChange={handleChangeTab} aria-label="basic tabs example">
             <Tab label="Thông tin thành viên" {...a11yProps(0)} />
             <Tab label="Lịch sử giao dịch" {...a11yProps(1)} />
+            <Tab label="Thêm voucher" {...a11yProps(2)} />
           </Tabs>
           <CustomTabPanel value={value} index={0}>
             <TabContext value={activeTab}>
@@ -66,6 +68,12 @@ export default function FormDetail({ watch }: Props) {
           <CustomTabPanel value={value} index={1}>
             <TabContext value={activeTab}>
               <TabTwo watch={watch}></TabTwo>
+            </TabContext>
+          </CustomTabPanel>
+
+          <CustomTabPanel value={value} index={2}>
+            <TabContext value={activeTab}>
+              <TabThree watch={watch}></TabThree>
             </TabContext>
           </CustomTabPanel>
         </Stack>

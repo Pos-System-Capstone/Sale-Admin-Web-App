@@ -1,12 +1,12 @@
 import { Box, Grid, Stack } from '@mui/material';
 
-import { InputField, SelectField, UploadImageField } from 'components/form';
+import { InputField, SelectField } from 'components/form';
 
 // import useExtraCategory from 'hooks/extra-categories/useExtraCategoy';
 import { useFormContext } from 'react-hook-form';
 import {
   PRODUCT_SIZE_OPTIONS,
-  PRODUCT_TYPE_OPTIONS,
+  // PRODUCT_TYPE_OPTIONS,
   ProductTypeEnum,
   TProduct
 } from 'types/product';
@@ -24,6 +24,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
   const { watch } = useFormContext<TProduct>();
   const productType = watch('type');
   console.log('productType', watch());
+
   return (
     <Box>
       <Stack spacing={3}>
@@ -33,31 +34,32 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
               Thông tin sản phẩm
             </CardTitle>
             <Box>
-              <SelectField
-                fullWidth
-                disabled={updateMode}
-                options={PRODUCT_TYPE_OPTIONS}
-                name="type"
-                label="Loại sản phẩm"
-              ></SelectField>
+              {/* <SelectField
+                  fullWidth
+                  disabled={updateMode}
+                  options={PRODUCT_TYPE_OPTIONS}
+                  name="type"
+                  label="Loại sản phẩm"
+                ></SelectField> */}
 
               <Box>
                 <Grid container spacing={2}>
-                  <Grid
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    item
-                    xs={12}
-                    sm={12}
-                  >
-                    <UploadImageField.Avatar
-                      label="Hình ảnh"
-                      name="picUrl"
-                      // style={{ margin: '0 auto 40px' }}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
+                  {/* <Grid
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      item
+                      xs={12}
+                      sm={12}
+                    >
+                      <UploadImageField.Avatar
+                        label="Hình ảnh"
+                        name="picUrl"
+                        // style={{ margin: '0 auto 40px' }}
+                      />
+                    </Grid> */}
+                  {/* <Grid item xs={6}></Grid> */}
+                  <Grid item xs={12}>
                     <InputField
                       fullWidth
                       name="name"
@@ -69,8 +71,6 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
                         'Tên của sản phẩm con: tên sản phẩm cha + size được chọn'
                       }
                     />
-                  </Grid>
-                  <Grid item xs={3}>
                     <InputField
                       disabled={updateMode}
                       fullWidth
@@ -80,51 +80,51 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
                       size="small"
                     />
                   </Grid>
-                  <Grid item xs={3}>
-                    <InputField
-                      max={100}
-                      min={0}
-                      fullWidth
-                      type="number"
-                      name="displayOrder"
-                      label="Thứ tự hiển thị"
-                      required
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <InputField
-                      fullWidth
-                      type="number"
-                      name="sellingPrice"
-                      label="Giá bán"
-                      required
-                      size="small"
-                      helperText="Giá bán của sản phẩm"
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <InputField
-                      fullWidth
-                      type="number"
-                      name="discountPrice"
-                      label="Giá giảm"
-                      required
-                      size="small"
-                      helperText="Giá giảm của sản phẩm"
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <InputField
-                      fullWidth
-                      type="number"
-                      name="historicalPrice"
-                      label="Giá gốc"
-                      required
-                      size="small"
-                      helperText="Chi phí sản xuất sản phẩm"
-                    />
-                  </Grid>
+                  {/* <Grid item xs={3}>
+                      <InputField
+                        max={100}
+                        min={0}
+                        fullWidth
+                        type="number"
+                        name="displayOrder"
+                        label="Thứ tự hiển thị"
+                        required
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <InputField
+                        fullWidth
+                        type="number"
+                        name="sellingPrice"
+                        label="Giá bán"
+                        required
+                        size="small"
+                        helperText="Giá bán của sản phẩm"
+                      />
+                    </Grid> */}
+                  {/* <Grid item xs={4}>
+                      <InputField
+                        fullWidth
+                        type="number"
+                        name="discountPrice"
+                        label="Giá giảm"
+                        required
+                        size="small"
+                        helperText="Giá giảm của sản phẩm"
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <InputField
+                        fullWidth
+                        type="number"
+                        name="historicalPrice"
+                        label="Giá gốc"
+                        required
+                        size="small"
+                        helperText="Chi phí sản xuất sản phẩm"
+                      />
+                    </Grid> */}
                   {(productType === ProductTypeEnum.SINGLE ||
                     productType === ProductTypeEnum.PARENT ||
                     productType === ProductTypeEnum.COMBO) && (
@@ -165,9 +165,9 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
                       />
                     </Grid>
                   )}
-                  <Grid item xs={12}>
-                    <InputField fullWidth name="description" label="Mô tả" required size="small" />
-                  </Grid>
+                  {/* <Grid item xs={12}>
+                      <InputField fullWidth name="description" label="Mô tả" required size="small" />
+                    </Grid> */}
                 </Grid>
               </Box>
             </Box>

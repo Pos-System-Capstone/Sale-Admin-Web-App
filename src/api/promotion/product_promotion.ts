@@ -16,6 +16,9 @@ const getProductById = (id: string | undefined) =>
 const updateProduct = (id: string | undefined, data?: TProductPromotionAPI) =>
   request.put<TProductPromotionAPI>(`/product/${id}`, data);
 
-const productPromotion = { getProduct, deleteProduct, updateProduct, getProductById };
+const addProduct = (data?: TProductPromotionAPI) =>
+  request.post<TProductPromotionAPI>(`/product`, data);
+
+const productPromotion = { getProduct, deleteProduct, updateProduct, getProductById, addProduct };
 
 export default productPromotion;

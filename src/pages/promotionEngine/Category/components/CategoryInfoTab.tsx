@@ -1,5 +1,5 @@
 // import { yupResolver } from '@hookform/resolvers/yup';
-import { Card, Box, CircularProgress, Button, Stack } from '@mui/material';
+import { Card, Box, CircularProgress, Stack } from '@mui/material';
 // import categoryApi from 'api/category';
 import productCategory from 'api/promotion/category';
 import CategoryForm from './CategoryForm';
@@ -7,9 +7,9 @@ import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton
 // import { EditorState } from 'draft-js';
 
 import useDashboard from 'hooks/useDashboard';
-import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
+// import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
-import { transformDraftToStr } from 'pages/Products/utils';
+// import { transformDraftToStr } from 'pages/Products/utils';
 import { useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -49,37 +49,31 @@ const CategoryInfoTab = ({ updateMode, category, isLoading }: Props) => {
   }, [category, updateCategoryForm]);
 
   const onSubmit = (values: TProductCategory) => {
-    return productCategory
-      .updateCategory(category?.productCateId, transformDraftToStr(values))
+    console.log(category);
+    const data = {
+      cateId: values.cateId,
+      name: values.name
+    };
+    console.log(data);
+
+    const updateCate = productCategory
+      .updateCategory(category?.productCateId, data)
       .then((res) => {
         enqueueSnackbar(`Cập nhật thành công`, {
           variant: 'success'
         });
-        navigate(`${PATH_PROMOTION_APP.category.root}/`);
+        navigate(`${PATH_PROMOTION_APP.category.root}`);
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
           variant: 'error'
         });
       });
+    console.log(updateCate);
   };
 
   return (
     <FormProvider {...updateCategoryForm}>
-      <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
-        <Stack direction="row" spacing={2}>
-          <Button onClick={() => navigate(-1)} variant="outlined">
-            Hủy
-          </Button>
-          <LoadingAsyncButton
-            onClick={updateCategoryForm.handleSubmit(onSubmit)}
-            type="submit"
-            variant="contained"
-          >
-            Lưu Danh Mục
-          </LoadingAsyncButton>
-        </Stack>
-      </DashboardNavLayout>
       {isLoading ? (
         <CircularProgress />
       ) : (
@@ -88,15 +82,17 @@ const CategoryInfoTab = ({ updateMode, category, isLoading }: Props) => {
             <Box>
               <CategoryForm updateMode={updateMode} />
             </Box>
-          </Card>
-          {/* <Card>
-            <CardTitle pb={2} variant="subtitle1">
-              SEO
-            </CardTitle>
-            <Box>
-              <SeoForm />
+            <Box display={'flex'} flexDirection={'row-reverse'}>
+              <LoadingAsyncButton
+                onClick={updateCategoryForm.handleSubmit(onSubmit)}
+                type="submit"
+                variant="contained"
+                sx={{ margin: '10px 16px 10px 10px ', flexEnd: 'right' }}
+              >
+                Cập nhật
+              </LoadingAsyncButton>
             </Box>
-          </Card> */}
+          </Card>
         </Stack>
       )}
     </FormProvider>

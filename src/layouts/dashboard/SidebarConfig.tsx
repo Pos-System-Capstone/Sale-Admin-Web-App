@@ -381,6 +381,11 @@ export const promotionAppSidebarConfig = [
         title: 'hồ sơ',
         path: PATH_PROMOTION_APP.profile.root,
         icon: ICONS.user
+      },
+      {
+        title: 'Danh mục sản phẩm ',
+        path: PATH_PROMOTION_APP.category.root,
+        icon: ICONS.category
       }
     ]
   }

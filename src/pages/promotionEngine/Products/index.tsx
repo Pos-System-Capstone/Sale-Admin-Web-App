@@ -89,20 +89,7 @@ export default function ProductPromotion() {
     }
   }, [user]);
   return (
-    <Page
-      actions={() => [
-        // <Button
-        //   key="add-product"
-        //   onClick={() => {
-        //     navigate(PATH_DASHBOARD.products.newProduct);
-        //   }}
-        //   variant="contained"
-        //   startIcon={<Icon icon={plusFill} />}
-        // >
-        //   Thêm sản phẩm
-        // </Button>
-      ]}
-    >
+    <Page actions={() => []}>
       <Card>
         <ResoTable
           ref={ref}

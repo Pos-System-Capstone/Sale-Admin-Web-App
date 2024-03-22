@@ -75,7 +75,7 @@ const ProductInfoTab = ({ updateMode, product, isLoading }: Props) => {
             type="submit"
             variant="contained"
           >
-            Lưu Product
+            Lưu sản phẩm
           </LoadingAsyncButton>
         </Stack>
       </DashboardNavLayout>

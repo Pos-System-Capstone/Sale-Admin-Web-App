@@ -188,12 +188,6 @@ const UpdateProduct = () => {
           <Button onClick={() => navigate(-1)} variant="outlined">
             Hủy
           </Button>
-          {/* <Button
-            onClick={() => navigate(`${PATH_DASHBOARD.products.newProduct}?cloneProductId=${id}`)}
-            variant="outlined"
-          >
-            Sao chép
-          </Button> */}
           <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
             Lưu
           </LoadingAsyncButton>

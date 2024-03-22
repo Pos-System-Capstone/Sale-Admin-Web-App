@@ -52,6 +52,7 @@ import MembershipDetail from 'pages/MemberShip/components/MembershipDetail';
 import MemberShipProgramsList from 'pages/MemberShip/MembershipProgram/components';
 import MembershipProgramsDetail from 'pages/MemberShip/MembershipProgram/components/MembershipProgramsDetail';
 import TransactionList from 'pages/Brands/TransactionList';
+import CreateProductCategory from 'pages/promotionEngine/Category/create';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -431,6 +432,7 @@ export default function Router() {
           path: 'product-category',
           children: [
             { path: '', element: <ProductCategory /> },
+            { path: 'new', element: <CreateProductCategory /> },
             { path: ':id', element: <UpdateProductCategory /> }
           ]
         }

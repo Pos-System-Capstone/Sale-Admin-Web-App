@@ -104,7 +104,7 @@ export const PATH_DASHBOARD = {
   tradingReport: {
     root: path(ROOTS_DASHBOARD, '/trading-report'),
     list: path(ROOTS_DASHBOARD, '/trading-report'),
-    editById: (id: any) => path(ROOTS_DASHBOARD, `/trading-report/${id}`),
+    editById: (id: any) => path(ROOTS_DASHBOARD, `/trading-report/u${id}`),
     new: path(ROOTS_DASHBOARD, '/trading-report/new'),
     storeMenu: path(ROOTS_DASHBOARD, '/menu-in-store')
   },

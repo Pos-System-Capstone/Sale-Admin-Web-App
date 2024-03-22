@@ -501,10 +501,11 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
             type: type
           }}
           showAction={false}
-          scroll={{ y: '50%', x: '100%' }}
-          rowKey="id"
+          scroll={{ y: '80%', x: '100%' }}
+          rowKey="productId"
+          pagination
           ref={tableRef}
-          getData={(param: any) => productPromotionApi.getProduct(param)}
+          getData={(params: any) => productPromotionApi.getProduct(params)}
           onChangeSelection={handleChangeSelection}
           columns={productPromotionColumns}
         />

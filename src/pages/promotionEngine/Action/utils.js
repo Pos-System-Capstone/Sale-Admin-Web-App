@@ -1,5 +1,4 @@
 import * as yup from 'yup';
-
 export const storeSchemaBuilder = (translate) =>
   yup.object({
     store_code: yup

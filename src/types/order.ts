@@ -15,6 +15,7 @@ export enum OrderType {
 }
 
 export enum OrderStatus {
+  NEW = 'NEW',
   PENDING = 'PENDING',
   CANCELED = 'CANCELED',
   PAID = 'PAID'
@@ -96,6 +97,11 @@ export const ORDER_STATUS_OPTONS = [
   //   value: ``,
   //   color: 'default'
   // },
+  {
+    label: 'Chờ xác nhận',
+    value: `${OrderStatus.NEW}`,
+    color: 'info'
+  },
   {
     label: 'Đang xử lý',
     value: `${OrderStatus.PENDING}`,

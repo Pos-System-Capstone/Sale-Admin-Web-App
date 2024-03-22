@@ -1,28 +1,26 @@
-export type TActionBase = {
-  actionId?: any;
-  actionType?: any;
-  discountQuantity?: any;
-  discountAmount?: any;
-  discountPercentage?: any;
-  fixedPrice?: any;
-  maxAmount?: any;
-  minPriceAfter?: any;
-  orderLadderProduct?: any;
-  ladderPrice?: any;
-  bundlePrice?: any;
-  bundleQuantity?: any;
-  bundleStrategy?: any;
-  delFlg?: any;
-  insDate?: any;
-  updDate?: any;
-  name?: any;
-  brandId?: any;
-  brand?: any;
+export interface TActionBase {
+  actionId: string;
+  name: string;
+  brandId: string;
+  actionType: number;
+  discountType: number;
+  discountQuantity: number;
+  discountAmount: number;
+  discountPercentage: number;
+  fixedPrice: number;
+  maxAmount: number;
+  minPriceAfter: number;
+  orderLadderProduct: number;
+  ladderPrice: number;
+  bundlePrice: number;
+  bundleQuantity: number;
+  bundleStrategy: number;
   bonusPointRate: number;
-  actionProductMapping?: [];
-  promotionTier?: [];
-  voucherGroup?: [];
-};
+  listProduct: ListProduct[];
+  delFlg: boolean;
+  insDate: string;
+  updDate: string;
+}
 export type TActionCreate = {
   name: string;
   brandId: string;

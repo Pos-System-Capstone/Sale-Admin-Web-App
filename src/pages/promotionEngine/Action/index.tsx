@@ -46,7 +46,7 @@ const ActionPage = () => {
         })
       )
       .catch((err: any) => {
-        const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
+        const errMsg = get(err.response, ['Data', 'Message'], `Có lỗi xảy ra. Vui lòng thử lại`);
         enqueueSnackbar(errMsg, {
           variant: 'error'
         });

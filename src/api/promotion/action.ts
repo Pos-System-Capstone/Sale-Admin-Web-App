@@ -11,7 +11,7 @@ const createAction = (data?: TActionCreate) => request.post<TActionBase>(`/actio
 
 
 const updateAction = (id: string | undefined, data?: TActionUpdate) =>
-    request.put<TActionBase>(`/actions/${id}`, data);
+    request.patch<TActionBase>(`/actions/${id}`, data);
 
 const deleteAction = (id: string | undefined, data?: TActionUpdate) =>
     request.delete<TActionBase>(`/actions/${id}`);

@@ -1,4 +1,4 @@
-import { Box, Grid, Paper } from '@mui/material';
+import { Box, Card, Grid, Paper } from '@mui/material';
 import { InputField } from 'components/form';
 // import TreeViewField, { RenderTree } from 'components/form/TreeViewField/TreeViewField';
 
@@ -80,50 +80,49 @@ const ConditionForm = ({ updateMode }: Props) => {
       <Grid container spacing={2}>
         <Grid item xs={6} sm={4}>
           <Paper variant="outlined" sx={{ width: '100%' }}>
-            <h3>Điều Kiện</h3>
-
-            <TreeView
-              aria-label="file system navigator"
-              defaultCollapseIcon={<ExpandMoreIcon />}
-              defaultExpandIcon={<ChevronRightIcon />}
-              sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto', m: '20px 0' }}
-            >
-              <TreeItem
-                nodeId="1"
-                label="Sản Phẩm"
-                icon=" "
-                onClick={() => handleTreeItemClick('1', 'Cart item content')}
+            <Card>
+              <TreeView
+                aria-label="file system navigator"
+                defaultCollapseIcon={<ExpandMoreIcon />}
+                defaultExpandIcon={<ChevronRightIcon />}
+                sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto', m: '20px 0' }}
               >
                 <TreeItem
-                  nodeId="2"
-                  label="Số lượng"
+                  nodeId="1"
+                  label="Sản Phẩm"
                   icon=" "
-                  onClick={() => handleTreeItemClick('2', 'Cart item content')}
-                  sx={{
-                    border: '1px solid #57d8a1',
-                    m: '10px 0',
-                    width: '160px',
-                    p: '1.1px',
-                    height: '25px',
-                    borderRadius: '4px'
-                  }}
-                />
-                <TreeItem
-                  nodeId="3"
-                  label="Mã sản phẩm"
-                  icon=" "
-                  onClick={() => handleTreeItemClick('3', 'Cart item content')}
-                  sx={{
-                    border: '1px solid #57d8a1',
-                    m: '10px 0',
-                    width: '160px',
-                    p: '1.1px',
-                    height: '25px',
-                    borderRadius: '4px'
-                  }}
-                />
-              </TreeItem>
-              {/* <TreeItem nodeId="1" label="Cart item" icon=" ">
+                  onClick={() => handleTreeItemClick('1', 'Cart item content')}
+                >
+                  <TreeItem
+                    nodeId="2"
+                    label="Số lượng"
+                    icon=" "
+                    onClick={() => handleTreeItemClick('2', 'Cart item content')}
+                    sx={{
+                      border: '1px solid #57d8a1',
+                      m: '10px 0',
+                      width: '160px',
+                      p: '1.1px',
+                      height: '25px',
+                      borderRadius: '4px'
+                    }}
+                  />
+                  <TreeItem
+                    nodeId="3"
+                    label="Mã sản phẩm"
+                    icon=" "
+                    onClick={() => handleTreeItemClick('3', 'Cart item content')}
+                    sx={{
+                      border: '1px solid #57d8a1',
+                      m: '10px 0',
+                      width: '160px',
+                      p: '1.1px',
+                      height: '25px',
+                      borderRadius: '4px'
+                    }}
+                  />
+                </TreeItem>
+                {/* <TreeItem nodeId="1" label="Cart item" icon=" ">
                 <TreeItem
                   nodeId="2"
                   label="Quantity"
@@ -153,70 +152,72 @@ const ConditionForm = ({ updateMode }: Props) => {
                 />
               </TreeItem> */}
 
-              <TreeItem
-                nodeId="4"
-                label="Đơn Hàng"
-                icon=" "
-                onClick={() => handleTreeItemClick('4', 'Cart item content')}
-                sx={{
-                  mb: '0.5rem',
-                  mt: '1rem'
-                }}
-              >
                 <TreeItem
-                  nodeId="5"
-                  label="Số lượng"
+                  nodeId="4"
+                  label="Đơn Hàng"
                   icon=" "
-                  onClick={() => handleTreeItemClick('5', 'Cart item content')}
+                  onClick={() => handleTreeItemClick('4', 'Cart item content')}
                   sx={{
-                    border: '1px solid #57d8a1',
-                    m: '10px 0',
-                    width: '160px',
-                    p: '1.1px',
-                    height: '25px',
-                    borderRadius: '4px'
+                    mb: '0.5rem',
+                    mt: '1rem'
                   }}
-                />
-                <TreeItem
-                  nodeId="6"
-                  label="Tổng số"
-                  icon=" "
-                  onClick={() => handleTreeItemClick('6', 'Cart item content')}
-                  sx={{
-                    border: '1px solid #57d8a1',
-                    m: '10px 0',
-                    width: '160px',
-                    p: '1.1px',
-                    height: '25px',
-                    borderRadius: '4px'
-                  }}
-                />
-              </TreeItem>
+                >
+                  <TreeItem
+                    nodeId="5"
+                    label="Số lượng"
+                    icon=" "
+                    onClick={() => handleTreeItemClick('5', 'Cart item content')}
+                    sx={{
+                      border: '1px solid #57d8a1',
+                      m: '10px 0',
+                      width: '160px',
+                      p: '1.1px',
+                      height: '25px',
+                      borderRadius: '4px'
+                    }}
+                  />
+                  <TreeItem
+                    nodeId="6"
+                    label="Tổng số"
+                    icon=" "
+                    onClick={() => handleTreeItemClick('6', 'Cart item content')}
+                    sx={{
+                      border: '1px solid #57d8a1',
+                      m: '10px 0',
+                      width: '160px',
+                      p: '1.1px',
+                      height: '25px',
+                      borderRadius: '4px'
+                    }}
+                  />
+                </TreeItem>
 
-              <TreeItem
-                nodeId="7"
-                label="Nhóm"
-                icon=" "
-                sx={{
-                  mb: '0.5rem',
-                  mt: '1rem'
-                }}
-              >
                 <TreeItem
-                  nodeId="8"
+                  nodeId="7"
                   label="Nhóm"
                   icon=" "
                   sx={{
-                    border: '1px solid #57d8a1',
-                    m: '10px 0',
-                    width: '160px',
-                    p: '1.1px',
-                    height: '25px',
-                    borderRadius: '4px'
+                    mb: '0.5rem',
+                    mt: '1rem'
                   }}
-                ></TreeItem>
-              </TreeItem>
-            </TreeView>
+                >
+                  <TreeItem
+                    nodeId="8"
+                    label="Nhóm"
+                    icon=" "
+                    sx={{
+                      border: '1px solid #57d8a1',
+                      m: '10px 0',
+                      width: '160px',
+                      p: '1.1px',
+                      height: '25px',
+                      borderRadius: '4px'
+                    }}
+                  ></TreeItem>
+                </TreeItem>
+              </TreeView>
+            </Card>
+            <h3>Nhóm điều kiện</h3>
           </Paper>
         </Grid>
         <Grid item xs={6} sm={8}>

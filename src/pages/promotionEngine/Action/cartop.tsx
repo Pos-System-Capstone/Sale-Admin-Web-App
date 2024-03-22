@@ -5,13 +5,15 @@ import { List, ListItem, Typography } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import ResoTable from 'components/ResoTable/ResoTable';
 import productPromotionApi from 'api/promotion/product';
-import { getUserInfo } from 'utils/utils';
 import { productPromotionColumns } from '../Products/config';
-import { Box, Button, Paper, Stack } from '@mui/material';
-
+import { getUserInfo } from 'utils/utils';
 interface TaskComponentProps {
   selectedText: string | null;
   type?: string | undefined;
+  setListProduct: Function;
+  listProduct: string[];
+  isUpdate: boolean;
+  brandId: string | undefined;
 }
 
 const options = [
@@ -22,42 +24,50 @@ const options = [
 
 const TaskComponent = ({
   selectedText,
-  type = 'checkbox'
+  type = 'checkbox',
+  setListProduct,
+  listProduct,
+  isUpdate,
+  brandId
 }: TaskComponentProps): ReactElement | null => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
+  const tableRef = useRef<any>();
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
-  const handleChangeSelection = React.useCallback((productId) => {
-    setSelectedProductIds(productId);
-  }, []);
+  const handleChangeSelection = React.useCallback(
+    (productId) => {
+      setSelectedProductIds(productId);
+      setListProduct(productId);
+    },
+    [setListProduct]
+  );
   let content = null;
-  const tableRef = useRef<any>();
-
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
   useEffect(() => {
-    if (tableRef.current) {
-      tableRef.current.formControl.setValue('brandId', user.brandId!);
+    if (isUpdate) {
+      setSelectedProductIds(listProduct);
     }
-  }, [user]);
+    tableRef.current?.formControl.setValue('brandId', brandId);
+  }, [isUpdate, listProduct, brandId, tableRef, isDrawerOpen]);
 
   switch (selectedText) {
     case '4':
       content = (
         <List>
           <ListItem sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography>Giảm giá</Typography>
+            <Typography>Giảm </Typography>
             <InputField
               name="discountAmount"
               sx={{ width: '120px' }}
               type="number"
               InputProps={{
-                style: { height: '25px', margin: '0 5px' }
+                style: { historyeight: '40px', margin: '0 5px' }
               }}
             />
-            <Typography>VND</Typography>
+            <Typography>VND cho sản phẩm</Typography>
           </ListItem>
           <ListItem sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography>Giá tối thiểu của sản phẩm sau khi giảm giá là</Typography>
@@ -67,7 +77,7 @@ const TaskComponent = ({
               sx={{ width: '120px' }}
               type="number"
               InputProps={{
-                style: { height: '25px', margin: '0 5px' }
+                style: { height: '40px', margin: '0 5px' }
               }}
             />
             <Typography>VND</Typography>
@@ -75,7 +85,7 @@ const TaskComponent = ({
           <ListItem sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography>Cho mặt hàng trong </Typography>
             <a style={{ color: 'green', margin: '0 5px' }} onClick={toggleDrawer}>
-              danh sách mặt hàng đã chọn(
+              danh sách sản phẩm đã chọn(
               {selectedProductIds === undefined ? 0 : selectedProductIds.length})
             </a>
           </ListItem>
@@ -388,67 +398,89 @@ const TaskComponent = ({
       content = null;
       break;
   }
-  const drawer = isDrawerOpen && (
+  // const drawer = isDrawerOpen && (
+  //   <div>
+  //     <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer}>
+  //       <Paper>
+  //         <Box
+  //           display="flex"
+  //           justifyContent="space-between"
+  //           alignItems="center"
+  //           p={2}
+  //           pt={0}
+  //           borderBottom={1}
+  //           borderColor="grey.300"
+  //           textAlign="right"
+  //         >
+  //           <Typography variant="h6">Chọn sản phẩm</Typography>
+  //           {/* <IconButton aria-label="close" onClick={() => setOpen(false)} size="large">
+  //             <Icon icon={closeFill} />
+  //           </IconButton> */}
+  //         </Box>
+  //       </Paper>
+  //       <ResoTable
+  //         checkboxSelection={{
+  //           selection: selectedProductIds,
+  //           type: type
+  //         }}
+  //         showAction={false}
+  //         scroll={{ y: '80%', x: '100%' }}
+  //         rowKey="productId"
+  //         pagination
+  //         ref={tableRef}
+  //         getData={(params: any) =>
+  //           productPromotionApi.getProduct({ brandId: brandId, page: 1, size: 100 })
+  //         }
+  //         onChangeSelection={handleChangeSelection}
+  //         columns={productPromotionColumns}
+  //       />
+  //       <Box
+  //         p={2}
+  //         borderTop={1}
+  //         borderColor="grey.300"
+  //         component={Paper}
+  //         display="flex"
+  //         justifyContent="space-between"
+  //         alignItems="center"
+  //       >
+  //         <Typography variant="body1">
+  //           Đã chọn{' '}
+  //           <strong>{selectedProductIds === undefined ? 0 : selectedProductIds.length}</strong> sản
+  //           phẩm
+  //         </Typography>
+  //         <Stack direction="row" spacing={2} justifyContent="flex-end">
+  //           <Button variant="outlined" onClick={() => setIsDrawerOpen(false)}>
+  //             Hủy
+  //           </Button>
+  //         </Stack>
+  //       </Box>
+  //     </Drawer>
+  //   </div>
+  // );
+
+  return (
     <div>
       <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer}>
-        <Paper>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            p={2}
-            pt={0}
-            borderBottom={1}
-            borderColor="grey.300"
-            textAlign="right"
-          >
-            <Typography variant="h6">Chọn sản phẩm</Typography>
-            {/* <IconButton aria-label="close" onClick={() => setOpen(false)} size="large">
-              <Icon icon={closeFill} />
-            </IconButton> */}
-          </Box>
-        </Paper>
+        <Typography variant="h3" component="h3" style={{ marginTop: '8px', marginBottom: '8px' }}>
+          DANH SÁCH SẢN PHẨM
+        </Typography>
         <ResoTable
           checkboxSelection={{
             selection: selectedProductIds,
             type: type
           }}
+          key="action"
           showAction={false}
           scroll={{ y: '80%', x: '100%' }}
           rowKey="productId"
+          pagination
           ref={tableRef}
-          getData={(param: any) => productPromotionApi.getProduct(param)}
+          getData={(params: any) => productPromotionApi.getProduct(params)}
           onChangeSelection={handleChangeSelection}
           columns={productPromotionColumns}
         />
-        <Box
-          p={2}
-          borderTop={1}
-          borderColor="grey.300"
-          component={Paper}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Typography variant="body1">
-            Đã chọn{' '}
-            <strong>{selectedProductIds === undefined ? 0 : selectedProductIds.length}</strong> sản
-            phẩm
-          </Typography>
-          <Stack direction="row" spacing={2} justifyContent="flex-end">
-            <Button variant="outlined" onClick={() => setIsDrawerOpen(false)}>
-              Hủy
-            </Button>
-          </Stack>
-        </Box>
       </Drawer>
-    </div>
-  );
-
-  return (
-    <div>
       {content}
-      {drawer}
     </div>
   );
 };

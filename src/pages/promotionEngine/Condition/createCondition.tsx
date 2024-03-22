@@ -10,10 +10,11 @@ import ConditionForm from 'pages/promotionEngine/Condition/ConditionForm';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
-import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
+
 import * as yup from 'yup';
 import { TConditionCreate } from 'types/promotion/condition';
-import conditionApi from 'api/promotion/condition';
+// import conditionApi from 'api/promotion/condition';
+// import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { getUserInfo } from 'utils/utils';
 
 interface Props {}
@@ -45,19 +46,19 @@ const NewCondition = (props: Props) => {
     body.ruleName = values.ruleName;
     body.description = values.description;
     body.conditionGroups = values.conditionGroups;
-    conditionApi
-      .createCondition(body)
-      .then((res) => {
-        enqueueSnackbar(`Tạo thành công`, {
-          variant: 'success'
-        });
-        navigate(`${PATH_PROMOTION_APP.condition.root}`);
-      })
-      .catch((err) => {
-        enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
-          variant: 'error'
-        });
-      });
+    // conditionApi
+    //   .createCondition(body)
+    //   .then((res) => {
+    //     enqueueSnackbar(`Tạo thành công`, {
+    //       variant: 'success'
+    //     });
+    //     navigate(`${PATH_PROMOTION_APP.condition.root}`);
+    //   })
+    //   .catch((err) => {
+    //     enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
+    //       variant: 'error'
+    //     });
+    //   });
   };
 
   return (

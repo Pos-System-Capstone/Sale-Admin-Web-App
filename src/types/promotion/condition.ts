@@ -33,40 +33,41 @@ export type TConditionBase = {
   updDate?: any;
 };
 
-export type TConditionCreate = {
-  conditionRuleId: string;
+export interface TConditionCreate {
   brandId: string;
   ruleName: string;
   description: string;
   conditionGroups: ConditionGroup[];
-  promotionId: any;
-  promotionName: any;
-  insDate: string;
-  updDate: string;
-};
+}
 
-export type ConditionGroup = {
-  conditionGroupId: string;
-  conditionRuleId: string;
+export interface ConditionGroup {
   groupNo: number;
   nextOperator: number;
-  conditions: Condition[];
-  summary: string;
-};
+  orderCondition: OrderCondition[];
+  productCondition: ProductCondition[];
+}
 
-export type Condition = {
-  orderConditionId: string;
-  conditionGroupId: string;
+export interface OrderCondition {
+  index: number;
   nextOperator: number;
-  indexGroup: number;
   quantity: number;
   quantityOperator: string;
   amount: number;
   amountOperator: string;
-  delFlg: boolean;
-  insDate: string;
-  updDate: string;
-};
+}
+
+export interface ProductCondition {
+  index: number;
+  nextOperator: number;
+  productConditionType: number;
+  productQuantity: number;
+  quantityOperator: string;
+  products: Product[];
+}
+
+export interface Product {
+  productId: string;
+}
 
 export const CONDITION_TYPE_DATA = () => {
   return [

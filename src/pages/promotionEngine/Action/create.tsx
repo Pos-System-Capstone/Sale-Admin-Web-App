@@ -6,7 +6,6 @@ import { Alert, Box, Card, FormHelperText, Grid, Paper, Stack, Typography } from
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import useDashboard from 'hooks/useDashboard';
-import useLocales from 'hooks/useLocales';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 // import { CardTitle } from 'pages/Products/components/Card';
@@ -20,7 +19,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import TaskComponent from './cartop';
-import { TActionCreate } from 'types/promotion/action';
+import { ListProduct, TActionCreate } from 'types/promotion/action';
 import actionApi from 'api/promotion/action';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { getUserInfo } from 'utils/utils';
@@ -29,7 +28,6 @@ const NewActionPage = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
-  const { translate } = useLocales();
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
 
@@ -37,9 +35,6 @@ const NewActionPage = () => {
   const [listProduct, setlistProduct] = useState<string[]>([]);
 
   // Hàm callback để nhận dữ liệu từ component con
-  const handleDataFromChild = (data: string[]) => {
-    setlistProduct(data);
-  };
 
   const handleTreeItemClick = (text: string, actionType: number) => {
     reset({
@@ -69,7 +64,14 @@ const NewActionPage = () => {
   const { handleSubmit, setValue, reset } = methods;
 
   const onSubmit = (values: TActionCreate) => {
-    console.log('action', values);
+    console.log('listProduct', listProduct);
+    let productToAdd: ListProduct[] = [];
+    listProduct.forEach((value) => {
+      productToAdd.push({
+        productId: value,
+        quantity: 1
+      });
+    });
     values.brandId = user.brandId;
     const body: TActionCreate = { ...values };
     body.brandId = user.brandId;
@@ -86,7 +88,8 @@ const NewActionPage = () => {
     body.bundleQuantity = +values.bundleQuantity;
     body.bundleStrategy = +values.bundleStrategy;
     body.orderLadderProduct = +values.orderLadderProduct;
-    body.listProduct = values.listProduct;
+    body.listProduct = productToAdd;
+    console.log('action', body);
     actionApi
       .createAction(body)
       .then((res) => {
@@ -123,25 +126,21 @@ const NewActionPage = () => {
             <Box>
               <Grid container spacing={1}>
                 <Grid item xs={6} sm={8} style={{ height: '100px' }}>
-                  <InputField
-                    fullWidth
-                    name="name"
-                    label={translate('collections.table.collectionName')}
-                  />
-                  <FormHelperText error>Vui lòng nhập tên action cần tạo</FormHelperText>
+                  <InputField fullWidth name="name" label="Tên Action" />
+                  <FormHelperText error>Vui lòng nhập tên Action</FormHelperText>
                 </Grid>
               </Grid>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={4}>
-                  <Paper variant="outlined" sx={{ width: '100%' }}>
-                    <h2>Các danh mục Action</h2>
+                  <Paper variant="outlined" sx={{ width: '100%', height: '100%' }}>
+                    <h2>Danh mục các loại Action</h2>
 
                     <TreeView
                       aria-label="file system navigator"
                       defaultCollapseIcon={<ExpandMoreIcon />}
                       defaultExpandIcon={<ChevronRightIcon />}
                       sx={{
-                        height: 240,
+                        height: '100%',
                         flexGrow: 1,
                         maxWidth: 400,
                         overflowY: 'auto',
@@ -152,7 +151,6 @@ const NewActionPage = () => {
                         nodeId="1"
                         label={
                           <Typography variant="body2" fontSize="20px">
-                            {/* Cart item */}
                             Sản Phẩm
                           </Typography>
                         }
@@ -161,7 +159,7 @@ const NewActionPage = () => {
                         <TreeItem
                           nodeId="2"
                           // label="Discount amount (VNĐ)"
-                          label="Giảm giá đơn hàng(VND)"
+                          label="Giảm giá sản phẩm"
                           icon=" "
                           onClick={() => {
                             handleTreeItemClick('4', 4);
@@ -170,7 +168,7 @@ const NewActionPage = () => {
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
-                            width: '190px',
+                            width: '240px',
                             p: '1.1px',
                             height: '25px',
                             borderRadius: '4px'
@@ -179,7 +177,7 @@ const NewActionPage = () => {
                         <TreeItem
                           nodeId="3"
                           // label="Discount percentage (%)"
-                          label="Giảm giá % đơn hàng(%)"
+                          label="Giảm giá % sản phẩm"
                           icon=" "
                           onClick={() => {
                             handleTreeItemClick('5', 5);
@@ -187,7 +185,7 @@ const NewActionPage = () => {
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
-                            width: '190px',
+                            width: '240px',
                             p: '1.1px',
                             height: '25px',
                             borderRadius: '4px'
@@ -196,13 +194,13 @@ const NewActionPage = () => {
                         <TreeItem
                           nodeId="4"
                           // label="Discount unit"
-                          label="Đơn vị giảm giá(Unit)"
+                          label="Giảm theo đơn vị sản phẩm"
                           icon=" "
                           onClick={() => handleTreeItemClick('6', 6)}
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
-                            width: '190px',
+                            width: '240px',
                             p: '1.1px',
                             height: '25px',
                             borderRadius: '4px'
@@ -217,7 +215,7 @@ const NewActionPage = () => {
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
-                            width: '190px',
+                            width: '240px',
                             p: '1.1px',
                             height: '25px',
                             borderRadius: '4px'
@@ -232,7 +230,7 @@ const NewActionPage = () => {
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
-                            width: '190px',
+                            width: '240px',
                             p: '1.1px',
                             height: '25px',
                             borderRadius: '4px'
@@ -247,7 +245,7 @@ const NewActionPage = () => {
                           sx={{
                             border: '1px solid #57d8a1',
                             m: '10px 0',
-                            width: '190px',
+                            width: '240px',
                             p: '1.1px',
                             height: '25px',
                             borderRadius: '4px'
@@ -333,7 +331,7 @@ const NewActionPage = () => {
                             borderRadius: '4px'
                           }}
                         />
-                        <TreeItem
+                        {/* <TreeItem
                           nodeId="13"
                           label="Tặng điểm"
                           icon=" "
@@ -348,7 +346,7 @@ const NewActionPage = () => {
                             height: '25px',
                             borderRadius: '4px'
                           }}
-                        />
+                        /> */}
                       </TreeItem>
                     </TreeView>
                   </Paper>
@@ -359,12 +357,18 @@ const NewActionPage = () => {
                       display: 'flex',
                       flexWrap: 'wrap',
                       '& > :not(style)': {
-                        height: 350
+                        height: 500
                       }
                     }}
                   >
-                    <Paper variant="outlined" sx={{ width: '100%' }}>
-                      <TaskComponent selectedText={selectedText} />
+                    <Paper variant="outlined" sx={{ width: '100%', height: '100%' }}>
+                      <TaskComponent
+                        setListProduct={setlistProduct}
+                        selectedText={selectedText}
+                        isUpdate={false}
+                        listProduct={listProduct}
+                        brandId={user.brandId}
+                      />
                     </Paper>
                   </Box>
                 </Grid>

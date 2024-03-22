@@ -20,7 +20,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import TaskComponent from './cartop';
-import { TActionBase, TActionUpdate } from 'types/promotion/action';
+import { ListProduct, TActionBase, TActionUpdate } from 'types/promotion/action';
 import actionApi from 'api/promotion/action';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { getUserInfo } from 'utils/utils';
@@ -88,11 +88,24 @@ const UpdateActionPage = () => {
   const { handleSubmit, setValue, reset } = methods;
   useEffect(() => {
     if (id) {
-      // Thực hiện các hành động cần thiết khi `id` thay đổi
+      setlistProduct(
+        action?.listProduct.map((value) => {
+          return value.productId;
+        }) ?? []
+      );
+      // setlistProduct(action?.listProduct.map((value) => value.productId) ?? []);
       reset({ ...action });
     }
   }, [id, reset, action]);
   const onSubmit = (values: TActionUpdate) => {
+    console.log('listProduct', listProduct);
+    let productToAdd: ListProduct[] = [];
+    listProduct.forEach((value) => {
+      productToAdd.push({
+        productId: value,
+        quantity: 1
+      });
+    });
     values.brandId = user.brandId;
     const body: TActionUpdate = { ...values };
     body.brandId = user.brandId;
@@ -109,7 +122,7 @@ const UpdateActionPage = () => {
     body.bundleQuantity = +values.bundleQuantity;
     body.bundleStrategy = +values.bundleStrategy;
     body.orderLadderProduct = +values.orderLadderProduct;
-    body.listProduct = values.listProduct;
+    body.listProduct = productToAdd;
     actionApi
       .updateAction(id, body)
       .then((res) => {
@@ -130,7 +143,7 @@ const UpdateActionPage = () => {
     if (action !== undefined) {
       reset({ ...action });
     }
-  }, [action]);
+  }, [action, reset]);
 
   return (
     <FormProvider {...methods}>
@@ -188,7 +201,7 @@ const UpdateActionPage = () => {
                       > */}
                       <TreeItem
                         nodeId="2"
-                        label="Giảm giá đơn hàng(VNĐ)"
+                        label="Giảm giá sản phẩm(VNĐ)"
                         icon=" "
                         onClick={() => {
                           handleTreeItemClick('4', 4);
@@ -399,7 +412,13 @@ const UpdateActionPage = () => {
                     }}
                   >
                     <Paper variant="outlined" sx={{ width: '100%' }}>
-                      <TaskComponent selectedText={selectedText} />
+                      <TaskComponent
+                        setListProduct={setlistProduct}
+                        selectedText={selectedText}
+                        isUpdate={true}
+                        listProduct={listProduct}
+                        brandId={user.brandId}
+                      />
                     </Paper>
                   </Box>
                 </Grid>

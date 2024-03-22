@@ -12,6 +12,10 @@ export const productPromotionColumns: TTableColumn<TProductPromotion>[] = [
     {
         title: 'Tên sản phẩm',
         dataIndex: 'productName',
+    },
+    {
+        title: 'Danh mục',
+        dataIndex: 'cateName',
         hideInSearch: true,
     },
     {

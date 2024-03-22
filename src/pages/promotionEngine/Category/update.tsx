@@ -5,14 +5,16 @@ import Page from 'components/Page';
 // import useCategory from 'hooks/categories/useCategory';
 import { useState } from 'react';
 import { useParams } from 'react-router';
-
+import { useNavigate } from 'react-router-dom';
 // import CategoryExtraTab from 'pages/promotionEngine/Category/components/CategoryExtraTab';
 import CategoryInfoTab from 'pages/promotionEngine/Category/components/CategoryInfoTab';
 import ProductPromotion from '../Products';
 import { useQuery } from 'react-query';
 import productCategory from 'api/promotion/category';
-// import ExtraCategoriesInCategoryTab from 'pages/Categories/components/ExtraCategoriesInCategoryTab';
-// import { CategoryType } from 'types/category';
+// import plusFill from '@iconify/icons-eva/plus-fill';
+// import { PATH_DASHBOARD } from 'routes/paths';
+// import MediumForm from './components/MediumForm';
+import ProductInfoTab from './components/ProductInfoTab';
 interface Props {}
 
 const UpdateProductCategory = (props: Props) => {
@@ -31,7 +33,7 @@ const UpdateProductCategory = (props: Props) => {
     );
   };
   const { id } = useParams();
-
+  const navigate = useNavigate();
   const { data: category, error, isLoading } = useCategory(id!);
   // const isContainer = category?.is_container;
 
@@ -41,7 +43,7 @@ const UpdateProductCategory = (props: Props) => {
 
   return (
     <>
-      <Page title="Cập nhật Danh mục Sản Phẩm">
+      <Page title="Cập nhật danh mục sản phẩm">
         <TabContext value={activeTab}>
           <Box>
             <TabList onChange={handleChangeTab}>
@@ -50,6 +52,7 @@ const UpdateProductCategory = (props: Props) => {
               {/* {category?.categoryType == CategoryType.NORMAL && (
                 <Tab label="Danh sách Extra trong danh mục" value="3" />
               )} */}
+              <Tab label="Thêm mới sản phẩm" value="3" />
             </TabList>
           </Box>
 
@@ -64,13 +67,11 @@ const UpdateProductCategory = (props: Props) => {
                 <ProductPromotion />
               </Stack>
             </TabPanel>
-            {/* {category?.categoryType === CategoryType.NORMAL && (
-              <TabPanel value="3">
-                <Stack spacing={2}>
-                  <ExtraCategoriesInCategoryTab />
-                </Stack>
-              </TabPanel>
-            )} */}
+            <TabPanel value="3">
+              <Stack spacing={2}>
+                <ProductInfoTab category={category} />
+              </Stack>
+            </TabPanel>
           </Stack>
         </TabContext>
       </Page>

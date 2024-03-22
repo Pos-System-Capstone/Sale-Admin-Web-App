@@ -1,5 +1,5 @@
-import { Grid, Stack } from '@mui/material';
-import { InputField, UploadImageField } from 'components/form';
+import { Grid } from '@mui/material';
+import { InputField } from 'components/form';
 import { useFormContext } from 'react-hook-form';
 // import { CREATE_CATEGORY_TYPE_OPTIONS } from 'types/category';
 
@@ -10,15 +10,12 @@ interface Props {
 const CategoryForm = ({ updateMode }: Props) => {
   const { watch } = useFormContext();
   return (
-    <Grid container spacing={2}>
-      <Grid alignItems={'center'} item xs={12} sm={4}>
-        <UploadImageField.Avatar label="Hình ảnh" name="picUrl" style={{ margin: '0 auto 40px' }} />
+    <Grid container xs={12} spacing={2}>
+      <Grid item xs={8}>
+        <InputField fullWidth name="name" label="Tên danh mục" />
       </Grid>
-      <Grid spacing={2} xs={12} sm={8}>
-        <Stack ml={2} my={2} direction="column" spacing={2}>
-          <InputField fullWidth name="name" label="Tên danh mục" />
-          <InputField fullWidth name="cateId" label="Mã danh mục" />
-        </Stack>
+      <Grid item xs={4}>
+        <InputField fullWidth name="cateId" label="Mã danh mục" />
       </Grid>
     </Grid>
   );

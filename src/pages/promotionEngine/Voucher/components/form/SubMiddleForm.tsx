@@ -8,7 +8,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  SelectChangeEvent,
   Stack,
   TextField,
   Typography
@@ -20,16 +19,39 @@ import { useState } from 'react';
 import { CardTitle } from 'pages/promotionEngine/Voucher/components/Card';
 interface Props {
   hasVariant: any;
+  onPrefixChange: (prefix: string) => void;
+  onPostfixChange: (postfix: string) => void;
+  onCustomCharsetChange: (customCharset: string) => void;
+  onCharsetChange: (charset: string) => void;
 }
 
-const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
+const SubMiddleForm = ({
+  hasVariant,
+  onPrefixChange,
+  onPostfixChange,
+  onCustomCharsetChange,
+  onCharsetChange
+}: Props) => {
   const [countPrefix, setCountPrefix] = useState(0);
   const [countPostfix, setCountPostfix] = useState(0);
 
-  const [charset, setCharset] = React.useState('');
+  const handleCharsetChange = (event: string) => {
+    const value = event;
+    onCharsetChange(value); // Pass prefix value to parent component
+  };
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setCharset(event.target.value);
+  const handleCustomCharsetChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    onCustomCharsetChange(value); // Pass prefix value to parent component
+  };
+  const handlePrefixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    onPrefixChange(value); // Pass prefix value to parent component
+  };
+
+  const handlePostfixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    onPostfixChange(value); // Pass postfix value to parent component
   };
   const { t } = useLocales();
   return (
@@ -61,7 +83,9 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label={`${t('promotionSystem.voucher.addVoucher.charset.label')}`}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      handleCharsetChange(e.target.value);
+                    }}
                   >
                     <MenuItem value={10}>{`${t(
                       'promotionSystem.voucher.addVoucher.charset.alphanumeric'
@@ -97,7 +121,10 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
                   disabled
                   id="outlined-disabled"
                   label={`${t('promotionSystem.voucher.addVoucher.sample')}`}
-                  defaultValue="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                  value="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                  onLoad={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    handleCustomCharsetChange(e);
+                  }}
                 />
               </Box>
             </Grid>
@@ -112,11 +139,15 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
                 <TextField
                   fullWidth
                   label={`${t('promotionSystem.voucher.addVoucher.prefix')}`}
-                  id="fullWidth"
+                  id="prefix"
+                  name="prefix"
                   autoComplete="off"
                   inputProps={{ maxLength: 10 }}
                   // helperText={`${count}/10`}
-                  onChange={(e) => setCountPrefix(e.target.value.length)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    handlePrefixChange(e);
+                    setCountPrefix(e.target.value.length);
+                  }}
                 />
                 <Typography
                   variant={'caption'}
@@ -145,9 +176,13 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
                   label={`${t('promotionSystem.voucher.addVoucher.postfix')}`}
                   id="fullWidth"
                   autoComplete="off"
+                  name="postfix"
                   inputProps={{ maxLength: 10 }}
                   // helperText={`${count}/10`}
-                  onChange={(e) => setCountPostfix(e.target.value.length)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    handlePostfixChange(e);
+                    setCountPostfix(e.target.value.length);
+                  }}
                 />
                 <Typography
                   variant={'caption'}

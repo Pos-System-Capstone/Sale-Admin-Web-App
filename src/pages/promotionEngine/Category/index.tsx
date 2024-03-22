@@ -1,9 +1,8 @@
 /* eslint-disable camelcase */
-// import plusFill from '@iconify/icons-eva/plus-fill';
-// import { Icon } from '@iconify/react';
 // import { TabContext, TabList } from '@mui/lab';
 // material
-import { Card } from '@mui/material';
+import { Icon } from '@iconify/react';
+import { Button, Card } from '@mui/material';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
@@ -11,7 +10,6 @@ import React, { useRef, useEffect } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
-// import { PATH_DASHBOARD } from 'routes/paths';
 // import { TProduct } from 'types/product';
 // import confirm from 'components/Modal/confirm';
 // import { deleteProdById } from '../../redux/product/api';
@@ -20,8 +18,12 @@ import productCategory from 'api/promotion/category';
 // import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 import { fDateTime } from 'utils/formatTime';
 // import { get } from 'lodash';
+// import { ProductTypeEnum } from 'types/product';
 import { useSnackbar } from 'notistack';
 import { getUserInfo } from 'utils/utils';
+import plusFill from '@iconify/icons-eva/plus-fill';
+// import { PATH_DASHBOARD } from 'routes/paths';
+// import { ProductTypeEnum } from 'types/product';
 
 // ----------------------------------------------------------------------
 
@@ -33,28 +35,6 @@ export default function ProductPromotion() {
   const { t } = useLocales();
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
-  // const [isShowConfirmDeleteProductDialog, setIsShowConfirmDeleteProductDialog] = useState(false);
-  // const [currentDeleteItem, setCurrentDeleteItem] = useState<TProductCategory | null>(null);
-
-  // const editProduct = (data: TProduct) => {
-  //   navigate(`${PATH_DASHBOARD.products.root}/${data.id}`);
-  // };
-  // const deleteProductHandler = () =>
-  //   productApi
-  //     .deleteProduct(currentDeleteItem?.productId)
-  //     .then(() => setCurrentDeleteItem(null))
-  //     .then(ref.current?.reload)
-  //     .then(() =>
-  //       enqueueSnackbar(`Xóa thành công`, {
-  //         variant: 'success'
-  //       })
-  //     )
-  //     .catch((err: any) => {
-  //       const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
-  //       enqueueSnackbar(errMsg, {
-  //         variant: 'error'
-  //       });
-  //     });
   const columns = [
     {
       title: 'No',
@@ -94,39 +74,22 @@ export default function ProductPromotion() {
     <Page
       title="Quản lý danh mục sản phẩm"
       actions={() => [
-        // <Button
-        //   key="add-product-extra"
-        //   onClick={() => {
-        //     navigate(`${PATH_DASHBOARD.products.newProduct}?productType=${ProductTypeEnum.EXTRA}`);
-        //   }}
-        //   variant="outlined"
-        //   startIcon={<Icon icon={plusFill} />}
-        // >
-        //   Thêm extra
-        // </Button>,
-        // <Button
-        //   key="add-product"
-        //   onClick={() => {
-        //     navigate(PATH_DASHBOARD.products.newProduct);
-        //   }}
-        //   variant="contained"
-        //   startIcon={<Icon icon={plusFill} />}
-        // >
-        //   Thêm sản phẩm
-        // </Button>
+        <Button
+          key="add-product"
+          onClick={() => {
+            navigate(PATH_PROMOTION_APP.category.new);
+          }}
+          variant="contained"
+          startIcon={<Icon icon={plusFill} />}
+        >
+          Thêm danh mục
+        </Button>
       ]}
     >
       <Card>
         <ResoTable
           ref={ref}
           pagination
-          // getData={(params: any) =>
-          //   productCategory.getCategory({
-          //     size: 10,
-          //     page: 1,
-          //     brandId: '7f77ca43-940b-403d-813a-38b3b3a7b667'
-          //   })
-          // }
           getData={(params: any) => productCategory.getCategory(params)}
           onEdit={(cate: TProductCategory) => {
             navigate(`${PATH_PROMOTION_APP.category.editById(cate.productCateId)}`);

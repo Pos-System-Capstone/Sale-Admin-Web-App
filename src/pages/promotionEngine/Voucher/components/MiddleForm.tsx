@@ -8,22 +8,34 @@ import AlertTitle from '@mui/material/AlertTitle';
 // import ResoTable from 'components/ResoTable/ResoTable';
 // import useExtraCategory from 'hooks/extra-categories/useExtraCategoy';
 import useLocales from 'hooks/useLocales';
-import React from 'react';
+// import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CreateProductForm, ProductTypeEnum, TProductBase } from 'types/product';
 import { TTableColumn } from 'types/table';
 import { Card, CardTitle } from './Card';
 import BasicProductInfoForm from './form/BasicProductInfoForm';
 import SubMiddleForm from './form/SubMiddleForm';
+import { TVoucherCreate } from 'types/promotion/voucher';
 
 type Props = {
   updateMode?: boolean;
+  onPrefixChange: (prefix: string) => void;
+  onPostfixChange: (postfix: string) => void;
+  onCustomCharsetChange: (customCharset: string) => void;
+  onCharsetChange: (charset: string) => void;
 };
 
 // eslint-disable-next-line arrow-body-style
-const MiddleForm: React.FC<Props> = ({ updateMode }) => {
-  const { watch } = useFormContext<CreateProductForm>();
+const MiddleForm: React.FC<Props> = ({
+  updateMode,
+  onPrefixChange,
+  onPostfixChange,
+  onCustomCharsetChange,
+  onCharsetChange
+}: Props) => {
+  const { watch } = useFormContext<CreateProductForm | TVoucherCreate>();
   const { t } = useLocales();
+
   const [hasExtra, hasVariant] = watch(['has_extra', 'hasVariant']);
   const cateId = watch('cat_id');
   const productType = watch('product_type');
@@ -64,7 +76,15 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
             <BasicProductInfoForm />
           </Box>
         </Card>
-        {!isExtraProduct && <SubMiddleForm hasVariant={hasVariant} />}
+        {!isExtraProduct && (
+          <SubMiddleForm
+            onCharsetChange={onCharsetChange}
+            onCustomCharsetChange={onCustomCharsetChange}
+            onPrefixChange={onPrefixChange}
+            onPostfixChange={onPostfixChange}
+            hasVariant={hasVariant}
+          />
+        )}
       </Stack>
     </Box>
   );

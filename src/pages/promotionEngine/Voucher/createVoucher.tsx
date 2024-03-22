@@ -14,13 +14,17 @@ import { useQuery } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ProductTypeEnum } from 'types/product';
 import MiddleForm from './components/MiddleForm';
+import { useState } from 'react';
 
 const CreateVoucher = () => {
   const { t } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
-
+  const [postfix, setPostFix] = useState('');
+  const [prefix, setPreFix] = useState('');
+  const [charset, setCharset] = useState('');
+  const [customCharset, setCustomCharset] = useState('');
   const [searchParams] = useSearchParams();
   const cloneProductId: any = searchParams.get('cloneProductId');
   const productType: any = Number(searchParams.get('productType') ?? ProductTypeEnum.SINGLE);
@@ -30,6 +34,10 @@ const CreateVoucher = () => {
     defaultValues: {
       tags: [],
       description: '',
+      prefix: '',
+      postfix: '',
+      charset: '',
+      customCharset: '',
       product_type: productType
     }
   });
@@ -45,6 +53,10 @@ const CreateVoucher = () => {
   );
 
   const onSubmit = (values: any) => {
+    values.prefix = prefix;
+    values.postfix = postfix;
+    values.charset = charset;
+    values.customCharset = customCharset;
     console.log(values);
   };
 
@@ -67,7 +79,21 @@ const CreateVoucher = () => {
       </Box>
     );
   }
+  const handleCustomCharset = (customCharset: string) => {
+    setCustomCharset(customCharset);
+  };
+  const handleCharsetChange = (charset: string) => {
+    setCharset(charset);
+  };
+  const handlePrefixChange = (prefix: string) => {
+    setPreFix(prefix);
+  };
 
+  const handlePostfixChange = (postfix: string) => {
+    setPostFix(postfix);
+  };
+  console.log(postfix);
+  console.log(prefix);
   return (
     <FormProvider {...methods}>
       <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
@@ -82,7 +108,12 @@ const CreateVoucher = () => {
       </DashboardNavLayout>
       <Page title={`${t('promotionSystem.voucher.addVoucher.voucherGroupBuilder')}`}>
         <Box display="flex">
-          <MiddleForm />
+          <MiddleForm
+            onCharsetChange={handleCharsetChange}
+            onCustomCharsetChange={handleCustomCharset}
+            onPrefixChange={handlePrefixChange}
+            onPostfixChange={handlePostfixChange}
+          />
         </Box>
       </Page>
     </FormProvider>

@@ -30,6 +30,7 @@ import { UploadSingleFile } from '../../upload';
 import BlogNewPostPreview from './BlogNewPostPreview';
 import { dispatch } from 'redux/store';
 import { postBlog } from 'redux/slices/blog';
+import { getUserInfo } from 'utils/utils';
 
 // ----------------------------------------------------------------------
 
@@ -68,7 +69,8 @@ export default function BlogNewPostForm() {
   const handleClosePreview = () => {
     setOpen(false);
   };
-
+  const userRaw = getUserInfo();
+  const user: any = JSON.parse(userRaw ?? '{}');
   const NewBlogSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
     blogContent: Yup.string().required('blogContent is required'),
@@ -85,7 +87,7 @@ export default function BlogNewPostForm() {
       status: 'Active',
       metaData: '',
       priority: 1,
-      brandId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
+      brandId: user.brandId
     },
     validationSchema: NewBlogSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {

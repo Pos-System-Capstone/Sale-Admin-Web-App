@@ -11,8 +11,16 @@ const getCategoryById = (id: string | undefined) =>
   request.get<TProductCategory>(`/product-category/${id}`);
 
 const updateCategory = (id: string | undefined, data?: TProductCategory) =>
-  request.put<TProductCategory>(`/product-category/${id}`, data);
+  request.put<TProductCategory>(`/product-category/${id}/ `, data);
+console.log(updateCategory);
 
-const productCategory = { getCategory, getCategoryById, updateCategory };
+const addCategoriesToProductCategory = (body: TProductCategory) =>
+  request.post<TProductCategory>(`product-category`, body);
+const productCategory = {
+  getCategory,
+  getCategoryById,
+  updateCategory,
+  addCategoriesToProductCategory
+};
 
 export default productCategory;

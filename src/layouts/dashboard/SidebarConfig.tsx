@@ -358,7 +358,7 @@ export const promotionAppSidebarConfig = [
         icon: ICONS.user
       },
       {
-        title: 'Danh mục',
+        title: 'Danh mục sản phẩm ',
         path: PATH_PROMOTION_APP.category.root,
         icon: ICONS.category
       }

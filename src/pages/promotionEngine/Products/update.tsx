@@ -40,11 +40,11 @@ const UpdateProductPromotion = (props: Props) => {
 
   return (
     <>
-      <Page title="Cập nhật Danh mục Sản Phẩm">
+      <Page title="Cập nhật danh mục sản phẩm">
         <TabContext value={activeTab}>
           <Box>
             <TabList onChange={handleChangeTab}>
-              <Tab label="Cập nhật Sản Phẩm" value="1" />
+              <Tab label="Cập nhật sản phẩm" value="1" />
             </TabList>
           </Box>
 

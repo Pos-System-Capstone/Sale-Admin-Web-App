@@ -10,10 +10,12 @@ const BasicProductInfoForm = ({ isExtraCate = false, updateMode = false }: Props
   return (
     <Box>
       <Grid container spacing={2}>
+        {' '}
         <Grid alignItems={'center'} item xs={12} sm={12}>
           <UploadImageField.Avatar
             label="Hình ảnh"
             name="picUrl"
+            // style={{ margin: '0 auto 40px' }}
           />
         </Grid>
         <Grid item xs={8}>

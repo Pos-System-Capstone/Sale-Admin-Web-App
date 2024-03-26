@@ -96,9 +96,9 @@ export type TVoucherGroupMoreCreate = {
 };
 
 export type TApplyVoucher = {
-  voucherGroupId?: any;
-  membershipId?: any;
-  quantity?: any;
+  voucherGroupId: string;
+  quantity: number;
+  membershipId: string;
 };
 
 export type TVoucherCreate = {

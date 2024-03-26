@@ -31,15 +31,19 @@ export default function TabThree({ watch }: Props) {
   const { handleSubmit } = updateVoucherForm;
 
   const onSubmit = async (values: TApplyVoucher) => {
-    const body: TApplyVoucher = { ...values };
-    body.membershipId = id;
+    const body = { ...values };
+    body.membershipId = id ?? '';
     body.quantity = values.quantity;
     body.voucherGroupId = values.voucherGroupId;
 
     const response = await voucherApi.createApplyVoucher(body);
-    if (response.status == 200) {
-      enqueueSnackbar(`Thêm ${values.quantity} số lượng voucher thành công`, {
+    if (response.status === 200) {
+      enqueueSnackbar(response.data, {
         variant: 'success'
+      });
+    } else {
+      enqueueSnackbar('Lỗi , không thêm được voucher', {
+        variant: 'error'
       });
     }
   };
@@ -50,7 +54,7 @@ export default function TabThree({ watch }: Props) {
           <Grid container spacing={2}>
             <Grid container item xs={5} spacing={2}>
               <Grid item xs={12}>
-                <InputField fullWidth name="quantity" label="số lượng" required />
+                <InputField type="number" fullWidth name="quantity" label="số lượng" required />
               </Grid>
               <Grid item xs={12}>
                 <AutoCompleteVoucher

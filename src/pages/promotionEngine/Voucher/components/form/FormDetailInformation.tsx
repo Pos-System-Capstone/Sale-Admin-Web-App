@@ -1,20 +1,12 @@
 import styled from '@emotion/styled';
-import {
-  Button,
-  Grid,
-  TableBody,
-  TableHead,
-  TableRow,
-  TextField,
-  ToggleButton
-} from '@mui/material';
+import { Grid, TableBody, TableHead, TableRow, ToggleButton } from '@mui/material';
 import useLocales from 'hooks/useLocales';
 import React, { useState, useRef, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { Add } from '@mui/icons-material';
+
 import { TabContext } from '@mui/lab';
 import ResoTable from 'components/ResoTable/ResoTable';
 import voucherApi from 'api/promotion/voucher';
@@ -22,7 +14,7 @@ import voucherApi from 'api/promotion/voucher';
 import { useNavigate, useParams } from 'react-router-dom';
 //
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
-import { TVoucher, TVoucherGroupMoreCreate } from 'types/promotion/voucher';
+import { TVoucher } from 'types/promotion/voucher';
 import { TTableColumn } from 'types/table';
 import { Stack } from '@mui/material';
 import { TableContainer } from '@mui/material';
@@ -48,8 +40,6 @@ const FormDetailInformation = ({ watch }: Props) => {
   const navigate = useNavigate();
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
-  const [quantity, setQuantity] = React.useState<number>(0);
-  const { id } = useParams();
 
   const productColumns: TTableColumn<TVoucher>[] = [
     {
@@ -101,14 +91,10 @@ const FormDetailInformation = ({ watch }: Props) => {
     }
   ];
 
-  const handleQuantityChange = (event: any) => {
-    const value = parseInt(event.target.value, 10);
-    setQuantity(isNaN(value) ? 0 : value);
-  };
-
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const { id } = useParams();
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     if (newAlignment !== null) setAlignment(newAlignment);
@@ -131,20 +117,6 @@ const FormDetailInformation = ({ watch }: Props) => {
     index: number;
     value: number;
   }
-
-  const paramsData: TVoucherGroupMoreCreate = {
-    voucherGroupId: id,
-    quantity: quantity
-  };
-
-  const performPostRequest = async () => {
-    try {
-      const response = await voucherApi.createVoucherGroupMore(paramsData);
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   useEffect(() => {
     if (ref.current) {
@@ -179,7 +151,6 @@ const FormDetailInformation = ({ watch }: Props) => {
     };
   }
 
-  console.log(quantity);
   return (
     <Grid container spacing={2} sx={{ ml: '20px' }}>
       <Typography variant="h4">THÔNG TIN CHI TIẾT</Typography>
@@ -195,32 +166,6 @@ const FormDetailInformation = ({ watch }: Props) => {
         <CustomTabPanel value={value} index={0}>
           <Grid container spacing={2}>
             <Grid item xs={7}></Grid>
-            <Grid item xs={5}>
-              <TextField
-                id="outlined-helperText"
-                variant="outlined"
-                sx={{ width: '180px', pb: '2px' }}
-                value={quantity === 0 ? '' : quantity}
-                label="Nhập số lượng Voucher"
-                onChange={handleQuantityChange}
-              />
-              <Button
-                variant="contained"
-                sx={{ height: '53px', ml: '10px' }}
-                startIcon={<Add />}
-                onClick={performPostRequest}
-              >
-                Thêm voucher
-              </Button>
-              {/* <Typography
-                  variant="subtitle2"
-                  color="textSecondary"
-                  fontWeight="bold"
-                  sx={{ pb: '1px' }}
-                >
-                  Số lượng tối đa của voucher là 999 voucher
-                </Typography> */}
-            </Grid>
           </Grid>
           <Box sx={{ pt: '5px' }}>
             <TabContext value={activeTab}>

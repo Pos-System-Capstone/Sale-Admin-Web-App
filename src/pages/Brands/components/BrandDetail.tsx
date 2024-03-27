@@ -207,16 +207,6 @@ const BrandDetailPage = () => {
         </Card>
       ) : (
         <>
-          {/* <Card sx={{ my: 2 }}>
-            <Stack spacing={2}>
-              <Box>
-                <Typography my={2} variant="h5">
-                  Phương thức thanh toán
-                </Typography>
-                <PaymentProviderConfig brand={brand} />
-              </Box>
-            </Stack>
-          </Card> */}
           <Card sx={{ my: 2 }}>
             <Stack spacing={2}>
               <Box>

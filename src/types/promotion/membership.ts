@@ -27,7 +27,6 @@ export type TMembershipProgram = {
   membership?: any[];
   membershipCardType?: any[];
   walletType?: any[];
-
 };
 
 

@@ -29,6 +29,12 @@ export const PATH_PROMOTION_APP = {
     new: path(ROOTS_DASHBOARD, '/promotion/new'),
     editById: (id: any) => path(ROOTS_DASHBOARD, `/promotion/${id}`)
   },
+  promotion_store: {
+    root: path(ROOTS_DASHBOARD, '/promotion-store'),
+    new: path(ROOTS_DASHBOARD, '/promotion-store/new'),
+    editById: (id: any) => path(ROOTS_DASHBOARD, `/promotion-store/${id}`)
+  },
+
   voucher: {
     root: path(ROOTS_DASHBOARD, '/voucher-groups'),
     new: path(ROOTS_DASHBOARD, '/voucher-groups/new'),

@@ -2,19 +2,13 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Stack, Tab } from '@mui/material';
 import EmptyContent from 'components/EmptyContent';
 import Page from 'components/Page';
-// import useCategory from 'hooks/categories/useCategory';
-import { useState } from 'react';
-import { useParams } from 'react-router';
-import { useNavigate } from 'react-router-dom';
-// import CategoryExtraTab from 'pages/promotionEngine/Category/components/CategoryExtraTab';
 import CategoryInfoTab from 'pages/promotionEngine/Category/components/CategoryInfoTab';
 import ProductPromotion from '../Products';
-import { useQuery } from 'react-query';
 import productCategory from 'api/promotion/category';
-// import plusFill from '@iconify/icons-eva/plus-fill';
-// import { PATH_DASHBOARD } from 'routes/paths';
-// import MediumForm from './components/MediumForm';
 import ProductInfoTab from './components/ProductInfoTab';
+import { useState } from 'react';
+import { useParams } from 'react-router';
+import { useQuery } from 'react-query';
 interface Props {}
 
 const UpdateProductCategory = (props: Props) => {
@@ -33,10 +27,8 @@ const UpdateProductCategory = (props: Props) => {
     );
   };
   const { id } = useParams();
-  const navigate = useNavigate();
   const { data: category, error, isLoading } = useCategory(id!);
   // const isContainer = category?.is_container;
-
   if (error) {
     return <EmptyContent title="Không tìm thấy danh mục này" />;
   }
@@ -49,9 +41,6 @@ const UpdateProductCategory = (props: Props) => {
             <TabList onChange={handleChangeTab}>
               <Tab label="Thông tin chung" value="1" />
               <Tab label="Sản phẩm trong danh mục" value="2" />
-              {/* {category?.categoryType == CategoryType.NORMAL && (
-                <Tab label="Danh sách Extra trong danh mục" value="3" />
-              )} */}
               <Tab label="Thêm mới sản phẩm" value="3" />
             </TabList>
           </Box>

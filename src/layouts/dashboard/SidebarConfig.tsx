@@ -370,7 +370,7 @@ export const promotionAppSidebarConfig = [
     ]
   },
   {
-    subheader: 'Cấu hình khuyến mãi',
+    subheader: 'Cấu hình thương hiệu',
     items: [
       {
         title: 'Cài đặt',
@@ -383,8 +383,8 @@ export const promotionAppSidebarConfig = [
         icon: ICONS.user
       },
       {
-        title: 'Danh mục sản phẩm ',
-        path: PATH_PROMOTION_APP.category.root,
+        title: 'Danh sách cửa hàng ',
+        path: PATH_PROMOTION_APP.promotion_store.root,
         icon: ICONS.category
       }
     ]

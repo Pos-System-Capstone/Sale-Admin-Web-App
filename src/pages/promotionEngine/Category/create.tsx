@@ -51,7 +51,7 @@ const CreateProduct = () => {
           </LoadingAsyncButton>
         </Stack>
       </DashboardNavLayout>
-      <Page title="Tạo sản phẩm">
+      <Page title="Tạo danh mục">
         <Box>
           <MiddleForm />
         </Box>

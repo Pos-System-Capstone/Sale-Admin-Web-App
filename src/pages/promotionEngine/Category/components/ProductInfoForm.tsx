@@ -1,4 +1,4 @@
-import { Box, Card, Grid, Stack } from '@mui/material';
+import { Box, Grid, Stack } from '@mui/material';
 
 import { InputField } from 'components/form';
 
@@ -21,29 +21,27 @@ const ProductInfoForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
   return (
     <Box>
       <Stack spacing={3}>
-        <Card id="product-detail">
-          <Stack spacing={2} textAlign="left">
+        <Stack spacing={2} textAlign="left">
+          <Box>
             <Box>
-              <Box>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <InputField fullWidth name="name" label="Tên sản phẩm" required size="small" />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <InputField
-                      disabled={updateMode}
-                      fullWidth
-                      name="code"
-                      label="Mã sản phẩm"
-                      required
-                      size="small"
-                    />
-                  </Grid>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <InputField fullWidth name="name" label="Tên sản phẩm" required size="small" />
                 </Grid>
-              </Box>
+                <Grid item xs={6}>
+                  <InputField
+                    disabled={updateMode}
+                    fullWidth
+                    name="code"
+                    label="Mã sản phẩm"
+                    required
+                    size="small"
+                  />
+                </Grid>
+              </Grid>
             </Box>
-          </Stack>
-        </Card>
+          </Box>
+        </Stack>
       </Stack>
     </Box>
   );

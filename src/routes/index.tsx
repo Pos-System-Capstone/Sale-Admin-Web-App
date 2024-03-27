@@ -453,6 +453,7 @@ export default function Router() {
           path: 'product-category',
           children: [
             { path: '', element: <ProductCategory /> },
+            { path: 'new', element: <CreateProductCategory /> },
             { path: ':id', element: <UpdateProductCategory /> }
           ]
         }

@@ -190,6 +190,11 @@ export const brandAdminSidebarConfig = [
         title: 'Sản phẩm',
         path: PATH_DASHBOARD.products.list,
         icon: ICONS.product
+      },
+      {
+        title: 'Biến thể sản phẩm',
+        path: PATH_DASHBOARD.variants.list,
+        icon: ICONS.product
       }
     ]
   },
@@ -381,11 +386,6 @@ export const promotionAppSidebarConfig = [
         title: 'hồ sơ',
         path: PATH_PROMOTION_APP.profile.root,
         icon: ICONS.user
-      },
-      {
-        title: 'Danh mục sản phẩm ',
-        path: PATH_PROMOTION_APP.category.root,
-        icon: ICONS.category
       }
     ]
   }

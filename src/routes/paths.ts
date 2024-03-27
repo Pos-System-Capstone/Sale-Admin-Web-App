@@ -88,6 +88,13 @@ export const PATH_DASHBOARD = {
     master: path(ROOTS_DASHBOARD, '/products/master'),
     newProduct: path(ROOTS_DASHBOARD, '/products/new')
   },
+
+  variants: {
+    root: path(ROOTS_DASHBOARD, '/variants'),
+    list: path(ROOTS_DASHBOARD, '/variants'),
+    new: path(ROOTS_DASHBOARD, '/variants/new'),
+    editById: (id: number) => path(ROOTS_DASHBOARD, `/variants/${id}`)
+  },
   collections: {
     root: path(ROOTS_DASHBOARD, '/collections'),
     list: path(ROOTS_DASHBOARD, '/collections'),
@@ -104,7 +111,7 @@ export const PATH_DASHBOARD = {
   tradingReport: {
     root: path(ROOTS_DASHBOARD, '/trading-report'),
     list: path(ROOTS_DASHBOARD, '/trading-report'),
-    editById: (id: any) => path(ROOTS_DASHBOARD, `/trading-report/u${id}`),
+    editById: (id: any) => path(ROOTS_DASHBOARD, `/trading-report/${id}`),
     new: path(ROOTS_DASHBOARD, '/trading-report/new'),
     storeMenu: path(ROOTS_DASHBOARD, '/menu-in-store')
   },

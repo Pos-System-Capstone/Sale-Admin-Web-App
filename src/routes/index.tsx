@@ -52,7 +52,9 @@ import MembershipDetail from 'pages/MemberShip/components/MembershipDetail';
 import MemberShipProgramsList from 'pages/MemberShip/MembershipProgram/components';
 import MembershipProgramsDetail from 'pages/MemberShip/MembershipProgram/components/MembershipProgramsDetail';
 import TransactionList from 'pages/Brands/TransactionList';
-import CreateProductCategory from 'pages/promotionEngine/Category/create';
+import ListVariants from 'pages/Products/Variants';
+import CreateVariant from 'pages/Products/Variants/components/CreateVariant';
+import DetailVariant from 'pages/Products/Variants/components/DetailVariant';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -224,6 +226,14 @@ export default function Router() {
             { path: ':id', element: <UpdateProduct /> },
             { path: 'extras', element: <Products /> },
             { path: 'master', element: <Products /> }
+          ]
+        },
+        {
+          path: 'variants',
+          children: [
+            { path: '', element: <ListVariants /> },
+            { path: 'new', element: <CreateVariant /> },
+            { path: ':id', element: <DetailVariant /> }
           ]
         },
         {
@@ -432,7 +442,6 @@ export default function Router() {
           path: 'product-category',
           children: [
             { path: '', element: <ProductCategory /> },
-            { path: 'new', element: <CreateProductCategory /> },
             { path: ':id', element: <UpdateProductCategory /> }
           ]
         }

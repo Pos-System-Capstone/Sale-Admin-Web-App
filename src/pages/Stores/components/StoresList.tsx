@@ -63,21 +63,6 @@ const StoresList = () => {
         );
       }
     }
-    // {
-    //   title: 'Chi tiết',
-    //   fixed: 'right',
-    //   hideInSearch: true,
-    //   render: (_: any, store: TStore) => (
-    //     <Tooltip title="Chi tiết">
-    //       <IconButton
-    //         onClick={() => navigate(PATH_DASHBOARD.stores.storeById(store.id))}
-    //         size="large"
-    //       >
-    //         <Visibility />
-    //       </IconButton>
-    //     </Tooltip>
-    //   )
-    // }
   ];
 
   const handleGetStoreOfBrand = (params: any) => {

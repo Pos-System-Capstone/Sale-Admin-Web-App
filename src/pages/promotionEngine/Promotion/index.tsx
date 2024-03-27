@@ -26,15 +26,14 @@ const Promotion = (props: Props) => {
   const { translate } = useLocales();
   const navigate = useNavigate();
   const ref = useRef<any>();
-  const userRaw = getUserInfo();
-  const user: any = JSON.parse(userRaw ?? '{}');
-  // const brandId = useSelector((state: RootState) => state.brand);
-  console.log('user', user.brandId);
+
   const DISCOUNT_TYPE_ENUM = DISCOUNT_TYPE_DATA();
   const GIFT_TYPE_ENUM = GIFT_TYPE_DATA();
   const STATUS_TYPE_ENUM = STATUS_TYPE_DATA();
   const PROMOTION_TYPE_ENUM = PROMOTION_TYPE_DATA();
-
+  const userRaw = getUserInfo();
+  const user: any = JSON.parse(userRaw ?? '{}');
+  console.log('user', user.brandId);
   const promotionColumn: TTableColumn<TPromotionBase>[] = [
     { title: 'brandId', dataIndex: 'brandId', hideInTable: true, hideInSearch: true },
     {

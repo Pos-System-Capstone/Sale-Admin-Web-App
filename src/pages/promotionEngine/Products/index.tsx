@@ -1,8 +1,5 @@
 /* eslint-disable camelcase */
-// import plusFill from '@iconify/icons-eva/plus-fill';
-// import { Icon } from '@iconify/react';
-// import { TabContext, TabList } from '@mui/lab';
-// material
+
 import { Card } from '@mui/material';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
@@ -12,10 +9,6 @@ import { useParams } from 'react-router';
 // components
 import { useNavigate } from 'react-router-dom';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
-// import { PATH_DASHBOARD } from 'routes/paths';
-// import { TProduct } from 'types/product';
-// import confirm from 'components/Modal/confirm';
-// import { deleteProdById } from '../../redux/product/api';
 import { TProductPromotionAPI } from 'types/promotion/productPromotion';
 import productApi from 'api/promotion/product_promotion';
 import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';

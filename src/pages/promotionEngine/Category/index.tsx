@@ -95,17 +95,8 @@ export default function ProductPromotion() {
             navigate(`${PATH_PROMOTION_APP.category.editById(cate.productCateId)}`);
           }}
           columns={columns}
-          // onDelete={setCurrentDeleteItem}
           rowKey="id"
         />
-        {/* <DeleteConfirmDialog
-          open={Boolean(currentDeleteItem)}
-          onClose={() => setCurrentDeleteItem(null)}
-          onDelete={deleteProductHandler}
-          title={
-            'Xác nhận xoá sản phẩm'
-          }
-        /> */}
       </Card>
     </Page>
   );

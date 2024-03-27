@@ -1,4 +1,3 @@
-// routes
 import { useParams } from 'react-router';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
@@ -375,7 +374,7 @@ export const promotionAppSidebarConfig = [
     ]
   },
   {
-    subheader: 'Cấu hình khuyến mãi',
+    subheader: 'Cấu hình thương hiệu',
     items: [
       {
         title: 'Cài đặt',
@@ -386,6 +385,11 @@ export const promotionAppSidebarConfig = [
         title: 'hồ sơ',
         path: PATH_PROMOTION_APP.profile.root,
         icon: ICONS.user
+      },
+      {
+        title: 'Danh sách cửa hàng ',
+        path: PATH_PROMOTION_APP.promotion_store.root,
+        icon: ICONS.category
       }
     ]
   }

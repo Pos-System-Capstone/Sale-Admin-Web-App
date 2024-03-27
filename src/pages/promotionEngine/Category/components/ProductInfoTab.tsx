@@ -38,9 +38,6 @@ const ProductInfoTab = ({ updateMode, category, isLoading }: Props) => {
   const user: any = JSON.parse(userRaw ?? '{}');
   const methods = useForm<TProductPromotionAPI>({});
   const { handleSubmit, reset, watch } = methods;
-  console.log(category?.productCateId);
-  console.log(category?.cateId);
-  console.log(category?.name);
   const onSubmit = async (values: TProductPromotionAPI) => {
     const data = {
       brandId: user.brandId,
@@ -49,28 +46,14 @@ const ProductInfoTab = ({ updateMode, category, isLoading }: Props) => {
       name: values.name,
       productCateId: category?.productCateId
     };
-
     // const addNew = await productPromotionApi.createProduct(data);
     const addNew = await productPromotion.addProduct(data);
-    console.log(addNew);
-
     addNew.status === 200
       ? enqueueSnackbar('Thêm thành công', { variant: 'success' })
       : enqueueSnackbar('Có lỗi xảy ra', { variant: 'error' });
   };
-
   return (
     <FormProvider {...methods}>
-      {/* <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
-        <Stack direction="row" spacing={2}>
-          <Button onClick={() => navigate(-1)} variant="outlined">
-            Hủy
-          </Button>
-          <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
-            Lưu Sản Phẩm
-          </LoadingAsyncButton>
-        </Stack>
-      </DashboardNavLayout> */}
       {isLoading ? (
         <CircularProgress />
       ) : (

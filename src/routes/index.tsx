@@ -6,7 +6,6 @@ import BlogPosts from 'pages/dashboard/BlogPosts';
 import DashBoardReport from 'pages/report/DashBoardReport';
 import { lazy, Suspense } from 'react';
 import { Navigate, useLocation, useRoutes } from 'react-router-dom';
-// import RoleBasedGuard from '../guards/RoleBasedGuard';
 // components
 import LoadingScreen from '../components/LoadingScreen';
 // guards
@@ -55,6 +54,10 @@ import TransactionList from 'pages/Brands/TransactionList';
 import ListVariants from 'pages/Products/Variants';
 import CreateVariant from 'pages/Products/Variants/components/CreateVariant';
 import DetailVariant from 'pages/Products/Variants/components/DetailVariant';
+import CreateProductCategory from 'pages/promotionEngine/Category/create';
+import StorePromotionListPage from 'pages/promotionEngine/Store';
+import CreateStorePromotion from 'pages/promotionEngine/Store/create';
+import UpdateStorePromotion from 'pages/promotionEngine/Store/update';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -366,6 +369,14 @@ export default function Router() {
       children: [
         { path: '', element: <Navigate to="/promotion-system/app" replace /> },
         { path: 'app', element: <PromotionDash /> },
+        {
+          path: 'promotion-store',
+          children: [
+            { path: '', element: <StorePromotionListPage /> },
+            { path: 'new', element: <CreateStorePromotion /> },
+            { path: ':id', element: <UpdateStorePromotion /> }
+          ]
+        },
         {
           path: 'promotion',
           children: [

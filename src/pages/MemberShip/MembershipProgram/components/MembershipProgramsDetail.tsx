@@ -28,9 +28,6 @@ export default function MembershipProgramsDetail() {
     {}
   );
 
-  console.log(membershipUpdate);
-  console.log(user.brandId);
-
   const updateMembershipForm = useForm<TMembershipProgram>({
     defaultValues: { ...membershipUpdate }
   });

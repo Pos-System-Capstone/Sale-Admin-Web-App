@@ -20,6 +20,7 @@ export type TNewBrandCreate = {
   address: string;
   phone: string;
   picUrl: string;
+  brandCode: string;
 };
 
 export type TBrandUpdate = TNewBrandCreate;

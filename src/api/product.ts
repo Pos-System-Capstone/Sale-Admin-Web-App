@@ -17,8 +17,12 @@ const updateProductInGroup = (productInGroupId: string, groupId: string, payload
     `/groupProducts/${groupId}/productInGroup/${productInGroupId}`,
     payload
   );
+const addVariantsToProduct = (id: string, values: string[]) =>
+  request.post<string[]>(`/products/${id}/variants`, values);
+
 const productApi = {
   createGroupProduct,
+  addVariantsToProduct,
   getListGroupProductOfCombo,
   updateGroupProductOfComBos,
   updateProductInGroup,

@@ -17,7 +17,8 @@ const CreateNewBrand = () => {
       email: '',
       address: '',
       phone: '',
-      picUrl: ''
+      picUrl: '',
+      brandCode: ''
     }
   });
 

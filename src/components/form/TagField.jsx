@@ -1,5 +1,6 @@
 import { Button, Chip, FormControl, FormHelperText, Grid, Stack, TextField } from '@mui/material';
 import { styled } from '@mui/system';
+import { useSnackbar } from 'notistack';
 import React, { useState, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
@@ -21,8 +22,9 @@ const TagField = ({
 }) => {
   const { control, setValue, getValues } = useFormContext();
   const [listValue, setListValue] = useState([]);
-  const [newValue, setNewValue] = useState();
+  const [newValue, setNewValue] = useState('');
   const rawString = data ? data : getValues(name);
+  const { enqueueSnackbar } = useSnackbar();
 
   const ScrollableGridItem = styled(Grid)(({ theme }) => ({
     overflowY: 'auto'
@@ -51,9 +53,12 @@ const TagField = ({
     }
   }, [listValue, punctuation, name, setValue, isInput]);
 
+  console.log(newValue);
   const addValue = () => {
-    setListValue([...listValue, newValue]);
-    setNewValue('');
+    if (newValue != '') {
+      setListValue([...listValue, newValue]);
+      setNewValue('');
+    }
   };
 
   const removeValue = (index) => {

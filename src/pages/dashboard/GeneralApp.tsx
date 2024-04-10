@@ -73,13 +73,7 @@ export default function GeneralApp() {
     }
   );
   return (
-    <Page
-      title={
-        user?.role.includes(Role.StoreManager) || user?.role.includes(Role.BrandAdmin)
-          ? 'Báo cáo tổng quan'
-          : ''
-      }
-    >
+    <Page title={'Báo cáo tổng quan'}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={12}>
           <FormProvider {...filterForm}>
@@ -203,7 +197,7 @@ export default function GeneralApp() {
               report?.topUpAmount ?? 0
             ]}
             listName={['Tại quán', 'Mang đi', 'Giao hàng', 'Nạp thẻ']}
-            filterTitle={['Số lượng đơn', 'Doanh thu']}
+            filterTitle={['Doanh thu', 'Số lượng đơn']}
           />
         </Grid>
         <Grid item xs={12} md={6} lg={6}>
@@ -211,20 +205,35 @@ export default function GeneralApp() {
             title={'Hình thức thanh toán'}
             totalOrder={[
               report?.totalCash ?? 0,
-              report?.totalMomo ?? 0,
               report?.totalBanking ?? 0,
-              report?.totalPointify ?? 0,
-              report?.totalVisa ?? 0
+              report?.totalMomo ?? 0,
+              report?.totalGrabFood ?? 0,
+              report?.totalShopeeFood ?? 0,
+              report?.totalBeFood ?? 0,
+              report?.totalVisa ?? 0,
+              report?.totalPointify ?? 0
             ]}
             totalOrderAmount={[
               report?.cashAmount ?? 0,
-              report?.momoAmount ?? 0,
               report?.bankingAmount ?? 0,
-              report?.pointifyAmount ?? 0,
-              report?.visaAmount ?? 0
+              report?.momoAmount ?? 0,
+              report?.grabFoodAmount ?? 0,
+              report?.shopeeFoodAmount ?? 0,
+              report?.beFoodAmount ?? 0,
+              report?.visaAmount ?? 0,
+              report?.pointifyAmount ?? 0
             ]}
-            listName={['Tiền mặt', 'Momo', 'Ngân hàng', 'Ví thành viên', 'Visa/MasterCard']}
-            filterTitle={['Số lượng đơn', 'Doanh thu']}
+            listName={[
+              'Tiền mặt',
+              'Ngân hàng',
+              'Momo',
+              'GrabFood',
+              'ShopeeFood',
+              'Befood',
+              'Visa/MasterCard',
+              'Ví thành viên'
+            ]}
+            filterTitle={['Doanh thu', 'Số lượng đơn']}
           />
         </Grid>
         <Grid item xs={12} md={6} lg={6}>
@@ -245,7 +254,7 @@ export default function GeneralApp() {
                 ?.sort((a, b) => b.totalAmount - a.totalAmount)
                 .map((item) => item.name) ?? []
             }
-            filterTitle={['Số lượng sản phẩm', 'Doanh thu sản phẩm']}
+            filterTitle={['Doanh thu sản phẩm', 'Số lượng sản phẩm']}
           />
         </Grid>
         <Grid item xs={12} md={6} lg={6}>
@@ -258,7 +267,7 @@ export default function GeneralApp() {
               report?.totalAmountSizeL ?? 0
             ]}
             listName={['Size S', 'Size M', 'Size L']}
-            filterTitle={['Số lượng sản phẩm', 'Doanh thu sản phẩm']}
+            filterTitle={['Doanh thu sản phẩm', 'Số lượng sản phẩm']}
           />
         </Grid>
         <Grid item xs={12} md={12} lg={12}>

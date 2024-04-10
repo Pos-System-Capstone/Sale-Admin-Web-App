@@ -152,11 +152,17 @@ export type StoreReport = {
   totalBanking: number;
   totalVisa: number;
   totalPointify: number;
+  totalGrabFood: number;
+  totalShopeeFood: number;
+  totalBeFood: number;
   cashAmount: number;
   momoAmount: number;
   bankingAmount: number;
   visaAmount: number;
   pointifyAmount: number;
+  grabFoodAmount: number;
+  shopeeFoodAmount: number;
+  beFoodAmount: number;
   timeLine: number[];
   totalOrderTimeLine: number[];
   totalAmountTimeLine: number[];

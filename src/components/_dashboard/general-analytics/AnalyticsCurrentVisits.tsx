@@ -51,12 +51,12 @@ export default function AnalyticsCurrentVisits(props: Props) {
     {
       day: props.filterTitle[0],
       value: 0,
-      data: props.totalOrder
+      data: props.totalOrderAmount
     },
     {
       day: props.filterTitle[1],
       value: 1,
-      data: props.totalOrderAmount
+      data: props.totalOrder
     }
   ];
   const chartOptions = merge(BaseOptionChart(), {

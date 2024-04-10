@@ -390,6 +390,11 @@ export const promotionAppSidebarConfig = [
         title: 'Danh sách cửa hàng ',
         path: PATH_PROMOTION_APP.promotion_store.root,
         icon: ICONS.category
+      },
+      {
+        title: 'Kênh bán hàng ',
+        path: PATH_PROMOTION_APP.promotion_channel.root,
+        icon: ICONS.store
       }
     ]
   }

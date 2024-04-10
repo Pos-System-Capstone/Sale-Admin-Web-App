@@ -22,7 +22,6 @@ const CreateProduct = () => {
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
   const methods = useForm<TProductCategory>({
-    // resolver: yupResolver(validationSchema),
     defaultValues: {}
   });
   const { handleSubmit, reset, watch } = methods;

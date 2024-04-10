@@ -289,7 +289,7 @@ export default function GeneralApp() {
         {report?.categoryReports
           .sort((a, b) => b.totalProduct - a.totalProduct)
           .map((item) => (
-            <Grid key={item.id} item xs={12} md={6} lg={6}>
+            <Grid key={item.id} item xs={12} md={6} lg={4}>
               <AnalyticsCurrentVisits
                 title={item.name}
                 totalOrder={
@@ -307,7 +307,7 @@ export default function GeneralApp() {
                     ?.sort((a, b) => b.totalAmount - a.totalAmount)
                     .map((item) => item.name) ?? []
                 }
-                filterTitle={['Số lượng sản phẩm', 'Doanh thu sản phẩm']}
+                filterTitle={['Doanh thu', 'Số lượng']}
               />
             </Grid>
           ))}

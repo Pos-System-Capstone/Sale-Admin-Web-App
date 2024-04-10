@@ -23,6 +23,7 @@ import { useProductDetail } from 'hooks/products/useProduct';
 import productApi from 'api/product';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import ChoiceGroupComboForm from './Combos/components/form/ChoiceGroupComboForm';
+import UpdateVariant from './components/form/UpdateVariant';
 
 const UpdateProduct = () => {
   const [currentProduct, setCurrentProduct] = React.useState<TProductBase | null>(null);
@@ -207,6 +208,7 @@ const UpdateProduct = () => {
               {productDetails?.type === ProductTypeEnum.COMBO && (
                 <Tab label=" Cấu hình combo" value="2" />
               )}
+              <Tab label="Thêm biến thể" value="3" />
             </TabList>
           </Box>
           <TabPanel value={'1'}>
@@ -221,6 +223,11 @@ const UpdateProduct = () => {
               </Stack>
             </TabPanel>
           )}
+          <TabPanel value={'3'}>
+            <Stack mb={2} spacing={2} width="100%">
+              <UpdateVariant />
+            </Stack>
+          </TabPanel>
         </TabContext>
       </Page>
     </FormProvider>

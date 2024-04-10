@@ -33,6 +33,9 @@ function CreateNewBrandForm({ onFinish }: Props) {
         <Grid item xs={12} sm={4}>
           <InputField type="number" fullWidth name="phone" label="Số điện thoại" />
         </Grid>
+        <Grid item xs={6} sm={4}>
+          <InputField type="name" fullWidth name="brandCode" label="Mã thương hiệu" />
+        </Grid>
 
         <Grid item xs={12} sm={12} display={'flex'} justifyContent={'end'}>
           <Button variant="contained" onClick={onFinish}>

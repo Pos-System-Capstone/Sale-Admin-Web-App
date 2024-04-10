@@ -34,7 +34,10 @@ export const PATH_PROMOTION_APP = {
     new: path(ROOTS_DASHBOARD, '/promotion-store/new'),
     editById: (id: any) => path(ROOTS_DASHBOARD, `/promotion-store/${id}`)
   },
-
+  promotion_channel: {
+    root: path(ROOTS_DASHBOARD, '/promotion-channel'),
+    new: path(ROOTS_DASHBOARD, '/promotion-channel/new')
+  },
   voucher: {
     root: path(ROOTS_DASHBOARD, '/voucher-groups'),
     new: path(ROOTS_DASHBOARD, '/voucher-groups/new'),
@@ -83,5 +86,8 @@ export const PATH_PROMOTION_APP = {
     root: path(ROOTS_DASHBOARD, '/product-category'),
     new: path(ROOTS_DASHBOARD, '/product-category/new'),
     editById: (id: any) => path(ROOTS_DASHBOARD, `/product-category/${id}`)
+  },
+  channel: {
+    new: path(ROOTS_DASHBOARD, '/channel-promotion/new')
   }
 };

@@ -58,6 +58,8 @@ import CreateProductCategory from 'pages/promotionEngine/Category/create';
 import StorePromotionListPage from 'pages/promotionEngine/Store';
 import CreateStorePromotion from 'pages/promotionEngine/Store/create';
 import UpdateStorePromotion from 'pages/promotionEngine/Store/update';
+import ChannelPromotion from 'pages/promotionEngine/Channel';
+import CreateChannelPromotion from 'pages/promotionEngine/Channel/create';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -375,6 +377,13 @@ export default function Router() {
             { path: '', element: <StorePromotionListPage /> },
             { path: 'new', element: <CreateStorePromotion /> },
             { path: ':id', element: <UpdateStorePromotion /> }
+          ]
+        },
+        {
+          path: 'promotion-channel',
+          children: [
+            { path: '', element: <ChannelPromotion /> },
+            { path: 'new', element: <CreateChannelPromotion /> }
           ]
         },
         {

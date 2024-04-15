@@ -95,7 +95,8 @@ const CreatePromotion = (props: Props) => {
   };
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
-
+  const startDate = new Date();
+  const endDate = new Date();
   const createPromotionForm = useForm<TPromotionBase>({
     // resolver: activeStep === 0 ? yupResolver(validationSchema) : yupResolver(validationSchema2);
     defaultValues: {
@@ -105,8 +106,10 @@ const CreatePromotion = (props: Props) => {
       promotionType: 0,
       promotionCode: '',
       promotionName: '',
-      startDate: Date.now(),
-      endDate: Date.now(),
+      exclusive: 0,
+      postActionType: 0,
+      startDate: startDate,
+      endDate: endDate,
       hourFilter: [],
       dayFilter: [],
       paymentMethod: [],

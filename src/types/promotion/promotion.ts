@@ -103,6 +103,41 @@ export type TPromotion = {
   status: string;
 };
 
+export type TPromotionCreate = {
+  brandId: string;
+  promotionCode: string;
+  promotionName: string;
+  actionType: number;
+  postActionType: number;
+  imgUrl: string;
+  description: string;
+  exclusive: number;
+  applyBy: number;
+  startDate: string;
+  endDate: string;
+  saleMode: number;
+  gender: number;
+  paymentMethod: number | number[];
+  forHoliday: number;
+  forMembership: number;
+  dayFilter: number | number[];
+  hourFilter: number | number[];
+  status: number;
+  hasVoucher: boolean;
+  isAuto: boolean;
+  promotionType: number;
+};
+
+export type TCreatePromotionTier = {
+  conditionRuleId: string;
+  actionId: string;
+  promotionId: string;
+  voucherGroupId: string;
+  summary: string;
+  priority: number;
+  moreQuantity: number;
+};
+
 export type ListProductApply = {
   productId: string;
 };

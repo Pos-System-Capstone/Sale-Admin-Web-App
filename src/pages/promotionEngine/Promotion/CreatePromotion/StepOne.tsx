@@ -22,11 +22,14 @@ import { useState } from 'react';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import { InputField, RadioGroupField, SelectField, UploadImageField } from 'components/form';
-import DateTimePickerField from 'components/form/DateTimePickerField';
 import useDashboard from 'hooks/useDashboard';
-import { TPromotionBase } from 'types/promotion/promotion';
+import { TPromotionCreate } from 'types/promotion/promotion';
 import { useNavigate } from 'react-router';
 import CheckBoxGroupField from 'components/form/CheckBoxGroupField';
+import promotionApi from 'api/promotion/promotion';
+import DateTimePickerField from 'components/form/DateTimePickerField';
+import { useSnackbar } from 'notistack';
+import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 
 interface Props {
   watch: any;
@@ -36,6 +39,7 @@ interface Props {
 function StepOne({ watch, handleSubmit }: Props) {
   const { translate } = useLocales();
   const { setNavOpen } = useDashboard();
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const StyleWidthTypography = styled(Typography)((props) => ({
     marginTop: `${props.marginTop || '16px'}`,
@@ -53,7 +57,7 @@ function StepOne({ watch, handleSubmit }: Props) {
       year: 'numeric'
     };
     const timeFormatOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric' };
-
+    const customerTypes = targetCustomerList();
     const outputDate: string = dateObject.toLocaleDateString('en-GB', dateFormatOptions);
     const outputTime: string = dateObject.toLocaleTimeString('en-GB', timeFormatOptions);
 
@@ -80,8 +84,43 @@ function StepOne({ watch, handleSubmit }: Props) {
     setValue(newValue);
   };
 
-  const onSubmit = (values: TPromotionBase) => {
-    console.log(`data`, values);
+  const onSubmit = async (values: TPromotionCreate) => {
+    const body: TPromotionCreate = { ...values };
+    body.postActionType = Number(values.postActionType);
+    body.exclusive = Number(values.exclusive);
+    body.applyBy = Number(values.applyBy);
+    body.actionType = Number(values.actionType);
+    body.forHoliday = Number(values.forHoliday);
+    body.forMembership = Number(values.forMembership);
+    body.promotionType = Number(values.promotionType);
+    body.gender = Number(values.gender);
+    body.saleMode = Number(values.saleMode);
+    body.isAuto = Boolean(values.isAuto);
+    body.hasVoucher = Boolean(values.hasVoucher);
+    body.paymentMethod = (values.paymentMethod as number[]).reduce(
+      (accumulator: number, currentValue: number) => accumulator + currentValue,
+      0
+    );
+    body.dayFilter = (values.dayFilter as number[]).reduce(
+      (accumulator: number, currentValue: number) => accumulator + currentValue,
+      0
+    );
+    body.hourFilter = (values.hourFilter as number[]).reduce(
+      (accumulator: number, currentValue: number) => accumulator + currentValue,
+      0
+    );
+    try {
+      const res = await promotionApi.createPromotion(body);
+      if (res.status == 200) {
+        enqueueSnackbar('Tạo thành công', { variant: 'success' });
+        navigate(PATH_PROMOTION_APP.promotion.root);
+      } else {
+        enqueueSnackbar('Có lỗi xảy ra', { variant: 'error' });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      enqueueSnackbar('Có lỗi xảy ra', { variant: 'error' });
+    }
   };
 
   return (
@@ -126,12 +165,22 @@ function StepOne({ watch, handleSubmit }: Props) {
                         <InputField fullWidth name="promotionCode" label="Mã khuyến mãi" required />
                       </Grid>
                       <Grid item xs={12}>
+                        <InputField
+                          fullWidth
+                          name="actionType"
+                          label="Loại hành động"
+                          required
+                          defaultValue="0"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
                         <DateTimePickerField
                           fullWidth
                           name="startDate"
                           label={translate('promotionSystem.promotion.preview.startDate')}
                           inputFormat="yyyy/MM/dd hh:mm a"
                           minDate={new Date()}
+                          required
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -141,6 +190,7 @@ function StepOne({ watch, handleSubmit }: Props) {
                           label={translate('promotionSystem.promotion.preview.endDate')}
                           inputFormat="yyyy/MM/dd hh:mm a"
                           minDate={new Date()}
+                          required
                         />
                       </Grid>
                     </Grid>
@@ -153,18 +203,28 @@ function StepOne({ watch, handleSubmit }: Props) {
                           label={translate('promotionSystem.promotion.preview.status')}
                         ></SelectField>
                       </Grid>
-
+                      <Grid item xs={12}>
+                        <InputField
+                          fullWidth
+                          name="postActionType"
+                          label="Loại hành động post"
+                          required
+                          defaultValue="0"
+                        />
+                      </Grid>
                       <Grid item xs={12}>
                         <InputField
                           fullWidth
                           name="exclusive"
                           label={translate('promotionSystem.promotion.preview.exclusive')}
                           required
+                          defaultValue="0"
                         />
                       </Grid>
                       <Grid item xs={12}>
                         <InputField fullWidth name="description" label={'Tiêu đề'} required />
                       </Grid>
+
                       <Grid container item xs={12}>
                         <StyleWidthTypography variant="h6">Có Voucher</StyleWidthTypography>
                       </Grid>
@@ -225,7 +285,25 @@ function StepOne({ watch, handleSubmit }: Props) {
                       </Box>
                       <Box alignItems="center" display={'flex'}>
                         <StyleWidthTypography variant="h6" sx={{ width: '35%' }}>
-                          {translate('promotionSystem.promotion.preview.customerType')}：
+                          Giới tính：
+                        </StyleWidthTypography>
+                        <StyleWidthTypography variant="body1" sx={{ width: '65%' }}>
+                          <RadioGroupField
+                            sx={{
+                              display: 'flex',
+                              justifyContent: 'start',
+                              flexDirection: 'row-reverse'
+                            }}
+                            fullWidth
+                            options={genders}
+                            name="gender"
+                          />
+                        </StyleWidthTypography>
+                      </Box>
+
+                      <Box alignItems="center" display={'flex'}>
+                        <StyleWidthTypography variant="h6" sx={{ width: '35%' }}>
+                          Loại khách hàng:
                         </StyleWidthTypography>
                         <StyleWidthTypography variant="body1" sx={{ width: '65%' }}>
                           <RadioGroupField
@@ -236,7 +314,7 @@ function StepOne({ watch, handleSubmit }: Props) {
                             }}
                             fullWidth
                             options={customerTypes}
-                            name="customerType"
+                            name="forMembership"
                           />
                         </StyleWidthTypography>
                       </Box>

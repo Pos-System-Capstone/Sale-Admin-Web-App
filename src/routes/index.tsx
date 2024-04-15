@@ -2,7 +2,7 @@ import BlogNewPost from 'pages/dashboard/BlogNewPost';
 // static
 import BlogPost from 'pages/dashboard/BlogPost';
 // layouts
-import BlogPosts from 'pages/dashboard/BlogPosts';
+import BlogPosts from 'pages/dashboard/BlogPost';
 import DashBoardReport from 'pages/report/DashBoardReport';
 import { lazy, Suspense } from 'react';
 import { Navigate, useLocation, useRoutes } from 'react-router-dom';

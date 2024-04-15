@@ -1,14 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // import { sentenceCase } from 'change-case';
 import { useParams } from 'react-router-dom';
 // material
 import {
   Box,
+  Button,
   Card,
-  Divider,
-  Skeleton,
-  Container,
-  Typography
+  Tab
   // , Pagination
 } from '@mui/material';
 // redux
@@ -17,99 +15,81 @@ import { getPost } from '../../redux/slices/blog';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
-import useSettings from '../../hooks/useSettings';
 // @types
 import { BlogState } from '../../@types/blog';
 // components
 import Page from '../../components/Page';
-import Markdown from '../../components/Markdown';
-import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-import {
-  BlogPostHero
-  // BlogPostTags,
-  // BlogPostRecent,
-  // BlogPostCommentList,
-  // BlogPostCommentForm
-} from '../../components/_dashboard/blog';
+import { Icon } from '@iconify/react';
+import { useLocation, useNavigate } from 'react-router';
+import { useSnackbar } from 'notistack';
+import plusFill from '@iconify/icons-eva/plus-fill';
+import { TabContext, TabList } from '@mui/lab';
+import ResoTable from 'components/ResoTable/ResoTable';
+import { UseFormReturn } from 'react-hook-form';
+import { postColumns } from './config';
+import blogApi from 'api/blog';
 
 // ----------------------------------------------------------------------
 
-const SkeletonLoad = (
-  <>
-    <Skeleton width="100%" height={560} variant="rectangular" sx={{ borderRadius: 2 }} />
-    <Box sx={{ mt: 3, display: 'flex', alignItems: 'center' }}>
-      <Skeleton variant="circular" width={64} height={64} />
-      <Box sx={{ flexGrow: 1, ml: 2 }}>
-        <Skeleton variant="text" height={20} />
-        <Skeleton variant="text" height={20} />
-        <Skeleton variant="text" height={20} />
-      </Box>
-    </Box>
-  </>
-);
-
-export default function BlogPost() {
-  const { themeStretch } = useSettings();
+export default function BlogPosts() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { post, error, recentPosts } = useSelector((state: { blog: BlogState }) => state.blog);
-
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const currentPage = params.get('tabindex');
+  const [activeTab, setActiveTab] = useState(currentPage || '1');
+  const ref = useRef<{ reload: Function; formControl: UseFormReturn<any> }>();
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getPost(id!));
   }, [dispatch, id]);
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    ref.current?.formControl.setValue(
+      'ispublished',
+      newValue === '1' ? 1 : newValue === '2' ? 0 : 2
+    );
+    setActiveTab(newValue);
+    ref.current?.formControl.setValue('tabindex', newValue);
+  };
 
   return (
-    <Page title="Blog: Post Details | Minimal-UI">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
-        <HeaderBreadcrumbs
-          heading="Post Details"
-          links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'Blog', href: PATH_DASHBOARD.blog.root }
-          ]}
-        />
-
-        {post && (
-          <Card>
-            <BlogPostHero post={post} />
-
-            <Box sx={{ p: { xs: 3, md: 5 } }}>
-              <Typography variant="h6" sx={{ mb: 5 }}>
-                {post.description}
-              </Typography>
-
-              <Markdown children={post.body} />
-
-              <Box sx={{ my: 5 }}>
-                <Divider />
-                {/* <BlogPostTags post={post} /> */}
-                <Divider />
-              </Box>
-
-              {/* <Box sx={{ display: 'flex', mb: 2 }}>
-                <Typography variant="h4">Comments</Typography>
-                <Typography variant="subtitle2" sx={{ color: 'text.disabled' }}>
-                  ({post.comments.length})
-                </Typography>
-              </Box> */}
-
-              {/* <BlogPostCommentList post={post} /> */}
-
-              {/* <Box sx={{ mb: 5, mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
-                <Pagination count={8} color="primary" />
-              </Box>
-
-              <BlogPostCommentForm /> */}
-            </Box>
-          </Card>
-        )}
-
-        {!post && SkeletonLoad}
-
-        {error && <Typography variant="h6">404 Post not found</Typography>}
-
-        {/* {recentPosts.length > 0 && <BlogPostRecent posts={recentPosts} />} */}
-      </Container>
+    <Page
+      title="Quản lý bài viết"
+      actions={() => [
+        <Button
+          key="add-post"
+          onClick={() => {
+            navigate(PATH_DASHBOARD.blog.newPost);
+          }}
+          variant="contained"
+          startIcon={<Icon icon={plusFill} />}
+        >
+          Thêm bài viết
+        </Button>
+      ]}
+    >
+      <Card>
+        <TabContext value={activeTab}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <TabList onChange={handleChange} aria-label="lab API tabs example">
+              <Tab label="Bài viết đã xuất bản" value="1" />
+              <Tab label="Bài viết chưa xuất bản" value="2" />
+              <Tab label="Bài viết nháp" value="3" />
+            </TabList>
+          </Box>
+          <ResoTable
+            ref={ref}
+            pagination
+            getData={(params: any) => blogApi.getBlogs(params)}
+            // onEdit={editPost}
+            // onDelete={onDelete}
+            columns={postColumns}
+            rowKey="post_id"
+          />
+        </TabContext>
+      </Card>
     </Page>
   );
 }

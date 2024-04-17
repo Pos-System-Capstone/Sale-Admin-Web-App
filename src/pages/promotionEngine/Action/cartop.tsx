@@ -110,7 +110,7 @@ const TaskComponent = ({
             <p>%</p>
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>và giá chiết khấu tối đa là </p>
+            <p>Giảm giá tối đa </p>
             {/* <InputField name="maximunDiscount" /> */}
             <InputField
               name="maxAmount"
@@ -314,9 +314,9 @@ const TaskComponent = ({
             <p>% cho giỏ hàng</p>
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>giá chiết khấu tối đa là</p>
+            <p>giá giảm tối đa là</p>
             <InputField
-              name="minPriceAfter"
+              name="maxAmount"
               type="number"
               sx={{ width: '120px' }}
               InputProps={{
@@ -362,7 +362,7 @@ const TaskComponent = ({
             <p>% tính phí cho giỏ hàng</p>
           </ListItem>
           <ListItem style={{ display: 'flex', alignItems: 'center' }}>
-            <p>giá chiết khấu tối đa là</p>
+            <p>giá giảm tối đa là</p>
             <InputField
               name="maxAmount"
               type="number"

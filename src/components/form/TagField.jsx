@@ -5,8 +5,9 @@ import React, { useState, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 const TagField = ({
+  dataArray = [],
   data = '',
-  punctuation,
+  punctuation = '',
   isInput = false,
   name = '',
   label = '',
@@ -21,6 +22,7 @@ const TagField = ({
   ...props
 }) => {
   const { control, setValue, getValues } = useFormContext();
+  const [listArray, setListArray] = useState(dataArray);
   const [listValue, setListValue] = useState([]);
   const [newValue, setNewValue] = useState('');
   const rawString = data ? data : getValues(name);
@@ -37,7 +39,11 @@ const TagField = ({
       .filter(Boolean);
     return list;
   };
+  useEffect(() => {
+    dataArray.length > 0 && setListArray(dataArray);
+  }, [dataArray]);
 
+  console.log(dataArray);
   useEffect(() => {
     if (rawString) {
       const parsedList = parseStringToList(rawString, punctuation);
@@ -116,6 +122,9 @@ const TagField = ({
                       label={value}
                       onDelete={isInput ? () => removeValue(index) : undefined}
                     />
+                  ))}
+                  {listArray.map((value, index) => (
+                    <Chip key={index} label={value} />
                   ))}
                 </Stack>
               </ScrollableGridItem>

@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import StepOne from './StepOne';
 
-import { TPromotionBase } from 'types/promotion/promotion';
+import { TPromotionCreate } from 'types/promotion/promotion';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { getUserInfo } from 'utils/utils';
@@ -97,17 +97,21 @@ const CreatePromotion = (props: Props) => {
   const user: any = JSON.parse(userRaw ?? '{}');
   const startDate = new Date();
   const endDate = new Date();
-  const createPromotionForm = useForm<TPromotionBase>({
+  const createPromotionForm = useForm<TPromotionCreate>({
     // resolver: activeStep === 0 ? yupResolver(validationSchema) : yupResolver(validationSchema2);
     defaultValues: {
       brandId: user.brandId,
-      hasVoucher: true,
-      applyBy: 0,
+      hasVoucher: false,
+      applyBy: 3,
       promotionType: 0,
       promotionCode: '',
       promotionName: '',
       exclusive: 0,
       postActionType: 0,
+      forMembership: 0,
+      saleMode: 7,
+      gender: 3,
+      isAuto: true,
       startDate: startDate,
       endDate: endDate,
       hourFilter: [],
@@ -115,7 +119,9 @@ const CreatePromotion = (props: Props) => {
       paymentMethod: [],
       imgUrl: '',
       actionType: 0,
-      description: ''
+      description: '',
+      allDay: false,
+      allHour: false
     }
   });
 
@@ -148,7 +154,6 @@ const CreatePromotion = (props: Props) => {
 
   const { handleSubmit, watch, formState } = createPromotionForm;
 
-  // targetCustomer[1] = member
   return (
     <FormProvider {...createPromotionForm}>
       <Page title={`${translate('promotionSystem.promotion.createPromotion.createPromotion')}`}>

@@ -113,8 +113,8 @@ export type TPromotionCreate = {
   description: string;
   exclusive: number;
   applyBy: number;
-  startDate: string;
-  endDate: string;
+  startDate: any;
+  endDate: any;
   saleMode: number;
   gender: number;
   paymentMethod: number | number[];
@@ -125,7 +125,12 @@ export type TPromotionCreate = {
   status: number;
   hasVoucher: boolean;
   isAuto: boolean;
+  allDay: boolean;
+  allHour: boolean;
   promotionType: number;
+  storeIdMappings: string[];
+  memberLevelIdMappings: string[];
+  chanelIdMappings: string[];
 };
 
 export type TCreatePromotionTier = {

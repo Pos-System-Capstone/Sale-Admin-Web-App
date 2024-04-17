@@ -21,15 +21,26 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { useState } from 'react';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
-import { InputField, RadioGroupField, SelectField, UploadImageField } from 'components/form';
+import {
+  InputField,
+  RadioGroupField,
+  SelectField,
+  SwitchField,
+  UploadImageField
+} from 'components/form';
 import useDashboard from 'hooks/useDashboard';
 import { TPromotionCreate } from 'types/promotion/promotion';
 import { useNavigate } from 'react-router';
 import CheckBoxGroupField from 'components/form/CheckBoxGroupField';
-import promotionApi from 'api/promotion/promotion';
+// import promotionApi from 'api/promotion/promotion';
 import DateTimePickerField from 'components/form/DateTimePickerField';
 import { useSnackbar } from 'notistack';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
+import TabStore from './modalForm/TabStore';
+import { useQuery } from 'react-query';
+import membershipsApi from 'api/promotion/membership';
+import { getUserInfo } from 'utils/utils';
+import promotionApi from 'api/promotion/promotion';
 
 interface Props {
   watch: any;
@@ -41,6 +52,11 @@ function StepOne({ watch, handleSubmit }: Props) {
   const { setNavOpen } = useDashboard();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  const [stores, setStores] = useState<string[]>([]);
+  const [channels, setChannels] = useState<string[]>([]);
+  const userRaw = getUserInfo();
+  const user: any = JSON.parse(userRaw ?? '{}');
+  const [checked, setChecked] = useState(false);
   const StyleWidthTypography = styled(Typography)((props) => ({
     marginTop: `${props.marginTop || '16px'}`,
     width: `${props.width || '50%'}`
@@ -79,10 +95,19 @@ function StepOne({ watch, handleSubmit }: Props) {
   const statusList = statusMap();
   const promotionTypes = promotionTypeList();
   const [value, setValue] = useState<string>('1');
-
+  const isMember = (watch('forMembership') == 0 || watch('forMembership')) == 1 ? true : false;
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
   };
+  const { data: memberLevels } = useQuery(['memberLevel'], () =>
+    membershipsApi
+      .getMemberLever({ page: 1, size: 100, apiKey: user.brandId })
+      .then((res) => res.data.items)
+  );
+
+  const memberLevelOptions = memberLevels
+    ? memberLevels.map((c) => ({ label: c.name, value: c.memberLevelId }))
+    : [];
 
   const onSubmit = async (values: TPromotionCreate) => {
     const body: TPromotionCreate = { ...values };
@@ -101,14 +126,20 @@ function StepOne({ watch, handleSubmit }: Props) {
       (accumulator: number, currentValue: number) => accumulator + currentValue,
       0
     );
-    body.dayFilter = (values.dayFilter as number[]).reduce(
-      (accumulator: number, currentValue: number) => accumulator + currentValue,
-      0
-    );
-    body.hourFilter = (values.hourFilter as number[]).reduce(
-      (accumulator: number, currentValue: number) => accumulator + currentValue,
-      0
-    );
+    body.dayFilter = watch('allDay')
+      ? 16777215
+      : (values.dayFilter as number[]).reduce(
+          (accumulator: number, currentValue: number) => accumulator + currentValue,
+          0
+        );
+    body.hourFilter = watch('allDay')
+      ? 127
+      : (values.hourFilter as number[]).reduce(
+          (accumulator: number, currentValue: number) => accumulator + currentValue,
+          0
+        );
+    body.storeIdMappings = stores;
+    body.chanelIdMappings = channels;
     try {
       const res = await promotionApi.createPromotion(body);
       if (res.status == 200) {
@@ -121,6 +152,7 @@ function StepOne({ watch, handleSubmit }: Props) {
       console.error('Error:', error);
       enqueueSnackbar('Có lỗi xảy ra', { variant: 'error' });
     }
+    console.log('body', body);
   };
 
   return (
@@ -140,6 +172,7 @@ function StepOne({ watch, handleSubmit }: Props) {
                 <Tab label="Tổng quan" value="1" />
                 <Tab label="Cấu hình" value="2" />
                 <Tab label="Thời gian" value="3" />
+                <Tab label="Cửa hàng" value="4" />
               </TabList>
             </Box>
             <TabPanel value="1">
@@ -158,21 +191,14 @@ function StepOne({ watch, handleSubmit }: Props) {
                           name="promotionName"
                           label={translate('promotionSystem.promotion.preview.name')}
                           required
-                          defaultValue="promotionName"
                         />
                       </Grid>
                       <Grid item xs={12}>
                         <InputField fullWidth name="promotionCode" label="Mã khuyến mãi" required />
                       </Grid>
-                      <Grid item xs={12}>
-                        <InputField
-                          fullWidth
-                          name="actionType"
-                          label="Loại hành động"
-                          required
-                          defaultValue="0"
-                        />
-                      </Grid>
+                      {/* <Grid item xs={12}>
+                        <InputField fullWidth name="actionType" label="Loại hành động" required />
+                      </Grid> */}
                       <Grid item xs={12}>
                         <DateTimePickerField
                           fullWidth
@@ -209,7 +235,6 @@ function StepOne({ watch, handleSubmit }: Props) {
                           name="postActionType"
                           label="Loại hành động post"
                           required
-                          defaultValue="0"
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -218,27 +243,10 @@ function StepOne({ watch, handleSubmit }: Props) {
                           name="exclusive"
                           label={translate('promotionSystem.promotion.preview.exclusive')}
                           required
-                          defaultValue="0"
                         />
                       </Grid>
                       <Grid item xs={12}>
                         <InputField fullWidth name="description" label={'Tiêu đề'} required />
-                      </Grid>
-
-                      <Grid container item xs={12}>
-                        <StyleWidthTypography variant="h6">Có Voucher</StyleWidthTypography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <RadioGroupField
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'row'
-                          }}
-                          fullWidth
-                          options={hasVoucherList}
-                          name="hasVoucher"
-                          defaultValue={hasVoucherList}
-                        />
                       </Grid>
                     </Grid>
                     <Grid item xs={4}>
@@ -318,6 +326,24 @@ function StepOne({ watch, handleSubmit }: Props) {
                           />
                         </StyleWidthTypography>
                       </Box>
+                      {isMember ? (
+                        <Box alignItems="center" display={'flex'}>
+                          <StyleWidthTypography variant="h6" sx={{ width: '35%' }}>
+                            Chọn level:
+                          </StyleWidthTypography>
+                          <StyleWidthTypography variant="body1" sx={{ width: '65%' }}>
+                            <Grid container xs={12}>
+                              <CheckBoxGroupField
+                                xs={4}
+                                options={memberLevelOptions}
+                                name={'memberLevelIdMappings'}
+                              />
+                            </Grid>
+                          </StyleWidthTypography>
+                        </Box>
+                      ) : (
+                        ' '
+                      )}
 
                       <Box display="flex" alignItems="center">
                         <StyleWidthTypography variant="h6" sx={{ width: '35%' }}>
@@ -329,24 +355,6 @@ function StepOne({ watch, handleSubmit }: Props) {
                             fullWidth
                             options={applyList}
                             name="applyBy"
-                          />
-                        </StyleWidthTypography>
-                      </Box>
-                      <Box display="flex" alignItems="center">
-                        <StyleWidthTypography variant="h6" width={'50%'}>
-                          Tự động:
-                        </StyleWidthTypography>
-                        <StyleWidthTypography variant="body1">
-                          <RadioGroupField
-                            sx={{
-                              display: 'flex',
-                              justifyContent: 'flex-start',
-                              flexDirection: 'row'
-                            }}
-                            fullWidth
-                            options={isAutoList}
-                            name="isAuto"
-                            defaultValue={isAutoList}
                           />
                         </StyleWidthTypography>
                       </Box>
@@ -385,16 +393,15 @@ function StepOne({ watch, handleSubmit }: Props) {
                       </Box>
 
                       <Box display="flex" alignItems="center">
-                        <StyleWidthTypography variant="h6">
-                          {translate('promotionSystem.promotion.preview.availableOnHoliday')}：
-                        </StyleWidthTypography>
-                        <StyleWidthTypography variant="body1">
-                          <RadioGroupField
-                            sx={{ display: 'flex', flexDirection: 'row' }}
-                            options={forHolidayStatuss}
-                            name="forHoliday"
-                          />
-                        </StyleWidthTypography>
+                        <Box display="flex" alignItems="center">
+                          <SwitchField name="forHoliday" label={'Áp dụng ngày lễ'} />
+                        </Box>
+                        <Box display="flex" alignItems="center">
+                          <SwitchField name="isAuto" label={'Tự động'} />
+                        </Box>
+                        <Box>
+                          <SwitchField name="hasVoucher" label={'Có voucher'} />
+                        </Box>
                       </Box>
 
                       <Box>
@@ -435,27 +442,51 @@ function StepOne({ watch, handleSubmit }: Props) {
                     </Grid>
                     <Grid p={0} item xs={12}>
                       <Box>
-                        <StyleWidthTypography variant="h6">Khung Ngày:</StyleWidthTypography>
+                        <StyleWidthTypography variant="h6">
+                          Khung Ngày <SwitchField name={'allDay'} label={'Tất cả'} />{' '}
+                        </StyleWidthTypography>
                       </Box>
                       <Box>
                         <Grid container xs={12}>
-                          <CheckBoxGroupField xs={1.5} options={dayList} name={'dayFilter'} />
+                          {!watch('allDay') ? (
+                            <CheckBoxGroupField xs={1.5} options={dayList} name={'dayFilter'} />
+                          ) : (
+                            ''
+                          )}
                         </Grid>
                       </Box>
                     </Grid>
                     <Grid p={0} item xs={12}>
                       <Box alignItems="center" width="100%">
-                        <StyleWidthTypography variant="h6">Khung Giờ:</StyleWidthTypography>
+                        <StyleWidthTypography variant="h6">
+                          Khung Giờ <SwitchField name={'allHour'} label={'Tất cả'} />{' '}
+                        </StyleWidthTypography>
                       </Box>
                       <Box>
                         <Grid container xs={12}>
-                          <CheckBoxGroupField xs={12 / 8} options={timeList} name={'hourFilter'} />
+                          {!watch('allHour') ? (
+                            <CheckBoxGroupField
+                              xs={12 / 8}
+                              options={timeList}
+                              name={'hourFilter'}
+                            />
+                          ) : (
+                            ''
+                          )}
                         </Grid>
                       </Box>
                     </Grid>
                   </Grid>
                 </Box>
               </Stack>
+            </TabPanel>
+            <TabPanel value="4">
+              <TabStore
+                stores={stores}
+                setStores={setStores}
+                channels={channels}
+                setChannels={setChannels}
+              />
             </TabPanel>
           </TabContext>
         </Stack>

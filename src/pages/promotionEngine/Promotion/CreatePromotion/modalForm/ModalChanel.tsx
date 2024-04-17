@@ -1,43 +1,44 @@
 import closeFill from '@iconify/icons-eva/close-fill';
 import { Icon } from '@iconify/react';
-import { Box, Button, Dialog, IconButton, Paper, Stack, Typography } from '@mui/material';
+import { Box, Dialog, IconButton, Paper, Stack, Typography } from '@mui/material';
 import productApi from 'api/product';
-import variantApi from 'api/variant';
-import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+import channelPromotionApi from 'api/promotion/channel';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import { TPChannelBase } from 'types/promotion/channelPromotions';
+import { TTableColumn } from 'types/table';
 interface Props {
-  variantsColunm: any;
-  ProductId?: string;
+  brandId: string;
   trigger?: any;
   update: any;
   onReload: Function;
-  selectedVariants: string[] | undefined;
+  selectedChannelIds: string[] | undefined;
   selected?: string[] | undefined;
   type?: string | undefined;
 }
-const ModalVariants = ({
-  ProductId,
+const ModalChanel = ({
+  brandId,
   trigger,
   onReload,
-  variantsColunm,
-  selectedVariants,
+  selectedChannelIds,
   update,
   selected = [],
   type = 'checkbox'
 }: Props) => {
   const [open, setOpen] = useState(false);
-  const selectedVariantIds = selectedVariants;
-  const { id } = useParams();
+  const selectedIds = selectedChannelIds;
   const handleClick = () => {
     setOpen((o) => !o);
   };
   const { enqueueSnackbar } = useSnackbar();
 
+  const channelColunm: TTableColumn<TPChannelBase>[] = [
+    { title: 'Mã cửa hàng', dataIndex: 'channelName' }
+  ];
+
   const handleSubmit = () =>
-    Promise.resolve(productApi.addVariantsToProduct(ProductId!, selectedVariantIds!))
+    Promise.resolve(productApi.addVariantsToProduct(brandId!, selectedIds!))
       .then((res) => {
         enqueueSnackbar('Them thanh cong', {
           variant: 'success'
@@ -54,7 +55,6 @@ const ModalVariants = ({
   const handleChangeSelection = React.useCallback((ids) => {
     update(ids);
   }, []);
-  console.log('selectedExtraCategoryIds', selectedVariantIds);
   return (
     <>
       {React.cloneElement(trigger, { onClick: handleClick })}
@@ -81,15 +81,15 @@ const ModalVariants = ({
             <Stack spacing={2}>
               <ResoTable
                 checkboxSelection={{
-                  selection: selectedVariantIds,
+                  selection: selectedIds,
                   type: type
                 }}
                 showAction={false}
                 scroll={{ y: '50%', x: '100%' }}
-                rowKey="id"
-                getData={variantApi.getVariants}
+                rowKey="channelId"
+                getData={() => channelPromotionApi.getChannels({ page: 1, size: 1000, brandId })}
                 onChangeSelection={handleChangeSelection}
-                columns={variantsColunm}
+                columns={channelColunm}
               />
             </Stack>
           </Box>
@@ -103,16 +103,8 @@ const ModalVariants = ({
             alignItems="center"
           >
             <Typography variant="body1">
-              Đã chọn <strong>{selectedVariantIds?.length}</strong> sản phẩm
+              Đã chọn <strong>{selectedIds?.length}</strong> sản phẩm
             </Typography>
-            <Stack direction="row" spacing={2} justifyContent="flex-end">
-              <Button variant="outlined" onClick={() => setOpen(false)}>
-                Hủy
-              </Button>
-              <LoadingAsyncButton onClick={handleSubmit} variant="contained">
-                Thêm
-              </LoadingAsyncButton>
-            </Stack>
           </Box>
         </Box>
       </Dialog>
@@ -120,4 +112,4 @@ const ModalVariants = ({
   );
 };
 
-export default ModalVariants;
+export default ModalChanel;

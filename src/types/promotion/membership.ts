@@ -8,6 +8,10 @@ export type TMembership = {
   gender?: any;
 };
 
+export type TMemberLevel = {
+  memberLevelId?: string;
+  name?: string;
+};
 
 export type TTransactionByMemberShipId = {
   insDate?: any;
@@ -28,5 +32,3 @@ export type TMembershipProgram = {
   membershipCardType?: any[];
   walletType?: any[];
 };
-
-

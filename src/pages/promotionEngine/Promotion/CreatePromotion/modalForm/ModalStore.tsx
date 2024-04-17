@@ -1,60 +1,42 @@
 import closeFill from '@iconify/icons-eva/close-fill';
 import { Icon } from '@iconify/react';
-import { Box, Button, Dialog, IconButton, Paper, Stack, Typography } from '@mui/material';
-import productApi from 'api/product';
-import variantApi from 'api/variant';
-import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+import { Box, Dialog, IconButton, Paper, Stack, Typography } from '@mui/material';
+import storePromotionApi from 'api/promotion/store';
 import ResoTable from 'components/ResoTable/ResoTable';
-import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import { TPStore } from 'types/promotion/store';
+import { TTableColumn } from 'types/table';
 interface Props {
-  variantsColunm: any;
-  ProductId?: string;
+  brandId?: string;
   trigger?: any;
   update: any;
   onReload: Function;
-  selectedVariants: string[] | undefined;
+  selectedStoreIds: string[] | undefined;
   selected?: string[] | undefined;
   type?: string | undefined;
 }
-const ModalVariants = ({
-  ProductId,
+const ModalStore = ({
+  brandId,
   trigger,
   onReload,
-  variantsColunm,
-  selectedVariants,
+  selectedStoreIds,
   update,
   selected = [],
   type = 'checkbox'
 }: Props) => {
   const [open, setOpen] = useState(false);
-  const selectedVariantIds = selectedVariants;
-  const { id } = useParams();
+  const selectedIds = selectedStoreIds;
   const handleClick = () => {
     setOpen((o) => !o);
   };
-  const { enqueueSnackbar } = useSnackbar();
 
-  const handleSubmit = () =>
-    Promise.resolve(productApi.addVariantsToProduct(ProductId!, selectedVariantIds!))
-      .then((res) => {
-        enqueueSnackbar('Them thanh cong', {
-          variant: 'success'
-        });
-        setOpen(false);
-        onReload();
-      })
-      .catch((err) => {
-        enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
-          variant: 'error'
-        });
-      });
+  console.log('selectedExtraCategoryIds', selectedIds);
+  const storeColunm: TTableColumn<TPStore>[] = [{ title: 'Mã cửa hàng', dataIndex: 'storeCode' }];
 
   const handleChangeSelection = React.useCallback((ids) => {
     update(ids);
   }, []);
-  console.log('selectedExtraCategoryIds', selectedVariantIds);
+
   return (
     <>
       {React.cloneElement(trigger, { onClick: handleClick })}
@@ -71,7 +53,7 @@ const ModalVariants = ({
               borderColor="grey.300"
               textAlign="right"
             >
-              <Typography variant="h6">Thêm biến thể vào sản phẩm</Typography>
+              <Typography variant="h6">Thêm cửa hàng</Typography>
               <IconButton aria-label="close" onClick={() => setOpen(false)} size="large">
                 <Icon icon={closeFill} />
               </IconButton>
@@ -81,15 +63,17 @@ const ModalVariants = ({
             <Stack spacing={2}>
               <ResoTable
                 checkboxSelection={{
-                  selection: selectedVariantIds,
+                  selection: selectedIds,
                   type: type
                 }}
                 showAction={false}
                 scroll={{ y: '50%', x: '100%' }}
-                rowKey="id"
-                getData={variantApi.getVariants}
+                rowKey="storeId"
+                getData={(params: any) =>
+                  storePromotionApi.getStores({ page: 1, size: 10, brandId })
+                }
                 onChangeSelection={handleChangeSelection}
-                columns={variantsColunm}
+                columns={storeColunm}
               />
             </Stack>
           </Box>
@@ -103,16 +87,9 @@ const ModalVariants = ({
             alignItems="center"
           >
             <Typography variant="body1">
-              Đã chọn <strong>{selectedVariantIds?.length}</strong> sản phẩm
+              Đã chọn <strong>{selectedIds?.length}</strong> sản phẩm
             </Typography>
-            <Stack direction="row" spacing={2} justifyContent="flex-end">
-              <Button variant="outlined" onClick={() => setOpen(false)}>
-                Hủy
-              </Button>
-              <LoadingAsyncButton onClick={handleSubmit} variant="contained">
-                Thêm
-              </LoadingAsyncButton>
-            </Stack>
+            <Stack direction="row" spacing={2} justifyContent="flex-end"></Stack>
           </Box>
         </Box>
       </Dialog>
@@ -120,4 +97,4 @@ const ModalVariants = ({
   );
 };
 
-export default ModalVariants;
+export default ModalStore;

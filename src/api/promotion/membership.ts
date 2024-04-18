@@ -1,4 +1,5 @@
 import {
+  TMemberLevel,
   TMembership,
   TMembershipProgram,
   TTransactionByMemberShipId
@@ -22,6 +23,9 @@ const deleteMembership = (params?: any) =>
 const getMembershipById = (id: string | undefined) =>
   request.get<TMembership>(`/memberships/${id}`);
 
+const getMemberLever = (params?: any) =>
+  request.get<BaseReponse<TMemberLevel>>(`/member-level`, { params });
+
 const updateMembership = (id: string | undefined, data?: TMembership) =>
   request.put<TMembership>(`/memberships/${id}`, data);
 
@@ -38,7 +42,8 @@ const membershipsApi = {
   updateMembership,
   getMembershipPrograms,
   getTransactionByMembershipId,
-  getMembershipProgramsById
+  getMembershipProgramsById,
+  getMemberLever
 };
 
 export default membershipsApi;

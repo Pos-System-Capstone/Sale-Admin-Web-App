@@ -35,57 +35,39 @@ const discountActionList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
     {
-      label: `${translate(
-        'promotionSystem.promotion.createPromotion.discountActionType.discountAmountOfOrder'
-      )}`,
+      label: `Giảm giá đơn hàng`,
       value: 1
     },
     {
-      label: `${translate(
-        'promotionSystem.promotion.createPromotion.discountActionType.discountPercentageOfOrder'
-      )}`,
+      label: `Giảm phần trăm đơn hàng`,
       value: 2
     },
     {
-      label: `${translate(
-        'promotionSystem.promotion.createPromotion.discountActionType.discountShippingFeeOfOrder'
-      )}`,
+      label: `Giảm phí ship`,
       value: 3
     },
     {
-      label: `${translate(
-        'promotionSystem.promotion.createPromotion.discountActionType.discountAmountOfItem'
-      )}`,
+      label: `Giảm giá sản phẩm`,
       value: 4
     },
     {
-      label: `${translate(
-        'promotionSystem.promotion.createPromotion.discountActionType.discountPercentOfItem'
-      )}`,
+      label: `Giảm phần trăm sản phẩm`,
       value: 5
     },
     {
-      label: `${translate(
-        'promotionSystem.promotion.createPromotion.discountActionType.discountUnitOfItem'
-      )}`,
+      label: `đơn vị sản phẩm`,
       value: 6
     },
     {
-      label: `${translate(
-        'promotionSystem.promotion.createPromotion.discountActionType.fixedPriceOfItem'
-      )}`,
+      label: `Giá cố định`,
       value: 7
     },
     {
-      label: `${translate(
-        'promotionSystem.promotion.createPromotion.discountActionType.ladderPriceOfItem'
-      )}`,
+      label: `Giao dịch theo bảng giá`,
       value: 8
     },
     {
-      label: `${translate(
-        'promotionSystem.promotion.createPromotion.discountActionType.bundlePriceOfItem'
-      )}`,
+      label: `Giá trọn gói`,
       value: 9
     },
     {
@@ -121,15 +103,46 @@ const giftActionList = () => {
 const actionType = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    { label: 'Số lượng đơn', value: 1 },
-    { label: 'Phần trăm đơn', value: 2 },
-    { label: 'Đang vận chuyển ', value: 3 },
-    { label: 'Số lượng sản phẩm ', value: 4 },
-    { label: 'Phần trăm sản phẩm ', value: 5 },
-    { label: 'Unit ', value: 6 },
-    { label: 'Fixed ', value: 7 },
-    { label: 'Ladder ', value: 8 },
-    { label: 'Bundle', value: 9 }
+    {
+      label: `Giảm giá đơn hàng`,
+      value: 1
+    },
+    {
+      label: `Giảm phần trăm đơn hàng`,
+      value: 2
+    },
+    {
+      label: `Giảm phí ship`,
+      value: 3
+    },
+    {
+      label: `Giảm giá sản phẩm`,
+      value: 4
+    },
+    {
+      label: `Giảm phần trăm sản phẩm`,
+      value: 5
+    },
+    {
+      label: `đơn vị sản phẩm`,
+      value: 6
+    },
+    {
+      label: `Giá cố định`,
+      value: 7
+    },
+    {
+      label: `Giao dịch theo bảng giá`,
+      value: 8
+    },
+    {
+      label: `Giá trọn gói`,
+      value: 9
+    },
+    {
+      label: 'Tặng điểm',
+      value: 10
+    }
   ];
 };
 const timeFrameList = () => {

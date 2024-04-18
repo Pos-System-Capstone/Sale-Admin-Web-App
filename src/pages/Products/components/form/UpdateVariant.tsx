@@ -27,7 +27,7 @@ export default function UpdateVariant() {
       dataIndex: 'name'
     },
     {
-      title: 'Mã sản phẩm',
+      title: 'Biến thể',
       dataIndex: 'value',
       hideInSearch: true,
       render: (value: any) => <TagField data={value} punctuation={'_'} />

@@ -23,7 +23,6 @@ import typography from '../../../theme/typography';
 // utils
 // import fakeRequest from '../../../utils/fakeRequest';
 // @types
-import { PostBlogFormValues } from '../../../@types/blog';
 //
 // import { QuillEditor } from '../../editor';
 import { UploadSingleFile } from '../../upload';
@@ -31,6 +30,7 @@ import BlogNewPostPreview from './BlogNewPostPreview';
 import { dispatch } from 'redux/store';
 import { postBlog } from 'redux/slices/blog';
 import { getUserInfo } from 'utils/utils';
+import { TBlogCreate } from 'types/blog';
 
 // ----------------------------------------------------------------------
 
@@ -78,16 +78,14 @@ export default function BlogNewPostForm() {
     image: Yup.mixed().required('Cover is required')
   });
 
-  const formik = useFormik<PostBlogFormValues>({
+  const formik = useFormik<TBlogCreate>({
     initialValues: {
       title: '',
       blogContent: '',
       image: null,
       isDialog: true,
-      status: 'Active',
       metaData: '',
-      priority: 1,
-      brandId: user.brandId
+      priority: 1
     },
     validationSchema: NewBlogSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
@@ -127,10 +125,16 @@ export default function BlogNewPostForm() {
                 <Stack spacing={3}>
                   <TextField
                     fullWidth
-                    label="Post Title"
+                    label="Tiêu đề"
                     {...getFieldProps('title')}
                     error={Boolean(touched.title && errors.title)}
                     helperText={touched.title && errors.title}
+                  />
+                  <FormControlLabel
+                    control={<Switch {...getFieldProps('isDialog')} checked={values.isDialog} />}
+                    label="Bảng thông báo"
+                    labelPlacement="start"
+                    sx={{ mx: 0, width: '100%', justifyContent: 'space-between' }}
                   />
 
                   <TextField
@@ -138,26 +142,11 @@ export default function BlogNewPostForm() {
                     multiline
                     minRows={3}
                     maxRows={5}
-                    label="Description"
+                    label="Chi tiết"
                     {...getFieldProps('blogContent')}
                     error={Boolean(touched.blogContent && errors.blogContent)}
                     helperText={touched.blogContent && errors.blogContent}
                   />
-
-                  {/* <div>
-                    <LabelStyle>Content</LabelStyle>
-                    <QuillEditor
-                      id="post-content"
-                      value={values.content}
-                      onChange={(val) => setFieldValue('content', val)}
-                      error={Boolean(touched.content && errors.content)}
-                    />
-                    {touched.content && errors.content && (
-                      <FormHelperText error sx={{ px: 2 }}>
-                        {touched.content && errors.content}
-                      </FormHelperText>
-                    )}
-                  </div> */}
 
                   <div>
                     <LabelStyle>Cover</LabelStyle>
@@ -182,25 +171,25 @@ export default function BlogNewPostForm() {
               <Card sx={{ p: 3 }}>
                 <Stack spacing={3}>
                   <div>
-                    <FormControlLabel
+                    {/* <FormControlLabel
                       control={
                         <Switch
                           {...getFieldProps('status')}
                           onChange={() => {
-                            const newStatus = values.status === 'Active' ? 'unActive' : 'Active';
+                            const newStatus = values.isDialog === true ? false : true;
                             setFieldValue('status', newStatus);
                           }}
-                          checked={values.status === 'Active'}
+                          checked={values.isDialog}
                         />
                       }
                       label="Publish"
                       labelPlacement="start"
                       sx={{ mb: 1, mx: 0, width: '100%', justifyContent: 'space-between' }}
-                    />
+                    /> */}
 
                     <FormControlLabel
                       control={<Switch {...getFieldProps('isDialog')} checked={values.isDialog} />}
-                      label="Enable comments"
+                      label="Bảng thông báo"
                       labelPlacement="start"
                       sx={{ mx: 0, width: '100%', justifyContent: 'space-between' }}
                     />

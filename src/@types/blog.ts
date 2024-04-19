@@ -1,4 +1,5 @@
 import { FormikProps } from 'formik';
+import { TBlogCreate } from 'types/blog';
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +27,7 @@ export type PostBlogFormValues = {
   brandId: string;
 };
 
-export type NewPostViewFormikInstance = FormikProps<PostBlogFormValues>;
+export type NewPostViewFormikInstance = FormikProps<TBlogCreate>;
 
 export type BlogState = {
   isLoading: boolean;

@@ -70,7 +70,7 @@ export default function BlogNewPostPreview({
 }: BlogNewPostPreviewProps) {
   const { values, handleSubmit, isSubmitting, isValid } = formik;
   const { title, blogContent } = values;
-  const image = isString(values.image) ? values.image : values.image?.preview;
+  const image = isString(values.image) ? values.image : values.image;
   const hasContent = title || blogContent || image;
   const hasHero = title || image;
 

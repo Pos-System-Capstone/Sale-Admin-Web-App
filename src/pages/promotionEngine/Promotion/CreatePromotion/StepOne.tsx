@@ -127,13 +127,13 @@ function StepOne({ watch, handleSubmit }: Props) {
       0
     );
     body.dayFilter = watch('allDay')
-      ? 16777215
+      ? 127
       : (values.dayFilter as number[]).reduce(
           (accumulator: number, currentValue: number) => accumulator + currentValue,
           0
         );
-    body.hourFilter = watch('allDay')
-      ? 127
+    body.hourFilter = watch('allHour')
+      ? 16777215
       : (values.hourFilter as number[]).reduce(
           (accumulator: number, currentValue: number) => accumulator + currentValue,
           0

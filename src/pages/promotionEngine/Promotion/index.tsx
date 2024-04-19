@@ -49,14 +49,14 @@ const Promotion = (props: Props) => {
     {
       title: `${translate('promotionSystem.promotion.table.code')}`,
       dataIndex: 'promotionCode',
-      valueType: 'text'
+      valueType: 'text',
+      hideInSearch: true
     },
     {
       title: `${translate('promotionSystem.promotion.table.type')}`,
       dataIndex: 'promotionType',
       valueEnum: PROMOTION_TYPE_ENUM,
       valueType: 'select',
-      hideInSearch: true,
       render: (value) => (
         <Label
           color={

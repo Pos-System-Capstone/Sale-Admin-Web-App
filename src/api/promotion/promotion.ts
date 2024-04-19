@@ -83,9 +83,9 @@ export const STATUS_TYPE_DATA = () => {
 export const PROMOTION_TYPE_DATA = () => {
   const { translate } = useLocales();
   return [
-    { value: 1, label: translate('promotionSystem.promotion.createPromotion.usingVoucher') },
+    { value: 1, label: translate('promotionSystem.promotion.createPromotion.automatic') },
     { value: 2, label: translate('promotionSystem.promotion.createPromotion.usingCode') },
-    { value: 3, label: translate('promotionSystem.promotion.createPromotion.automatic') },
+    { value: 3, label: translate('promotionSystem.promotion.createPromotion.usingVoucher') },
     { value: null, label: '' }
   ];
 };

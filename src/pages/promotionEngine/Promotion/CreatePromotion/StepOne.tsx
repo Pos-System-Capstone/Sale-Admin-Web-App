@@ -117,7 +117,7 @@ function StepOne({ watch, handleSubmit }: Props) {
     body.actionType = Number(values.actionType);
     body.forHoliday = Number(values.forHoliday);
     body.forMembership = Number(values.forMembership);
-    body.promotionType = Number(values.promotionType);
+    // body.promotionType = Number(values.promotionType);
     body.gender = Number(values.gender);
     body.saleMode = Number(values.saleMode);
     body.isAuto = Boolean(values.isAuto);
@@ -199,6 +199,20 @@ function StepOne({ watch, handleSubmit }: Props) {
                       {/* <Grid item xs={12}>
                         <InputField fullWidth name="actionType" label="Loại hành động" required />
                       </Grid> */}
+
+                      <Grid item xs={12}>
+                        <InputField fullWidth name="description" label={'Tiêu đề'} required />
+                      </Grid>
+                    </Grid>
+                    <Grid container item xs={4}>
+                      <Grid item xs={12}>
+                        <SelectField
+                          fullWidth
+                          options={statusList}
+                          name="status"
+                          label={translate('promotionSystem.promotion.preview.status')}
+                        ></SelectField>
+                      </Grid>
                       <Grid item xs={12}>
                         <DateTimePickerField
                           fullWidth
@@ -219,17 +233,8 @@ function StepOne({ watch, handleSubmit }: Props) {
                           required
                         />
                       </Grid>
-                    </Grid>
-                    <Grid container item xs={4}>
-                      <Grid item xs={12}>
-                        <SelectField
-                          fullWidth
-                          options={statusList}
-                          name="status"
-                          label={translate('promotionSystem.promotion.preview.status')}
-                        ></SelectField>
-                      </Grid>
-                      <Grid item xs={12}>
+
+                      {/* <Grid item xs={12}>
                         <InputField
                           fullWidth
                           name="postActionType"
@@ -244,10 +249,7 @@ function StepOne({ watch, handleSubmit }: Props) {
                           label={translate('promotionSystem.promotion.preview.exclusive')}
                           required
                         />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <InputField fullWidth name="description" label={'Tiêu đề'} required />
-                      </Grid>
+                      </Grid> */}
                     </Grid>
                     <Grid item xs={4}>
                       <Box sx={{ marginTop: '0px' }} display={'flex'} justifyContent={'center'}>
@@ -358,6 +360,33 @@ function StepOne({ watch, handleSubmit }: Props) {
                           />
                         </StyleWidthTypography>
                       </Box>
+                      <Box display="flex" alignItems="center">
+                        <Box display="flex" alignItems="center">
+                          <SwitchField name="forHoliday" label={'Áp dụng ngày lễ'} />
+                        </Box>
+                        <Box display="flex" alignItems="center">
+                          <SwitchField name="isAuto" label={'Tự động'} />
+                        </Box>
+                        <Box>
+                          <SwitchField name="hasVoucher" label={'Có voucher'} />
+                        </Box>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                      {/* <Box>
+                        <StyleWidthTypography variant="h6">Loại khuyến mãi:</StyleWidthTypography>
+                        <StyleWidthTypography variant="body1">
+                          <Grid container xs={12}>
+                            <RadioGroupField
+                              xs={12}
+                              fullWidth
+                              options={promotionTypes}
+                              name="promotionType"
+                              defaultValue={promotionTypes}
+                            />
+                          </Grid>
+                        </StyleWidthTypography>
+                      </Box> */}
                       <Box>
                         <StyleWidthTypography variant="h6" sx={{ width: '100%' }}>
                           Loại：
@@ -375,35 +404,6 @@ function StepOne({ watch, handleSubmit }: Props) {
                           </Grid>
                         </StyleWidthTypography>
                       </Box>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Box>
-                        <StyleWidthTypography variant="h6">Loại khuyến mãi:</StyleWidthTypography>
-                        <StyleWidthTypography variant="body1">
-                          <Grid container xs={12}>
-                            <RadioGroupField
-                              xs={12}
-                              fullWidth
-                              options={promotionTypes}
-                              name="promotionType"
-                              defaultValue={promotionTypes}
-                            />
-                          </Grid>
-                        </StyleWidthTypography>
-                      </Box>
-
-                      <Box display="flex" alignItems="center">
-                        <Box display="flex" alignItems="center">
-                          <SwitchField name="forHoliday" label={'Áp dụng ngày lễ'} />
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                          <SwitchField name="isAuto" label={'Tự động'} />
-                        </Box>
-                        <Box>
-                          <SwitchField name="hasVoucher" label={'Có voucher'} />
-                        </Box>
-                      </Box>
-
                       <Box>
                         <StyleWidthTypography variant="h6" width={'100%'}>
                           {translate('promotionSystem.promotion.preview.paymentMethod')}：

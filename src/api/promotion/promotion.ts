@@ -99,8 +99,17 @@ const createPromotion = (data?: any) =>
 const createPromotionTier = (data?: any) =>
   request.post<BaseReponse<TCreatePromotionTier>>(`/promotion-tiers`, data);
 
+const updatePromotionTier = (id: string, data?: any) =>
+  request.put<TCreatePromotionTier>(`/promotion-tiers/${id}`, data);
+
 const getPromotionById = (id?: string) => request.get<TPromotionBase>(`/promotions/${id}`);
 
-const promotionApi = { getPromotion, createPromotion, getPromotionById, createPromotionTier };
+const promotionApi = {
+  getPromotion,
+  createPromotion,
+  getPromotionById,
+  createPromotionTier,
+  updatePromotionTier
+};
 
 export default promotionApi;

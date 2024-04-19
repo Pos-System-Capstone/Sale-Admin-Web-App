@@ -34,6 +34,7 @@ import useDashboard from 'hooks/useDashboard';
 import { TPromotionBase } from 'types/promotion/promotion';
 import { useNavigate } from 'react-router';
 import CreatePromotionTier from './CreatePromotionTier';
+import PromotionTierDetail from './PromotionTierDetail';
 
 interface Props {
   watch: any;
@@ -144,6 +145,7 @@ function StepThree({ watch, handleSubmit }: Props) {
       : false
     : false;
 
+  console.log('check', checkPromotionTier);
   return (
     <>
       <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
@@ -521,124 +523,8 @@ function StepThree({ watch, handleSubmit }: Props) {
               </Stack>
             </TabPanel>
             <TabPanel value="4">
-              {checkPromotionTier ? (
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Box alignItems="center" width={'100%'}>
-                      <StyleWidthTypography
-                        sx={{
-                          color: 'rgb(110,110,140)'
-                        }}
-                        width={'100%'}
-                        textAlign="left"
-                        variant="h4"
-                      >
-                        Bậc Khuyến Mãi
-                      </StyleWidthTypography>
-                    </Box>
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    {promotionTier !== undefined && (
-                      <Grid container spacing={2}>
-                        <Grid item xs={8}>
-                          <StyleWidthTypography width={'100%'}>
-                            <Typography variant="h6" style={{ display: 'inline-block' }}>
-                              Loại hành động :
-                            </Typography>{' '}
-                            <Typography style={{ display: 'inline-block' }} variant="body1">
-                              {promotionTier[0].action.name}
-                            </Typography>
-                          </StyleWidthTypography>
-                        </Grid>
-                        <Grid item xs={4}>
-                          <StyleWidthTypography width={'100%'}>
-                            <Typography variant="h6" style={{ display: 'inline-block' }}>
-                              Ưu tiên :
-                            </Typography>{' '}
-                            <Typography style={{ display: 'inline-block' }} variant="body1">
-                              {promotionTier[0].priority}
-                            </Typography>
-                          </StyleWidthTypography>
-                        </Grid>
-                      </Grid>
-                    )}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Box>
-                      <Card>
-                        {promotionTier !== undefined && (
-                          <Grid container spacing={2}>
-                            <Grid item xs={4}>
-                              <Box alignItems="center">
-                                <StyleWidthTypography style={{ marginTop: '0rem' }} variant="h6">
-                                  Nhóm Voucher
-                                </StyleWidthTypography>
-                              </Box>
-
-                              <Box alignItems="center">
-                                {promotionTier[0].voucherGroup !== null ? (
-                                  <StyleWidthTypography variant="caption" style={{ color: 'blue' }}>
-                                    {promotionTier[0].voucherGroup.name}
-                                  </StyleWidthTypography>
-                                ) : (
-                                  <StyleWidthTypography variant="caption">
-                                    {' '}
-                                    Không có Voucher{' '}
-                                  </StyleWidthTypography>
-                                )}
-                              </Box>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Box alignItems="center">
-                                <StyleWidthTypography style={{ marginTop: '0rem' }} variant="h6">
-                                  Điều kiện
-                                </StyleWidthTypography>
-                              </Box>
-                              <Box alignItems="center">
-                                {promotionTier[0].conditionRule !== null ? (
-                                  <StyleWidthTypography variant="caption" style={{ color: 'blue' }}>
-                                    {promotionTier[0].conditionRule.ruleName}
-                                  </StyleWidthTypography>
-                                ) : (
-                                  <StyleWidthTypography variant="caption">
-                                    {' '}
-                                    Không có điều kiện{' '}
-                                  </StyleWidthTypography>
-                                )}
-                              </Box>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Box alignItems="center">
-                                <StyleWidthTypography style={{ marginTop: '0rem' }} variant="h6">
-                                  Hành động
-                                </StyleWidthTypography>
-                              </Box>
-                              <Box alignItems="center">
-                                {promotionTier[0].action !== null ? (
-                                  <StyleWidthTypography
-                                    variant="caption"
-                                    style={{ color: 'blue', marginTop: '1rem' }}
-                                  >
-                                    {promotionTier[0].action.name}
-                                  </StyleWidthTypography>
-                                ) : (
-                                  <StyleWidthTypography variant="caption">
-                                    {' '}
-                                    Không có hành động
-                                  </StyleWidthTypography>
-                                )}
-                              </Box>
-                            </Grid>
-                          </Grid>
-                        )}
-                      </Card>
-                    </Box>
-                  </Grid>
-                </Grid>
-              ) : (
-                <CreatePromotionTier watch={watch} />
-              )}
+              {checkPromotionTier && <PromotionTierDetail watch={watch} />}
+              <CreatePromotionTier watch={watch} />
             </TabPanel>
           </TabContext>
           <StyleWidthTypography width={'100%'} textAlign="right">

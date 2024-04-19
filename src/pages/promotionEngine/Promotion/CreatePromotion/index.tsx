@@ -103,7 +103,7 @@ const CreatePromotion = (props: Props) => {
       brandId: user.brandId,
       hasVoucher: false,
       applyBy: 3,
-      promotionType: 0,
+      // promotionType: 0,
       promotionCode: '',
       promotionName: '',
       exclusive: 0,

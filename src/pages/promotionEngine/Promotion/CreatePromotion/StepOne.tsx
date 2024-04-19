@@ -18,7 +18,7 @@ import {
   promotionTypeList
 } from '../components/config';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import {
@@ -35,7 +35,6 @@ import CheckBoxGroupField from 'components/form/CheckBoxGroupField';
 // import promotionApi from 'api/promotion/promotion';
 import DateTimePickerField from 'components/form/DateTimePickerField';
 import { useSnackbar } from 'notistack';
-import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import TabStore from './modalForm/TabStore';
 import { useQuery } from 'react-query';
 import membershipsApi from 'api/promotion/membership';
@@ -56,7 +55,7 @@ function StepOne({ watch, handleSubmit }: Props) {
   const [channels, setChannels] = useState<string[]>([]);
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
-  const [checked, setChecked] = useState(false);
+  const ref = useRef();
   const StyleWidthTypography = styled(Typography)((props) => ({
     marginTop: `${props.marginTop || '16px'}`,
     width: `${props.width || '50%'}`
@@ -144,7 +143,7 @@ function StepOne({ watch, handleSubmit }: Props) {
       const res = await promotionApi.createPromotion(body);
       if (res.status == 200) {
         enqueueSnackbar('Tạo thành công', { variant: 'success' });
-        navigate(PATH_PROMOTION_APP.promotion.root);
+        // navigate(PATH_PROMOTION_APP.promotion.root);
       } else {
         enqueueSnackbar('Có lỗi xảy ra', { variant: 'error' });
       }

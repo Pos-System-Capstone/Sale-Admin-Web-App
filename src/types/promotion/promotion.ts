@@ -133,6 +133,37 @@ export type TPromotionCreate = {
   chanelIdMappings: string[];
 };
 
+export type TPromotionUpdate = {
+  promotionId: string;
+  brandId: string;
+  promotionCode: string;
+  promotionName: string;
+  actionType: number;
+  postActionType: number;
+  imgUrl: string;
+  description: string;
+  exclusive: number;
+  applyBy: number;
+  startDate: any;
+  endDate: any;
+  saleMode: number;
+  gender: number;
+  paymentMethod: number | number[];
+  forHoliday: number;
+  forMembership: number;
+  dayFilter: number | number[];
+  hourFilter: number | number[];
+  status: number;
+  hasVoucher: boolean;
+  isAuto: boolean;
+  allDay: boolean;
+  allHour: boolean;
+  // promotionType: number;
+  // storeIdMappings: string[];
+  // memberLevelIdMappings: string[];
+  // chanelIdMappings: string[];
+};
+
 export type TCreatePromotionTier = {
   conditionRuleId: string;
   actionId: string;

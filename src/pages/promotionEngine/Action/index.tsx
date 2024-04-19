@@ -58,13 +58,14 @@ const ActionPage = () => {
       hideInSearch: true
     },
     {
-      title: 'Tên hành động',
-      dataIndex: 'name'
+      title: 'Name',
+      dataIndex: 'name',
+      hideInSearch: true
     },
     {
-      title: 'Loại hành động',
+      title: 'Type',
       dataIndex: 'actionType',
-      valueType: 'select',
+      hideInSearch: true,
       valueEnum: ACTION_TYPE_ENUM
     },
     {

@@ -19,6 +19,7 @@ const CheckBoxGroupField = ({
       render={({ field, fieldState }) => (
         <>
           {options.map((item, index) => {
+            const isChecked = field.value?.includes(item.value || item);
             return (
               <Grid item xs={xs} key={index}>
                 <FormControlLabel
@@ -43,6 +44,7 @@ const CheckBoxGroupField = ({
                       inputRef={field.ref}
                       icon={props.icon}
                       checkedIcon={props.checkedIcon}
+                      checked={isChecked}
                       value={value}
                     />
                   }

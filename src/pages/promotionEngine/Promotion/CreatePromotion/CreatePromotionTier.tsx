@@ -5,9 +5,10 @@ import conditionApi from 'api/promotion/condition';
 import promotionApi from 'api/promotion/promotion';
 import voucherApi from 'api/promotion/voucher';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+import Page from 'components/Page';
 import { InputField, SelectField } from 'components/form';
 import { useSnackbar } from 'notistack';
-import { Card } from 'pages/promotionEngine/Promotion/components/Card';
+// import { Card } from 'pages/promotionEngine/Promotion/components/Card';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router';
@@ -84,7 +85,7 @@ function CreatePromotionTier({ watch }: Props) {
 
   return (
     <FormProvider {...methods}>
-      <Card>
+      <Page title="Thêm bậc voucher">
         <Stack p={1} spacing={3} width={'100%'}>
           <Grid container spacing={3}>
             <Grid item xs={4}>
@@ -131,7 +132,7 @@ function CreatePromotionTier({ watch }: Props) {
             </Grid>
           </Grid>
         </Stack>
-      </Card>
+      </Page>
     </FormProvider>
   );
 }

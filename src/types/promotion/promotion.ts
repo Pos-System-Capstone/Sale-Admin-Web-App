@@ -127,13 +127,24 @@ export type TPromotionCreate = {
   isAuto: boolean;
   allDay: boolean;
   allHour: boolean;
-  promotionType: number;
+  // promotionType: number;
   storeIdMappings: string[];
   memberLevelIdMappings: string[];
   chanelIdMappings: string[];
 };
 
 export type TCreatePromotionTier = {
+  conditionRuleId: string;
+  actionId: string;
+  promotionId: string;
+  voucherGroupId: string;
+  summary: string;
+  priority: number;
+  moreQuantity: number;
+};
+
+export type TUpdatePromotionTier = {
+  promotionTierId: string;
   conditionRuleId: string;
   actionId: string;
   promotionId: string;

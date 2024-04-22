@@ -116,15 +116,16 @@ function StepOne({ watch, handleSubmit }: Props) {
     body.actionType = Number(values.actionType);
     body.forHoliday = Number(values.forHoliday);
     body.forMembership = Number(values.forMembership);
-    // body.promotionType = Number(values.promotionType);
     body.gender = Number(values.gender);
     body.saleMode = Number(values.saleMode);
     body.isAuto = Boolean(values.isAuto);
     body.hasVoucher = Boolean(values.hasVoucher);
-    body.paymentMethod = (values.paymentMethod as number[]).reduce(
-      (accumulator: number, currentValue: number) => accumulator + currentValue,
-      0
-    );
+    body.paymentMethod = watch('allPayment')
+      ? 127
+      : (values.paymentMethod as number[]).reduce(
+          (accumulator: number, currentValue: number) => accumulator + currentValue,
+          0
+        );
     body.dayFilter = watch('allDay')
       ? 127
       : (values.dayFilter as number[]).reduce(
@@ -143,7 +144,6 @@ function StepOne({ watch, handleSubmit }: Props) {
       const res = await promotionApi.createPromotion(body);
       if (res.status == 200) {
         enqueueSnackbar('Tạo thành công', { variant: 'success' });
-        // navigate(PATH_PROMOTION_APP.promotion.root);
       } else {
         enqueueSnackbar('Có lỗi xảy ra', { variant: 'error' });
       }
@@ -151,7 +151,6 @@ function StepOne({ watch, handleSubmit }: Props) {
       console.error('Error:', error);
       enqueueSnackbar('Có lỗi xảy ra', { variant: 'error' });
     }
-    console.log('body', body);
   };
 
   return (
@@ -372,20 +371,6 @@ function StepOne({ watch, handleSubmit }: Props) {
                       </Box>
                     </Grid>
                     <Grid item xs={6}>
-                      {/* <Box>
-                        <StyleWidthTypography variant="h6">Loại khuyến mãi:</StyleWidthTypography>
-                        <StyleWidthTypography variant="body1">
-                          <Grid container xs={12}>
-                            <RadioGroupField
-                              xs={12}
-                              fullWidth
-                              options={promotionTypes}
-                              name="promotionType"
-                              defaultValue={promotionTypes}
-                            />
-                          </Grid>
-                        </StyleWidthTypography>
-                      </Box> */}
                       <Box>
                         <StyleWidthTypography variant="h6" sx={{ width: '100%' }}>
                           Loại：
@@ -405,15 +390,20 @@ function StepOne({ watch, handleSubmit }: Props) {
                       </Box>
                       <Box>
                         <StyleWidthTypography variant="h6" width={'100%'}>
-                          {translate('promotionSystem.promotion.preview.paymentMethod')}：
+                          {translate('promotionSystem.promotion.preview.paymentMethod')}{' '}
+                          <SwitchField name={'allPayment'} label={'Tất cả'} />{' '}
                         </StyleWidthTypography>
                         <StyleWidthTypography variant="body1" width={'100%'}>
                           <Grid container xs={12}>
-                            <CheckBoxGroupField
-                              xs={4}
-                              options={paymentList}
-                              name={'paymentMethod'}
-                            />
+                            {!watch('allPayment') ? (
+                              <CheckBoxGroupField
+                                xs={4}
+                                options={paymentList}
+                                name={'paymentMethod'}
+                              />
+                            ) : (
+                              ''
+                            )}
                           </Grid>
                         </StyleWidthTypography>
                       </Box>

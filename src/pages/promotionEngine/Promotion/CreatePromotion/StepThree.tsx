@@ -97,7 +97,7 @@ function StepThree({ watch, handleSubmit }: Props) {
   console.log('memberLevels', memberLevels);
 
   const memberLevelOptions = memberLevels
-    ? memberLevels.map((c: any) => ({ label: c.name, value: c.memberLevelId }))
+    ? memberLevels.map((c: any) => ({ label: c.memberLevelId, value: c.memberLevelId }))
     : [];
 
   const onSubmit = async (values: TPromotionUpdate) => {
@@ -167,7 +167,8 @@ function StepThree({ watch, handleSubmit }: Props) {
                 <Tab label="Tổng quan" value="1" />
                 <Tab label="Cấu hình" value="2" />
                 <Tab label="Thời gian" value="3" />
-                <Tab label="Cửa hàng" value="4" />
+                <Tab label="Bậc khuyến mãi" value="4" />
+                <Tab label="Cửa hàng" value="5" />
               </TabList>
             </Box>
             <TabPanel value="1">
@@ -441,9 +442,10 @@ function StepThree({ watch, handleSubmit }: Props) {
               </Stack>
             </TabPanel>
             <TabPanel value="4">
-              {checkPromotionTier && <PromotionTierDetail watch={watch} />}
               <CreatePromotionTier watch={watch} />
+              {checkPromotionTier && <PromotionTierDetail myWatch={watch} />}
             </TabPanel>
+            <TabPanel value="5">Cửa hàng</TabPanel>
           </TabContext>
           <StyleWidthTypography width={'100%'} textAlign="right">
             <Typography style={{ display: 'inline-block' }}>Cập nhật gần đây: </Typography>{' '}

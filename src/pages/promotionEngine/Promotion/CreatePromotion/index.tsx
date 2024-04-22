@@ -121,7 +121,8 @@ const CreatePromotion = (props: Props) => {
       actionType: 0,
       description: '',
       allDay: false,
-      allHour: false
+      allHour: false,
+      allPayment: false
     }
   });
 

@@ -127,6 +127,7 @@ export type TPromotionCreate = {
   isAuto: boolean;
   allDay: boolean;
   allHour: boolean;
+  allPayment: boolean;
   // promotionType: number;
   storeIdMappings: string[];
   memberLevelIdMappings: string[];
@@ -164,7 +165,7 @@ export type TPromotionUpdate = {
   // chanelIdMappings: string[];
 };
 
-export type TCreatePromotionTier = {
+export type TBasePromotionTier = {
   conditionRuleId: string;
   actionId: string;
   promotionId: string;
@@ -175,14 +176,16 @@ export type TCreatePromotionTier = {
 };
 
 export type TUpdatePromotionTier = {
-  promotionTierId: string;
-  conditionRuleId: string;
-  actionId: string;
-  promotionId: string;
-  voucherGroupId: string;
-  summary: string;
-  priority: number;
-  moreQuantity: number;
+  promotionTier: {
+    promotionTierId: string;
+    conditionRuleId: string;
+    actionId: string;
+    promotionId: string;
+    voucherGroupId: string;
+    summary: string;
+    priority: number;
+    voucherQuantity: number;
+  }[];
 };
 
 export type ListProductApply = {

@@ -13,7 +13,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
-import { TCreatePromotionTier } from 'types/promotion/promotion';
+import { TBasePromotionTier } from 'types/promotion/promotion';
 import { getUserInfo } from 'utils/utils';
 
 interface Props {
@@ -50,7 +50,7 @@ function CreatePromotionTier({ watch }: Props) {
 
   const voucherGroupOptions =
     voucherGroups?.map((c) => ({ label: c.voucherName, value: c.voucherGroupId })) || [];
-  const methods = useForm<TCreatePromotionTier>({
+  const methods = useForm<TBasePromotionTier>({
     defaultValues: {
       actionId: '',
       conditionRuleId: '',
@@ -61,7 +61,7 @@ function CreatePromotionTier({ watch }: Props) {
     }
   });
   const { handleSubmit } = methods;
-  const onSubmit = async (values: TCreatePromotionTier) => {
+  const onSubmit = async (values: TBasePromotionTier) => {
     const body = { ...values };
     body.promotionId = id!;
     body.priority = Number(values.priority);
@@ -79,8 +79,6 @@ function CreatePromotionTier({ watch }: Props) {
       console.error('Error:', error);
       enqueueSnackbar('Có lỗi xảy ra', { variant: 'error' });
     }
-
-    console.log(body);
   };
 
   return (
@@ -127,7 +125,7 @@ function CreatePromotionTier({ watch }: Props) {
                 variant="contained"
                 onClick={handleSubmit(onSubmit)}
               >
-                Lưu
+                Thêm bậc
               </LoadingAsyncButton>
             </Grid>
           </Grid>

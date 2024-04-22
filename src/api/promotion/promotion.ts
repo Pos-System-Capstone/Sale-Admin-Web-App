@@ -1,5 +1,5 @@
 import useLocales from 'hooks/useLocales';
-import { TCreatePromotionTier, TPromotionBase, TPromotionUpdate } from 'types/promotion/promotion';
+import { TBasePromotionTier, TPromotionBase, TPromotionUpdate } from 'types/promotion/promotion';
 import { BaseReponse } from 'types/response';
 import { axiosInstances } from 'utils/axios';
 
@@ -97,10 +97,10 @@ const createPromotion = (data?: any) =>
   request.post<BaseReponse<TPromotionBase>>(`/promotions`, data);
 
 const createPromotionTier = (data?: any) =>
-  request.post<BaseReponse<TCreatePromotionTier>>(`/promotion-tiers`, data);
+  request.post<BaseReponse<TBasePromotionTier>>(`/promotion-tiers`, data);
 
 const updatePromotionTier = (id: string, data?: any) =>
-  request.put<TCreatePromotionTier>(`/promotion-tiers/${id}`, data);
+  request.put<TBasePromotionTier>(`/promotion-tiers/${id}`, data);
 
 const updatePromotion = (id: string, data?: any) =>
   request.patch<TPromotionUpdate>(`/promotions/${id}`, data);

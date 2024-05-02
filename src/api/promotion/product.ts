@@ -4,8 +4,8 @@ import { axiosInstances } from 'utils/axios';
 
 const request = axiosInstances.promotion;
 
-const getProduct = (params?: any) =>
-  request.get<BaseReponse<TProductPromotion>>(`/product/brand`, { params });
+const getProduct = (brandId?: string, params?: any) =>
+  request.get<BaseReponse<TProductPromotion>>(`/product/brand?brandId=${brandId}`, { params });
 
 const productPromotionApi = { getProduct };
 

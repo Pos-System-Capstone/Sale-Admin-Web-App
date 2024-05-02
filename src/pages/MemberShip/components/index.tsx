@@ -21,11 +21,6 @@ export default function MemberShipList() {
 
   const membershipsColumns: TTableColumn<TMembership>[] = [
     {
-      title: 'STT',
-      dataIndex: 'index',
-      hideInSearch: true
-    },
-    {
       title: 'Tên thành viên',
       dataIndex: 'fullname',
       hideInSearch: true
@@ -33,11 +28,6 @@ export default function MemberShipList() {
     {
       title: 'Số điện thoại',
       dataIndex: 'phoneNumber'
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      hideInSearch: true
     },
     {
       title: 'Ngày đăng ký',
@@ -49,16 +39,6 @@ export default function MemberShipList() {
       title: 'Ngày cập nhật',
       dataIndex: 'updDate',
       valueType: 'date',
-      hideInSearch: true
-    },
-    {
-      title: 'Level ID',
-      dataIndex: 'memberLevelId',
-      hideInSearch: true
-    },
-    {
-      title: 'Giới tính',
-      dataIndex: 'gender',
       hideInSearch: true
     }
   ];

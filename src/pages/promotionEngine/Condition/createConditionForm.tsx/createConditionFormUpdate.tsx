@@ -39,7 +39,6 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
   }, []);
 
   const tableRef = useRef<any>();
-
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
   useEffect(() => {
@@ -515,10 +514,12 @@ const CreateConditionFormUpdate: React.FC<CreateConditionFormProps> = ({
             type: type
           }}
           showAction={false}
+          key="productId"
           scroll={{ y: '80%', x: '100%' }}
-          rowKey="productId"
+          rowKey="code"
+          pagination
           ref={tableRef}
-          getData={(param: any) => productPromotionApi.getProduct(param)}
+          getData={(params: any) => productPromotionApi.getProduct(user.brandId, params)}
           onChangeSelection={handleChangeSelection}
           columns={productPromotionColumns}
         />

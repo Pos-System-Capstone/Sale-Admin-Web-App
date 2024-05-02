@@ -505,7 +505,7 @@ const CreateConditionForm: React.FC<CreateConditionFormProps> = ({ nodeId, type 
           rowKey="productId"
           pagination
           ref={tableRef}
-          getData={(params: any) => productPromotionApi.getProduct(params)}
+          getData={(params: any) => productPromotionApi.getProduct(user.brandId, params)}
           onChangeSelection={handleChangeSelection}
           columns={productPromotionColumns}
         />

@@ -6,7 +6,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import { ConditionGroup } from 'types/promotion/condition';
-import CreateConditionForm from './createConditionForm/createConditionForm';
+import UpdateConditionForm from './updateConditionForm/updateConditionForm';
 interface Props {
   conditionAppend: (condition: Partial<ConditionGroup>) => void;
   conditionRemove?: any;
@@ -27,9 +27,9 @@ export const ConditionGroupsContext = React.createContext<ConditionGroupsContext
   conditionGroupIndex: 0
 });
 
-const ConditionForm = ({ conditionFields, conditionAppend, conditionRemove }: Props) => {
+const DetailConditionForm = ({ conditionFields, conditionAppend, conditionRemove }: Props) => {
   const [currentContent, setCurrentContent] = useState<string | null>(null);
-  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>('1');
   const [flashing, setFlashing] = useState(false);
   const handleTreeItemClick = (nodeId: string, content: string) => {
     setSelectedNodeId(nodeId);
@@ -141,7 +141,7 @@ const ConditionForm = ({ conditionFields, conditionAppend, conditionRemove }: Pr
             <Paper variant="outlined" sx={{ width: '100%' }}>
               {selectedNodeId !== null && (
                 <ConditionContext.Provider value={{ conditionRemove }}>
-                  <CreateConditionForm
+                  <UpdateConditionForm
                     nodeId={selectedNodeId}
                     content={currentContent}
                     conditionFields={conditionFields}
@@ -157,4 +157,4 @@ const ConditionForm = ({ conditionFields, conditionAppend, conditionRemove }: Pr
   );
 };
 
-export default ConditionForm;
+export default DetailConditionForm;

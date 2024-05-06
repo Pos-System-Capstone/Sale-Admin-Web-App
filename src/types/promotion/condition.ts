@@ -40,14 +40,22 @@ export interface TConditionCreate {
   conditionGroups: ConditionGroup[];
 }
 
+export interface TConditionUpdate {
+  conditionRuleId: string;
+  brandId: string;
+  ruleName: string;
+  description: string;
+  conditionGroups: ConditionGroup[];
+}
+
 export interface ConditionGroup {
   groupNo: number;
   nextOperator: number;
-  orderCondition: OrderCondition[];
-  productCondition: ProductCondition[];
+  orderConditions: TOrderCondition[];
+  productConditions: TProductCondition[] | [];
 }
 
-export interface OrderCondition {
+export interface TOrderCondition {
   index: number;
   nextOperator: number;
   quantity: number;
@@ -56,19 +64,26 @@ export interface OrderCondition {
   amountOperator: string;
 }
 
-export interface ProductCondition {
+export interface TProductCondition {
   index: number;
   nextOperator: number;
   productConditionType: number;
   productQuantity: number;
   quantityOperator: string;
-  products: Product[];
+  productIdList: string[];
 }
 
-export interface Product {
+export interface TProductConditionUpdate {
+  index: number;
+  nextOperator: number;
+  productConditionType: number;
+  productQuantity: number;
+  quantityOperator: string;
+  listProduct: TProduct[];
+}
+export interface TProduct {
   productId: string;
 }
-
 export const CONDITION_TYPE_DATA = () => {
   return [
     {

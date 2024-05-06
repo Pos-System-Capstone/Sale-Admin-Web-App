@@ -1,28 +1,33 @@
 import { Grid } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { ConditionGroupsContext } from '../ConditionForm';
-import { Button } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 import ToggleProduct from './ToggleProduct';
 import { CreateConditionContext } from '../createCondition';
 import { InputField, SelectField } from 'components/form';
 import { listNextOperator, listProductType, listQuantityOperator } from './config';
-import { TProductCondition } from 'types/promotion/condition';
+import { TProductCondition, TProductConditionUpdate } from 'types/promotion/condition';
 
 interface Props {
   removeProductCondition: any;
-  listProductIds: string[];
+  productConditionFields: any;
 }
 
 export default function MiddleFormUpdateCondition({
   removeProductCondition,
-  listProductIds
+  productConditionFields
 }: Props) {
+  const context = useContext(CreateConditionContext);
+  const { conditionGroupIndex, productIndex } = useContext(ConditionGroupsContext);
+
+  const listProductIds = productConditionFields.map(
+    (product: TProductConditionUpdate, index: number) =>
+      product.listProduct[productIndex!].productId
+  );
+
   const [selectedProductIds, setSelectedProductIds] = useState<string[]>(listProductIds);
   const [selectedProductCount, setSelectedProductCount] = useState(listProductIds.length);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const context = useContext(CreateConditionContext);
-  const { conditionGroupIndex, productIndex } = useContext(ConditionGroupsContext);
+
   const updateValue = context.setValue;
   const getValue = context.getValues;
   const toggleDrawer = () => {
@@ -79,7 +84,7 @@ export default function MiddleFormUpdateCondition({
       )}
       {check < 3 ? (
         <Grid container spacing={2}>
-          <Grid container item xs={11} spacing={0}>
+          <Grid container item xs={12} spacing={0}>
             <Grid item xs={12}>
               <p>
                 đơn hàng{' '}
@@ -95,15 +100,15 @@ export default function MiddleFormUpdateCondition({
               </p>
             </Grid>
           </Grid>
-          <Grid item xs={1}>
+          {/* <Grid item xs={1}>
             <Button onClick={deleteHandler}>
               <DeleteIcon />
             </Button>
-          </Grid>
+          </Grid> */}
         </Grid>
       ) : (
         <Grid container spacing={2}>
-          <Grid container item xs={11} spacing={2}>
+          <Grid container item xs={12} spacing={2}>
             <Grid item xs={10}>
               <p style={{ marginLeft: '8px' }}>
                 mỗi sản phẩm trong{' '}
@@ -125,11 +130,11 @@ export default function MiddleFormUpdateCondition({
               />
             </Grid>
           </Grid>
-          <Grid item xs={1}>
+          {/* <Grid item xs={1}>
             <Button onClick={deleteHandler}>
               <DeleteIcon />
             </Button>
-          </Grid>
+          </Grid> */}
         </Grid>
       )}
     </>

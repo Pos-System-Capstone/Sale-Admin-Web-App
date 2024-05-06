@@ -3,7 +3,7 @@ import { Drawer } from '@mui/material';
 import productPromotionApi from 'api/promotion/product';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { productPromotionColumns } from 'pages/promotionEngine/Products/config';
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { getUserInfo } from 'utils/utils';
 interface Props {
   toggleDrawer: any;
@@ -21,12 +21,8 @@ export default function ToggleProduct({
 
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
-  useEffect(() => {
-    if (tableRef.current) {
-      tableRef.current.formControl.setValue('brandId', user.brandId!);
-    }
-  }, [user]);
 
+  const brandId = user.brandId;
   return (
     <>
       <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer}>
@@ -43,7 +39,7 @@ export default function ToggleProduct({
           rowKey="productId"
           pagination
           ref={tableRef}
-          getData={(params: any) => productPromotionApi.getProduct(params)}
+          getData={(params: any) => productPromotionApi.getProduct(brandId, params)}
           onChangeSelection={handleChangeSelection}
           columns={productPromotionColumns}
         />

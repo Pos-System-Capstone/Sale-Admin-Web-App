@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { TProductCondition, TProductConditionUpdate } from 'types/promotion/condition';
+import { TProductCondition } from 'types/promotion/condition';
 import { Grid } from '@mui/material';
 import { ConditionGroupsContext } from '../ConditionForm';
 import MiddleFormUpdateProductCondition from './MiddleFormUpdateProductCondition';
@@ -16,9 +16,6 @@ export default function ProductGeneralCondition({
   appendProductCondition
 }: Props) {
   const { conditionGroupIndex } = useContext(ConditionGroupsContext);
-  const listProductIds = productConditionFields.map(
-    (product: TProductConditionUpdate, index: number) => product.listProduct[index].productId
-  );
   return (
     <>
       <Grid item container spacing={0}>
@@ -27,7 +24,7 @@ export default function ProductGeneralCondition({
             <ConditionGroupsContext.Provider value={{ conditionGroupIndex, productIndex: index }}>
               <MiddleFormUpdateProductCondition
                 removeProductCondition={removeProductCondition}
-                listProductIds={listProductIds}
+                productConditionFields={productConditionFields}
               />
             </ConditionGroupsContext.Provider>
           </Grid>

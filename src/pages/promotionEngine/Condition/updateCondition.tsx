@@ -6,7 +6,6 @@ import Page from 'components/Page';
 import useDashboard from 'hooks/useDashboard';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
@@ -138,17 +137,17 @@ const UpdateCondition = (props: Props) => {
             <Grid item container spacing={2}>
               <Card style={{ width: '100%' }}>
                 <Grid item container spacing={2}>
-                  <Grid item xs={5} sm={5}>
+                  <Grid item xs={6} sm={6}>
                     <InputField fullWidth name="ruleName" label="Tên Điều kiện" />
                   </Grid>
-                  <Grid item xs={5} sm={5}>
+                  <Grid item xs={6} sm={6}>
                     <InputField name="description" label="Mô tả Điều Kiện" fullWidth />
                   </Grid>
-                  <Grid item xs={2} sm={2}>
+                  {/* <Grid item xs={2} sm={2}>
                     <LoadingAsyncButton onClick={addHandler}>
                       Thêm nhóm điều kiện
                     </LoadingAsyncButton>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </Card>
               <Grid item container xs={12} sm={12} spacing={3}>
@@ -160,7 +159,7 @@ const UpdateCondition = (props: Props) => {
                 >
                   {fields.map((field, index) => (
                     <>
-                      <Grid item xs={11} sm={11} key={index}>
+                      <Grid item xs={12} sm={12} key={index}>
                         <Card style={{ width: '100%' }}>
                           <DetailConditionForm
                             conditionAppend={append}
@@ -169,7 +168,7 @@ const UpdateCondition = (props: Props) => {
                           />
                         </Card>
                       </Grid>
-                      <Grid
+                      {/* <Grid
                         item
                         xs={1}
                         sm={1}
@@ -179,7 +178,7 @@ const UpdateCondition = (props: Props) => {
                         onClick={() => deleteHandler(index)}
                       >
                         <DeleteIcon />
-                      </Grid>
+                      </Grid> */}
                     </>
                   ))}
                 </CreateConditionContext.Provider>

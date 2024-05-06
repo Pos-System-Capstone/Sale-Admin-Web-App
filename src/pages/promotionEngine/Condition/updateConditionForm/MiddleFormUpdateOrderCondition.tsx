@@ -1,8 +1,6 @@
 import { Grid } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import { ConditionContext, ConditionGroupsContext } from '../ConditionForm';
-import { Button } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 import ToggleProduct from './ToggleProduct';
 import { CreateConditionContext } from '../createCondition';
 import { InputField, SelectField } from 'components/form';
@@ -68,7 +66,7 @@ export default function MiddleFormUpdateOrderCondition({ removeOrderCondition }:
       )}
       {check > 0 ? (
         <Grid container spacing={2}>
-          <Grid container item xs={11} spacing={2}>
+          <Grid container item xs={12} spacing={2}>
             <Grid item xs={12}>
               <p>
                 đơn hàng có tổng số lượng sản phẩm{' '}
@@ -84,15 +82,15 @@ export default function MiddleFormUpdateOrderCondition({ removeOrderCondition }:
               </p>
             </Grid>
           </Grid>
-          <Grid item xs={1}>
+          {/* <Grid item xs={1}>
             <Button onClick={deleteHandler}>
               <DeleteIcon />
             </Button>
-          </Grid>
+          </Grid> */}
         </Grid>
       ) : (
         <Grid container spacing={2}>
-          <Grid container item xs={11} spacing={2}>
+          <Grid container item xs={12} spacing={2}>
             <Grid item xs={12}>
               <p>
                 đơn hàng có tổng giá trị{' '}
@@ -108,11 +106,11 @@ export default function MiddleFormUpdateOrderCondition({ removeOrderCondition }:
               </p>
             </Grid>
           </Grid>
-          <Grid item xs={1}>
+          {/* <Grid item xs={1}>
             <Button onClick={deleteHandler}>
               <DeleteIcon />
             </Button>
-          </Grid>
+          </Grid> */}
         </Grid>
       )}
     </>

@@ -1,4 +1,4 @@
-import { TConditionBase, TConditionCreate } from 'types/promotion/condition';
+import { TConditionBase, TConditionCreate, TConditionUpdate } from 'types/promotion/condition';
 import { BaseReponse } from 'types/response';
 import { axiosInstances } from 'utils/axios';
 
@@ -9,6 +9,9 @@ const getConditionRules = (params?: any) =>
 
 const createCondition = (data?: TConditionCreate) =>
   request.post<TConditionBase>(`/condition-rules`, data);
+
+const updateCondition = (data?: TConditionUpdate, id?: string) =>
+  request.patch<TConditionBase>(`/condition-rules/${id}`, data);
 
 const getConditionRuleId = (id?: string) => request.get<TConditionBase>(`/condition-rules/${id}`);
 

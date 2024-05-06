@@ -144,8 +144,8 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
         <Stack spacing={2}>
           <ResoTable
             ref={tableRef}
-            onEdit={(stores: any) =>
-              navigate(`${PATH_PROMOTION_APP.condition.root}/${stores.conditionRuleId}`)
+            onEdit={(params: any) =>
+              navigate(`${PATH_PROMOTION_APP.condition.root}/${params.conditionRuleId}`)
             }
             onDelete={() => {
               console.log('delete');

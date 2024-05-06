@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Card, Grid, Stack } from '@mui/material';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
@@ -7,17 +7,19 @@ import useDashboard from 'hooks/useDashboard';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ConditionForm from 'pages/promotionEngine/Condition/ConditionForm';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 
 import * as yup from 'yup';
-import { ConditionGroup, TConditionCreate } from 'types/promotion/condition';
-import conditionApi from 'api/promotion/condition';
-import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
+import { TConditionUpdate } from 'types/promotion/condition';
+// import conditionApi from 'api/promotion/condition';
+// import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { getUserInfo } from 'utils/utils';
 import { InputField } from 'components/form';
+import { useQuery } from 'react-query';
+import conditionApi from 'api/promotion/condition';
+import DetailConditionForm from './DetailConditionForm';
 
 interface Props {}
 
@@ -34,7 +36,7 @@ export const CreateConditionContext = React.createContext<{
   getValues: (name: string) => {}
 });
 
-const NewCondition = (props: Props) => {
+const UpdateCondition = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
@@ -44,15 +46,33 @@ const NewCondition = (props: Props) => {
   const isExtra: boolean = searchParams.get('isExtra') === 'true';
   const [test, listTest] = useState<any[]>([1, 2]);
 
-  const createConditionForm = useForm<TConditionCreate>({
+  const { id } = useParams();
+  const { data: conditionUpdate } = useQuery(
+    ['condition', user.brandId],
+    async () => {
+      return conditionApi.getConditionRuleId(id).then((res) => res.data);
+    }
+    // {
+    //   enabled: Boolean(id)
+    // }
+  );
+  console.log(`conditionUpdate`, conditionUpdate);
+
+  const updateConditionForm = useForm<TConditionUpdate>({
+    defaultValues: { ...conditionUpdate },
     resolver: yupResolver(schema)
+    // defaultValues: {},
     // shouldUnregister: false
   });
-  const { watch, control, handleSubmit, setValue } = createConditionForm;
-
-  const onSubmit = (values: TConditionCreate) => {
+  const { watch, control, handleSubmit, setValue, reset } = updateConditionForm;
+  useEffect(() => {
+    if (conditionUpdate) {
+      reset({ ...conditionUpdate });
+    }
+  }, [conditionUpdate]);
+  const onSubmit = (values: TConditionUpdate) => {
     values.brandId = user.brandId;
-    const body: TConditionCreate = { ...values };
+    const body: TConditionUpdate = { ...values };
     body.brandId = user.brandId;
     body.ruleName = values.ruleName;
     body.description = values.description;
@@ -71,25 +91,27 @@ const NewCondition = (props: Props) => {
       return group;
     });
 
-    conditionApi
-      .createCondition(body)
-      .then((res) => {
-        enqueueSnackbar(`Tạo thành công`, {
-          variant: 'success'
-        });
-        navigate(`${PATH_PROMOTION_APP.condition.root}`);
-      })
-      .catch((err) => {
-        enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
-          variant: 'error'
-        });
-      });
+    // conditionApi
+    //   .createCondition(body)
+    //   .then((res) => {
+    //     enqueueSnackbar(`Tạo thành công`, {
+    //       variant: 'success'
+    //     });
+    //     navigate(`${PATH_PROMOTION_APP.condition.root}`);
+    //   })
+    //   .catch((err) => {
+    //     enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
+    //       variant: 'error'
+    //     });
+    //   });
     console.log(`data`, body);
   };
-  const { append, remove, fields } = useFieldArray<TConditionCreate>({
+  const { append, remove, fields } = useFieldArray<TConditionUpdate>({
     control,
     name: 'conditionGroups'
   });
+
+  console.log(`fields`, fields);
 
   const addHandler = () => {
     append({
@@ -99,17 +121,10 @@ const NewCondition = (props: Props) => {
       orderConditions: []
     });
   };
-  const deleteHandler = (index: number) => {
-    remove(index);
-    const updatedConditions = watch('conditionGroups');
-    updatedConditions.forEach((condition: ConditionGroup, index: number) => {
-      condition.groupNo = index + 1;
-    });
-    setValue(`conditionGroups`, updatedConditions);
-  };
+  const deleteHandler = (index: number) => remove(index);
 
   return (
-    <FormProvider {...createConditionForm}>
+    <FormProvider {...updateConditionForm}>
       <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
         <Stack direction="row" spacing={2}>
           <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
@@ -139,15 +154,15 @@ const NewCondition = (props: Props) => {
               <Grid item container xs={12} sm={12} spacing={3}>
                 <CreateConditionContext.Provider
                   value={{
-                    setValue: (name, value) => setValue(name as keyof TConditionCreate, value),
-                    getValues: (name) => watch(name as keyof TConditionCreate)
+                    setValue: (name, value) => setValue(name as keyof TConditionUpdate, value),
+                    getValues: (name) => watch(name as keyof TConditionUpdate)
                   }}
                 >
                   {fields.map((field, index) => (
                     <>
                       <Grid item xs={11} sm={11} key={index}>
                         <Card style={{ width: '100%' }}>
-                          <ConditionForm
+                          <DetailConditionForm
                             conditionAppend={append}
                             conditionRemove={remove}
                             conditionFields={fields}
@@ -177,4 +192,4 @@ const NewCondition = (props: Props) => {
   );
 };
 
-export default NewCondition;
+export default UpdateCondition;

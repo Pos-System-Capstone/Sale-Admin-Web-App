@@ -39,7 +39,7 @@ import PromotionReport from 'pages/report/PromotionReport';
 import DayReport from 'pages/report/TradingReport';
 import UpdateActionPage from 'pages/promotionEngine/Action/update';
 import UpdatePromotion from 'pages/promotionEngine/Promotion/PromotionDetail/update';
-import UpdateConditionPage from 'pages/promotionEngine/Condition/update';
+import UpdateConditionPage from 'pages/promotionEngine/Condition/updateCondition';
 import DetailVoucher from 'pages/promotionEngine/Voucher/detailVoucher';
 import ProductPromotion from 'pages/promotionEngine/Products';
 import ProductCategory from 'pages/promotionEngine/Category';

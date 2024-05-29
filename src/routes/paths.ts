@@ -21,6 +21,7 @@ export const PATH_AUTH = {
 
 export const PATH_PAGE = {
   comingSoon: '/policy',
+  passioPolicy: '/policy-passio',
   maintenance: '/maintenance',
   pricing: '/pricing',
   payment: '/payment',

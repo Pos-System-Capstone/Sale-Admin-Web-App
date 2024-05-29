@@ -60,6 +60,7 @@ import CreateStorePromotion from 'pages/promotionEngine/Store/create';
 import UpdateStorePromotion from 'pages/promotionEngine/Store/update';
 import ChannelPromotion from 'pages/promotionEngine/Channel';
 import CreateChannelPromotion from 'pages/promotionEngine/Channel/create';
+import PassioPolicy from 'pages/ComingSoonPassio';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -520,6 +521,7 @@ export default function Router() {
       element: <LogoOnlyLayout />,
       children: [
         { path: 'policy', element: <ComingSoon /> },
+        { path: 'policy-passio', element: <PassioPolicy /> },
         { path: '500', element: <Page500 /> },
         { path: '404', element: <NotFound /> },
         { path: '*', element: <Navigate to="/404" replace /> }

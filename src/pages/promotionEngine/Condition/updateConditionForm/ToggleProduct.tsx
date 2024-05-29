@@ -21,7 +21,6 @@ export default function ToggleProduct({
 
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
-
   const brandId = user.brandId;
   return (
     <>

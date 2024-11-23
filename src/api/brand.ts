@@ -40,6 +40,8 @@ const createNewBrandStore = (data: TStoreCreate) => {
 };
 const getBrandReport = (params: any) =>
   requestWebAdmin.get<StoreReport>(`brands/day-report`, { params: params });
+const getBrandProductReport = (params: any) =>
+  requestWebAdmin.get<StoreReport>(`brands/product-report`, { params: params });
 
 const brandApi = {
   getBrandDetail,
@@ -52,6 +54,7 @@ const brandApi = {
   createNewBrandStore,
   getStoresOfBrandWithoutPaging,
   getBrandReport,
+  getBrandProductReport,
   ...generateAPIWithPaging<TBrand>('brands')
 };
 

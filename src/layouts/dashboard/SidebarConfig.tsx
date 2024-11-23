@@ -130,9 +130,14 @@ export const brandAdminSidebarConfig = [
     subheader: 'Dashboard',
     items: [
       {
-        title: 'Báo cáo',
+        title: 'Báo cáo tổng quan',
         path: PATH_DASHBOARD.general.app,
         icon: ICONS.dashboard
+      },
+      {
+        title: 'Báo cáo sản phẩm',
+        path: PATH_DASHBOARD.general.ecommerce,
+        icon: ICONS.product
       }
     ]
   },

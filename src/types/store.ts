@@ -195,6 +195,7 @@ export type ProductReport = {
   totalAmount: number;
   totalDiscount: number;
   finalAmount: number;
+  categoryName: string;
 };
 
 export type SessionReport = {

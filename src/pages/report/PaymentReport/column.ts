@@ -1,7 +1,6 @@
-import { TPaymentReportBase, TPaymentReportStore } from 'types/report/payment';
 import { TTableColumn } from 'types/table';
 
-export const paymentColumns: TTableColumn<TPaymentReportBase>[] = [
+export const paymentColumns: TTableColumn<any>[] = [
   {
     title: 'Cửa hàng',
     dataIndex: 'storeName',
@@ -76,7 +75,7 @@ export const paymentColumns: TTableColumn<TPaymentReportBase>[] = [
   }
 ];
 
-export const storePaymentColumns: TTableColumn<TPaymentReportStore>[] = [
+export const storePaymentColumns: TTableColumn<any>[] = [
   {
     title: 'Ngày',
     dataIndex: 'date',

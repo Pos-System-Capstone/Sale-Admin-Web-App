@@ -130,7 +130,7 @@ const StoreListPage = () => {
             rowKey="id"
             ref={tableRef}
             onEdit={(stores: any) => navigate(`${PATH_DASHBOARD.promotion.root}/${stores.id}`)}
-            getData={getStores}
+            getData={getStores.get}
             onDelete={setCurrentDeleteItem}
             columns={columns}
           />

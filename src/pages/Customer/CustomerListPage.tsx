@@ -7,18 +7,16 @@ import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
-import { useState } from 'react';
-// components
+
 import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { TTableColumn } from 'types/table';
-import { Customer, customersListData } from '../../@types/customer';
+import { customersListData } from '../../@types/customer';
 
 const CustomerListPage = () => {
   const navigate = useNavigate();
   const { translate } = useLocales();
-  const [filters, setFilters] = useState(null);
-  const orderColumns: TTableColumn<Customer>[] = [
+  const orderColumns: TTableColumn<any>[] = [
     {
       title: translate('pages.customers.table.no'),
       dataIndex: 'index',

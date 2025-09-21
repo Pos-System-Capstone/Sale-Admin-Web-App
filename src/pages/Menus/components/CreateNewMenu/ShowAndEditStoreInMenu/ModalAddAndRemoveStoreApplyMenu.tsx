@@ -4,7 +4,6 @@ import { Box, Button, Dialog, IconButton, Paper, Stack, Typography } from '@mui/
 import brandApi from 'api/brand';
 import Label from 'components/Label';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
-import { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useAuth from 'hooks/useAuth';
 import { useSnackbar } from 'notistack';
@@ -12,13 +11,14 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { addOrRemoveStoresApplyMenu, getStoreApplyMenus } from 'redux/menu/api';
 import { StoreStatus, TStoreDetail } from 'types/store';
+import { TTableColumn } from 'types/table';
 
 interface Props {
   menuId?: string;
   trigger?: any;
   onReload: Function;
   selected?: string[] | undefined;
-  type?: string | undefined;
+  type?: 'checkbox' | 'radio' | undefined;
 }
 const ModalStoresApplyMenuForm = ({
   menuId,
@@ -75,7 +75,7 @@ const ModalStoresApplyMenuForm = ({
         });
       });
 
-  const menuInStoreColumns: ResoDescriptionColumnType<TStoreDetail>[] = [
+  const menuInStoreColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

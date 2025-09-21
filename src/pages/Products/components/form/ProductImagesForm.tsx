@@ -9,7 +9,6 @@ import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { Controller, useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { uploadfile } from 'redux/file/api';
-import { ProductImage } from 'types/product';
 import { TTableColumn } from 'types/table';
 import { CardTitle } from '../Card';
 
@@ -61,7 +60,7 @@ const ProductImagesForm = (props: Props) => {
     appendProductImage(newOrderMedias);
   };
 
-  const productImgColumns: TTableColumn<ProductImage & { id: string }>[] = [
+  const productImgColumns: TTableColumn<any>[] = [
     {
       title: 'Hình ảnh',
       dataIndex: 'image_url',

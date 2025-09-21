@@ -14,7 +14,7 @@ import voucherApi from 'api/promotion/voucher';
 import { useNavigate, useParams } from 'react-router-dom';
 //
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
-import { TVoucher } from 'types/promotion/voucher';
+
 import { TTableColumn } from 'types/table';
 import { Stack } from '@mui/material';
 import { TableContainer } from '@mui/material';
@@ -41,7 +41,7 @@ const FormDetailInformation = ({ watch }: Props) => {
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
 
-  const productColumns: TTableColumn<TVoucher>[] = [
+  const productColumns: TTableColumn<any>[] = [
     {
       title: `${t('promotionSystem.voucher.table.no')}`,
       dataIndex: 'index',

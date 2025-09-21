@@ -21,7 +21,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { useParams } from 'react-router-dom';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
-import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
 import { parseParams } from 'utils/axios';
 import { formatDate } from 'utils/formatTime';
@@ -135,7 +134,7 @@ export const DayReport = () => {
     }
   ];
 
-  const menuColumns: TTableColumn<TTradingBase>[] = [
+  const menuColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',
@@ -146,7 +145,7 @@ export const DayReport = () => {
       dataIndex: 'storeId',
       hideInTable: true,
       valueType: 'select',
-      hideInSearch: storeId != '0',
+      hideInSearch: storeId !== '0',
       renderFormItem: () => <AutocompleteStore name="storeId" label="Cửa hàng" />
     },
     {

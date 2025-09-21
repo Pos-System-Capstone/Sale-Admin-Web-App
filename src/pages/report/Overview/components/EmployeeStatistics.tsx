@@ -15,7 +15,7 @@ function EmployeeStatistics() {
     other?: any;
     total?: any;
   };
-  const employeeColumns: TTableColumn<ProductSaleDetail>[] = [
+  const employeeColumns: TTableColumn<any>[] = [
     {
       title: 'Họ và tên',
       hideInSearch: true,

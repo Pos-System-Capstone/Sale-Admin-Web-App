@@ -4,7 +4,6 @@ import { Box, Dialog, IconButton, Paper, Stack, Typography } from '@mui/material
 import storePromotionApi from 'api/promotion/store';
 import ResoTable from 'components/ResoTable/ResoTable';
 import React, { useState } from 'react';
-import { TPStore } from 'types/promotion/store';
 import { TTableColumn } from 'types/table';
 interface Props {
   brandId?: string;
@@ -13,7 +12,7 @@ interface Props {
   onReload: Function;
   selectedStoreIds: string[] | undefined;
   selected?: string[] | undefined;
-  type?: string | undefined;
+  type?: 'checkbox' | 'radio' | undefined;
 }
 const ModalStore = ({
   brandId,
@@ -31,7 +30,7 @@ const ModalStore = ({
   };
 
   console.log('selectedExtraCategoryIds', selectedIds);
-  const storeColunm: TTableColumn<TPStore>[] = [{ title: 'Mã cửa hàng', dataIndex: 'storeCode' }];
+  const storeColunm: TTableColumn<any>[] = [{ title: 'Mã cửa hàng', dataIndex: 'storeCode' }];
 
   const handleChangeSelection = React.useCallback((ids) => {
     update(ids);

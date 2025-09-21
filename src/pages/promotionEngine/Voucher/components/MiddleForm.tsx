@@ -2,15 +2,11 @@
 import { Box, Stack } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-// import SeoForm from 'components/form/Seo/SeoForm';
-// import Label from 'components/Label';
-// import ModalForm from 'components/ModalForm/ModalForm';
-// import ResoTable from 'components/ResoTable/ResoTable';
-// import useExtraCategory from 'hooks/extra-categories/useExtraCategoy';
+
 import useLocales from 'hooks/useLocales';
 // import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { CreateProductForm, ProductTypeEnum, TProductBase } from 'types/product';
+import { CreateProductForm, ProductTypeEnum } from 'types/product';
 import { TTableColumn } from 'types/table';
 import { Card, CardTitle } from './Card';
 import BasicProductInfoForm from './form/BasicProductInfoForm';
@@ -43,7 +39,7 @@ const MiddleForm: React.FC<Props> = ({
 
   // const { data: extras } = useExtraCategory(cateId);
 
-  const productExtraColumns: TTableColumn<TProductBase>[] = [
+  const productExtraColumns: TTableColumn<any>[] = [
     {
       title: 'Tên',
       dataIndex: 'product_name'

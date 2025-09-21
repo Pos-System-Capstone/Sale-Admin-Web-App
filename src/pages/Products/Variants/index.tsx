@@ -14,7 +14,7 @@ import TagField from 'components/form/TagField';
 export default function ListVariants() {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const variantColumn: TTableColumn<TVariant>[] = [
+  const variantColumn: TTableColumn<any>[] = [
     {
       title: `STT`,
       dataIndex: 'index',

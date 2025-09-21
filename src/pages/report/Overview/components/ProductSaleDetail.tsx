@@ -111,7 +111,7 @@ function TabTwo() {
     }
   ];
 
-  const orderColumns: TTableColumn<ProductSaleDetail>[] = [
+  const orderColumns: TTableColumn<any>[] = [
     {
       title: 'Ngày',
       valueType: 'date',

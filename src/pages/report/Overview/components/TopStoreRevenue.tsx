@@ -1,14 +1,13 @@
 import { Stack, Typography } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router';
-import { TTopStoreRevenueBase } from 'types/report/overview';
 import { TTableColumn } from 'types/table';
 import { formatDate } from 'utils/formatTime';
 function TopStoreRevenue({ dateRange }: any) {
   const ref = useRef<any>();
   const { storeId } = useParams();
 
-  const orderColumns: TTableColumn<TTopStoreRevenueBase>[] = [
+  const orderColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       hideInSearch: true,

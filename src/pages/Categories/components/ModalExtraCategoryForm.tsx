@@ -10,7 +10,7 @@ import { SUB_CATEGORY_TYPE_OPTION } from 'constraints';
 import useExtraCategoriesInProductCategory from 'hooks/categories/useCategoryChild';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
-import { CategoryStatus, CategoryType, TCategory } from 'types/category';
+import { CategoryStatus, CategoryType } from 'types/category';
 import { TTableColumn } from 'types/table';
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
   trigger?: any;
   onReload: Function;
   selected?: string[] | undefined;
-  type?: string | undefined;
+  type?: 'checkbox' | 'radio' | undefined;
 }
 const ModalExtraCategoryForm = ({
   cateId,
@@ -64,7 +64,7 @@ const ModalExtraCategoryForm = ({
   const handleChangeSelection = React.useCallback((ids, data) => {
     setSelectedExtraCategoryIds(ids);
   }, []);
-  const categoryColumns: TTableColumn<TCategory>[] = [
+  const categoryColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

@@ -8,7 +8,7 @@ import productPromotionApi from 'api/promotion/product';
 import { productPromotionColumns } from '../Products/config';
 interface TaskComponentProps {
   selectedText: string | null;
-  type?: string | undefined;
+  type?: 'checkbox' | 'radio' | undefined;
   setListProduct: Function;
   listProduct: string[];
   isUpdate: boolean;

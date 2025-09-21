@@ -33,7 +33,7 @@ const MenusPage = () => {
   const [isShowConfirmDeleteDialog, setIsShowConfirmDeleteDialog] = useState(false);
   const [deleteMenu, setDeleteMenu] = useState<PosMenu>();
 
-  const menuColumns: TTableColumn<PosMenu>[] = [
+  const menuColumns: TTableColumn<any>[] = [
     {
       title: 'Code',
       dataIndex: 'code'

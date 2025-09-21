@@ -1,8 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { TProductPromotion } from "types/promotion/product";
 import { TTableColumn } from "types/table";
 
-export const productPromotionColumns: TTableColumn<TProductPromotion>[] = [
+export const productPromotionColumns: TTableColumn<any>[] = [
     {
         title: 'STT',
         dataIndex: 'index',

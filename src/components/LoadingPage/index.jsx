@@ -1,5 +1,4 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
-import React from 'react';
 import Logo from '../Logo';
 
 import illustration from '../../assets/images/illustration_dashboard.png';

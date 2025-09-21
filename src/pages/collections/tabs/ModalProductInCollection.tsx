@@ -14,7 +14,7 @@ interface Props {
   trigger?: any;
   onReload: Function;
   selected?: string[] | undefined;
-  type?: string | undefined;
+  type?: 'checkbox' | 'radio' | undefined;
 }
 const ModalProductsInCollection = ({
   collectionId,

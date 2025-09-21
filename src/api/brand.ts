@@ -2,7 +2,7 @@ import { TBrand, TBrandDetail, TBrandUpdate, TNewBrandCreate } from 'types/brand
 import { TEmployeeCreate } from 'types/employee';
 import { BaseReponse } from 'types/response';
 import { StoreReport, TStore, TStoreCreate, TStoreDetail } from 'types/store';
-import { TUser } from 'types/user';
+
 import requestWebAdmin from 'utils/axios';
 import { generateAPIWithPaging } from './utils';
 
@@ -21,10 +21,10 @@ const getStoresOfBrandWithoutPaging = () => {
 };
 
 const getListUserOfBrand = (brandId: string, params?: any) => {
-  return requestWebAdmin.get<BaseReponse<TUser>>(`brands/${brandId}/users`, { params });
+  return requestWebAdmin.get<BaseReponse<any>>(`brands/${brandId}/users`, { params });
 };
 const createUserOfBrand = (brandId: string, values: TEmployeeCreate) => {
-  return requestWebAdmin.post<BaseReponse<TUser>>(`brands/${brandId}/users`, values);
+  return requestWebAdmin.post<BaseReponse<any>>(`brands/${brandId}/users`, values);
 };
 
 const createNewBrand = (data: TNewBrandCreate) => {

@@ -35,7 +35,7 @@ const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
   const [updateCateId, setUpdateCateId] = useState<number | null>(null);
   const [currentDeleteItem, setCurrentDeleteItem] = useState<TCategory | null>(null);
 
-  const categoryColumns: TTableColumn<TCategory>[] = [
+  const categoryColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

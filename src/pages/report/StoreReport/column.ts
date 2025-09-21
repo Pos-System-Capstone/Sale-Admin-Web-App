@@ -1,7 +1,7 @@
 import { TStoreReport } from 'types/report/store';
 import { TTableColumn } from 'types/table';
 
-export const storeColumns: TTableColumn<TStoreReport>[] = [
+export const storeColumns: TTableColumn<any>[] = [
   {
     title: 'STT',
     dataIndex: 'index',

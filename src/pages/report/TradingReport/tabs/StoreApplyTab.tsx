@@ -23,7 +23,7 @@ import { Menu } from 'types/menu';
 import { TTableColumn } from 'types/table';
 import { fDate } from 'utils/formatTime';
 
-export const menuInStoreColumns: TTableColumn<Menu>[] = [
+export const menuInStoreColumns: TTableColumn<any>[] = [
   {
     title: 'Cửa hàng',
     dataIndex: ['store', 'store_name'],
@@ -197,7 +197,7 @@ const StoreApplyTab = () => {
               updateForm.reset(normalizeMenuData({ ...values, store_id: values.store?.id }));
             }}
             onDelete={onConfirmDelete}
-            renderEdit={(dom: ReactNode, data: any) => (
+            renderEdit={(dom: ReactNode) => (
               <ModalForm
                 onOk={async () => {
                   try {

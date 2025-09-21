@@ -1,11 +1,8 @@
-// import { Label } from '@mui/icons-material';
-// import AutocompleteCategory from 'components/form/common/Category/AutocompleteCategory';
 import { Box, Chip } from '@mui/material';
 import { PRODUCT_TYPE_DATA } from 'constraints';
-import { TProduct } from 'types/product';
 import { TTableColumn } from 'types/table';
 
-export const productColumns: TTableColumn<TProduct>[] = [
+export const productColumns: TTableColumn<any>[] = [
   {
     title: 'STT',
     dataIndex: 'index',

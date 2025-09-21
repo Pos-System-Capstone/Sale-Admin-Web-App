@@ -14,7 +14,7 @@ export default function TabTwo({ watch }: Props) {
   const user: any = JSON.parse(userRaw ?? '{}');
   const { id } = useParams();
 
-  const membershipsColumns: TTableColumn<TTransactionByMemberShipId>[] = [
+  const membershipsColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

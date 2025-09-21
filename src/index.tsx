@@ -27,8 +27,7 @@ import App from './App';
 // components
 import LoadingScreen from './components/LoadingScreen';
 import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
-// Check our docs
-// https://docs-minimals.vercel.app/authentication/ts-version
+
 import { AuthProvider } from './contexts/JWTContext';
 // contexts
 import { SettingsProvider } from './contexts/SettingsContext';
@@ -40,7 +39,6 @@ import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 // highlight
 import './utils/highlight';
-import './_apis_';
 
 // ----------------------------------------------------------------------
 

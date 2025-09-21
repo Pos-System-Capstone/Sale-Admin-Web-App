@@ -17,7 +17,6 @@ import { useNavigate } from 'react-router-dom';
 import { addCategoy, deleteCategoyById, editCategory } from 'redux/category/api';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TCategory } from 'types/category';
-import { TConditionBase } from 'types/promotion/condition';
 import { TTableColumn } from 'types/table';
 import { fDateTime } from 'utils/formatTime';
 import { getUserInfo } from 'utils/utils';
@@ -34,7 +33,7 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
   // const brandId = useSelector((state: RootState) => state.brand);
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
-  const columns: TTableColumn<TConditionBase>[] = [
+  const columns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

@@ -6,7 +6,6 @@ import { TabContext } from '@mui/lab';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { getUserInfo } from 'utils/utils';
 import { TTableColumn } from 'types/table';
-import { TPStore } from 'types/promotion/store';
 import storePromotionApi from 'api/promotion/store';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 
@@ -17,7 +16,7 @@ const StorePromotionList = () => {
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
   const { id } = useParams();
-  const StorePromotion: TTableColumn<TPStore>[] = [
+  const StorePromotion: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

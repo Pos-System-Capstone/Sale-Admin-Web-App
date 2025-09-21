@@ -29,7 +29,7 @@ const SessionListPage = () => {
 
   const [selectSession, setSelectSession] = useState<TSession | null>(null);
 
-  const orderColumns: TTableColumn<TSession>[] = [
+  const orderColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

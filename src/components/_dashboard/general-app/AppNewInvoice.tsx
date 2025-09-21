@@ -1,8 +1,4 @@
-// material
 import { Card, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-// utils
-//
 import { Visibility } from '@mui/icons-material';
 import { IconButton, Stack, Tooltip } from '@mui/material';
 import useAuth from 'hooks/useAuth';
@@ -53,8 +49,7 @@ import OrderDetailDialog from 'pages/Orders/components/OrderDetailDialog';
 export default function AppNewInvoice() {
   const [detailOrder, setDetailOrder] = useState<string | null>(null);
   const { user } = useAuth();
-  const theme = useTheme();
-  const orderColumns: TTableColumn<TOrder>[] = [
+  const orderColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

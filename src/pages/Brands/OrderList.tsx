@@ -19,7 +19,7 @@ const OrderListBrandPage = () => {
 
   const [detailOrder, setDetailOrder] = useState<string | null>(null);
 
-  const orderColumns: TTableColumn<TOrder>[] = [
+  const orderColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

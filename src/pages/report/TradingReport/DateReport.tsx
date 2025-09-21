@@ -20,7 +20,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { useParams } from 'react-router-dom';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
-import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
 import { parseParams } from 'utils/axios';
 import { formatDate } from 'utils/formatTime';
@@ -28,7 +27,7 @@ import ReportBtn from '../components/ReportBtn';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
 
-export const menuColumns: TTableColumn<TTradingBase>[] = [
+export const menuColumns: TTableColumn<any>[] = [
   {
     title: 'STT',
     dataIndex: 'index',

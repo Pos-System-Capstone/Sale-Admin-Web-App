@@ -1,9 +1,8 @@
 import { Avatar } from '@mui/material';
-import { TBlog } from 'types/blog';
 // import { TPost } from 'types/order';
 import { TTableColumn } from 'types/table';
 
-export const postColumns: TTableColumn<TBlog>[] = [
+export const postColumns: TTableColumn<any>[] = [
   {
     title: 'STT',
     dataIndex: 'index',

@@ -1,6 +1,5 @@
 import { forwardRef, ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useLocation } from 'react-router-dom';
 // material
 import { Box, BoxProps, Container, Stack, Typography } from '@mui/material';
 // utils
@@ -16,8 +15,6 @@ interface PageProps extends BoxProps {
 
 const ReportPage = forwardRef<HTMLDivElement, PageProps>(
   ({ children, title = '', content, actions, ...other }, ref) => {
-    const { pathname } = useLocation();
-
     return (
       <Box ref={ref} {...other}>
         <Helmet>

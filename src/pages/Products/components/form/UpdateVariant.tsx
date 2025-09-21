@@ -3,7 +3,6 @@ import { Box } from '@mui/system';
 import ResoTable from 'components/ResoTable/ResoTable';
 import productApi from 'api/product';
 import { TTableColumn } from 'types/table';
-import { TVariant } from 'types/report/variant';
 import TagField from 'components/form/TagField';
 import { useParams } from 'react-router';
 import { useSnackbar } from 'notistack';
@@ -16,7 +15,7 @@ export default function UpdateVariant() {
   const { enqueueSnackbar } = useSnackbar();
   const [selectedVariants, setSelectedVariants] = useState<string[]>([]);
   const tableRef = useRef<any>();
-  const variantsColunm: TTableColumn<TVariant>[] = [
+  const variantsColunm: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

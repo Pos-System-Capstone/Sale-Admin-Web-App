@@ -27,7 +27,7 @@ const LogSale = () => {
     }
   }, [dateRange]);
 
-  const logColumns: TTableColumn<TLog>[] = [
+  const logColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

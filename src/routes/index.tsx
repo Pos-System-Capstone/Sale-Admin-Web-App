@@ -62,10 +62,6 @@ import ChannelPromotion from 'pages/promotionEngine/Channel';
 import CreateChannelPromotion from 'pages/promotionEngine/Channel/create';
 import PassioPolicy from 'pages/ComingSoonPassio';
 
-// import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
-
-// ----------------------------------------------------------------------
-
 const Loadable = (Component: any) => (props: any) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { pathname } = useLocation();
@@ -593,10 +589,6 @@ const UpdateComboPage = Loadable(lazy(() => import('../pages/Products/Combos/Upd
 // accounts
 const AccountListPage = Loadable(lazy(() => import('../pages/accounts/AccountListPage')));
 const CreateAccount = Loadable(lazy(() => import('../pages/accounts/CreateAccount')));
-
-//log
-const LogPage = Loadable(lazy(() => import('../pages/Log')));
-
 // report
 const OverviewDate = Loadable(lazy(() => import('../pages/report/Overview/OverviewDate')));
 const OverviewMonth = Loadable(lazy(() => import('../pages/report/Overview/OverviewMonth')));

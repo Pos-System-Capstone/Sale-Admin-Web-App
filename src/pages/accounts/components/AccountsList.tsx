@@ -42,7 +42,7 @@ export default function AccountsList(props: Props) {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const accountColumns: TTableColumn<TUser>[] = [
+  const accountColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',
@@ -118,32 +118,11 @@ export default function AccountsList(props: Props) {
     // Store Manager get list staff of store
     else if (user?.storeId && user?.role.includes(Role.StoreManager)) {
       return storeApi.getStoreEmployees(user?.storeId, newParam);
-    } else return;
+    } else {
+      return Promise.resolve([]);
+    }
   };
 
-  // confirm({
-  //   title: (
-  //     <>
-  //       Xác nhận xóa <strong>{currentDeleteAccount?.name}</strong>
-  //     </>
-  //   ),
-  //   content: 'Người dùng sẽ bị xoá khỏi hệ thống',
-  //   onOk: () => {
-  //     return userApi
-  //       .updateUserStatus(currentDeleteAccount.id, UserStatus.DEACTIVATE)
-  //       .then((res) => {
-  //         enqueueSnackbar('Xoá thành công', {
-  //           variant: 'success'
-  //         });
-  //       })
-  //       .then(() => ref.current?.reload())
-  //       .catch((err) => {
-  //         enqueueSnackbar('Có lỗi xảy ra, vui lòng thử lại!', {
-  //           variant: 'error'
-  //         });
-  //       });
-  //   }
-  // });
   useEffect(() => {
     const form = tableRef.current?.formControl;
     if (!form) return;
@@ -159,7 +138,7 @@ export default function AccountsList(props: Props) {
         <ResoTable
           ref={tableRef}
           pagination
-          getData={(params: any) => handleCallListDataBaseOnRole(params)}
+          getData={handleCallListDataBaseOnRole}
           onEdit={(user: TUser) => {
             navigate(`${PATH_DASHBOARD.user.profileById(user.id)}`);
           }}

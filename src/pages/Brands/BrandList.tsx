@@ -18,7 +18,7 @@ import { Icon } from '@iconify/react';
 const BrandListPage = () => {
   const navigate = useNavigate();
 
-  const brandColumns: TTableColumn<TBrand>[] = [
+  const brandColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

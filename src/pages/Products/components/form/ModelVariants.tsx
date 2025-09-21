@@ -16,7 +16,7 @@ interface Props {
   onReload: Function;
   selectedVariants: string[] | undefined;
   selected?: string[] | undefined;
-  type?: string | undefined;
+  type?: 'checkbox' | 'radio' | undefined;
 }
 const ModalVariants = ({
   ProductId,

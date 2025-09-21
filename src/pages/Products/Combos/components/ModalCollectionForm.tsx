@@ -42,7 +42,7 @@ const ModalCollectionForm = ({ trigger, onSubmit, selected = [] }: Props) => {
     setSelectedProduct(data);
   }, []);
 
-  const columns: TTableColumn<TCollection>[] = [
+  const columns: TTableColumn<any>[] = [
     {
       title: translate('combos.table.comboName'),
       dataIndex: 'name',

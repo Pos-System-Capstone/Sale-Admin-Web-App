@@ -19,7 +19,7 @@ export default function MemberShipProgramsList() {
   const user: any = JSON.parse(userRaw ?? '{}');
   const { id } = useParams();
 
-  const membershipProgramColumns: TTableColumn<TMembershipProgram>[] = [
+  const membershipProgramColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

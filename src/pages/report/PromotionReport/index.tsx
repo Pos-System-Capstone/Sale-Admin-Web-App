@@ -11,7 +11,6 @@ import { SelectField } from 'components/form';
 // import AutocompleteStore from 'components/form/common/report/AutocompleteStore';
 import Label from 'components/Label';
 import { useParams } from 'react-router';
-import { PromotionBase } from 'types/report/promotion';
 import { TTableColumn } from 'types/table';
 import { formatDate } from 'utils/formatTime';
 import ReportBtn from '../components/ReportBtn';
@@ -21,7 +20,7 @@ const PromotionReport = () => {
   const tableRef = useRef<any>();
   const { storeId } = useParams();
 
-  const columns: TTableColumn<PromotionBase>[] = [
+  const columns: TTableColumn<any>[] = [
     // {
     //   title: 'Tên khách hàng',
     //   dataIndex: 'storeId',

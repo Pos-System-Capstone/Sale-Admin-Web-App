@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TCollection } from 'types/collection';
-import { GIFT_TYPE_DATA, TGiftBase } from 'types/promotion/gift';
+import { GIFT_TYPE_DATA } from 'types/promotion/gift';
 import { TTableColumn } from 'types/table';
 import { getUserInfo } from 'utils/utils';
 
@@ -30,7 +30,7 @@ const GiftPage = () => {
       tableRef.current.formControl.setValue('status', 0);
     }
   }, [user]);
-  const columns: TTableColumn<TGiftBase>[] = [
+  const columns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

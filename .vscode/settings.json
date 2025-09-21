@@ -1,4 +1,4 @@
 {
   "editor.columnSelection": false,
-  "editor.defaultColorDecorators": false
+  "editor.defaultColorDecorators": "never"
 }

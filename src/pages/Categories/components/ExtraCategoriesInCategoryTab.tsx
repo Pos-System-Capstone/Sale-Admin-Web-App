@@ -15,7 +15,7 @@ const ExtraCategoriesInCategoryTab = (props: Props) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const tableRef = useRef<any>();
-  const categoryColumns: TTableColumn<TCategory>[] = [
+  const categoryColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

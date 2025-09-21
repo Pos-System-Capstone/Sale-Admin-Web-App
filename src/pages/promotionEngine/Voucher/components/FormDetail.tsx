@@ -7,7 +7,7 @@ import { Box, Stack } from '@mui/material';
 // import useExtraCategory from 'hooks/extra-categories/useExtraCategoy';
 import useLocales from 'hooks/useLocales';
 import React from 'react';
-import { ProductTypeEnum, TProductBase } from 'types/product';
+import { ProductTypeEnum } from 'types/product';
 import { TTableColumn } from 'types/table';
 import { Card } from './Card';
 import BasicProductInfoForm2 from './form/FormDetailVoucher';
@@ -29,7 +29,7 @@ const FormDetail: React.FC<Props> = ({ updateMode, watch }) => {
 
   // const { data: extras } = useExtraCategory(cateId);
 
-  const productExtraColumns: TTableColumn<TProductBase>[] = [
+  const productExtraColumns: TTableColumn<any>[] = [
     {
       title: 'Tên',
       dataIndex: 'product_name'

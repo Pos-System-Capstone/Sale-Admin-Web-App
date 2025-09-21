@@ -14,7 +14,7 @@ export default function TransactionList() {
 
   const [detailOrder, setDetailOrder] = useState<string | null>(null);
 
-  const transactionColumns: TTableColumn<TTransaction>[] = [
+  const transactionColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

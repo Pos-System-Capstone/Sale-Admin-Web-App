@@ -5,7 +5,7 @@ import React from 'react';
 import { TProductBase } from 'types/product';
 import { TTableColumn } from 'types/table';
 
-export const comboColumns: TTableColumn<TProductBase>[] = [
+export const comboColumns: TTableColumn<any>[] = [
   {
     title: 'STT',
     dataIndex: 'index',

@@ -8,7 +8,6 @@ import MenuInStoreForm from 'components/form/Menu/MenuInStoreForm';
 import Label from 'components/Label';
 import confirm from 'components/Modal/confirm';
 import ModalForm from 'components/ModalForm/ModalForm';
-import { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { useSnackbar } from 'notistack';
@@ -20,63 +19,7 @@ import { deleteStoreApplyMenus, getStoreApplyMenus, updateStoreApplyMenus } from
 import { PATH_DASHBOARD } from 'routes/paths';
 import { StoreStatus, TStoreDetail } from 'types/store';
 import ModalStoresApplyMenuForm from '../components/CreateNewMenu/ShowAndEditStoreInMenu/ModalAddAndRemoveStoreApplyMenu';
-
-// export const menuInStoreColumns: TTableColumn<Menu>[] = [
-//   {
-//     title: 'Cửa hàng',
-//     dataIndex: ['store', 'store_name'],
-//     hideInSearch: true
-//   },
-//   {
-//     title: 'Thời gian hiệu lực',
-//     hideInSearch: true,
-//     render: (_, data: Menu) =>
-//       data.start_time && data.end_time ? (
-//         <Typography>
-//           {fDate(data.start_time)} - {fDate(data.end_time)}
-//         </Typography>
-//       ) : (
-//         '-'
-//       )
-//   },
-//   {
-//     title: 'Khung giờ',
-//     dataIndex: 'time_ranges',
-//     hideInSearch: true,
-//     render: (_: any, { time_ranges }: Menu) => (
-//       <Stack direction="row" spacing={1}>
-//         {time_ranges?.map(([from, to]) => (
-//           <Chip size="small" key={`${from}-${to}`} label={`${from}-${to}`} />
-//         ))}
-//       </Stack>
-//     )
-//   },
-//   {
-//     title: 'Ngày hoạt động',
-//     dataIndex: 'day_filters',
-//     valueType: 'select',
-//     valueEnum: DAY_OF_WEEK,
-//     render: (_: any, { day_filters: dayFilters, id }: Menu) =>
-//       dayFilters.length === 7 ? (
-//         <Chip label="Cả tuần" color="info" />
-//       ) : (
-//         <Stack direction="row" spacing={1}>
-//           {dayFilters?.map((day) => (
-//             <Chip
-//               size="small"
-//               key={`${id}-${day}`}
-//               label={DAY_OF_WEEK.find(({ value }) => value === day)?.label}
-//             />
-//           ))}
-//         </Stack>
-//       )
-//   },
-//   {
-//     title: 'Độ ưu tiên',
-//     dataIndex: 'priority',
-//     hideInSearch: true
-//   }
-// ];
+import { TTableColumn } from 'types/table';
 
 const StoreApplyTab = () => {
   const { id }: any = useParams();
@@ -84,7 +27,7 @@ const StoreApplyTab = () => {
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
   const tableRef = useRef<any>();
-  const menuInStoreColumns: ResoDescriptionColumnType<TStoreDetail>[] = [
+  const menuInStoreColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',
@@ -257,7 +200,7 @@ const StoreApplyTab = () => {
             columns={menuInStoreColumns}
             rowKey="menu_in_store_id"
             showAction={false}
-            renderEdit={(dom: ReactNode, data: any) => (
+            renderEdit={(dom: ReactNode) => (
               <ModalForm
                 onOk={async () => {
                   try {

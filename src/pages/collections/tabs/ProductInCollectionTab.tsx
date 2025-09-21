@@ -8,7 +8,7 @@ import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import React, { useRef } from 'react';
 import { productCollectionApi } from 'redux/collections/api';
-import { TProduct, TProductBase } from 'types/product';
+import { TProductBase } from 'types/product';
 import { TTableColumn } from 'types/table';
 import ModalProductsInCollection from './ModalProductInCollection';
 
@@ -55,7 +55,7 @@ const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
     }
   };
 
-  const categoryExtraColumns: TTableColumn<TProduct>[] = [
+  const categoryExtraColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

@@ -1,8 +1,7 @@
 import TagField from 'components/form/TagField';
-import { TVariant } from 'types/report/variant';
 import { TTableColumn } from 'types/table';
 
-export const variantColumn: TTableColumn<TVariant>[] = [
+export const variantColumn: TTableColumn<any>[] = [
   {
     title: `STT`,
     dataIndex: 'index',

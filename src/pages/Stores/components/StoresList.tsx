@@ -1,14 +1,12 @@
 /* eslint-disable camelcase */
 import Label from 'components/Label';
 
-// material
 import { Box, Stack } from '@mui/material';
 import brandApi from 'api/brand';
 import ResoTable from 'components/ResoTable/ResoTable';
-// components
+
 import storeApi from 'api/store';
 import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
-import { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 import useAuth from 'hooks/useAuth';
 import { useSnackbar } from 'notistack';
 import { useRef, useState } from 'react';
@@ -16,6 +14,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { StoreStatus, TStore } from 'types/store';
 import { Role } from 'utils/role';
+import { TTableColumn } from 'types/table';
 
 const StoresList = () => {
   const navigate = useNavigate();
@@ -26,7 +25,7 @@ const StoresList = () => {
   const { enqueueSnackbar } = useSnackbar();
   const tableRef = useRef<any>();
 
-  const storeDetailColumns: ResoDescriptionColumnType<TStore>[] = [
+  const storeDetailColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',
@@ -55,7 +54,7 @@ const StoresList = () => {
       title: 'Trạng thái',
       dataIndex: 'status',
       hideInSearch: true,
-      render: (status) => {
+      render: (status: StoreStatus) => {
         return status === StoreStatus.ACTIVE ? (
           <Label color="primary">Hoạt động </Label>
         ) : (
@@ -95,7 +94,6 @@ const StoresList = () => {
             <ResoTable
               rowKey="id"
               pagination
-              ref={tableRef}
               onEdit={(store: TStore) => {
                 navigate(`${PATH_DASHBOARD.stores.storeById(store.id)}`);
               }}

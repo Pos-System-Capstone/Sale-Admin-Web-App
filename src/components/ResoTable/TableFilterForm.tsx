@@ -9,7 +9,7 @@ import {
   TimePickerField
 } from 'components/form';
 import DateRangePickerField from 'components/form/DateRangePickerField';
-import React from 'react';
+
 import { TTableColumn } from 'types/table';
 
 type TableType = TTableColumn<any>;

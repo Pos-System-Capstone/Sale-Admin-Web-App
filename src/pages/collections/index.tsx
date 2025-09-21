@@ -26,7 +26,7 @@ const CollectionListPage = () => {
 
   const [currentDeleteItem, setCurrentDeleteItem] = useState<TCollection | null>(null);
 
-  const columns: TTableColumn<TCollection>[] = [
+  const columns: TTableColumn<any>[] = [
     {
       title: 'Tên',
       dataIndex: 'name',

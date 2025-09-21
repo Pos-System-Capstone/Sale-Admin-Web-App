@@ -27,7 +27,6 @@ import {
   // PAYMENT_TYPE_OPTIONS,
   TOrderDetail
 } from 'types/order';
-import { TProductInOrderDetail } from 'types/product';
 import { TTableColumn } from 'types/table';
 import OrderCustom from './OrderCustom';
 
@@ -154,7 +153,7 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
     // }
   ];
 
-  const orderItemColumns: TTableColumn<TProductInOrderDetail>[] = [
+  const orderItemColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index'

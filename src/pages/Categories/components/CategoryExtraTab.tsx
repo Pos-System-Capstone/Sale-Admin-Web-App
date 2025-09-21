@@ -115,7 +115,7 @@ const CategoryExtraTab = (props: Props) => {
     return false;
   };
 
-  const categoryExtraColumns: TTableColumn<TProduct>[] = [
+  const categoryExtraColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

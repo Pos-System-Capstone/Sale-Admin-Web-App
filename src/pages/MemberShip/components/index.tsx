@@ -1,5 +1,5 @@
 import Page from 'components/Page';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Button, Card } from '@mui/material';
 import { useNavigate } from 'react-router';
@@ -9,7 +9,6 @@ import { TabContext } from '@mui/lab';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { getUserInfo } from 'utils/utils';
 import membershipsApi from 'api/promotion/membership';
-import { TMembership } from 'types/promotion/membership';
 import { TTableColumn } from 'types/table';
 
 export default function MemberShipList() {
@@ -19,7 +18,7 @@ export default function MemberShipList() {
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
 
-  const membershipsColumns: TTableColumn<TMembership>[] = [
+  const membershipsColumns: TTableColumn<any>[] = [
     {
       title: 'Tên thành viên',
       dataIndex: 'fullname',

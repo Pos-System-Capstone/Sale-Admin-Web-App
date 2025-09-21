@@ -6,7 +6,7 @@ import channelPromotionApi from 'api/promotion/channel';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
-import { TPChannelBase } from 'types/promotion/channelPromotions';
+
 import { TTableColumn } from 'types/table';
 interface Props {
   brandId: string;
@@ -15,7 +15,7 @@ interface Props {
   onReload: Function;
   selectedChannelIds: string[] | undefined;
   selected?: string[] | undefined;
-  type?: string | undefined;
+  type?: 'checkbox' | 'radio' | undefined;
 }
 const ModalChanel = ({
   brandId,
@@ -33,9 +33,7 @@ const ModalChanel = ({
   };
   const { enqueueSnackbar } = useSnackbar();
 
-  const channelColunm: TTableColumn<TPChannelBase>[] = [
-    { title: 'Mã cửa hàng', dataIndex: 'channelName' }
-  ];
+  const channelColunm: TTableColumn<any>[] = [{ title: 'Mã cửa hàng', dataIndex: 'channelName' }];
 
   const handleSubmit = () =>
     Promise.resolve(productApi.addVariantsToProduct(brandId!, selectedIds!))

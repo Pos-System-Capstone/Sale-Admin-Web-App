@@ -1,6 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable consistent-return */
 import editIcon from '@iconify/icons-eva/edit-outline';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import trashIcon from '@iconify/icons-eva/trash-outline';
@@ -44,9 +41,39 @@ import TableFilterForm from 'components/ResoTable/TableFilterForm';
 import useLocales from 'hooks/useLocales';
 import get from 'lodash/get';
 import { useSnackbar } from 'notistack';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { getCellValue, renderText, transformParamToHyphen } from './utils';
+import { Theme } from '@mui/material/styles';
+import { TTableColumn } from 'types/table';
+
+interface TableProps {
+  columns?: TTableColumn<any>[];
+  dataSource?: any;
+  pagination?: boolean;
+  filters?: any;
+  onEdit?: (data: any) => void;
+  onDelete?: (data: any) => void;
+  rowKey?: string;
+  checkboxSelection?: boolean | { selection?: any[]; type?: 'checkbox' | 'radio' };
+  onChangeSelection?: (selectedIds: any[], selectedData: any[]) => void;
+  scroll?: any;
+  showAction?: boolean;
+  disabledSelections?: any[];
+  showFilter?: boolean;
+  showSettings?: boolean;
+  toolBarRender?: () => React.ReactNode[];
+  getData?: (params: any) => Promise<any>;
+  defaultFilters?: Record<string, any>;
+  renderEdit?: (dom: React.ReactNode) => React.ReactNode;
+  renderDelete?: (dom: React.ReactNode) => React.ReactNode;
+  ref?: React.Ref<any>;
+}
+
+interface StyleProps {
+  left?: string | number;
+  right?: string | number;
+}
 
 const StickyLeftTableCell = withStyles((theme) => ({
   head: {
@@ -80,7 +107,7 @@ const StickyRightTableCell = withStyles((theme) => ({
   }
 }))(TableCell);
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
   root: {
     textAlign: 'left'
   },
@@ -92,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
   stickyLeft: {
     width: '60px',
     position: 'sticky',
-    left: (props) => props.left ?? '0',
+    left: (props: StyleProps) => props.left ?? '0',
     backgroundColor: 'white'
     // borderRight: `1px solid ${theme.palette.grey[400]}`
   },
@@ -100,42 +127,37 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'right',
     width: '60px',
     position: 'sticky',
-    right: (props) => props.right ?? '0',
+    right: (props: StyleProps) => props.right ?? '0',
     backgroundColor: '#fff'
     // borderLeft: `1px solid ${theme.palette.grey[400]}`
   },
   body: {}
 }));
 
-const ResoTable = (
-  {
-    columns = [],
-    dataSource = null,
-    pagination = true,
-    filters = null,
-    onEdit = null,
-    onDelete = null,
-    rowKey = 'id',
-    checkboxSelection = false,
-    onChangeSelection = () => null,
-    scroll = null,
-    showAction = true,
-    disabledSelections = [],
-    showFilter = true,
-    showSettings = true,
-    toolBarRender = () => [],
-    ...props
-  },
-  ref = null
-) => {
-  const {
-    getData,
-    defaultFilters = {},
-    // defaultSort = {},
-    renderEdit = (dom) => dom,
-    renderDelete = (dom) => dom
-  } = props || {};
-  const classes = useStyles();
+const ResoTable: React.FC<TableProps> = ({
+  ref,
+  columns = [],
+  dataSource = null,
+  pagination = true,
+  filters = null,
+  onEdit,
+  onDelete,
+  rowKey = 'id',
+  checkboxSelection = false,
+  onChangeSelection,
+  scroll = null,
+  showAction = true,
+  disabledSelections = [],
+  showFilter = true,
+  showSettings = true,
+  toolBarRender = () => [],
+  getData,
+  defaultFilters = {},
+  renderEdit = (dom: React.ReactNode) => dom,
+  renderDelete = (dom: React.ReactNode) => dom,
+  ...props
+}) => {
+  const classes = useStyles({});
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useLocales();
 
@@ -185,14 +207,18 @@ const ResoTable = (
   );
   const { current, pageSize, total } = tableProps?.pagination ?? {};
 
-  const [_columns, setColumns] = React.useState(columns ?? []);
-  const [_selectedIds, setSelectedIds] = React.useState(checkboxSelection?.selection ?? []);
-  const [_anchorEl, setAnchorEl] = React.useState(null);
-  const [_settingColEl, setSettingColEl] = React.useState(null);
-  const [_openMenu, setOpenMenu] = React.useState(null);
-  const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
+  const [_columns, setColumns] = useState(columns ?? []);
+  const [_selectedIds, setSelectedIds] = useState<any[]>(
+    (checkboxSelection && typeof checkboxSelection === 'object'
+      ? checkboxSelection.selection
+      : null) ?? []
+  );
+  const [_anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [_settingColEl, setSettingColEl] = useState<HTMLElement | null>(null);
+  const [_openMenu, setOpenMenu] = useState<string | null>(null);
+  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
-  const openEditMenu = (event) => {
+  const openEditMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const closeEditMenu = () => {
@@ -203,15 +229,10 @@ const ResoTable = (
     setColumns(columns);
   }, [columns]);
 
-  React.useImperativeHandle(ref, () => ({
-    reload: () => search?.submit(),
-    formControl: form
-  }));
-
   React.useEffect(() => {
     if (typeof onChangeSelection === 'function') {
       // TH default selection chua co trong list data
-      const selectionData = data?.list.filter((d) => _selectedIds.includes(d[rowKey]));
+      const selectionData = data?.list?.filter((d: any) => _selectedIds.includes(d[rowKey])) ?? [];
       // data
       onChangeSelection(_selectedIds, selectionData);
     }
@@ -257,9 +278,13 @@ const ResoTable = (
   const handleClick = React.useCallback(
     (event, name) => {
       const selectedIndex = _selectedIds.indexOf(name);
-      let newSelected = [];
+      let newSelected: any[] = [];
 
-      if (checkboxSelection?.type === 'radio') {
+      if (
+        checkboxSelection &&
+        typeof checkboxSelection === 'object' &&
+        checkboxSelection.type === 'radio'
+      ) {
         if (selectedIndex === -1) {
           newSelected = [name];
         } else {
@@ -280,7 +305,7 @@ const ResoTable = (
 
       setSelectedIds(newSelected);
     },
-    [_selectedIds, checkboxSelection?.type]
+    [_selectedIds, checkboxSelection]
   );
 
   const handleSort = React.useCallback(
@@ -316,14 +341,16 @@ const ResoTable = (
         !checkAllCurrentData;
       tableHeaders.push(
         <StickyLeftTableCell className={classes.stickyLeft} padding="checkbox">
-          {checkboxSelection?.type === 'checkbox' && (
-            <Checkbox
-              indeterminate={checkIndeterminateCurrentData}
-              checked={data?.list?.length > 0 && checkAllCurrentData}
-              onChange={onSelectAllClick}
-              inputProps={{ 'aria-label': 'select all desserts' }}
-            />
-          )}
+          {checkboxSelection &&
+            typeof checkboxSelection === 'object' &&
+            checkboxSelection.type === 'checkbox' && (
+              <Checkbox
+                indeterminate={checkIndeterminateCurrentData}
+                checked={(data?.list?.length ?? 0) > 0 && checkAllCurrentData}
+                onChange={onSelectAllClick}
+                inputProps={{ 'aria-label': 'select all desserts' }}
+              />
+            )}
         </StickyLeftTableCell>
       );
     }
@@ -335,14 +362,14 @@ const ResoTable = (
         <CellComp
           className={[classes.root, header.fixed === 'right' ? classes.stickyRight : ''].join(' ')}
           key={`header_${index}`}
-          align={header.alignRight ? 'right' : 'left'}
+          align={(header as any).alignRight ? 'right' : 'left'}
           sx={{ left: checkboxSelection ? '64px' : 0 }}
         >
           <TableSortLabel
             active={sortProperty === header.dataIndex}
             direction={sortDirection ? sortDirection : undefined}
             hideSortIcon={!sortable}
-            onClick={sortable ? () => handleSort(header) : null}
+            onClick={header.sortable ? () => handleSort(header) : undefined}
           >
             <Typography variant="body1" noWrap>
               {getCellValue(header.title, null, header)}
@@ -382,11 +409,12 @@ const ResoTable = (
 
   const tableBodyContent = React.useMemo(() => {
     if (!data) return;
-    const isSelected = (key) => _selectedIds.indexOf(key) !== -1;
-    const isDisabled = (key) => disabledSelections.findIndex((value) => value == key) !== -1;
+    const isSelected = (key: any) => _selectedIds.indexOf(key) !== -1;
+    const isDisabled = (key: any) =>
+      disabledSelections.findIndex((value: any) => value === key) !== -1;
 
     const body = [..._columns].filter(({ hideInTable }) => !hideInTable);
-    const tableBodys = [];
+    const tableBodys: React.ReactElement[] = [];
     data?.list.forEach((data, idx) => {
       const bodyRow = body.map((column, index) => {
         const CellComp = TableCell;
@@ -394,13 +422,13 @@ const ResoTable = (
         let cell;
 
         if (typeof column.render === 'function') {
-          cell = column.render(get(data, column.dataIndex, '-'), data, idx) ?? '-';
+          cell = column.render(get(data, column.dataIndex ?? '', '-'), data, idx) ?? '-';
         } else {
           if (column.valueEnum) {
             const opt =
               column.valueEnum?.find(
-                (opt) => `${opt.value}` === `${get(data, column.dataIndex)}`
-              ) ?? get(data, column.dataIndex, '-');
+                (opt: any) => `${opt.value}` === `${get(data, column.dataIndex ?? '')}`
+              ) ?? get(data, column.dataIndex ?? '', '-');
             cell = (
               <Label {...opt}>
                 <Typography variant="subtitle2" noWrap>
@@ -415,7 +443,7 @@ const ResoTable = (
                   ? idx + 1
                   : renderText(
                       column.valueType,
-                      get(data, column.dataIndex) ?? '-',
+                      get(data, column.dataIndex ?? '') ?? '-',
                       column.formatProps
                     )}
               </Typography>
@@ -429,9 +457,8 @@ const ResoTable = (
               index === 0 ? classes.stickyLeft : classes.body,
               column.fixed === 'right' && classes.stickyRight
             ].join(' ')}
-            left={checkboxSelection ? '64px' : 0}
             key={`${column.title}-${data[rowKey]}`}
-            hover
+            sx={{ left: checkboxSelection ? '64px' : 0 }}
           >
             {cell}
           </CellComp>
@@ -442,8 +469,10 @@ const ResoTable = (
         const isItemSelected = isSelected(data[rowKey]);
         const disabled = isDisabled(data[rowKey]);
         bodyRow.unshift(
-          <TableCell hover className={classes.stickyLeft} padding="checkbox">
-            {checkboxSelection?.type === 'checkbox' ? (
+          <TableCell className={classes.stickyLeft} padding="checkbox">
+            {checkboxSelection &&
+            typeof checkboxSelection === 'object' &&
+            checkboxSelection.type === 'checkbox' ? (
               <Checkbox
                 disabled={disabled}
                 checked={isItemSelected}
@@ -466,22 +495,20 @@ const ResoTable = (
             <IconButton onClick={() => handleEdit(data)} size="large">
               <Icon icon={editIcon} />
             </IconButton>
-          </Tooltip>,
-          data
+          </Tooltip>
         );
         const deleteComp = renderDelete(
           <Tooltip title="Xóa">
             <IconButton onClick={() => handleDelete(data)} sx={{ color: 'red' }} size="large">
               <Icon icon={trashIcon} />
             </IconButton>
-          </Tooltip>,
-          data
+          </Tooltip>
         );
         const ActionCell = mdUp ? (
           <StickyRightTableCell>
             <Stack direction="row" justifyContent="flex-end">
               {/* prettier-ignore */}
-              {onDelete && deleteComp}
+              {typeof onDelete === 'function' && deleteComp}
               <Divider orientation="vertical" flexItem />
               {editComp}
             </Stack>
@@ -506,7 +533,7 @@ const ResoTable = (
                 'aria-labelledby': 'edit-menu'
               }}
               onClose={(e) => {
-                closeEditMenu(e);
+                closeEditMenu();
                 setOpenMenu(null);
               }}
               open={data[rowKey] === _openMenu}
@@ -519,8 +546,7 @@ const ResoTable = (
                     <Icon icon={trashIcon} />
                   </ListItemIcon>
                   <ListItemText>Xóa</ListItemText>
-                </MenuItem>,
-                data
+                </MenuItem>
               )}
 
               {renderEdit(
@@ -533,8 +559,7 @@ const ResoTable = (
                     <Icon icon={editIcon} />
                   </ListItemIcon>
                   <ListItemText>Điều chỉnh</ListItemText>
-                </MenuItem>,
-                data
+                </MenuItem>
               )}
             </Menu>
           </StickyRightTableCell>
@@ -573,11 +598,12 @@ const ResoTable = (
     _openMenu,
     handleEdit,
     handleDelete,
-    handleClick
+    handleClick,
+    onDelete
   ]);
 
   const settingColumns = () => {
-    const handleToggle = (col, idx) => {
+    const handleToggle = (col: any, idx: number) => {
       const updateColumns = [..._columns];
       updateColumns[idx].hideInTable = !updateColumns[idx].hideInTable;
       setColumns(updateColumns);
@@ -619,10 +645,10 @@ const ResoTable = (
         </ListItem>
         <Divider />
         {_columns.map((col, idx) => {
-          const labelId = `checkbox-list-label-${col.dataIndex}`;
+          const labelId = `checkbox-list-label-${String(col.dataIndex)}`;
 
           return (
-            <ListItem key={col.dataIndex} disablePadding sx={{ paddingLeft: 1 }}>
+            <ListItem key={String(col.dataIndex)} disablePadding sx={{ paddingLeft: 1 }}>
               <ListItemButton role={undefined} onClick={() => handleToggle(col, idx)} dense>
                 <ListItemIcon>
                   <Checkbox
@@ -723,9 +749,11 @@ const ResoTable = (
           <TablePagination
             rowsPerPageOptions={[10, 50, 100]}
             component="div"
-            {...{ rowsPerPage: pageSize, count: total, page: current - 1 }}
+            rowsPerPage={pageSize ?? 10}
+            count={total ?? 0}
+            page={(current ?? 1) - 1}
             onPageChange={(_, page) => changeCurrent(page + 1)}
-            onRowsPerPageChange={(e) => changePageSize(e.target.value)}
+            onRowsPerPageChange={(e) => changePageSize(Number(e.target.value))}
           />
         )}
       </Container>
@@ -733,4 +761,4 @@ const ResoTable = (
   );
 };
 
-export default React.forwardRef(ResoTable);
+export default ResoTable;

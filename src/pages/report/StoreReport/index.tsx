@@ -75,14 +75,7 @@ const StoreReport = () => {
     }
   ];
 
-  type StoreDetails = {
-    index?: any;
-    id?: any;
-    name?: any;
-    date?: any;
-  };
-
-  const testColumns: TTableColumn<StoreDetails>[] = [
+  const testColumns: TTableColumn<any>[] = [
     {
       title: 'STT',
       dataIndex: 'index',

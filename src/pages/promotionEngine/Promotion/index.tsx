@@ -16,7 +16,6 @@ import { useNavigate } from 'react-router';
 
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { GIFT_TYPE_DATA } from 'types/promotion/gift';
-import { TPromotionBase } from 'types/promotion/promotion';
 import { TTableColumn } from 'types/table';
 import { getUserInfo } from 'utils/utils';
 
@@ -34,7 +33,7 @@ const Promotion = (props: Props) => {
   const userRaw = getUserInfo();
   const user: any = JSON.parse(userRaw ?? '{}');
   console.log('user', user.brandId);
-  const promotionColumn: TTableColumn<TPromotionBase>[] = [
+  const promotionColumn: TTableColumn<any>[] = [
     { title: 'brandId', dataIndex: 'brandId', hideInTable: true, hideInSearch: true },
     {
       title: `${translate('promotionSystem.promotion.table.no')}`,

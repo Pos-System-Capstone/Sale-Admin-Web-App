@@ -14,7 +14,6 @@ import { useNavigate } from 'react-router-dom';
 //
 import voucherApi from 'api/promotion/voucher';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
-import { TVoucherBase } from 'types/promotion/voucher';
 import { TTableColumn } from 'types/table';
 import { getUserInfo } from 'utils/utils';
 
@@ -31,7 +30,7 @@ export default function Voucher() {
   const navigate = useNavigate();
   const { t } = useLocales();
 
-  const productColumns: TTableColumn<TVoucherBase>[] = [
+  const productColumns: TTableColumn<any>[] = [
     {
       title: `${t('promotionSystem.voucher.table.no')}`,
       dataIndex: 'index',

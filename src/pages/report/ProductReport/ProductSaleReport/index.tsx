@@ -10,7 +10,6 @@ import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
-import { TProductSaleReportBase } from 'types/report/product';
 import { TTableColumn } from 'types/table';
 import { parseParams } from 'utils/axios';
 import { formatDate } from 'utils/formatTime';
@@ -24,7 +23,7 @@ const ProductSaleReport = () => {
     setActiveTab(newValue);
   };
 
-  const productSaleColumn: TTableColumn<TProductSaleReportBase>[] = [
+  const productSaleColumn: TTableColumn<any>[] = [
     {
       title: 'Cửa hàng',
       hideInTable: true,

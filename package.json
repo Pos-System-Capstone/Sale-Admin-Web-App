@@ -28,12 +28,6 @@
       "git add ."
     ]
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "babel": {
     "presets": [
       "@babel/preset-react"
@@ -93,7 +87,6 @@
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "emoji-mart": "^3.0.0",
-    "eslint-config-airbnb-base": "^14.2.1",
     "faker": "^5.5.3",
     "firebase": "^9.6.10",
     "formik": "^2.2.9",
@@ -148,7 +141,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
-    "@babel/eslint-parser": "^7.14.7",
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
     "@types/autosuggest-highlight": "^3.1.1",
@@ -178,18 +170,10 @@
     "@typescript-eslint/eslint-plugin": "^4.28.4",
     "@typescript-eslint/parser": "^4.28.4",
     "eslint": "^7.30.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-react-app": "6.0.0",
     "eslint-import-resolver-typescript": "2.4.0",
-    "eslint-loader": "4.0.2",
-    "eslint-plugin-flowtype": "^5.8.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "4.2.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.2",
